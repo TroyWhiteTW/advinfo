@@ -1,0 +1,39 @@
+/* tmp css, will delete when all menu follow the way of index page */
+.main .content .left-area .left-move .menu-area ul li a{
+	font-size:16px;
+	color:#000;
+}
+
+.main .content .left-area .left-move .menu-area ul li ul{
+	border-top:1px solid grey;
+	border-bottom:1px solid grey;
+	padding:30px 0px;
+	margin-right:-5px;
+}
+
+.main .content .left-area .left-move .menu-area ul li ul li a{
+	font-size:16px;
+	color:#b02929;
+	padding:10px;
+	margin-right:-10px;
+}
+
+.main .content .left-area .left-move .menu-area ul li ul li ul{
+	border-top:1px solid grey;
+	border-bottom:1px solid grey;
+	padding:15px 0px;
+	margin-right:-5px;
+}
+
+.main .content .left-area .left-move .menu-area ul li ul li ul li a{
+	font-size:16px;
+	color:#0da05c;
+}
+
+.left-area ul li{
+    
+	padding:5px;
+	text-align:right;
+    
+}
+/* tmp css, will delete when all menu follow the way of index page */
