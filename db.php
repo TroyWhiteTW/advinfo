@@ -1,7 +1,7 @@
-<?php 
+<?php
 // mysql connect error
 //$conn = @mysqli_connect('localhost','foxking','b31209','bradchao') or die("Server Busy");
-$conn = @mysqli_connect('localhost','root','root','bradchao') or die("Server Busy");
+$conn = @mysqli_connect('localhost', 'root', 'root', 'bradchao') or die("Server Busy");
 
 // if (mysqli_connect_errno()){
 // 	$return = array('result' => '-2' );
