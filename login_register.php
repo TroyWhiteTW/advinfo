@@ -372,7 +372,7 @@ if (mysqli_num_rows($result) > 0) {
                     <div class="content-article">
                         <div class="login-area">
                             <div class="login-tittle">加入會員</div>
-                            <form action="test.php" method="post">
+                            <form action="register.php" method="post">
                                 <table width="100%" border="0">
                                     <tbody>
                                     <tr>
