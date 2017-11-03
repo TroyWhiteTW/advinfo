@@ -23,6 +23,8 @@ $verifytime = 0;
 $type = $_REQUEST['type'];
 $status = 0;
 
+$password = md5($password);
+
 $sql = 'INSERT INTO members ' .
     '(account, password, name, gender, level, referral, email, phone, mobile, company_no, invoice_title, address, constore, regtime, verifycode, verifytime, type, status) ' .
     "VALUES ($account, $password, $name, $gender, $level, $referral, $email, $phone, $mobile, $company_no, $invoice_title, $address, $constore, $regtime, $verifycode, $verifytime, $type, $status);";
