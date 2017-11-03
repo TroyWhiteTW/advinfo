@@ -442,7 +442,7 @@ if (mysqli_num_rows($result) > 0) {
                                     <tr>
                                         <td class="td-04">會員類別</td>
                                         <td>
-                                            <select name="gender" class="input-4">
+                                            <select name="type" class="input-4">
                                                 <option value="1">一般會員</option>
                                                 <option value="2">直銷會員</option>
                                             </select>
