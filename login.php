@@ -22,6 +22,7 @@ if (mysqli_num_rows($result) > 0) {
 <!doctype html>
 <html>
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>珍菌王商城</title>
@@ -83,10 +84,12 @@ if (mysqli_num_rows($result) > 0) {
 </head>
 
 <body>
+
 <div class="wrap">
 
     <!-- 新增側邊欄 -->
     <div class="sidebar visible-sm visible-xs ">
+
         <ul class="fullheight" style="overflow:auto;">
             <?php
             // 左側分類
@@ -103,10 +106,12 @@ if (mysqli_num_rows($result) > 0) {
             ?>
 
         </ul>
+
     </div>
     <!-- 新增側邊欄 -->
 
     <div class="topbar-mobile">
+
         <div class="mobile-content">
             <input type="image" src="img/open_btn.png" name="lo" class="left-open">
             <div class="icon-area">
@@ -123,9 +128,11 @@ if (mysqli_num_rows($result) > 0) {
                 </ul>
             </div>
         </div>
+
     </div>
 
     <div class="topbar">
+
         <div class="top-content">
             <ul>
                 <li><a href="index.php">首頁
@@ -145,6 +152,7 @@ if (mysqli_num_rows($result) > 0) {
                 <div class="search-btn"></div>
             </div>
         </div>
+
     </div>
 
     <div class="container main">
@@ -356,6 +364,7 @@ if (mysqli_num_rows($result) > 0) {
             </div>
 
             <div class="col-sm-10">
+
                 <div class="beard">
                     <ul>
                         <li><a href="index.php">首頁</a></li>
@@ -363,6 +372,7 @@ if (mysqli_num_rows($result) > 0) {
                         <li><a href="login.php">會員登入</a></li>
                     </ul>
                 </div>
+
                 <div class="content-area">
                     <div class="content-article">
                         <div class="login-area">
@@ -408,6 +418,7 @@ if (mysqli_num_rows($result) > 0) {
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
