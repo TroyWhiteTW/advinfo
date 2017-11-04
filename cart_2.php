@@ -18,7 +18,6 @@ if (mysqli_num_rows($result) > 0) {
     echo 'E1';
     return;
 }
-// TODO: 待補側邊攔，目前是 hard code
 ?>
 <!doctype html>
 <html>
@@ -110,93 +109,71 @@ if (mysqli_num_rows($result) > 0) {
     <!-- 新增側邊欄 -->
 
     <div class="topbar-mobile">
-
         <div class="mobile-content">
-
             <input type="image" src="img/open_btn.png" name="lo" class="left-open">
-
             <div class="icon-area">
-
                 <ul>
-
-                    <li><a href="index.php"><div class="index-icon"></div></a></li>
-
-                    <li><a href="login.php"><div class="member-icon"></div></a></li>
-
-                    <li><a href="cart_1.php"><div class="cart-icon"></div></a></li>
-
+                    <li><a href="index.php">
+                            <div class="index-icon"></div>
+                        </a></li>
+                    <li><a href="login.php">
+                            <div class="member-icon"></div>
+                        </a></li>
+                    <li><a href="cart_1.php">
+                            <div class="cart-icon"></div>
+                        </a></li>
                 </ul>
-
             </div>
-
         </div>
-
     </div>
 
     <div class="topbar">
-
         <div class="top-content">
-
             <ul>
-
-                <li><a href="index.php">首頁<div class="index-icon"></div></a></li>
-
-                <li><a href="login.php">會員登入<div class="member-icon"></div></a></li>
-
-                <li><a href="cart_1.php">購物車<div class="cart-icon"></div></a></li>
-
+                <li><a href="index.php">首頁
+                        <div class="index-icon"></div>
+                    </a></li>
+                <li><a href="login.php">會員登入
+                        <div class="member-icon"></div>
+                    </a></li>
+                <li><a href="cart_1.php">購物車
+                        <div class="cart-icon"></div>
+                    </a></li>
             </ul>
-
             <div class="search">
-
                 <div class="search-input">
-
                     <input type="text" name="input-1" id="input-1" class="input-1" placeholder="搜尋商品">
-
                 </div>
-
                 <div class="search-btn"></div>
-
             </div>
-
         </div>
-
     </div>
 
     <div class="ft-search">
-
         <div class="search">
-
             <div class="search-input">
-
                 <input type="text" name="" id="" class="input-1" placeholder="搜尋商品"></div>
-
             <div class="search-btn"></div>
-
         </div>
-
     </div>
 
     <div class="container main">
 
         <div class="row content no-margin-rl">
 
-            <div class="col-sm-2 left-area hidden-xs ">
+            <div class="col-sm-2 left-area hidden-xs">
 
                 <div class="left-move ">
 
                     <div class="logo">
 
                         <a href="index.php">
-
                             <img src="img/logo.jpg" style="" alt="">
-
                         </a>
 
                     </div>
 
                     <div class="menu-area">
-
                         <ul class="fullheight" style="overflow:auto;">
 
                             <li>
@@ -386,7 +363,6 @@ if (mysqli_num_rows($result) > 0) {
                             </li>
 
                         </ul>
-
                     </div>
 
                 </div>
@@ -403,7 +379,7 @@ if (mysqli_num_rows($result) > 0) {
 
                         <li><img src="img/process_icon.png" alt=""></li>
 
-                        <li><a href="login.php">會員登入</a></li>
+                        <li><a href="cart_1.php">購物車</a></li>
 
                     </ul>
 
@@ -411,31 +387,136 @@ if (mysqli_num_rows($result) > 0) {
 
                 <div class="content-area">
 
+                    <div class="cart-area">
+
+                        <ul>
+
+                            <li class="select"><a href="cart_1.php">1.確認商品</a></li>
+
+                            <li><img src="img/process_icon.png" alt=""></li>
+
+                            <li><a href="cart_2.php">2.收件人資訊</a></li>
+
+                            <li><img src="img/process_icon.png" alt=""></li>
+
+                            <li><a href="cart_3.php">3.確認訂單資料</a></li>
+
+                            <li><img src="img/process_icon.png" alt=""></li>
+
+                            <li><a href="cart_4.php">4.完成確認</a></li>
+
+                        </ul>
+
+                    </div>
+
                     <div class="content-article">
 
-                        <div class="form-tittle">請選擇問題類型：<select name="" id="">
-                                <option selected="selected" value="0">請選擇</option>
-                                <option value="1">B</option>
-                                <option value="2">C</option>
-                            </select></div>
+                        <div class="form-name">訂購人資料</div>
 
-                        <div class="form-tittle">姓名：<div class="input-area"><input  name="" id="" type="text"></div></div>
+                        <div class="form-tittle">姓名：<input name="" id="" type="text" class="input-2"></div>
 
-                        <div class="form-tittle">電話：<div class="input-area"><input  name="" id="" type="text"></div></div>
+                        <div class="form-tittle">電子信箱：<input name="" id="" type="text" class="input-2"></div>
 
-                        <div class="form-tittle">電子郵件：<div class="input-area"><input  name="" id="" type="text"></div></div>
+                        <div class="form-tittle">聯繫電話：<input name="" id="" type="text" class="input-2"></div>
 
-                        <div class="form-tittle">問題內容</div>
+                        <div class="form-tittle"><span style="color:red;">*</span>手機：<input name="" id="" type="text" class="input-2"></div>
 
-                        <div class="form-tittle"><div class="input_area"><textarea cols="35" rows="10"></textarea></div></div>
+                        <div class="form-tittle"><span style="color:red;">*</span>聯繫地址：<input type="checkbox" checked="checked">台澎金馬<span style="color:red; font-size:12px;">(預設勾選)</span>
 
-                        <div class="form-tittle"><input type="submit" value="送出"></div>
+                            <div class="form-tittle">
+
+                                <select name="" id="">
+                                    <option selected="selected" value="0">請選擇縣市</option>
+                                    <option value="1">B</option>
+                                    <option value="2">C</option>
+                                </select>
+
+                                <select name="" id="">
+                                    <option selected="selected" value="0">請選擇區別</option>
+                                    <option value="1">B</option>
+                                    <option value="2">C</option>
+                                </select>
+
+                                <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="btn-area">
-                        <a href="index.html"><input type="submit" value="返回首頁" ></a>
+                    <div class="content-article">
+
+                        <div class="form-name">收件人資料</div>
+
+                        <div class="form-tittle">
+                            <div class="check-box"><input type="checkbox"></div>
+                            同步為訂購人資料
+                        </div>
+
+                        <div class="form-tittle">姓名：<input name="" id="" type="text" class="input-2"></div>
+
+                        <div class="form-tittle">電子信箱：<input name="" id="" type="text" class="input-2"></div>
+
+                        <div class="form-tittle">聯繫電話：<input name="" id="" type="text" class="input-2"></div>
+
+                        <div class="form-tittle"><span style="color:red;">*</span>手機：<input name="" id="" type="text" class="input-2"></div>
+
+                        <div class="form-tittle"><span style="color:red;">*</span>聯繫地址：<input type="checkbox" checked="checked">台澎金馬<span style="color:red; font-size:12px;">(預設勾選)</span>
+
+                            <div class="form-tittle">
+
+                                <select name="" id="">
+                                    <option selected="selected" value="0">請選擇縣市</option>
+                                    <option value="1">B</option>
+                                    <option value="2">C</option>
+                                </select>
+
+                                <select name="" id="">
+                                    <option selected="selected" value="0">請選擇區別</option>
+                                    <option value="1">B</option>
+                                    <option value="2">C</option>
+                                </select>
+
+                                <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+
+                            </div>
+
+                        </div>
+
                     </div>
+
+                </div>
+
+                <div class="content-article">
+
+                    <div class="form-name">取貨門市</div>
+
+                    <div class="function-area">
+
+                        <ul>
+
+                            <li><a href=""><input type="button" id="" name="" class="" value="全家取貨門市"></a></li>
+
+                            <li><a href=""><input type="button" id="" name="" class="" value="OK取貨門市"></a></li>
+
+                            <li><a href=""><input type="button" id="" name="" class="" value="萊爾富取貨門市"></a></li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="form-tittle">門市名稱：<input name="" id="" type="text" class="input-2"></div>
+
+                    <div class="form-tittle">門市地址：<input name="" id="" type="text" class="input-2"></div>
+
+                </div>
+
+                <div class="btn-area">
+
+                    <a href="cart_1.php"><input type="submit" value="返回上一步"></a>
+
+                    <a href="cart_3.php"><input type="submit" value="確認，下一步"></a>
 
                 </div>
 
@@ -497,7 +578,8 @@ if (mysqli_num_rows($result) > 0) {
 
             </div>
 
-            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休) 快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
+            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休)
+                快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
 
         </footer>
 
