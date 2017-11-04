@@ -411,56 +411,30 @@ if (mysqli_num_rows($result) > 0) {
 
                 <div class="content-area">
 
-                    <div class="content-article"></div>
+                    <div class="content-article">
 
-                    <div class="col-sm-10">
+                        <div class="form-tittle">請選擇問題類型：<select name="" id="">
+                                <option selected="selected" value="0">請選擇</option>
+                                <option value="1">B</option>
+                                <option value="2">C</option>
+                            </select></div>
 
-                        <div class="beard">
+                        <div class="form-tittle">姓名：<div class="input-area"><input  name="" id="" type="text"></div></div>
 
-                            <ul>
+                        <div class="form-tittle">電話：<div class="input-area"><input  name="" id="" type="text"></div></div>
 
-                                <li><a href="index.php">首頁</a></li>
+                        <div class="form-tittle">電子郵件：<div class="input-area"><input  name="" id="" type="text"></div></div>
 
-                                <li><img src="img/process_icon.png" alt=""></li>
+                        <div class="form-tittle">問題內容</div>
 
-                                <li><a href="function_member.php">客服中心</a></li>
+                        <div class="form-tittle"><div class="input_area"><textarea cols="35" rows="10"></textarea></div></div>
 
-                            </ul>
+                        <div class="form-tittle"><input type="submit" value="送出"></div>
+                        
+                    </div>
 
-                        </div>
-
-                        <div class="content-area">
-
-                            <div class="content-article">
-
-                                <div class="form-tittle">請選擇問題類型：
-                                    <select name="" id="">
-                                        <option selected="selected" value="0">請選擇</option>
-                                        <option value="1">B</option>
-                                        <option value="2">C</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-tittle">姓名：<div class="input-area"><input  name="" id="" type="text"></div></div>
-
-                                <div class="form-tittle">電話：<div class="input-area"><input  name="" id="" type="text"></div></div>
-
-                                <div class="form-tittle">電子郵件：<div class="input-area"><input  name="" id="" type="text"></div></div>
-
-                                <div class="form-tittle">問題內容</div>
-
-                                <div class="form-tittle"><div class="input_area"><textarea cols="35" rows="10"></textarea></div></div>
-
-                                <div class="form-tittle"><input type="submit" value="送出"></div>
-
-                            </div>
-
-                            <div class="btn-area">
-                                <a href="index.php"><input type="submit" value="返回首頁" ></a>
-                            </div>
-
-                        </div>
-
+                    <div class="btn-area">
+                        <a href="index.html"><input type="submit" value="返回首頁" ></a>
                     </div>
 
                 </div>
