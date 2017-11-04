@@ -370,11 +370,17 @@ if (mysqli_num_rows($result) > 0) {
             <div class="col-sm-10">
 
                 <div class="beard">
+
                     <ul>
+
                         <li><a href="index.php">首頁</a></li>
+
                         <li><img src="img/process_icon.png" alt=""></li>
+
                         <li><a href="login.php">會員登入</a></li>
+
                     </ul>
+
                 </div>
 
                 <div class="content-area">
@@ -581,34 +587,61 @@ if (mysqli_num_rows($result) > 0) {
         </div>
 
         <footer>
+
             <div class="foot-area">
+
                 <div class="foot-menu">
-                    <div class="ft-logo"><a href="index.php"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
+
+                    <div class="ft-logo"><a href="index.html"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
+
                     <div class="ft-menu-list">
+
                         <ul>
+
                             <li><a href="ftmenu_about.php">關於我們</a></li>
+
                             <li>│</li>
+
                             <li><a href="ftmenu_privacy.php">隱私權條款</a></li>
+
                             <li>│</li>
+
                             <li><a href="ftmenu_policy.php">服務政策</a></li>
+
                             <li>│</li>
+
                             <li><a href="ftmenu_refund.php">退貨需知</a></li>
+
                             <li>│</li>
+
                             <li><a href="ftmenu_goods.php">商品寄送</a></li>
+
                             <li>│</li>
+
                             <li><a href="ftmenu_supplier.php">供應商資訊</a></li>
+
                             <li>│</li>
+
                             <li><a href="ftmenu_process.php">購物流程說明</a></li>
+
                             <li>│</li>
+
                             <li><a href="ftmenu_warranty.php">鑑賞期說明</a></li>
+
                             <li>│</li>
+
                             <li><a href="ftmenu_service.php">客服中心</a></li>
+
                         </ul>
+
                     </div>
+
                 </div>
+
             </div>
-            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休)
-                快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
+
+            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休) 快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
+
         </footer>
 
     </div>

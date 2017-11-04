@@ -413,9 +413,53 @@ if (mysqli_num_rows($result) > 0) {
 
                     <div class="content-article"></div>
 
-                    <div class="btn-area">
+                    <div class="col-sm-10">
 
-                        <a href="index.html"><input type="submit" value="返回首頁" ></a>
+                        <div class="beard">
+
+                            <ul>
+
+                                <li><a href="index.php">首頁</a></li>
+
+                                <li><img src="img/process_icon.png" alt=""></li>
+
+                                <li><a href="function_member.php">客服中心</a></li>
+
+                            </ul>
+
+                        </div>
+
+                        <div class="content-area">
+
+                            <div class="content-article">
+
+                                <div class="form-tittle">請選擇問題類型：
+                                    <select name="" id="">
+                                        <option selected="selected" value="0">請選擇</option>
+                                        <option value="1">B</option>
+                                        <option value="2">C</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-tittle">姓名：<div class="input-area"><input  name="" id="" type="text"></div></div>
+
+                                <div class="form-tittle">電話：<div class="input-area"><input  name="" id="" type="text"></div></div>
+
+                                <div class="form-tittle">電子郵件：<div class="input-area"><input  name="" id="" type="text"></div></div>
+
+                                <div class="form-tittle">問題內容</div>
+
+                                <div class="form-tittle"><div class="input_area"><textarea cols="35" rows="10"></textarea></div></div>
+
+                                <div class="form-tittle"><input type="submit" value="送出"></div>
+
+                            </div>
+
+                            <div class="btn-area">
+                                <a href="index.php"><input type="submit" value="返回首頁" ></a>
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -437,39 +481,39 @@ if (mysqli_num_rows($result) > 0) {
 
                         <ul>
 
-                            <li><a href="ftmenu_about.html">關於我們</a></li>
+                            <li><a href="ftmenu_about.php">關於我們</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_privacy.html">隱私權條款</a></li>
+                            <li><a href="ftmenu_privacy.php">隱私權條款</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_policy.html">服務政策</a></li>
+                            <li><a href="ftmenu_policy.php">服務政策</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_refund.html">退貨需知</a></li>
+                            <li><a href="ftmenu_refund.php">退貨需知</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_goods.html">商品寄送</a></li>
+                            <li><a href="ftmenu_goods.php">商品寄送</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_supplier.html">供應商資訊</a></li>
+                            <li><a href="ftmenu_supplier.php">供應商資訊</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_process.html">購物流程說明</a></li>
+                            <li><a href="ftmenu_process.php">購物流程說明</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_warranty.html">鑑賞期說明</a></li>
+                            <li><a href="ftmenu_warranty.php">鑑賞期說明</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_service.html">客服中心</a></li>
+                            <li><a href="ftmenu_service.php">客服中心</a></li>
 
                         </ul>
 

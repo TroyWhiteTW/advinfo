@@ -415,7 +415,7 @@ if (mysqli_num_rows($result) > 0) {
 
                     <div class="btn-area">
 
-                        <a href="index.html"><input type="submit" value="返回首頁" ></a>
+                        <a href="index.php"><input type="submit" value="返回首頁" ></a>
 
                     </div>
 
@@ -437,39 +437,39 @@ if (mysqli_num_rows($result) > 0) {
 
                         <ul>
 
-                            <li><a href="ftmenu_about.html">關於我們</a></li>
+                            <li><a href="ftmenu_about.php">關於我們</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_privacy.html">隱私權條款</a></li>
+                            <li><a href="ftmenu_privacy.php">隱私權條款</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_policy.html">服務政策</a></li>
+                            <li><a href="ftmenu_policy.php">服務政策</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_refund.html">退貨需知</a></li>
+                            <li><a href="ftmenu_refund.php">退貨需知</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_goods.html">商品寄送</a></li>
+                            <li><a href="ftmenu_goods.php">商品寄送</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_supplier.html">供應商資訊</a></li>
+                            <li><a href="ftmenu_supplier.php">供應商資訊</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_process.html">購物流程說明</a></li>
+                            <li><a href="ftmenu_process.php">購物流程說明</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_warranty.html">鑑賞期說明</a></li>
+                            <li><a href="ftmenu_warranty.php">鑑賞期說明</a></li>
 
                             <li>│</li>
 
-                            <li><a href="ftmenu_service.html">客服中心</a></li>
+                            <li><a href="ftmenu_service.php">客服中心</a></li>
 
                         </ul>
 
