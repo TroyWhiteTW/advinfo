@@ -369,12 +369,12 @@ if (mysqli_num_rows($result) > 0) {
 
                             <div class="login-tittle">加入會員</div>
 
-                            <form action="register.php" method="post">
+                            <form id="register_form" action="register.php" method="post">
 
                                 <table width="100%" border="0">
                                     <tbody>
                                     <tr>
-                                        <td class="td-04">帳號</td>
+                                        <td class="td-04">帳號<span style="color:red;">*</span></td>
                                         <td><input type="text" name="account" class="input-4"></td>
                                     </tr>
 
@@ -384,7 +384,7 @@ if (mysqli_num_rows($result) > 0) {
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">密碼</td>
+                                        <td class="td-04">密碼<span style="color:red;">*</span></td>
                                         <td><input type="password" name="password" class="input-4"></td>
                                     </tr>
 
@@ -398,17 +398,17 @@ if (mysqli_num_rows($result) > 0) {
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">確認密碼</td>
+                                        <td class="td-04">確認密碼<span style="color:red;">*</span></td>
                                         <td><input type="password" name="password_c" class="input-4"></td>
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">姓名</td>
+                                        <td class="td-04">姓名<span style="color:red;">*</span></td>
                                         <td><input type="text" name="name" class="input-4"></td>
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">性別</td>
+                                        <td class="td-04">性別<span style="color:red;">*</span></td>
                                         <td>
                                             <select name="gender" class="input-4">
                                                 <option value="M">男</option>
@@ -417,7 +417,7 @@ if (mysqli_num_rows($result) > 0) {
                                         </td>
                                     </tr>
 
-                                    <tr>
+                                    <tr hidden="hidden">
                                         <td class="td-04">電子信箱</td>
                                         <td><input type="text" name="email" class="input-4"></td>
                                     </tr>
@@ -428,17 +428,31 @@ if (mysqli_num_rows($result) > 0) {
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">手機</td>
+                                        <td class="td-04"></td>
+                                        <td class="td-05">
+                                            例:0298765432
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="td-04">手機<span style="color:red;">*</span></td>
                                         <td><input type="text" name="mobile" class="input-4"></td>
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">聯繫地址</td>
+                                        <td class="td-04"></td>
+                                        <td class="td-05">
+                                            例:0123456789
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="td-04">聯繫地址<span style="color:red;">*</span></td>
                                         <td><input type="text" name="address" class="input-4"></td>
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">會員類別</td>
+                                        <td class="td-04">會員類別<span style="color:red;">*</span></td>
                                         <td>
                                             <select name="type" class="input-4">
                                                 <option value="1">一般會員</option>
@@ -600,6 +614,104 @@ if (mysqli_num_rows($result) > 0) {
     });
 
     //新增側邊欄
+
+    //註冊表單提交檢查
+    var form = document.getElementById('register_form');
+    form.addEventListener('submit', function (e) {
+
+        var isDataCorrect = true;
+
+        var account = $('input[name="account"]').val().trim();
+        var password = $('input[name="password"]').val().trim();
+        var password_c = $('input[name="password_c"]').val().trim();
+        var name = $('input[name="name"]').val().trim();
+        var phone = $('input[name="phone"]').val().trim();
+        var mobile = $('input[name="mobile"]').val().trim();
+        var address = $('input[name="address"]').val().trim();
+
+        //檢查帳號格式
+        var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
+        if (!account.match(email_regex)) {
+            isDataCorrect = false;
+            alert('帳號格式錯誤，請輸入電子信箱。');
+        }
+        if (account.match(/\s/)) {
+            isDataCorrect = false;
+            alert('帳號格式錯誤，請勿包含空白鍵。');
+        }
+        if (account.length === 0) {
+            isDataCorrect = false;
+            alert('請輸入帳號。');
+        }
+        //檢查密碼格式
+        if (password.length < 8 || password.length > 20) {
+            isDataCorrect = false;
+            alert('密碼格式錯誤，字數必須在8-20之間');
+        }
+        if (!password.match(/[0-9]/) || !password.match(/[a-zA-Z]/)) {
+            isDataCorrect = false;
+            alert('密碼格式錯誤，必須至少擁有一個數字及英文');
+        }
+        if (password.match(/\s/)) {
+            isDataCorrect = false;
+            alert('密碼格式錯誤，請勿包含空白鍵。');
+        }
+        if (password !== password_c) {
+            isDataCorrect = false;
+            alert('密碼確認必須與密碼相同');
+        }
+        if (password.length === 0) {
+            isDataCorrect = false;
+            alert('請輸入密碼。');
+        }
+        //檢查姓名
+        if (name.match(/\s/)) {
+            isDataCorrect = false;
+            alert('姓名格式錯誤，請勿包含空白鍵。');
+        }
+        if (name.match(/\d/)) {
+            isDataCorrect = false;
+            alert('姓名格式錯誤，請勿包含數字。');
+        }
+        if (name.length === 0) {
+            isDataCorrect = false;
+            alert('請輸入姓名。');
+        }
+        //檢查聯繫電話
+        if (phone.match(/\s/)) {
+            isDataCorrect = false;
+            alert('聯繫電話格式錯誤，請勿包含空白鍵。');
+        }
+        if (phone.match(/[^\d]/)) {
+            isDataCorrect = false;
+            alert('聯繫電話格式錯誤，請輸入數字。');
+        }
+        //檢查手機
+        if (mobile.match(/\s/)) {
+            isDataCorrect = false;
+            alert('手機格式錯誤，請勿包含空白鍵。');
+        }
+        if (mobile.match(/[^\d]/)) {
+            isDataCorrect = false;
+            alert('手機格式錯誤，請輸字數字。');
+        }
+        if (mobile.length !== 10) {
+            isDataCorrect = false;
+            alert('請輸入正確手機號碼。');
+        }
+        //檢查聯繫地址
+        if (address.length === 0) {
+            isDataCorrect = false;
+            alert('請輸入聯繫地址。');
+        }
+        if (isDataCorrect === false) {
+            e.preventDefault();
+        }
+    })
+    ;
+
+
+    //註冊表單提交檢查
 
 </script>
 </body>
