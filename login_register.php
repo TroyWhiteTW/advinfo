@@ -369,7 +369,7 @@ if (mysqli_num_rows($result) > 0) {
 
                             <div class="login-tittle">加入會員</div>
 
-                            <form id="register_form" action="register.php" method="post">
+                            <form id="register_form" action="register2.php" method="post">
 
                                 <table width="100%" border="0">
                                     <tbody>
@@ -693,7 +693,7 @@ if (mysqli_num_rows($result) > 0) {
         }
         if (mobile.match(/[^\d]/)) {
             isDataCorrect = false;
-            alert('手機格式錯誤，請輸字數字。');
+            alert('手機格式錯誤，請輸入數字。');
         }
         if (mobile.length !== 10) {
             isDataCorrect = false;
@@ -709,8 +709,6 @@ if (mysqli_num_rows($result) > 0) {
         }
     })
     ;
-
-
     //註冊表單提交檢查
 
 </script>
