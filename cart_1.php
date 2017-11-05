@@ -578,7 +578,7 @@ if (mysqli_num_rows($result) > 0) {
 
                     </div>
 
-                    <div class="btn-area"><a href="cart_2.html"><input type="submit" value="確認，下一步"></a></div>
+                    <div class="btn-area"><a href="cart_2.php"><input type="submit" value="確認，下一步"></a></div>
 
                 </div>
 
@@ -592,7 +592,7 @@ if (mysqli_num_rows($result) > 0) {
 
                 <div class="foot-menu">
 
-                    <div class="ft-logo"><a href="index.html"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
+                    <div class="ft-logo"><a href="index.php"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
 
                     <div class="ft-menu-list">
 

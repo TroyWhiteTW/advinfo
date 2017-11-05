@@ -369,7 +369,7 @@ if (mysqli_num_rows($result) > 0) {
 
                             <div class="login-tittle">加入會員</div>
 
-                            <form id="register_form" action="register2.php" method="post">
+                            <form id="register_form" action="register.php" method="post">
 
                                 <table width="100%" border="0">
                                     <tbody>
@@ -492,7 +492,7 @@ if (mysqli_num_rows($result) > 0) {
 
                 <div class="foot-menu">
 
-                    <div class="ft-logo"><a href="index.html"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
+                    <div class="ft-logo"><a href="index.php"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
 
                     <div class="ft-menu-list">
 
