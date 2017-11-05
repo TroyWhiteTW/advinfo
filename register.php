@@ -244,7 +244,7 @@ function encodeRegisterData($rawDataArray)
             if ($k === "password") {
                 $dataArray[$k] = "\"" . md5($rawDataArray[$k]) . "\"";
             } else if ($k === "email") {
-                $dataArray[$k] = $rawDataArray['account'];
+                $dataArray[$k] = "\"" . $rawDataArray['account'] . "\"";
             } else {
                 $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
             }
