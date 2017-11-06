@@ -96,10 +96,10 @@ function checkData($post, &$msg)
                 checkSpace($k, $msg);
                 checkGender($k, $msg);
                 break;
-            case 'level':
+            case 'type':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
-                checkLevel($k, $msg);
+                checkType($k, $msg);
                 break;
             case 'referral':
                 checkSpace($k, $msg);
@@ -206,7 +206,7 @@ function checkGender($k, &$msg)
     }
 }
 
-function checkLLevel($k, &$msg)
+function checkType($k, &$msg)
 {
     if (empty($_POST[$k])) {
         return;
