@@ -1,10 +1,10 @@
-<?php 
-	include 'db.php';
+<?php
+include 'db.php';
 ?>
 <?php
-    // 產品分類
-    $sql = "select * from proclass where parent = 0 order by no";
-    $result = mysqli_query($conn, $sql);
+// 產品分類
+$sql = "select * from proclass where parent = 0 order by no";
+$result = mysqli_query($conn, $sql);
 //    if (mysqli_num_rows($result) > 0){
 //        while ($row = mysqli_fetch_assoc($result)){
 //            $proclass[] = array(
@@ -36,304 +36,277 @@
 ?>
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-        <title>珍菌王商城</title>
-        <link href="css/reset.css" rel="stylesheet" type="text/css">
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<head>
 
-        <link href="css/layout.css" rel="stylesheet" type="text/css">
-        <link href="css/tmp_left_menu.css" rel="stylesheet" type="text/css">
-        
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    </head>
-    
-    <body>
-        <div class="wrap">
-            
-            <div class="topbar-mobile">
-                <div class="mobile-content">
-                    <input type="image" src="img/open_btn.png" name="" id="" class="left-open">
-                    <div class="icon-area">
+    <?php include 'http_head.php'; ?>
+
+</head>
+
+<body>
+<div class="wrap">
+
+    <div class="topbar-mobile">
+        <div class="mobile-content">
+            <input type="image" src="img/open_btn.png" name="" id="" class="left-open">
+            <div class="icon-area">
+                <ul>
+                    <li>Hi!王先生榮董您好!</li>
+                    <li><a href="index.php">
+                            <div class="index-icon"></div>
+                        </a></li>
+                    <li><a href="function_member.php">
+                            <div class="member-icon"></div>
+                        </a></li>
+                    <li><a href="cart_1.php">
+                            <div class="cart-icon"></div>
+                        </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="topbar">
+        <div class="top-content">
+            <ul>
+                <li><a href="index.php">首頁
+                        <div class="index-icon"></div>
+                    </a></li>
+                <li><a href="login.php">會員登入
+                        <div class="member-icon"></div>
+                    </a></li>
+                <li><a href="cart_1.php">購物車
+                        <div class="cart-icon"></div>
+                    </a></li>
+            </ul>
+            <div class="search">
+                <div class="search-input">
+                    <input type="text" name="input-1" id="input-1" class="input-1" placeholder="搜尋商品">
+                </div>
+                <div class="search-btn"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ft-search">
+        <div class="search">
+            <div class="search-input">
+                <input type="text" name="" id="" class="input-1" placeholder="搜尋商品"></div>
+            <div class="search-btn"></div>
+        </div>
+    </div>
+
+
+    <div class="container main">
+        <div class="row content no-margin-rl">
+
+            <div class="col-sm-2 left-area hidden-xs">
+                <div class="left-move ">
+
+
+                    <div class="logo">
+                        <a href="index.php">
+                            <img src="img/logo.jpg" style="" alt="">
+                        </a>
+                    </div>
+
+                    <div class="menu-area">
                         <ul>
-                            <li>Hi!王先生榮董您好!</li>
-                            <li><a href="index.php"><div class="index-icon"></div></a></li>
-                            <li><a href="function_member.php"><div class="member-icon"></div></a></li>
-                            <li><a href="cart_1.php"><div class="cart-icon"></div></a></li>
+                            <?php
+                            // 左側分類
+                            foreach ($proclass as $class) {
+                                echo '<li>';
+                                echo "<a href=pd_query.php?pcno1={$class['no']}>";
+                                echo $class['pcname'];
+                                echo '</a>';
+                                echo '</li>';
+                            }
+                            ?>
                         </ul>
                     </div>
+
                 </div>
             </div>
-            
-            <div class="topbar">
-                <div class="top-content">
+
+            <div class="col-sm-10">
+                <div class="beard">
                     <ul>
-                        <li><a href="index.php">首頁<div class="index-icon"></div></a></li>
-                        <li><a href="login.php">會員登入<div class="member-icon"></div></a></li>
-                        <li><a href="cart_1.php">購物車<div class="cart-icon"></div></a></li>
+                        <li><a href="index.php">首頁</a></li>
+                        <li><img src="img/process_icon.png" alt=""></li>
+                        <li><a href="pd_query.php">類別</a></li>
+                        <li><img src="img/process_icon.png" alt=""></li>
+                        <li><a href="pd_page.php">商品頁</a></li>
                     </ul>
-                    <div class="search">
-                        <div class="search-input">
-                            <input type="text" name="input-1" id="input-1" class="input-1" placeholder="搜尋商品">
-                        </div>
-                        <div class="search-btn"></div>
-                    </div>
                 </div>
-            </div>
-            
-            <div class="ft-search">
-                <div class="search">
-                    <div class="search-input">
-                        <input type="text" name="" id="" class="input-1" placeholder="搜尋商品"></div>
-                    <div class="search-btn"></div>
-                </div>
-            </div>
-            
-            
-            <div class="container main">
-                <div class="row content no-margin-rl">
+                <div class="content-area">
+                    <div class="content-article">
 
-                    <div class="col-sm-2 left-area hidden-xs">
-                        <div class="left-move ">
+                        <div class="product-pic-area ">
+                            <div class="product-pic">
 
+                                <img src="img/pd_01.jpg" id="prod_img" alt="" style="width:100%;">
 
-                            <div class="logo">
-                                <a href="index.php">
-                                    <img src="img/logo.jpg" style="" alt="">
-                                </a>
-                            </div>
-
-                            <div class="menu-area">
-                                <ul>
-                                <?php 
-                                    // 左側分類
-                                    foreach ($proclass as $class){
-                                        echo '<li>';
-                                        echo "<a href=pd_query.php?pcno1={$class['no']}>";
-                                        echo $class['pcname'];
-                                        echo '</a>';
-                                        echo '</li>';
+                                <div class="tag-type">
+                                    <?php
+                                    if ($product['pcno3'] == 1) {
+                                        // 新品上市
+                                        echo '<img src="img/tag_new.png">';
+                                    } else if ($product['pcno3'] == 2) {
+                                        // 促銷商品
+                                        echo '<img src="img/tag_promot.png">';
                                     }
-                                ?>
-                                </ul>
+                                    ?>
+
+                                </div>
                             </div>
 
+
+                            <div class="pic-small " style="">
+                                <div class="pic-s contentbtn thumb_selected "
+                                     style="background-image:url('img/pd_01.jpg');">
+
+                                </div>
+
+                                <div class="pic-s contentbtn  "
+                                     style="background-image:url('img/pd_02.jpg');">
+
+                                </div>
+
+                                <div class="pic-s contentbtn  "
+                                     style="background-image:url('img/pd_03.jpg');">
+
+                                </div>
+
+                                <div class="pic-s contentbtn  "
+                                     style="background-image:url('img/pd_04.jpg');">
+
+                                </div>
+
+                                <div class="pic-s contentbtn  "
+                                     style="background-image:url('img/pd_05.jpg');">
+
+                                </div>
+
+                            </div>
+
+                            <!--
+                            <div class="pic-small">
+                                <div class="pic-s"></div>
+                                <div class="pic-s"></div>
+                                <div class="pic-s"></div>
+                                <div class="pic-s"></div>
+                            </div>
+                            -->
+
+                        </div>
+
+                        <div class="product-info-area">
+                            <div class="product-tittle"><?php echo $product['proname']; ?></div>
+                            <div class="product-info"><?php echo $product['prointro']; ?></div>
+                            <div style="margin-top:10px;">
+                                <div class="price-unit">NTS</div>
+                                <div class="price-big"><?php echo $product['price']; ?></div>
+                                <div class="goods">庫存數量：<?php echo $product['stock']; ?></div>
+                            </div>
+                            <div class="pv-number">PV值：<?php echo $product['PV']; ?></div>
+                            <div class="goods-number">商品編號：<?php echo $product['proid']; ?></div>
+                            <div style="margin-top:10px;">
+                                <div class="number">數量
+                                    <select name="" id="">
+                                        <option selected="selected" value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="3">4</option>
+                                        <option value="3">5</option>
+                                    </select>
+                                </div>
+                                <div class="buy-btn-area">
+                                    <div class="buy-btn">加入購物車</div>
+                                    <div class="buy-btn">直接購買</div>
+                                </div>
+                                <div class="pay-way">可付款方式：</div>
+                                <div class="pay-icon"><img src="img/visa.png" alt=""></div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-10">
-                        <div class="beard">
-                            <ul>
-                                <li><a href="index.php">首頁</a></li>
-                                <li><img src="img/process_icon.png" alt=""></li>
-                                <li><a href="pd_query.php">類別</a></li>
-                                <li><img src="img/process_icon.png" alt=""></li>
-                                <li><a href="pd_page.php">商品頁</a></li>
-                            </ul>
+                    <div class="content-article">
+                        <div class="form-tittle">
+                            <div class="pd-intro-tittle">商品介紹</div>
+                            <img src="img/pd_01.jpg" alt="" width="100%">
                         </div>
-                        <div class="content-area">
-                            <div class="content-article">
-                                
-                                <div class="product-pic-area ">
-                                    <div class="product-pic" >
-                                       
-                                        <img src="img/pd_01.jpg" id="prod_img" alt="" style="width:100%;">
-                                       
-                                        <div class="tag-type">
-                                        		<?php 
-                                        		  if ($product['pcno3'] == 1){
-                                        		      // 新品上市
-                                        		      echo '<img src="img/tag_new.png">';
-                                        		  }else if ($product['pcno3'] == 2) {
-                                        		      // 促銷商品
-                                        		      echo '<img src="img/tag_promot.png">';
-                                        		  }
-                                        		?>
-                                            
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                    <div class="pic-small " style="">
-                                        <div class="pic-s contentbtn thumb_selected "
-                                             style="background-image:url('img/pd_01.jpg');">
-
-                                        </div>
-
-                                        <div class="pic-s contentbtn  "
-                                             style="background-image:url('img/pd_02.jpg');">
-
-                                        </div>
-
-                                        <div class="pic-s contentbtn  "
-                                             style="background-image:url('img/pd_03.jpg');">
-
-                                        </div>
-
-                                        <div class="pic-s contentbtn  "
-                                             style="background-image:url('img/pd_04.jpg');">
-
-                                        </div>
-
-                                        <div class="pic-s contentbtn  "
-                                             style="background-image:url('img/pd_05.jpg');">
-
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <!--
-                                    <div class="pic-small">
-                                        <div class="pic-s"></div>
-                                        <div class="pic-s"></div>
-                                        <div class="pic-s"></div>
-                                        <div class="pic-s"></div>
-                                    </div>
-                                    -->
-                                    
-                                </div>
-                                
-                                <div class="product-info-area">
-                                    <div class="product-tittle"><?php echo $product['proname'];?></div>
-                                    <div class="product-info"><?php echo $product['prointro'];?></div>
-                                    <div style="margin-top:10px;">    
-                                        <div class="price-unit">NTS</div>
-                                        <div class="price-big"><?php echo $product['price'];?></div>
-                                        <div class="goods">庫存數量：<?php echo $product['stock'];?></div>
-                                    </div>
-                                    <div class="pv-number">PV值：<?php echo $product['PV'];?></div>
-                                    <div class="goods-number">商品編號：<?php echo $product['proid'];?></div>
-                                    <div style="margin-top:10px;">
-                                        <div class="number">數量
-                                            <select name="" id="">
-                                                <option selected="selected" value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="3">4</option>
-                                                <option value="3">5</option>
-                                            </select>
-                                        </div>
-                                        <div class="buy-btn-area">
-                                            <div class="buy-btn">加入購物車</div>
-                                            <div class="buy-btn">直接購買</div>
-                                        </div>
-                                        <div class="pay-way">可付款方式：</div>
-                                        <div class="pay-icon"><img src="img/visa.png" alt=""></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content-article">
-                                <div class="form-tittle">
-                                    <div class="pd-intro-tittle">商品介紹</div>
-                                    <img src="img/pd_01.jpg" alt="" width="100%">
-                                </div>
-                                <div class="form-tittle">
-                                    <img src="img/pd_02.jpg" alt="" width="100%">
-                                </div>
-
-                                <div class="form-tittle">
-                                    <img src="img/pd_03.jpg" alt="" width="100%">
-                                </div>
-                            </div>
-                            <div class="content-article">
-                                <table width="100%" border="1" cellspacing="1" cellpadding="1" style="border-color:#3E3E3E;">
-                                    <tbody>
-                                        <tr class="tb-02">
-                                            <th>商品規格 </th>
-                                            <th>注意事項 </th>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-03">
-                                                <p>規格：<?php echo $product['size'];?></p>
-                                                <p>重量：<?php echo $product['weight'];?></p>
-                                            </td>
-                                            <td class="td-03"><?php echo $product['memo'];?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <div class="content-article">
-                                <table width="100%" border="1" cellspacing="1" cellpadding="1" style="border-color:#3E3E3E;">
-                                    <tbody>
-                                        <tr class="tb-02">
-                                            <td>滿意服務</td> 
-                                        </tr>
-                                        <tr>
-                                            <td class="td-03">
-                                                <ul>
-                                                    <li>據消保法規定，凡購買之消費者均享有商品到貨7天(包含假日)鑑賞期之權益(※鑑賞期非試用期)。</li>
-                                                    <li>據消保法規定，凡購買之消費者均享有商品到貨7天(包含假日)鑑賞期之權益(※鑑賞期非試用期)。</li>
-                                                    <li>據消保法規定，凡購買之消費者均享有商品到貨7天(包含假日)鑑賞期之權益(※鑑賞期非試用期)。</li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="form-tittle">
+                            <img src="img/pd_02.jpg" alt="" width="100%">
                         </div>
+
+                        <div class="form-tittle">
+                            <img src="img/pd_03.jpg" alt="" width="100%">
+                        </div>
+                    </div>
+                    <div class="content-article">
+                        <table width="100%" border="1" cellspacing="1" cellpadding="1" style="border-color:#3E3E3E;">
+                            <tbody>
+                            <tr class="tb-02">
+                                <th>商品規格</th>
+                                <th>注意事項</th>
+                            </tr>
+                            <tr>
+                                <td class="td-03">
+                                    <p>規格：<?php echo $product['size']; ?></p>
+                                    <p>重量：<?php echo $product['weight']; ?></p>
+                                </td>
+                                <td class="td-03"><?php echo $product['memo']; ?></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="content-article">
+                        <table width="100%" border="1" cellspacing="1" cellpadding="1" style="border-color:#3E3E3E;">
+                            <tbody>
+                            <tr class="tb-02">
+                                <td>滿意服務</td>
+                            </tr>
+                            <tr>
+                                <td class="td-03">
+                                    <ul>
+                                        <li>據消保法規定，凡購買之消費者均享有商品到貨7天(包含假日)鑑賞期之權益(※鑑賞期非試用期)。</li>
+                                        <li>據消保法規定，凡購買之消費者均享有商品到貨7天(包含假日)鑑賞期之權益(※鑑賞期非試用期)。</li>
+                                        <li>據消保法規定，凡購買之消費者均享有商品到貨7天(包含假日)鑑賞期之權益(※鑑賞期非試用期)。</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                
-                <footer>
-                    <div class="foot-area">  
-                        <div class="foot-menu">
-                            <div class="ft-logo"><a href="index.php"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
-                            <div class="ft-menu-list">
-                                <ul>
-                                    <li><a href="ftmenu_about.php">關於我們</a></li>
-                                    <li>│</li>
-                                    <li><a href="ftmenu_privacy.php">隱私權條款</a></li>
-                                    <li>│</li>
-                                    <li><a href="ftmenu_policy.php">服務政策</a></li>
-                                    <li>│</li>
-                                    <li><a href="ftmenu_refund.php">退貨需知</a></li>
-                                    <li>│</li>
-                                    <li><a href="ftmenu_goods.php">商品寄送</a></li>
-                                    <li>│</li>
-                                    <li><a href="ftmenu_supplier.php">供應商資訊</a></li>
-                                    <li>│</li>
-                                    <li><a href="ftmenu_process.php">購物流程說明</a></li>
-                                    <li>│</li>
-                                    <li><a href="ftmenu_warranty.php">鑑賞期說明</a></li>
-                                    <li>│</li>
-                                    <li><a href="ftmenu_service.php">客服中心</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休) 快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
-                </footer>
-                
             </div>
-            
         </div>
-        
-        <script>
-            $('.contentbtn').click(function () {
 
-                $('.contentbtn').removeClass('thumb_selected');
+        <?php include 'footer.php'; ?>
 
-                var content = new Array();
-                content[0] = 'img/pd_01.jpg';
-                content[1] = 'img/pd_02.jpg';
-                content[2] = 'img/pd_03.jpg';
-                content[3] = 'img/pd_04.jpg';
-                content[4] = 'img/pd_05.jpg';
-                var self = $(this);
-                var index = self.index();
-                //console.log(index);
-                $(this).addClass('thumb_selected');
+    </div>
 
-                $('#prod_img').attr("src", content[index]); 
-            });
-        </script>
-    </body>
+</div>
+
+<script>
+    $('.contentbtn').click(function () {
+
+        $('.contentbtn').removeClass('thumb_selected');
+
+        var content = new Array();
+        content[0] = 'img/pd_01.jpg';
+        content[1] = 'img/pd_02.jpg';
+        content[2] = 'img/pd_03.jpg';
+        content[3] = 'img/pd_04.jpg';
+        content[4] = 'img/pd_05.jpg';
+        var self = $(this);
+        var index = self.index();
+        //console.log(index);
+        $(this).addClass('thumb_selected');
+
+        $('#prod_img').attr("src", content[index]);
+    });
+</script>
+</body>
+
 </html>

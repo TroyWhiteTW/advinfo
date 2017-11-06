@@ -23,63 +23,8 @@ $result = mysqli_query($conn, $sql);
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>珍菌王商城</title>
 
-    <link href="css/reset.css" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-
-    <link href="css/layout.css" rel="stylesheet" type="text/css">
-
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-    <!-- owl.carousel -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <script src="scripts/owl.carousel.min.js"></script>
-
-    <style>
-
-        .owl-carousel .owl-dot {
-            background-color: #CBCBCB;
-            border-radius: 50%;
-            display: inline-block;
-            height: 15px;
-            margin: 0 5px;
-            width: 15px;
-            opacity: .7;
-        }
-
-        .owl-dots > .active {
-            background-color: white;
-        }
-
-        .owl-carousel .active {
-            opacity: 1;
-        }
-
-        .owl-carousel {
-            position: relative;
-        }
-
-        .owl-carousel .owl-dots {
-            display: block;
-            text-align: center;
-            width: 100%;
-            position: absolute;
-            bottom: 14px;
-        }
-
-
-    </style>
+    <?php include 'http_head.php'; ?>
 
 </head>
 
@@ -425,7 +370,7 @@ $result = mysqli_query($conn, $sql);
 
                             <tr class="td-02">
                                 <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span style="color:red;">(產品編號)</span><br><br></td>
-                                <td><select >
+                                <td><select>
                                         <option value="1" selected>1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -439,7 +384,7 @@ $result = mysqli_query($conn, $sql);
 
                             <tr class="td-02">
                                 <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span style="color:red;">(產品編號)</span><br><br></td>
-                                <td><select >
+                                <td><select>
                                         <option value="1" selected>1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -453,7 +398,7 @@ $result = mysqli_query($conn, $sql);
 
                             <tr class="td-02">
                                 <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span style="color:red;">(產品編號)</span><br><br></td>
-                                <td><select >
+                                <td><select>
                                         <option value="1" selected>1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -487,11 +432,13 @@ $result = mysqli_query($conn, $sql);
 
                         <div class="form-name">配送方式</div>
 
-                        <div class="form-tittle"><label><input type="radio" name="" value="">便利商店取貨(須先付款) 60元</label></div>
+                        <div class="form-tittle"><label><input type="radio" name="" value="">便利商店取貨(須先付款) 60元</label>
+                        </div>
 
                         <div class="form-tittle"><label><input type="radio" name="" value="">宅配/快遞 60元</label></div>
 
-                        <div class="form-tittle"><label><input type="radio" name="" value="">宅配/快遞(貨到付款) 60元</label></div>
+                        <div class="form-tittle"><label><input type="radio" name="" value="">宅配/快遞(貨到付款) 60元</label>
+                        </div>
 
                         <div class="form-tittle"><label><input type="radio" name="" value="">營業據點取貨(須先付款) 60元</label>
                             <div class="form-tittle" style="margin-left:20px;">
@@ -572,9 +519,9 @@ $result = mysqli_query($conn, $sql);
 
                         <div class="form-tittle"><label><input type="radio" name="" value="">公司戶頭票</label></div>
 
-                        <div class="form-tittle">統一編號：<input  name="" id="" type="text" class="input-2"></div>
+                        <div class="form-tittle">統一編號：<input name="" id="" type="text" class="input-2"></div>
 
-                        <div class="form-tittle">公司抬頭：<input  name="" id="" type="text" class="input-2"></div>
+                        <div class="form-tittle">公司抬頭：<input name="" id="" type="text" class="input-2"></div>
 
                     </div>
 
@@ -586,63 +533,7 @@ $result = mysqli_query($conn, $sql);
 
         </div>
 
-        <footer>
-
-            <div class="foot-area">
-
-                <div class="foot-menu">
-
-                    <div class="ft-logo"><a href="index.php"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
-
-                    <div class="ft-menu-list">
-
-                        <ul>
-
-                            <li><a href="ftmenu_about.php">關於我們</a></li>
-
-                            <li>│</li>
-
-                            <li><a href="ftmenu_privacy.php">隱私權條款</a></li>
-
-                            <li>│</li>
-
-                            <li><a href="ftmenu_policy.php">服務政策</a></li>
-
-                            <li>│</li>
-
-                            <li><a href="ftmenu_refund.php">退貨需知</a></li>
-
-                            <li>│</li>
-
-                            <li><a href="ftmenu_goods.php">商品寄送</a></li>
-
-                            <li>│</li>
-
-                            <li><a href="ftmenu_supplier.php">供應商資訊</a></li>
-
-                            <li>│</li>
-
-                            <li><a href="ftmenu_process.php">購物流程說明</a></li>
-
-                            <li>│</li>
-
-                            <li><a href="ftmenu_warranty.php">鑑賞期說明</a></li>
-
-                            <li>│</li>
-
-                            <li><a href="ftmenu_service.php">客服中心</a></li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休) 快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
-
-        </footer>
+        <?php include 'footer.php'; ?>
 
     </div>
 
