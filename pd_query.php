@@ -6,61 +6,61 @@
 	// 產品分類
 	$sql = "select * from proclass where parent = 0 order by no";
 	$result = mysqli_query($conn, $sql);
-	if (mysqli_num_rows($result) > 0){
-		while ($row = mysqli_fetch_assoc($result)){
-			$proclass[] = array(
-					'no' => "{$row['no']}",
-					'pcname' => "{$row['pcname']}"
-			);
-		}
-	}else{
-		// 錯誤 查詢結果
-		echo 'E1';
-		return;
-	}
-	
-	// 輪播 
-	$sql = "select * from banners where status = 1 order by sort";
-	$result = mysqli_query($conn, $sql);
-	if (mysqli_num_rows($result) > 0){
-		while ($row = mysqli_fetch_assoc($result)){
-			$banners[] = array(
-					'pic' => "{$row['pic']}",
-					'url' => "{$row['url']}"
-			);
-		}
-	}else{
-		// 錯誤 查詢結果
-		echo 'E2';
-		return;
-	}
-    
-	$queryPcno1 = -1;  // 全部種類
-	if (isset($_REQUEST['pcno1'])) $queryPcno1 = $_REQUEST['pcno1'];
-	$queryPcno3 = -1; // 全部新品,促銷, 普通
-	if (isset($_REQUEST['pcno3'])) $queryPcno3 = $_REQUEST['pcno3'];
-	$queryOrder = -1; // -1 不排序; 1 低到高; 2 高到低
-	if (isset($_REQUEST['order'])) $queryOrder = $_REQUEST['order'];
-	
-	// 商品資訊
-	$sql = "select * from products,proclass where proclass.no=products.pcno1 and products.status=3";
-    if ($queryPcno1!=-1){
-        $sql .= " and products.pcno1='{$queryPcno1}'";
-    }
-    if ($queryPcno3!=-1){
-        $sql .= " and products.pcno3='{$queryPcno3}'";
-    }
-    if ($queryOrder==1){
-        $sql .= " order by products.price desc";
-    }else if ($queryOrder==2){
-        $sql .= " order by products.price asc";
-    }
-    
-    $products = array();
-	$result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_assoc($result)){
-        $products[] = $row;
-    }
+//	if (mysqli_num_rows($result) > 0){
+//		while ($row = mysqli_fetch_assoc($result)){
+//			$proclass[] = array(
+//					'no' => "{$row['no']}",
+//					'pcname' => "{$row['pcname']}"
+//			);
+//		}
+//	}else{
+//		// 錯誤 查詢結果
+//		echo 'E1';
+//		return;
+//	}
+//
+//	// 輪播
+//	$sql = "select * from banners where status = 1 order by sort";
+//	$result = mysqli_query($conn, $sql);
+//	if (mysqli_num_rows($result) > 0){
+//		while ($row = mysqli_fetch_assoc($result)){
+//			$banners[] = array(
+//					'pic' => "{$row['pic']}",
+//					'url' => "{$row['url']}"
+//			);
+//		}
+//	}else{
+//		// 錯誤 查詢結果
+//		echo 'E2';
+//		return;
+//	}
+//
+//	$queryPcno1 = -1;  // 全部種類
+//	if (isset($_REQUEST['pcno1'])) $queryPcno1 = $_REQUEST['pcno1'];
+//	$queryPcno3 = -1; // 全部新品,促銷, 普通
+//	if (isset($_REQUEST['pcno3'])) $queryPcno3 = $_REQUEST['pcno3'];
+//	$queryOrder = -1; // -1 不排序; 1 低到高; 2 高到低
+//	if (isset($_REQUEST['order'])) $queryOrder = $_REQUEST['order'];
+//
+//	// 商品資訊
+//	$sql = "select * from products,proclass where proclass.no=products.pcno1 and products.status=3";
+//    if ($queryPcno1!=-1){
+//        $sql .= " and products.pcno1='{$queryPcno1}'";
+//    }
+//    if ($queryPcno3!=-1){
+//        $sql .= " and products.pcno3='{$queryPcno3}'";
+//    }
+//    if ($queryOrder==1){
+//        $sql .= " order by products.price desc";
+//    }else if ($queryOrder==2){
+//        $sql .= " order by products.price asc";
+//    }
+//
+//    $products = array();
+//	$result = mysqli_query($conn, $sql);
+//    while ($row = mysqli_fetch_assoc($result)){
+//        $products[] = $row;
+//    }
 	
 ?>
 <!doctype html>

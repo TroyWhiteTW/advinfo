@@ -6,18 +6,18 @@ session_start();
 // 產品分類
 $sql = "select * from proclass where parent = 0 order by no";
 $result = mysqli_query($conn, $sql);
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $proclass[] = array(
-            'no' => "{$row['no']}",
-            'pcname' => "{$row['pcname']}"
-        );
-    }
-} else {
-    // 錯誤 查詢結果
-    echo 'E1';
-    return;
-}
+//if (mysqli_num_rows($result) > 0) {
+//    while ($row = mysqli_fetch_assoc($result)) {
+//        $proclass[] = array(
+//            'no' => "{$row['no']}",
+//            'pcname' => "{$row['pcname']}"
+//        );
+//    }
+//} else {
+//    // 錯誤 查詢結果
+//    echo 'E1';
+//    return;
+//}
 ?>
 <!doctype html>
 <html>

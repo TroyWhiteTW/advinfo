@@ -7,63 +7,63 @@
 	// 產品分類
 	$sql = "select * from proclass where parent = 0 order by no";
 	$result = mysqli_query($conn, $sql);
-	if (mysqli_num_rows($result) > 0){
-		while ($row = mysqli_fetch_assoc($result)){
-			$proclass[] = array(
-					'no' => "{$row['no']}",
-					'pcname' => "{$row['pcname']}"
-			);
-		}
-	}else{
-		// 錯誤 查詢結果
-		echo 'E1';
-		return;
-	}
-
-	// 輪播
-	$sql = "select * from banners where status = 1 order by sort";
-	$result = mysqli_query($conn, $sql);
-	if (mysqli_num_rows($result) > 0){
-		while ($row = mysqli_fetch_assoc($result)){
-			$banners[] = array(
-					'pic' => "{$row['pic']}",
-					'url' => "{$row['url']}"
-			);
-		}
-	}else{
-		// 錯誤 查詢結果
-		echo 'E2';
-		return;
-	}
-
-	// 商品資訊
-	$sql = "select * from products,proclass where proclass.no=products.pcno1 and products.status = 3";
-	$result = mysqli_query($conn, $sql);
-	if (mysqli_num_rows($result) > 0){
-	    while ($row = mysqli_fetch_assoc($result)){
-	        $product = array(
-	            'proid' => "{$row['proid']}",
-	            'proname' => "{$row['proname']}",
-	            'pcname' => "{$row['pcname']}",
-	            'pcno1' => "{$row['pcno1']}",
-	            'pcno2' => "{$row['pcno2']}",
-	            'pcno3' => "{$row['pcno3']}",
-	            'price' => "{$row['price']}",
-	            'PV' => "{$row['PV']}",
-	        );
-	        if ($row['pcno3']==1){
-        	        $product1[] = $product;
-	        }else if ($row['pcno3']==2){
-	            $product2[] = $product;
-	        }else if ($row['pcno3']==0){
-	            $product0[] = $product;
-	        }
-	    }
-	}else{
-	    // 錯誤 查詢結果
-	    echo 'E3' . mysqli_error($conn);
-	    return;
-	}
+//	if (mysqli_num_rows($result) > 0){
+//		while ($row = mysqli_fetch_assoc($result)){
+//			$proclass[] = array(
+//					'no' => "{$row['no']}",
+//					'pcname' => "{$row['pcname']}"
+//			);
+//		}
+//	}else{
+//		// 錯誤 查詢結果
+//		echo 'E1';
+//		return;
+//	}
+//
+//	// 輪播
+//	$sql = "select * from banners where status = 1 order by sort";
+//	$result = mysqli_query($conn, $sql);
+//	if (mysqli_num_rows($result) > 0){
+//		while ($row = mysqli_fetch_assoc($result)){
+//			$banners[] = array(
+//					'pic' => "{$row['pic']}",
+//					'url' => "{$row['url']}"
+//			);
+//		}
+//	}else{
+//		// 錯誤 查詢結果
+//		echo 'E2';
+//		return;
+//	}
+//
+//	// 商品資訊
+//	$sql = "select * from products,proclass where proclass.no=products.pcno1 and products.status = 3";
+//	$result = mysqli_query($conn, $sql);
+//	if (mysqli_num_rows($result) > 0){
+//	    while ($row = mysqli_fetch_assoc($result)){
+//	        $product = array(
+//	            'proid' => "{$row['proid']}",
+//	            'proname' => "{$row['proname']}",
+//	            'pcname' => "{$row['pcname']}",
+//	            'pcno1' => "{$row['pcno1']}",
+//	            'pcno2' => "{$row['pcno2']}",
+//	            'pcno3' => "{$row['pcno3']}",
+//	            'price' => "{$row['price']}",
+//	            'PV' => "{$row['PV']}",
+//	        );
+//	        if ($row['pcno3']==1){
+//        	        $product1[] = $product;
+//	        }else if ($row['pcno3']==2){
+//	            $product2[] = $product;
+//	        }else if ($row['pcno3']==0){
+//	            $product0[] = $product;
+//	        }
+//	    }
+//	}else{
+//	    // 錯誤 查詢結果
+//	    echo 'E3' . mysqli_error($conn);
+//	    return;
+//	}
 
 ?>
 <!doctype html>

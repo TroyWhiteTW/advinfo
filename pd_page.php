@@ -5,33 +5,33 @@
     // 產品分類
     $sql = "select * from proclass where parent = 0 order by no";
     $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0){
-        while ($row = mysqli_fetch_assoc($result)){
-            $proclass[] = array(
-                'no' => "{$row['no']}",
-                'pcname' => "{$row['pcname']}"
-            );
-        }
-    }else{
-        // 錯誤 查詢結果
-        echo 'E1';
-        return;
-    }
-    
-    // 傳遞 proid
-    if (!isset($_REQUEST['proid'])) die ("Server Busy!");
-    $proid = $_REQUEST['proid'];
-    
-    $sql = "select * from products where proid = '{$proid}'";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0){
-        // 撈該筆資料的全部欄位資料
-        $product = mysqli_fetch_assoc($result);
-    }else{
-        // 錯誤 查詢結果
-        echo 'E2';
-        return;
-    }
+//    if (mysqli_num_rows($result) > 0){
+//        while ($row = mysqli_fetch_assoc($result)){
+//            $proclass[] = array(
+//                'no' => "{$row['no']}",
+//                'pcname' => "{$row['pcname']}"
+//            );
+//        }
+//    }else{
+//        // 錯誤 查詢結果
+//        echo 'E1';
+//        return;
+//    }
+//
+//    // 傳遞 proid
+//    if (!isset($_REQUEST['proid'])) die ("Server Busy!");
+//    $proid = $_REQUEST['proid'];
+//
+//    $sql = "select * from products where proid = '{$proid}'";
+//    $result = mysqli_query($conn, $sql);
+//    if (mysqli_num_rows($result) > 0){
+//        // 撈該筆資料的全部欄位資料
+//        $product = mysqli_fetch_assoc($result);
+//    }else{
+//        // 錯誤 查詢結果
+//        echo 'E2';
+//        return;
+//    }
 
 ?>
 <!doctype html>
