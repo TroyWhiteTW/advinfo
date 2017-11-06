@@ -319,6 +319,7 @@ $result = mysqli_query($conn, $sql);
     form.addEventListener('submit', function (e) {
 
         var isDataCorrect = true;
+        var errorMessage = "";
 
         var account = $('input[name="account"]').val().trim();
         var password = $('input[name="password"]').val().trim();
@@ -332,78 +333,79 @@ $result = mysqli_query($conn, $sql);
         var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
         if (!account.match(email_regex)) {
             isDataCorrect = false;
-            alert('帳號格式錯誤，請輸入電子信箱。');
+            errorMessage += '帳號格式錯誤，請輸入電子信箱。\n';
         }
         if (account.match(/\s/)) {
             isDataCorrect = false;
-            alert('帳號格式錯誤，請勿包含空白鍵。');
+            errorMessage += '帳號格式錯誤，請勿包含空白鍵。\n';
         }
         if (account.length === 0) {
             isDataCorrect = false;
-            alert('請輸入帳號。');
+            errorMessage += '請輸入帳號\n';
         }
         //檢查密碼格式
         if (password.length < 8 || password.length > 20) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，字數必須在8-20之間');
+            errorMessage += '密碼格式錯誤，字數必須在8-20之間。\n';
         }
         if (!password.match(/[0-9]/) || !password.match(/[a-zA-Z]/)) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，必須至少擁有一個數字及英文');
+            errorMessage += '密碼格式錯誤，必須至少擁有一個數字及英文。\n';
         }
         if (password.match(/\s/)) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，請勿包含空白鍵。');
+            errorMessage += '密碼格式錯誤，請勿包含空白鍵。\n';
         }
         if (password !== password_c) {
             isDataCorrect = false;
-            alert('密碼確認必須與密碼相同');
+            errorMessage += '密碼確認必須與密碼相同。\n';
         }
         if (password.length === 0) {
             isDataCorrect = false;
-            alert('請輸入密碼。');
+            errorMessage += '請輸入密碼。\n';
         }
         //檢查姓名
         if (name.match(/\s/)) {
             isDataCorrect = false;
-            alert('姓名格式錯誤，請勿包含空白鍵。');
+            errorMessage += '姓名格式錯誤，請勿包含空白鍵。\n';
         }
         if (name.match(/\d/)) {
             isDataCorrect = false;
-            alert('姓名格式錯誤，請勿包含數字。');
+            errorMessage += '姓名格式錯誤，請勿包含數字。\n';
         }
         if (name.length === 0) {
             isDataCorrect = false;
-            alert('請輸入姓名。');
+            errorMessage += '請輸入姓名。\n';
         }
         //檢查聯繫電話
         if (phone.match(/\s/)) {
             isDataCorrect = false;
-            alert('聯繫電話格式錯誤，請勿包含空白鍵。');
+            errorMessage += '聯繫電話格式錯誤，請勿包含空白鍵。\n';
         }
         if (phone.match(/[^\d]/)) {
             isDataCorrect = false;
-            alert('聯繫電話格式錯誤，請輸入數字。');
+            errorMessage += '聯繫電話格式錯誤，請輸入數字。\n';
         }
         //檢查手機
         if (mobile.match(/\s/)) {
             isDataCorrect = false;
-            alert('手機格式錯誤，請勿包含空白鍵。');
+            errorMessage += '手機格式錯誤，請勿包含空白鍵。\n';
         }
         if (mobile.match(/[^\d]/)) {
             isDataCorrect = false;
-            alert('手機格式錯誤，請輸入數字。');
+            errorMessage += '手機格式錯誤，請輸入數字。\n';
         }
         if (mobile.length !== 10) {
             isDataCorrect = false;
-            alert('請輸入正確手機號碼。');
+            errorMessage += '請輸入正確手機號碼。\n';
         }
         //檢查聯繫地址
         if (address.length === 0) {
             isDataCorrect = false;
-            alert('請輸入聯繫地址。');
+            errorMessage += '請輸入聯繫地址。\n';
         }
         if (isDataCorrect === false) {
+            alert(errorMessage);
             e.preventDefault();
         }
     })
