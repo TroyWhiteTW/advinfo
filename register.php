@@ -41,6 +41,7 @@ if (empty($errorMessage)) {
     } else {
         echo "發生未預期錯誤...";
     }
+    $result->close();
 } else {
     echo "註冊資料有誤:\n" . $errorMessage;
 }
