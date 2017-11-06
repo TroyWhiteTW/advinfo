@@ -1,5 +1,7 @@
 <?php
 include 'db.php';
+session_start();
+$isLogin = !empty($_SESSION['user']);
 ?>
 <?php
 // 產品分類
@@ -52,35 +54,14 @@ $result = mysqli_query($conn, $sql);
     <div class="container main">
         <div class="row content no-margin-rl">
 
-            <div class="col-sm-2 left-area hidden-xs">
-                <div class="left-move ">
+            <div class="col-sm-2 left-area hidden-xs " style="">
 
+                <?php include 'side_bar.php'; ?>
 
-                    <div class="logo">
-                        <a href="index.php">
-                            <img src="img/logo.jpg" style="" alt="">
-                        </a>
-                    </div>
-
-                    <div class="menu-area">
-                        <ul>
-                            <?php
-                            // 左側分類
-                            foreach ($proclass as $class) {
-                                echo '<li>';
-                                echo "<a href=pd_query.php?pcno1={$class['no']}>";
-                                echo $class['pcname'];
-                                echo '</a>';
-                                echo '</li>';
-                            }
-                            ?>
-                        </ul>
-                    </div>
-
-                </div>
             </div>
 
             <div class="col-sm-10">
+
                 <div class="beard">
                     <ul>
                         <li><a href="index.php">首頁</a></li>
