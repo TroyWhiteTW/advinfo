@@ -55,29 +55,43 @@ $result = mysqli_query($conn, $sql);
                         <li><a href="function_member.php">會員專區</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="content-area">
+
                     <div class="function-area">
                         <ul>
-                            <li><a href="function_member.php"><input type="button" id="" name="" class="tag-value-select" value="個人資料"></a></li>
-                            <li><a href="function_orderquery.php"><input type="button" id="" name="" class="" value="訂單查詢"></a></li>
-                            <li><a href="function_bonusquery.php"><input type="button" id="" name="" class="" value="重銷獎金查詢/規則"></a></li>
+                            <li><a href="function_member.php"><input type="button" id="" name=""
+                                                                     class="tag-value-select" value="個人資料"></a></li>
+                            <li><a href="function_orderquery.php"><input type="button" id="" name="" class=""
+                                                                         value="訂單查詢"></a></li>
+                            <li><a href="function_bonusquery.php"><input type="button" id="" name="" class=""
+                                                                         value="重銷獎金查詢/規則"></a></li>
                         </ul>
                     </div>
+
                     <div class="content-article">
+
                         <div class="form-tittle">帳號：
-                            <div class="form-input-2">資料填入</div>
+                            <div class="form-input-2"><?php echo $_SESSION['user'][6]; ?></div>
                             <a href="password_modify.php"><input type="submit" value="修改密碼"></a>
                         </div>
-                        <div class="form-tittle">聘級：<div class="form-input-2">資料填入</div></div>
+
+                        <div class="form-tittle">聘級：
+                            <div class="form-input-2"><?php echo $_SESSION['user'][4]; ?></div>
+                        </div>
+
                         <div class="form-tittle">推薦ID：
-                            <div class="form-input-2">資料填入</div>
+                            <div class="form-input-2"><?php echo $_SESSION['user'][5]; ?></div>
                             <input type="submit" value="推薦表">
                         </div>
-                        <div class="form-tittle">推薦連結：<div class="form-input-2">資料填入</div>
+
+                        <div class="form-tittle">推薦連結：
+                            <div class="form-input-2">資料填入</div>
                             <input type="submit" value="複製">
                         </div>
-                        <div class="form-tittle">姓名：<input  name="" id="" type="text" class="input-2"></div>
+
+                        <div class="form-tittle">姓名：<input name="" id="" type="text" class="input-2"></div>
+
                         <div class="form-tittle">生日：
                             <select name="" id="">
                                 <option selected="selected" value="0">請選擇年</option>
@@ -153,14 +167,24 @@ $result = mysqli_query($conn, $sql);
                                 <option value="31">31</option>
                             </select>
                         </div>
-                        <div class="form-tittle">性別：：<input type="radio" value="male" name="sex">男<input type="radio" value="femal" name="sex">女</div>
-                        <div class="form-tittle">電子信箱：<input  name="" id="" type="text" class="input-2"></div>
-                        <div class="form-tittle">聯繫電話：<input  name="" id="" type="text" class="input-2"></div>
+
+                        <div class="form-tittle">性別：：<input type="radio" value="male" name="sex">男<input type="radio"
+                                                                                                         value="femal"
+                                                                                                         name="sex">女
+                        </div>
+
+                        <div class="form-tittle">電子信箱：<input name="" id="" type="text" class="input-2"></div>
+
+                        <div class="form-tittle">聯繫電話：<input name="" id="" type="text" class="input-2"></div>
+
                         <div class="form-tittle"><span style="color:red;">*</span>手機：
-                            <input  name="" id="" type="text" class="input-2">
+                            <input name="" id="" type="text" class="input-2">
                             <input type="submit" value="驗證手機">
                         </div>
-                        <div class="form-tittle"><span style="color:red;">*</span>聯繫地址：<input type="checkbox" checked="checked">台澎金馬<span style="color:red; font-size:12px;">(預設勾選)</span>
+
+                        <div class="form-tittle"><span style="color:red;">*</span>聯繫地址：<input type="checkbox"
+                                                                                              checked="checked">台澎金馬<span
+                                    style="color:red; font-size:12px;">(預設勾選)</span>
                             <div class="form-tittle">
                                 <select name="" id="">
                                     <option selected="selected" value="0">請選擇縣市</option>
@@ -173,11 +197,13 @@ $result = mysqli_query($conn, $sql);
                                     <option value="2">C</option>
                                 </select>
                             </div>
-                            <div class="form-tittle"><input  name="" id="" type="text" class="input-3"></div>
-                            <div class="form-tittle">統一編號：<input  name="" id="" type="text" class="input-2"></div>
-                            <div class="form-tittle">公司抬頭：<input  name="" id="" type="text" class="input-2"></div>
+                            <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+                            <div class="form-tittle">統一編號：<input name="" id="" type="text" class="input-2"></div>
+                            <div class="form-tittle">公司抬頭：<input name="" id="" type="text" class="input-2"></div>
                         </div>
+
                     </div>
+
                     <div class="content-article">
                         <div class="function-area">
                             <ul>
@@ -186,12 +212,18 @@ $result = mysqli_query($conn, $sql);
                                 <li><a href=""><input type="button" id="" name="" class="" value="萊爾富取貨門市"></a></li>
                             </ul>
                         </div>
-                        <div class="form-tittle">門市名稱：<div class="form-input-2">資料填入</div></div>
-                        <div class="form-tittle">門市地址：<div class="form-input-2">資料填入</div></div>
+                        <div class="form-tittle">門市名稱：
+                            <div class="form-input-2">資料填入</div>
+                        </div>
+                        <div class="form-tittle">門市地址：
+                            <div class="form-input-2">資料填入</div>
+                        </div>
                     </div>
+
                     <div class="btn-area">
-                        <a href=""><input type="submit" value="確認提交" ></a>
+                        <a href=""><input type="submit" value="確認提交"></a>
                     </div>
+
                 </div>
 
             </div>
