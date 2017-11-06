@@ -21,6 +21,7 @@ if (mysqli_num_rows($result) > 0) {
 ?>
 <!doctype html>
 <html>
+
 <head>
 
     <meta charset="utf-8">
@@ -374,37 +375,52 @@ if (mysqli_num_rows($result) > 0) {
                 </div>
 
                 <div class="content-area">
+
                     <div class="content-article">
+
                         <div class="login-area">
 
                             <div class="login-tittle">會員登入</div>
 
-                            <form action="index.php" method="post">
+                            <form id="login_form" action="memberLogin.php" method="post">
 
                                 <table width="100%" border="0">
+
                                     <tbody>
+
                                     <tr>
                                         <td class="td-04">會員帳號</td>
-                                        <td><input type="text" name="a" class="input-4"><a href="login_forget1.php"><input type="submit" class="login-btn1" value="忘記帳號"></a></td>
+                                        <td><input type="text" name="account" class="input-4"><a href="login_forget1.php"><span> 忘記帳號</span></a></td>
                                     </tr>
 
                                     <tr>
                                         <td class="td-04">會員密碼</td>
-                                        <td><input type="password" name="b" class="input-4"><a href="login_forget2.php"><input type="submit" class="login-btn1" value="忘記密碼"></a></td>
+                                        <td><input type="password" name="password" class="input-4"><a href="login_forget2.php"><span> 忘記密碼</span></a></td>
                                     </tr>
 
-                                    <tr>
+                                    <tr hidden="hidden">
                                         <td class="td-04">驗證碼</td>
-                                        <td><input type="text" name="c" class="input-5"></td>
+                                        <td><input type="text" name="validate_code" class="input-5"></td>
                                     </tr>
 
                                     <tr>
                                         <td colspan="2" style="text-align:center;">
-                                            <a href="index_login.php"><input type="submit" class="login-btn2" value="商城會員登入"></a>
-                                            <a href="index_login.php"><input type="submit" class="login-btn2" value="珍菌堂會員登入"></a>
+                                            <input id="typeData" name="type" value="0" hidden="hidden">
+                                            <input id="type1login" type="submit" class="login-btn2" value="商城會員登入">
+                                            <input id="type2login" type="submit" class="login-btn2" value="珍菌堂會員登入">
+                                            <script>
+                                                document.getElementById('type1login').addEventListener('click', function () {
+                                                    document.getElementById('typeData').value = "1";
+                                                });
+                                                document.getElementById('type2login').addEventListener('click', function () {
+                                                    document.getElementById('typeData').value = "2";
+                                                });
+                                            </script>
                                         </td>
                                     </tr>
+
                                     </tbody>
+
                                 </table>
 
                             </form>
@@ -416,7 +432,9 @@ if (mysqli_num_rows($result) > 0) {
                             <div class="login-info">※請輸入您在本網的帳號及密碼以登入系統，您即可清楚查到您在本站所有的消費訂單明細及紀錄。</div>
 
                         </div>
+
                     </div>
+
                 </div>
 
             </div>
@@ -579,6 +597,56 @@ if (mysqli_num_rows($result) > 0) {
 
     //新增側邊欄
 
+    //登入表單提交檢查
+    var form = document.getElementById('login_form');
+    form.addEventListener('submit', function (e) {
+
+        var isDataCorrect = true;
+
+        var account = $('input[name="account"]').val().trim();
+        var password = $('input[name="password"]').val().trim();
+        var validate_code = $('input[name="validate_code"]').val().trim();
+
+        //檢查帳號格式
+        var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
+        if (!account.match(email_regex)) {
+            isDataCorrect = false;
+            alert('帳號格式錯誤，請輸入電子信箱。');
+        }
+        if (account.match(/\s/)) {
+            isDataCorrect = false;
+            alert('帳號格式錯誤，請勿包含空白鍵。');
+        }
+        if (account.length === 0) {
+            isDataCorrect = false;
+            alert('請輸入帳號。');
+        }
+        //檢查密碼格式
+        if (password.length < 8 || password.length > 20) {
+            isDataCorrect = false;
+            alert('密碼格式錯誤，字數必須在8-20之間');
+        }
+        if (!password.match(/[0-9]/) || !password.match(/[a-zA-Z]/)) {
+            isDataCorrect = false;
+            alert('密碼格式錯誤，必須至少擁有一個數字及英文');
+        }
+        if (password.match(/\s/)) {
+            isDataCorrect = false;
+            alert('密碼格式錯誤，請勿包含空白鍵。');
+        }
+        if (password.length === 0) {
+            isDataCorrect = false;
+            alert('請輸入密碼。');
+        }
+        if (isDataCorrect === false) {
+            e.preventDefault();
+        }
+    })
+    ;
+    //登入表單提交檢查
+
 </script>
+
 </body>
+
 </html>
