@@ -44,58 +44,10 @@ $result = mysqli_query($conn, $sql);
 </head>
 
 <body>
+
 <div class="wrap">
 
-    <div class="topbar-mobile">
-        <div class="mobile-content">
-            <input type="image" src="img/open_btn.png" name="" id="" class="left-open">
-            <div class="icon-area">
-                <ul>
-                    <li>Hi!王先生榮董您好!</li>
-                    <li><a href="index.php">
-                            <div class="index-icon"></div>
-                        </a></li>
-                    <li><a href="function_member.php">
-                            <div class="member-icon"></div>
-                        </a></li>
-                    <li><a href="cart_1.php">
-                            <div class="cart-icon"></div>
-                        </a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="topbar">
-        <div class="top-content">
-            <ul>
-                <li><a href="index.php">首頁
-                        <div class="index-icon"></div>
-                    </a></li>
-                <li><a href="login.php">會員登入
-                        <div class="member-icon"></div>
-                    </a></li>
-                <li><a href="cart_1.php">購物車
-                        <div class="cart-icon"></div>
-                    </a></li>
-            </ul>
-            <div class="search">
-                <div class="search-input">
-                    <input type="text" name="input-1" id="input-1" class="input-1" placeholder="搜尋商品">
-                </div>
-                <div class="search-btn"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="ft-search">
-        <div class="search">
-            <div class="search-input">
-                <input type="text" name="" id="" class="input-1" placeholder="搜尋商品"></div>
-            <div class="search-btn"></div>
-        </div>
-    </div>
-
+    <?php include 'top_bar.php'; ?>
 
     <div class="container main">
         <div class="row content no-margin-rl">
