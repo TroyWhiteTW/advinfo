@@ -30,7 +30,7 @@ if (empty($errorMessage)) {
 
     $sqlSetStr = f1($keys);
 
-    $sqlValueStr = f2($keys,$insertData);
+    $sqlValueStr = f2($keys, $insertData);
 
     $sql = 'INSERT INTO members ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
 
@@ -45,21 +45,27 @@ if (empty($errorMessage)) {
     echo "註冊資料有誤:\n" . $errorMessage;
 }
 
-function f1($ks) {
+function f1($ks)
+{
     $str = "(";
     foreach ($ks as $v) {
         $str .= $v . ",";
     }
     return substr($str, 0, -1) . ")";
-};
+}
 
-function f2($ks, $vs) {
+;
+
+function f2($ks, $vs)
+{
     $str = "(";
     foreach ($ks as $v) {
         $str .= $vs[$v] . ",";
     }
     return substr($str, 0, -1) . ")";
-};
+}
+
+;
 
 function checkData($post, &$msg)
 {
