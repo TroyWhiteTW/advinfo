@@ -3,6 +3,7 @@ include 'db.php';
 session_start();
 ?>
 <?php
+
 $errorMessage = "";
 foreach ($_POST as $k => $v) {
     $_POST[$k] = trim($_POST[$k]);
@@ -10,6 +11,13 @@ foreach ($_POST as $k => $v) {
 checkData($_POST, $errorMessage);
 
 if (empty($errorMessage)) {
+
+    //檢查驗證碼
+    if ($_POST['validate_code'] !== $_SESSION['check_word']) {
+        echo "驗證碼錯誤，3秒後跳轉回登入頁...";
+        header("Refresh:3;url=login.php");
+        exit;
+    }
 
     $insertData = encodeRegisterData($_POST);
 
@@ -54,6 +62,10 @@ function checkData($post, &$msg)
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 checkType($k, $msg);
+                break;
+            case 'validate_code':
+                checkEmpty($k, $msg);
+                checkSpace($k, $msg);
                 break;
         }
     }

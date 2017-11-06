@@ -390,17 +390,28 @@ $result = mysqli_query($conn, $sql);
 
                                     <tr>
                                         <td class="td-04">會員帳號</td>
-                                        <td><input type="text" name="account" class="input-4"><a href="login_forget1.php"><span> 忘記帳號</span></a></td>
+                                        <td><input type="text" name="account" class="input-4"><a
+                                                    href="login_forget1.php"><span> 忘記帳號</span></a></td>
                                     </tr>
 
                                     <tr>
                                         <td class="td-04">會員密碼</td>
-                                        <td><input type="password" name="password" class="input-4"><a href="login_forget2.php"><span> 忘記密碼</span></a></td>
+                                        <td><input type="password" name="password" class="input-4"><a
+                                                    href="login_forget2.php"><span> 忘記密碼</span></a></td>
                                     </tr>
 
                                     <tr>
                                         <td class="td-04">驗證碼</td>
-                                        <td><input type="text" name="validate_code" class="input-5"></td>
+                                        <td><input type="text" name="validate_code" class="input-5">
+                                            <span id="captcha"><img src="captcha.php" width="100" height="25"/></span>
+                                            <a style="cursor: pointer" id="change_captcha">換一張</a>
+                                            <script>
+                                                document.getElementById('change_captcha').addEventListener('click', function () {
+                                                    document.getElementById('captcha').innerHTML = "<img src=\"captcha.php\" width=\"100\" height=\"25\"/>";
+                                                });
+                                            </script>
+                                        </td>
+
                                     </tr>
 
                                     <tr>
@@ -495,7 +506,8 @@ $result = mysqli_query($conn, $sql);
 
             </div>
 
-            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休) 快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
+            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休)
+                快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
 
         </footer>
 
@@ -638,6 +650,16 @@ $result = mysqli_query($conn, $sql);
             isDataCorrect = false;
             alert('請輸入密碼。');
         }
+        //檢查驗證碼格式
+        if (validate_code.length === 0) {
+            isDataCorrect = false;
+            alert('請輸入驗證碼。');
+        }
+        if (validate_code.match(/\s/)) {
+            isDataCorrect = false;
+            alert('驗證碼格式錯誤，請勿包含空白鍵。');
+        }
+        //
         if (isDataCorrect === false) {
             e.preventDefault();
         }
