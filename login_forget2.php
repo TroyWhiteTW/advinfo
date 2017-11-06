@@ -89,9 +89,13 @@ $result = mysqli_query($conn, $sql);
 
                             </div>
 
-                            <div class="login-input">請輸入電子信箱<input type="text" name="e" class="input-4"></div>
+                            <form action="reset_password_email.php" method="post">
 
-                            <div class="login-info"><input type="submit" class="login-btn" value="確認送出"></div>
+                                <div class="login-input">請輸入電子信箱<input type="text" name="email" class="input-4"></div>
+
+                                <div class="login-info"><input type="submit" class="login-btn" value="確認送出"></div>
+
+                            </form>
 
                         </div>
 
