@@ -12,13 +12,17 @@ checkData($_POST, $errorMessage);
 if (empty($errorMessage)) {
 
     //比對有無同帳號
-    $sqlCheckAccountExist = 'SELECT COUNT(account) FROM members WHERE account=' . "\"" . $_POST['account'] . "\"";
-
-    if (mysqli_query($conn, $sqlCheckAccountExist) !== 0) {
+    $sqlCheckAccountExist = 'SELECT * FROM members WHERE account=' . "\"" . $_POST['account'] . "\"";
+    $rs = mysqli_query($conn, $sqlCheckAccountExist);
+    $row = mysqli_fetch_array($rs, MYSQLI_NUM);
+    if (count($row) !== 0) {
         echo "該帳號已被註冊，3秒後跳轉回註冊頁...";
         header("Refresh:3;url=login_register.php");
+        $rs->close();
         exit;
     }
+    $rs->close();
+
 
     //檢查通過 寫入資料庫
     $insertData = encodeRegisterData($_POST);
