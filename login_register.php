@@ -6,18 +6,18 @@ session_start();
 // 產品分類
 $sql = "select * from proclass where parent = 0 order by no";
 $result = mysqli_query($conn, $sql);
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $proclass[] = array(
-            'no' => "{$row['no']}",
-            'pcname' => "{$row['pcname']}"
-        );
-    }
-} else {
-    // 錯誤 查詢結果
-    echo 'E1';
-    return;
-}
+//if (mysqli_num_rows($result) > 0) {
+//    while ($row = mysqli_fetch_assoc($result)) {
+//        $proclass[] = array(
+//            'no' => "{$row['no']}",
+//            'pcname' => "{$row['pcname']}"
+//        );
+//    }
+//} else {
+//    // 錯誤 查詢結果
+//    echo 'E1';
+//    return;
+//}
 ?>
 <!doctype html>
 <html>
@@ -372,7 +372,9 @@ if (mysqli_num_rows($result) > 0) {
                             <form id="register_form" action="register.php" method="post">
 
                                 <table width="100%" border="0">
+
                                     <tbody>
+
                                     <tr>
                                         <td class="td-04">帳號<span style="color:red;">*</span></td>
                                         <td><input type="text" name="account" class="input-4"></td>
@@ -417,6 +419,21 @@ if (mysqli_num_rows($result) > 0) {
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="td-04">聘級<span style="color:red;">*</span></td>
+                                        <td><input type="text" name="level" class="input-4"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="td-04">推薦者帳號</td>
+                                        <td><input type="text" name="referral" class="input-4"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="td-04">生日<span style="color:red;">*</span></td>
+                                        <td><input type="text" name="birthday" class="input-4"></td>
+                                    </tr>
+
                                     <tr hidden="hidden">
                                         <td class="td-04">電子信箱</td>
                                         <td><input type="text" name="email" class="input-4"></td>
@@ -447,8 +464,33 @@ if (mysqli_num_rows($result) > 0) {
                                     </tr>
 
                                     <tr>
+                                        <td class="td-04">統一編號</td>
+                                        <td><input type="text" name="company_no" class="input-4"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="td-04">發票抬頭</td>
+                                        <td><input type="text" name="invoice_title" class="input-4"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="td-04">縣市<span style="color:red;">*</span></td>
+                                        <td><input type="text" name="city" class="input-4"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="td-04">鄉鎮區<span style="color:red;">*</span></td>
+                                        <td><input type="text" name="area" class="input-4"></td>
+                                    </tr>
+
+                                    <tr>
                                         <td class="td-04">聯繫地址<span style="color:red;">*</span></td>
                                         <td><input type="text" name="address" class="input-4"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="td-04">常用便利商店門市</td>
+                                        <td><input type="text" name="constore" class="input-4"></td>
                                     </tr>
 
                                     <tr>
@@ -462,14 +504,10 @@ if (mysqli_num_rows($result) > 0) {
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">推薦人帳號</td>
-                                        <td><input type="text" name="referral" class="input-4"></td>
-                                    </tr>
-
-                                    <tr>
                                         <td class="td-04">輸入驗證碼</td>
                                         <td><input type="text" name="verifycode" class="input-5"></td>
                                     </tr>
+
                                     </tbody>
                                 </table>
 
@@ -540,7 +578,8 @@ if (mysqli_num_rows($result) > 0) {
 
             </div>
 
-            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休) 快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
+            <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休)
+                快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
 
         </footer>
 
