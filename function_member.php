@@ -72,7 +72,7 @@ $result = mysqli_query($conn, $sql);
                     <div class="content-article">
 
                         <div class="form-tittle">帳號：
-                            <div class="form-input-2"><?php echo $_SESSION['user'][6]; ?></div>
+                            <div class="form-input-2"><?php echo $_SESSION['user'][7]; ?></div>
                             <a href="password_modify.php"><input type="submit" value="修改密碼"></a>
                         </div>
 
