@@ -1,6 +1,7 @@
-<?php 
+<?php
 	include 'db.php';
 	session_start();
+	$isLogin = !empty($_SESSION['user']);
 ?>
 <?php
 	// 產品分類
@@ -18,8 +19,8 @@
 		echo 'E1';
 		return;
 	}
-	
-	// 輪播 
+
+	// 輪播
 	$sql = "select * from banners where status = 1 order by sort";
 	$result = mysqli_query($conn, $sql);
 	if (mysqli_num_rows($result) > 0){
@@ -34,7 +35,7 @@
 		echo 'E2';
 		return;
 	}
-	
+
 	// 商品資訊
 	$sql = "select * from products,proclass where proclass.no=products.pcno1 and products.status = 3";
 	$result = mysqli_query($conn, $sql);
@@ -63,7 +64,7 @@
 	    echo 'E3' . mysqli_error($conn);
 	    return;
 	}
-	
+
 ?>
 <!doctype html>
 <html>
@@ -123,8 +124,8 @@
                 position: absolute;
                 bottom: 14px;
             }
-            
-            
+
+
 
         </style>
 
@@ -135,20 +136,20 @@
             <!-- 新增側邊欄 -->
             <div class="sidebar visible-sm visible-xs ">
                 <ul class="fullheight" style="overflow:auto;">
-                    <?php 
+                    <?php
                     		// 左側分類
                         	foreach ($proclass as $class){
                         		echo '<li>';
                         		echo '<a class="sidebar-menu">';
-                        		
+
                         		echo $class['pcname'];
                         		echo '<i class="fa fa-angle-right angle-right" aria-hidden="true"></i>';
-                        		
+
                         		echo '</a>';
                         		echo '<li>';
                         	}
                     ?>
-                    
+
                 </ul>
             </div>
             <!-- 新增側邊欄 -->
@@ -169,11 +170,36 @@
 
             <div class="topbar">
                 <div class="top-content ">
+
+                    <?php
+
+                    if ($isLogin){
+                        echo '<ul>-- Hi! ' . $_SESSION['user'][2] . '-- </ul>';
+                    }
+
+                    ?>
+
                     <ul>
                         <li><a href="index.php">首頁<div class="index-icon"></div></a></li>
-                        <li><a href="login.php">會員登入<div class="member-icon"></div></a></li>
-                        <li><a href="cart_1.php">購物車<div class="cart-icon"></div></a></li>
+                        <?php
+                        if($isLogin){
+                            echo '<li><a href="function_member.php">會員專區<div class="member-icon"></div></a></li>';
+                            echo '<li><a href="cart_1.php">購物車<div class="cart-icon"></div></a></li>';
+                        }else{
+                            echo '<li><a href="login.php">會員登入<div class="member-icon"></div></a></li>';
+                        }
+                        ?>
+
+
                     </ul>
+
+                    <?php
+
+                    if ($isLogin){
+                        echo '<ul><a href="logout.php"> 登出 </a></ul>';
+                    }
+
+                    ?>
 
                     <div class="search show_border">
                         <div class="search-input">
@@ -184,8 +210,8 @@
 
                 </div>
             </div>
-            
-            
+
+
             <div class="ft-search">
                 <div class="search">
                     <div class="search-input">
@@ -199,7 +225,7 @@
 
 
             <div class="container main">
-                
+
                 <div class="row content no-margin-rl ">
                     <div class="col-xs-2 left-area hidden-xs " style="">
                         <div class=" left-move ">
@@ -212,10 +238,10 @@
                             </div>
 
                             <div class="menu-area">
-                                
+
                                 <ul class="fullheight" style="overflow:auto;">
-                                    
-                                    
+
+
                                     <li>
                                         <a class="sidebar-menu">
                                             套裝組合
@@ -261,7 +287,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    
+
                                     <li>
                                         <a class="sidebar-menu">
                                             膠囊類
@@ -286,11 +312,11 @@
                                                     </li>
                                                 </ul>
                                             </li>
-                                            
+
                                         </ul>
                                     </li>
-                                    
-                                    
+
+
                                     <li>
                                         <a class="sidebar-menu">
                                             萃取液
@@ -315,10 +341,10 @@
                                                     </li>
                                                 </ul>
                                             </li>
-                                            
+
                                         </ul>
                                     </li>
-                                    
+
                                     <li>
                                         <a class="sidebar-menu">
                                             健康器材
@@ -343,10 +369,10 @@
                                                     </li>
                                                 </ul>
                                             </li>
-                                            
+
                                         </ul>
                                     </li>
-                                    
+
                                     <li>
                                         <a class="sidebar-menu">
                                             養身食品
@@ -371,10 +397,10 @@
                                                     </li>
                                                 </ul>
                                             </li>
-                                            
+
                                         </ul>
                                     </li>
-                                    
+
                                     <li>
                                         <a class="sidebar-menu">
                                             滴丸
@@ -399,32 +425,32 @@
                                                     </li>
                                                 </ul>
                                             </li>
-                                            
+
                                         </ul>
                                     </li>
-                                    
-                                    
-                                </ul> 
+
+
+                                </ul>
                             </div>
 
                         </div>
                     </div>
-                    
-                    
+
+
 
                     <div class="col-sm-10">
 
 						<!--  輪播 -->
                         <div class="bigbanner" style="">
                             <div class="owl-carousel fadeOut" style="">
-								<?php 
+								<?php
 									foreach ($banners as $banner){
 										echo "<a href={$banner['url']}>";
 										echo "<img src=img/{$banner['pic']} style='' alt='' />";
 										echo "</a>";
 									}
 								?>
-								<!--  
+								<!--
                                 <a href=''>
                                     <img src='img/br_01.jpg' style="" alt='' />
                                 </a>
@@ -448,13 +474,13 @@
                             </div>
 
                             <div id="sildes-portfolio" class="owl-carousel owl-theme " style="padding:0 8px;">
-								<?php 
+								<?php
 								    foreach ($product1 as $product){
 								        echo '<div class="item ">';
 								        echo '<div class="pd-carousel" >';
-								        
+
 								        echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
-								        
+
 								        echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
 								        echo "<div class='pd-name'>{$product['proname']}</div>";
 								        echo "<div class='pd-type'>{$product['pcname']}</div>";
@@ -476,7 +502,7 @@
                                 </div>
 
                                 <div id="sildes-promote" class="owl-carousel owl-theme" style="padding:0 8px;">
-								<?php 
+								<?php
 								    foreach ($product2 as $product){
 								        echo '<div class="item ">';
 								        echo '<div class="pd-carousel" >';
@@ -492,7 +518,7 @@
 								        echo '</div>';
 								    }
 								?>
-                                    
+
                                 </div>
                             </div>
 
@@ -503,8 +529,8 @@
                                 </div>
                                 <div class="product-list  ">
 
-								<?php 
-								    
+								<?php
+
 								    foreach ($product0 as $product){
 								        echo '<div class="pd">';
 								        echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
@@ -523,12 +549,12 @@
                             </div>
                         </div>
                 </div>
-                    <!--  
+                    <!--
                 </div>
                 -->
 
                 <footer>
-                    <div class="foot-area">  
+                    <div class="foot-area">
                         <div class="foot-menu">
                             <div class="ft-logo"><a href="index.php"><br><br><br><img src="img/logo_foot.png" alt=""></a></div>
                             <div class="ft-menu-list">
@@ -550,7 +576,7 @@
                                     <li><a href="ftmenu_warranty.php">鑑賞期說明</a></li>
                                     <li>│</li>
                                     <li><a href="ftmenu_service.php">客服中心</a></li>
-                                
+
                                 </ul>
                             </div>
                         </div>
@@ -598,10 +624,10 @@
                     }
                 }
             });
-            
-            
-            
-            
+
+
+
+
 //新增側邊欄
 
         //側邊欄滑動
@@ -629,7 +655,7 @@
         $('.sidebar-menu').click(function() {
             console.log('L1 clicked');
             var display = $(this).next('.sidebar-sub').css('display');
-            
+
             $('.sidebar-sub').css('display', 'none');
 
             if (display == "block") {
@@ -640,7 +666,7 @@
                 $(this).next('.sidebar-sub').slideDown();
             }
         });
-        
+
         $('.sidebar-level2').click(function() {
             console.log('L2 clicked');
             var display2 = $(this).next('.sidebar-sub3').css('display');
