@@ -194,8 +194,16 @@ $result = mysqli_query($conn, $sql);
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">輸入驗證碼</td>
-                                        <td><input type="text" name="verifycode" class="input-5"></td>
+                                        <td class="td-04">驗證碼</td>
+                                        <td><input type="text" name="validate_code" class="input-5">
+                                            <span id="captcha"><img src="captcha.php" width="100" height="25"/></span>
+                                            <a style="cursor: pointer" id="change_captcha">換一張</a>
+                                            <script>
+                                                document.getElementById('change_captcha').addEventListener('click', function () {
+                                                    document.getElementById('captcha').innerHTML = "<img src=\"captcha.php\" width=\"100\" height=\"25\"/>";
+                                                });
+                                            </script>
+                                        </td>
                                     </tr>
 
                                     </tbody>
@@ -327,6 +335,7 @@ $result = mysqli_query($conn, $sql);
         var phone = $('input[name="phone"]').val().trim();
         var mobile = $('input[name="mobile"]').val().trim();
         var address = $('input[name="address"]').val().trim();
+        var validate_code = $('input[name="validate_code"]').val().trim();
 
         //檢查帳號格式
         var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
@@ -402,6 +411,15 @@ $result = mysqli_query($conn, $sql);
         if (address.length === 0) {
             isDataCorrect = false;
             alert('請輸入聯繫地址。');
+        }
+        //檢查驗證碼格式
+        if (validate_code.length === 0) {
+            isDataCorrect = false;
+            alert('請輸入驗證碼。');
+        }
+        if (validate_code.match(/\s/)) {
+            isDataCorrect = false;
+            alert('驗證碼格式錯誤，請勿包含空白鍵。');
         }
         if (isDataCorrect === false) {
             e.preventDefault();

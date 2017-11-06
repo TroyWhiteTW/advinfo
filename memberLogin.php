@@ -38,6 +38,7 @@ if (empty($errorMessage)) {
         echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
         header("Refresh:3;url=login.php");
     }
+    $rs->close();
 } else {
     echo "登入資料有誤:\n" . $errorMessage;
 }
