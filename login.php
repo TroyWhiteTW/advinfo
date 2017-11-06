@@ -235,9 +235,10 @@ $result = mysqli_query($conn, $sql);
 
     //登入表單提交檢查
     var form = document.getElementById('login_form');
-    form.addEventListener('submit', function (e) {
 
+    form.addEventListener('submit', function (e) {
         var isDataCorrect = true;
+        var errorMessage = "";
 
         var account = $('input[name="account"]').val().trim();
         var password = $('input[name="password"]').val().trim();
@@ -247,49 +248,50 @@ $result = mysqli_query($conn, $sql);
         var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
         if (!account.match(email_regex)) {
             isDataCorrect = false;
-            alert('帳號格式錯誤，請輸入電子信箱。');
+            errorMessage += '帳號格式錯誤，請輸入電子信箱。\n';
         }
         if (account.match(/\s/)) {
             isDataCorrect = false;
-            alert('帳號格式錯誤，請勿包含空白鍵。');
+            errorMessage += '帳號格式錯誤，請勿包含空白鍵。\n';
         }
         if (account.length === 0) {
             isDataCorrect = false;
-            alert('請輸入帳號。');
+            errorMessage += '請輸入帳號。\n';
         }
         //檢查密碼格式
         if (password.length < 8 || password.length > 20) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，字數必須在8-20之間');
+            errorMessage += '密碼格式錯誤，字數必須在8-20之間。\n';
         }
         if (!password.match(/[0-9]/) || !password.match(/[a-zA-Z]/)) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，必須至少擁有一個數字及英文');
+            errorMessage += '密碼格式錯誤，必須至少擁有一個數字及英文。\n';
         }
         if (password.match(/\s/)) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，請勿包含空白鍵。');
+            errorMessage += '密碼格式錯誤，請勿包含空白鍵。\n';
         }
         if (password.length === 0) {
             isDataCorrect = false;
-            alert('請輸入密碼。');
+            errorMessage += '請輸入密碼。\n';
         }
         //檢查驗證碼格式
         if (validate_code.length === 0) {
             isDataCorrect = false;
-            alert('請輸入驗證碼。');
+            errorMessage += '請輸入驗證碼。\n';
         }
         if (validate_code.match(/\s/)) {
             isDataCorrect = false;
-            alert('驗證碼格式錯誤，請勿包含空白鍵。');
+            errorMessage += '驗證碼格式錯誤，請勿包含空白鍵。\n';
         }
         //
         if (isDataCorrect === false) {
+            alert(errorMessage);
             e.preventDefault();
         }
     })
     ;
-    //登入表單提交檢查
+    //
 
 </script>
 
