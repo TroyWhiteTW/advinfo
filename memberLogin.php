@@ -14,15 +14,15 @@ if (empty($errorMessage)) {
     $insertData = encodeRegisterData($_POST);
 
     $sql = 'SELECT * FROM members WHERE account=' . $insertData['account'] .
-        ' AND ' . $insertData['password'] .
         ' AND ' . $insertData['type'];
 
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
 
-    if ($row[0] === $_POST['account']) {
+    if ($row[0] === $_POST['account'] && password_verify($_POST['password'], $row[1])) {
 
         //SESSION 設定
+        $_SESSION['user'] = $row;
 
         echo "登入成功，3秒後跳轉回首頁...";
         header("Refresh:3;url=index.php");
@@ -176,11 +176,7 @@ function encodeRegisterData($rawDataArray)
 
     foreach ($dataArray as $k => $v) {
         if (!empty($rawDataArray[$k])) {
-            if ($k === "password") {
-                $dataArray[$k] = "\"" . md5($rawDataArray[$k]) . "\"";
-            } else {
-                $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
-            }
+            $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
         }
     }
     return $dataArray;

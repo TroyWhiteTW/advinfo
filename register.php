@@ -246,7 +246,7 @@ function encodeRegisterData($rawDataArray)
     foreach ($dataArray as $k => $v) {
         if (!empty($rawDataArray[$k])) {
             if ($k === "password") {
-                $dataArray[$k] = "\"" . md5($rawDataArray[$k]) . "\"";
+                $dataArray[$k] = "\"" . password_hash($rawDataArray[$k], PASSWORD_DEFAULT) . "\"";
             } else if ($k === "email") {
                 $dataArray[$k] = "\"" . $rawDataArray['account'] . "\"";
             } else {
