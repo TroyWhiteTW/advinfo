@@ -211,7 +211,7 @@ function checkType($k, &$msg)
     if (empty($_POST[$k])) {
         return;
     }
-    if ($_POST[$k] !== "1" || $_POST[$k] !== "2") {
+    if ($_POST[$k] !== "1" && $_POST[$k] !== "2") {
         $msg .= "$k 錯誤";
     }
 }
