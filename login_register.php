@@ -203,33 +203,80 @@ $result = mysqli_query($conn, $sql);
                                     </tr>
                                     <script>
                                         document.getElementById('s_city').innerHTML =
-                                            '<option value="0">台北市</option>' +
-                                            '<option value="1">基隆市</option>' +
-                                            '<option value="2">台北縣</option>' +
-                                            '<option value="3">宜蘭縣</option>' +
-                                            '<option value="4">新竹市</option>' +
-                                            '<option value="5">新竹縣</option>' +
-                                            '<option value="6">桃園縣</option>' +
-                                            '<option value="7">苗栗縣</option>' +
-                                            '<option value="8">台中市</option>' +
-                                            '<option value="9">台中縣</option>' +
-                                            '<option value="10">彰化縣</option>' +
-                                            '<option value="11">南投縣</option>' +
-                                            '<option value="12">嘉義市</option>' +
-                                            '<option value="13">嘉義縣</option>' +
-                                            '<option value="14">雲林縣</option>' +
-                                            '<option value="15">台南市</option>' +
-                                            '<option value="16">台南縣</option>' +
-                                            '<option value="17">高雄市</option>' +
-                                            '<option value="18">高雄縣</option>' +
-                                            '<option value="19">澎湖縣</option>' +
-                                            '<option value="20">屏東縣</option>' +
-                                            '<option value="21">台東縣</option>' +
-                                            '<option value="22">花蓮縣</option>' +
-                                            '<option value="23">金門縣</option>' +
-                                            '<option value="24">連江縣</option>' +
-                                            '<option value="25">南海諸島</option>' +
-                                            '<option value="26">釣魚台列嶼</option>';
+                                            '<option value="台北市">台北市</option>' +
+                                            '<option value="基隆市">基隆市</option>' +
+                                            '<option value="台北縣">台北縣</option>' +
+                                            '<option value="宜蘭縣">宜蘭縣</option>' +
+                                            '<option value="新竹市">新竹市</option>' +
+                                            '<option value="新竹縣">新竹縣</option>' +
+                                            '<option value="桃園縣">桃園縣</option>' +
+                                            '<option value="苗栗縣">苗栗縣</option>' +
+                                            '<option value="台中市">台中市</option>' +
+                                            '<option value="台中縣">台中縣</option>' +
+                                            '<option value="彰化縣">彰化縣</option>' +
+                                            '<option value="南投縣">南投縣</option>' +
+                                            '<option value="嘉義市">嘉義市</option>' +
+                                            '<option value="嘉義縣">嘉義縣</option>' +
+                                            '<option value="雲林縣">雲林縣</option>' +
+                                            '<option value="台南市">台南市</option>' +
+                                            '<option value="台南縣">台南縣</option>' +
+                                            '<option value="高雄市">高雄市</option>' +
+                                            '<option value="高雄縣">高雄縣</option>' +
+                                            '<option value="澎湖縣">澎湖縣</option>' +
+                                            '<option value="屏東縣">屏東縣</option>' +
+                                            '<option value="台東縣">台東縣</option>' +
+                                            '<option value="花蓮縣">花蓮縣</option>' +
+                                            '<option value="金門縣">金門縣</option>' +
+                                            '<option value="連江縣">連江縣</option>' +
+                                            '<option value="南海諸島">南海諸島</option>' +
+                                            '<option value="釣魚台列嶼">釣魚台列嶼</option>';
+                                        document.getElementById('s_area').innerHTML =
+                                            '<option value="中正區">中正區</option>\n' +
+                                            '<option value="大同區">大同區</option>\n' +
+                                            '<option value="中山區">中山區</option>\n' +
+                                            '<option value="松山區">松山區</option>\n' +
+                                            '<option value="大安區">大安區</option>\n' +
+                                            '<option value="萬華區">萬華區</option>\n' +
+                                            '<option value="信義區">信義區</option>\n' +
+                                            '<option value="士林區">士林區</option>\n' +
+                                            '<option value="北投區">北投區</option>\n' +
+                                            '<option value="內湖區">內湖區</option>\n' +
+                                            '<option value="南港區">南港區</option>\n' +
+                                            '<option value="文山區">文山區</option>';
+
+                                        var areaObj = {
+                                            "台北市": ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"],
+                                            "基隆市": ["信義區", "中正區", "中山區", "安樂區", "暖暖區", "七堵區"],
+                                            "台北縣": ["萬里鄉", "金山鄉", "板橋市", "汐止市", "深坑鄉", "石碇鄉", "瑞芳鎮", "平溪鄉", "雙溪鄉", "貢寮鄉", "新店市", "坪林鄉", "烏來鄉", "永和市", "中和市", "土城市", "三峽鎮", "樹林市", "鶯歌鎮", "三重市", "新莊市", "泰山鄉", "林口鄉", "蘆洲市", "五股鄉", "八里鄉", "淡水鎮", "三芝鄉", "石門鄉"],
+                                            "宜蘭縣": ["宜蘭市", "頭城鎮", "礁溪鄉", "壯圍鄉", "員山鄉", "羅東鎮", "三星鄉", "大同鄉", "五結鄉", "冬山鄉", "蘇澳鎮", "南澳鄉"],
+                                            "新竹市": [],
+                                            "新竹縣": [],
+                                            "桃園縣": [],
+                                            "苗栗縣": [],
+                                            "台中市": [],
+                                            "台中縣": [],
+                                            "彰化縣": [],
+                                            "南投縣": [],
+                                            "嘉義市": [],
+                                            "嘉義縣": [],
+                                            "雲林縣": [],
+                                            "台南市": [],
+                                            "台南縣": [],
+                                            "高雄市": [],
+                                            "高雄縣": [],
+                                            "澎湖縣": [],
+                                            "屏東縣": [],
+                                            "台東縣": [],
+                                            "花蓮縣": [],
+                                            "金門縣": [],
+                                            "連江縣": [],
+                                            "南海諸島": [],
+                                            "釣魚台列嶼": []
+
+                                        }
+                                        document.getElementById('s_city').addEventListener('change', function (e) {
+                                            console.log(e.target.value);
+                                        });
 
 
                                     </script>
@@ -405,8 +452,8 @@ $result = mysqli_query($conn, $sql);
         var mobile = $('input[name="mobile"]').val().trim();
         var company_no = $('input[name="company_no"]').val().trim();
         var invoice_title = $('input[name="invoice_title"]').val().trim();
-        var city = $('input[name="city"]').val().trim();
-        var area = $('input[name="area"]').val().trim();
+        var city = $('select[name="city"]').val().trim();
+        var area = $('select[name="area"]').val().trim();
         var address = $('input[name="address"]').val().trim();
         var constore = $('input[name="constore"]').val().trim();
         var type = $('select[name="type"]').val().trim();
