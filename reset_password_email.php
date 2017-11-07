@@ -20,6 +20,7 @@ if (!empty($_POST['email'])) {
         return;
     }
 
+    // TODO: 聯結網域需修改!!!
     $link = 'http://localhost/advinfo/reset_password_email.php?email=' . $_POST['email'] . '&hash_key=' . $row[1];
 
     require 'PHPMailer/PHPMailerAutoload.php';
