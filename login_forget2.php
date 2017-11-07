@@ -89,7 +89,7 @@ $result = mysqli_query($conn, $sql);
 
                             </div>
 
-                            <form action="reset_password_email.php" method="post">
+                            <form id="forget2_form" action="reset_password_email.php" method="post">
 
                                 <div class="login-input">請輸入電子信箱<input type="text" name="email" class="input-4"></div>
 
@@ -154,7 +154,6 @@ $result = mysqli_query($conn, $sql);
         }
     });
 
-
     //新增側邊欄
 
     //側邊欄滑動
@@ -176,7 +175,6 @@ $result = mysqli_query($conn, $sql);
             $('body').removeClass('body-back');
         }
     }).resize();
-
 
     //下拉選單判斷
     $('.sidebar-menu').click(function () {
@@ -210,6 +208,37 @@ $result = mysqli_query($conn, $sql);
     });
 
     //新增側邊欄
+
+    //表單提交檢查
+    var form = document.getElementById('forget2_form');
+
+    form.addEventListener('submit', function (e) {
+        var isDataCorrect = true;
+        var errorMessage = "";
+
+        var email = $('input[name="email"]').val().trim();
+
+        //檢查帳號格式
+        var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
+        if (!email.match(email_regex)) {
+            isDataCorrect = false;
+            errorMessage += '格式錯誤，請輸入電子信箱。\n';
+        }
+        if (email.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '格式錯誤，請勿包含空白鍵。\n';
+        }
+        if (email.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入電子信箱。\n';
+        }
+
+        if (isDataCorrect === false) {
+            alert(errorMessage);
+            e.preventDefault();
+        }
+    });
+    //
 
 </script>
 
