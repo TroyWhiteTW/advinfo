@@ -101,22 +101,21 @@ $result = mysqli_query($conn, $sql);
                 <div class="content-area">
                     <div class="function-area">
                         <ul>
-                            <li><input type="button" onclick="location.href='?pcno3=1';" class="tag-value-hot btn-1"
-                                       value="新品上市"></li>
-                            <li><input type="button" onclick="location.href='?pcno3=2';" class="tag-value-promot btn-1"
-                                       value="促銷商品"></li>
-                            <li><input type="button" onclick="location.href='?order=1';" class="tag-value-price btn-1"
-                                       value="價格:低-高"></li>
-                            <li><input type="button" onclick="location.href='?order=1';" class="tag-value-price btn-1"
-                                       value="價格:高-低"></li>
+                            <li><input type="button" onclick="location.href='?pcno3=1';" class="tag-value-hot btn-1" value="新品上市"></li>
+                            <li><input type="button" onclick="location.href='?pcno3=2';" class="tag-value-promot btn-1" value="促銷商品"></li>
+                            <li><input type="button" onclick="location.href='?order=1';" class="tag-value-price btn-1" value="價格:低-高"></li>
+                            <li><input type="button" onclick="location.href='?order=1';" class="tag-value-price btn-1" value="價格:高-低"></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="product-area">
                     <div class="product-list">
+
                         <?php
+
                         foreach ($products as $product) {
+
                             echo '<div class="pd">';
                             echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
                             echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
@@ -140,7 +139,6 @@ $result = mysqli_query($conn, $sql);
                                 echo '<div class="tag-type"><img src="img/tag_promot.png" alt=""></div>';
                             }
 
-
                             echo '</a>';
                             echo '</div>';
                         }
@@ -149,6 +147,7 @@ $result = mysqli_query($conn, $sql);
 
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -158,6 +157,103 @@ $result = mysqli_query($conn, $sql);
     </div>
 
 </div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('.fadeOut').owlCarousel({
+            items: 1,
+            loop: true,
+            margin: 10,
+            autoplay: true
+        });
+    });
+
+    $('#sildes-portfolio, #sildes-promote').owlCarousel({
+        items: 4,
+        loop: true,
+        margin: 5,
+        autoplay: true,
+        //navText:['<span class="fa fa-long-arrow-left fa-2x"></span>','<span class="fa fa-long-arrow-right fa-2x"></span>'],
+        dots: false,
+        responsive: {
+            0: {
+                nav: false,
+                items: 2
+            },
+            768: {
+                nav: false,
+                items: 2
+            },
+            992: {
+                nav: false,
+                items: 3
+            },
+            1290: {
+                nav: false,
+                items: 4
+            }
+        }
+    });
+
+
+    //新增側邊欄
+
+    //側邊欄滑動
+    $('#left-open').click(function () {
+        // 顯示隱藏側邊欄
+        $('.sidebar').toggleClass('sidebar-view');
+        // body畫面變暗+鎖住網頁滾輪
+        $('body').toggleClass('body-back');
+    });
+
+    $(window).resize(function () {
+        //減去tobar 高度
+        var bh = $(window).height() - 51;
+        $('.fullheight').height(bh);
+
+        var bw = $(window).width();
+        if (bw >= 768) {
+            $('.sidebar').removeClass('sidebar-view');
+            $('body').removeClass('body-back');
+        }
+    }).resize();
+
+
+    //下拉選單判斷
+    $('.sidebar-menu').click(function () {
+        console.log('L1 clicked');
+        var display = $(this).next('.sidebar-sub').css('display');
+
+        $('.sidebar-sub').css('display', 'none');
+
+        if (display == "block") {
+            //$(this).next('.sidebar-sub').css('display', 'none');
+            $(this).next('.sidebar-sub').slideUp();
+        } else if (display == "none") {
+            //$(this).next('.sidebar-sub').css('display', 'block');
+            $(this).next('.sidebar-sub').slideDown();
+        }
+    });
+
+    $('.sidebar-level2').click(function () {
+        console.log('L2 clicked');
+        var display2 = $(this).next('.sidebar-sub3').css('display');
+        console.log(display2);
+        $('.sidebar-sub3').css('display', 'none');
+
+        if (display2 == "block") {
+            //$(this).next('.sidebar-sub3').css('display', 'none');
+            $(this).next('.sidebar-sub3').slideUp();
+        } else if (display2 == "none") {
+            //$(this).next('.sidebar-sub3').css('display', 'block');
+            $(this).next('.sidebar-sub3').slideDown();
+        }
+    });
+
+    //新增側邊欄
+
+</script>
+
 </body>
 
 </html>
