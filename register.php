@@ -12,6 +12,9 @@ checkData($_POST, $errorMessage);
 
 if (empty($errorMessage)) {
 
+    //組合生日字串
+    $_POST['birthday'] = $_POST['birthday_y'] . '-' . $_POST['birthday_m'] . '-' . $_POST['birthday_d'];
+
     //檢查驗證碼
     if ($_POST['validate_code'] !== $_SESSION['check_word']) {
         echo "驗證碼錯誤，3秒後跳轉回登入頁...";
@@ -131,7 +134,15 @@ function checkData($post, &$msg)
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 break;
-            case 'birthday':
+            case 'birthday_y':
+                checkEmpty($k, $msg);
+                checkSpace($k, $msg);
+                break;
+            case 'birthday_m':
+                checkEmpty($k, $msg);
+                checkSpace($k, $msg);
+                break;
+            case 'birthday_d':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 break;
