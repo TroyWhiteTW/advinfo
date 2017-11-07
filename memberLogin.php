@@ -21,13 +21,13 @@ if (empty($errorMessage)) {
 
     $insertData = encodeRegisterData($_POST);
 
-    $sql = 'SELECT * FROM members WHERE account=' . $insertData['account'] .
-        ' AND ' . $insertData['type'];
+    $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] .
+        ' AND type=' . $insertData['type'];
 
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
 
-    if ($row[0] === $_POST['account'] && password_verify($_POST['password'], $row[1])) {
+    if ($row[7] === $_POST['email'] && password_verify($_POST['password'], $row[1])) {
 
         //SESSION 設定
         $_SESSION['user'] = $row;
@@ -48,7 +48,7 @@ function checkData($post, &$msg)
 {
     foreach ($post as $k => $v) {
         switch ($k) {
-            case 'account':
+            case 'email':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 chechEmail($k, $msg);
@@ -182,7 +182,7 @@ function checkType($k, &$msg)
 function encodeRegisterData($rawDataArray)
 {
     $dataArray = [
-        "account" => "\"\"",
+        "email" => "\"\"",
         "password" => "\"\"",
         "type" => "\"\"",
     ];

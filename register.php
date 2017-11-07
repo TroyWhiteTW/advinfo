@@ -80,7 +80,7 @@ function checkData($post, &$msg)
 {
     foreach ($post as $k => $v) {
         switch ($k) {
-            case 'account':
+            case 'email':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 chechEmail($k, $msg);
