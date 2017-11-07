@@ -20,7 +20,7 @@ if (empty($errorMessage)) {
     }
 
     //比對有無同帳號
-    $sqlCheckAccountExist = 'SELECT * FROM members WHERE email=' . "\"" . $_POST['account'] . "\"";
+    $sqlCheckAccountExist = 'SELECT * FROM members WHERE email=' . "\"" . $_POST['email'] . "\"";
     $rs = mysqli_query($conn, $sqlCheckAccountExist);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
     if (count($row) !== 0) {
@@ -276,8 +276,6 @@ function encodeRegisterData($rawDataArray)
         if (!empty($rawDataArray[$k])) {
             if ($k === "password") {
                 $dataArray[$k] = "\"" . password_hash($rawDataArray[$k], PASSWORD_DEFAULT) . "\"";
-            } else if ($k === "email") {
-                $dataArray[$k] = "\"" . $rawDataArray['account'] . "\"";
             } else {
                 $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
             }

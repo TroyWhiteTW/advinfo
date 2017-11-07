@@ -67,7 +67,7 @@ $result = mysqli_query($conn, $sql);
 
                                     <tr>
                                         <td class="td-04">帳號<span style="color:red;">*</span></td>
-                                        <td><input type="text" name="account" class="input-4"></td>
+                                        <td><input type="text" name="email" class="input-4"></td>
                                     </tr>
 
                                     <tr>
@@ -151,11 +151,6 @@ $result = mysqli_query($conn, $sql);
                                                     return padLeft("0" + str, lenght);
                                             }
                                         </script>
-                                    </tr>
-
-                                    <tr hidden="hidden">
-                                        <td class="td-04">電子信箱</td>
-                                        <td><input type="text" name="email" class="input-4"></td>
                                     </tr>
 
                                     <tr>
@@ -434,7 +429,7 @@ $result = mysqli_query($conn, $sql);
         var isDataCorrect = true;
         var errorMessage = "";
 
-        var account = $('input[name="account"]').val().trim();
+        var account = $('input[name="email"]').val().trim();
         var password = $('input[name="password"]').val().trim();
         var password_c = $('input[name="password_c"]').val().trim();
         var name = $('input[name="name"]').val().trim();
