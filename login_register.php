@@ -110,7 +110,7 @@ $result = mysqli_query($conn, $sql);
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">聘級<span style="color:red;">*</span></td>
+                                        <td class="td-04">聘級</td>
                                         <td><input type="text" name="level" class="input-4"></td>
                                     </tr>
 
@@ -134,21 +134,21 @@ $result = mysqli_query($conn, $sql);
 
                                             var m = "";
                                             for (var i = 1; i <= 12; i++) {
-                                                m += '<option value="' + i + '">' + padLeft(i+"",2) + '</option>';
+                                                m += '<option value="' + i + '">' + padLeft(i + "", 2) + '</option>';
                                             }
                                             document.getElementById('b_m').innerHTML = m;
 
                                             var d = "";
                                             for (var i = 1; i <= 31; i++) {
-                                                d += '<option value="' + i + '">' + padLeft(i+"",2) + '</option>';
+                                                d += '<option value="' + i + '">' + padLeft(i + "", 2) + '</option>';
                                             }
                                             document.getElementById('b_d').innerHTML = d;
 
-                                            function padLeft(str,lenght){
-                                                if(str.length >= lenght)
+                                            function padLeft(str, lenght) {
+                                                if (str.length >= lenght)
                                                     return str;
                                                 else
-                                                    return padLeft("0" +str,lenght);
+                                                    return padLeft("0" + str, lenght);
                                             }
                                         </script>
                                     </tr>
@@ -194,13 +194,45 @@ $result = mysqli_query($conn, $sql);
 
                                     <tr>
                                         <td class="td-04">縣市<span style="color:red;">*</span></td>
-                                        <td><input type="text" name="city" class="input-4"></td>
+                                        <td><select name="city" id="s_city"></select></td>
                                     </tr>
 
                                     <tr>
                                         <td class="td-04">鄉鎮區<span style="color:red;">*</span></td>
-                                        <td><input type="text" name="area" class="input-4"></td>
+                                        <td><select name="area" id="s_area"></td>
                                     </tr>
+                                    <script>
+                                        document.getElementById('s_city').innerHTML =
+                                            '<option value="0">台北市</option>' +
+                                            '<option value="1">基隆市</option>' +
+                                            '<option value="2">台北縣</option>' +
+                                            '<option value="3">宜蘭縣</option>' +
+                                            '<option value="4">新竹市</option>' +
+                                            '<option value="5">新竹縣</option>' +
+                                            '<option value="6">桃園縣</option>' +
+                                            '<option value="7">苗栗縣</option>' +
+                                            '<option value="8">台中市</option>' +
+                                            '<option value="9">台中縣</option>' +
+                                            '<option value="10">彰化縣</option>' +
+                                            '<option value="11">南投縣</option>' +
+                                            '<option value="12">嘉義市</option>' +
+                                            '<option value="13">嘉義縣</option>' +
+                                            '<option value="14">雲林縣</option>' +
+                                            '<option value="15">台南市</option>' +
+                                            '<option value="16">台南縣</option>' +
+                                            '<option value="17">高雄市</option>' +
+                                            '<option value="18">高雄縣</option>' +
+                                            '<option value="19">澎湖縣</option>' +
+                                            '<option value="20">屏東縣</option>' +
+                                            '<option value="21">台東縣</option>' +
+                                            '<option value="22">花蓮縣</option>' +
+                                            '<option value="23">金門縣</option>' +
+                                            '<option value="24">連江縣</option>' +
+                                            '<option value="25">南海諸島</option>' +
+                                            '<option value="26">釣魚台列嶼</option>';
+
+
+                                    </script>
 
                                     <tr>
                                         <td class="td-04">聯繫地址<span style="color:red;">*</span></td>
@@ -223,7 +255,8 @@ $result = mysqli_query($conn, $sql);
                                     </tr>
 
                                     <tr>
-                                        <td class="td-04">驗證碼</td>
+                                        <td class="td-04">驗證碼<span style="color:red;">*</span></td>
+                                        </td>
                                         <td><input type="text" name="validate_code" class="input-5">
                                             <span id="captcha"><img src="captcha.php" width="100" height="25"/></span>
                                             <a style="cursor: pointer" id="change_captcha">換一張</a>
@@ -362,9 +395,21 @@ $result = mysqli_query($conn, $sql);
         var password = $('input[name="password"]').val().trim();
         var password_c = $('input[name="password_c"]').val().trim();
         var name = $('input[name="name"]').val().trim();
+        var gender = $('select[name="gender"]').val().trim();
+        var level = $('input[name="level"]').val().trim();
+        var referral = $('input[name="referral"]').val().trim();
+        var birthday_y = $('select[name="birthday_y"]').val().trim();
+        var birthday_m = $('select[name="birthday_m"]').val().trim();
+        var birthday_d = $('select[name="birthday_d"]').val().trim();
         var phone = $('input[name="phone"]').val().trim();
         var mobile = $('input[name="mobile"]').val().trim();
+        var company_no = $('input[name="company_no"]').val().trim();
+        var invoice_title = $('input[name="invoice_title"]').val().trim();
+        var city = $('input[name="city"]').val().trim();
+        var area = $('input[name="area"]').val().trim();
         var address = $('input[name="address"]').val().trim();
+        var constore = $('input[name="constore"]').val().trim();
+        var type = $('select[name="type"]').val().trim();
         var validate_code = $('input[name="validate_code"]').val().trim();
 
         //檢查帳號格式
@@ -445,11 +490,103 @@ $result = mysqli_query($conn, $sql);
         //檢查驗證碼格式
         if (validate_code.length === 0) {
             isDataCorrect = false;
-            alert('請輸入驗證碼。');
+            errorMessage += '請輸入驗證碼。\n';
         }
         if (validate_code.match(/\s/)) {
             isDataCorrect = false;
-            alert('驗證碼格式錯誤，請勿包含空白鍵。');
+            errorMessage += '驗證碼格式錯誤，請勿包含空白鍵。\n';
+        }
+        //檢查聘級 level
+        if (level.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '聘級格式錯誤，請勿包含空白鍵。\n';
+        }
+        //檢查性別 gender
+        if (gender.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '性別格式錯誤，請勿包含空白鍵。\n';
+        }
+        if (gender !== "F" && gender !== "M") {
+            isDataCorrect = false;
+            errorMessage += '性別格式錯誤。\n';
+        }
+        //檢查推薦者帳號 referral
+        if (referral !== "") {
+            if (!referral.match(email_regex)) {
+                isDataCorrect = false;
+                errorMessage += '推薦者帳號格式錯誤，請輸入電子信箱。\n';
+            }
+            if (referral.match(/\s/)) {
+                isDataCorrect = false;
+                errorMessage += '推薦者帳號格式錯誤，請勿包含空白鍵。\n';
+            }
+        }
+        //檢查生日 birthday ymd
+        if (birthday_y.match(/[^\d]/)) {
+            isDataCorrect = false;
+            errorMessage += '生日年份錯誤，請輸入數字。\n';
+        }
+        if (birthday_y.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入生日年。\n';
+        }
+        if (birthday_m.match(/[^\d]/)) {
+            isDataCorrect = false;
+            errorMessage += '生日月份錯誤，請輸入數字。\n';
+        }
+        if (birthday_m.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入生日月。\n';
+        }
+        if (birthday_d.match(/[^\d]/)) {
+            isDataCorrect = false;
+            errorMessage += '生日日期錯誤，請輸入數字。\n';
+        }
+        if (birthday_d.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入生日日期。\n';
+        }
+        //檢查統一編號 company_no
+        if (company_no.match(/[^\d]/)) {
+            isDataCorrect = false;
+            errorMessage += '統一編號格式錯誤，請輸入數字。\n';
+        }
+        if (company_no.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '統一編號格式錯誤，請勿包含空白鍵。\n';
+        }
+        //檢查發票抬頭 invoice_title
+        if (invoice_title.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '發票抬頭格式錯誤，請勿包含空白鍵。\n';
+        }
+        //檢查縣市 city
+        if (city.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '縣市格式錯誤，請勿包含空白鍵。\n';
+        }
+        if (city.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入縣市。\n';
+        }
+        //檢查鄉鎮區 area
+        if (area.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '鄉鎮區格式錯誤，請勿包含空白鍵。\n';
+        }
+        if (area.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入鄉鎮區。\n';
+        }
+        //檢查常用便利商店門市 constore
+        if (constore.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '常用便利商店門市格式錯誤，請勿包含空白鍵。\n';
+        }
+        //檢查會員類別 type
+        if (type !== "1" && type !== "2") {
+            isDataCorrect = false;
+            errorMessage += '會員類別格式錯誤。\n';
         }
         if (isDataCorrect === false) {
             alert(errorMessage);
