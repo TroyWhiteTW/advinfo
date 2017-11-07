@@ -20,7 +20,7 @@ if (empty($errorMessage)) {
     }
 
     //比對有無同帳號
-    $sqlCheckAccountExist = 'SELECT * FROM members WHERE account=' . "\"" . $_POST['account'] . "\"";
+    $sqlCheckAccountExist = 'SELECT * FROM members WHERE email=' . "\"" . $_POST['account'] . "\"";
     $rs = mysqli_query($conn, $sqlCheckAccountExist);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
     if (count($row) !== 0) {
@@ -128,6 +128,10 @@ function checkData($post, &$msg)
                 chechEmail($k, $msg);
                 break;
             case 'validate_code':
+                checkEmpty($k, $msg);
+                checkSpace($k, $msg);
+                break;
+            case 'birthday':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 break;
@@ -245,17 +249,20 @@ function checkType($k, &$msg)
 function encodeRegisterData($rawDataArray)
 {
     $dataArray = [
-        "account" => "\"\"",
+        'id' => "\"zjttw_" . date("YmdHis", time()) . "\"",
         "password" => "\"\"",
         "name" => "\"\"",
         "gender" => "\"\"",
         "level" => "\"\"",
         "referral" => "\"\"",
+        "birthday" => "\"\"",
         "email" => "\"\"",
         "phone" => "\"\"",
         "mobile" => "\"\"",
         "company_no" => "\"\"",
         "invoice_title" => "\"\"",
+        "city" => "\"\"",
+        "area" => "\"\"",
         "address" => "\"\"",
         "constore" => "\"\"",
         "regtime" => "\"" . date("Y-m-d H:i:s", time()) . "\"",
