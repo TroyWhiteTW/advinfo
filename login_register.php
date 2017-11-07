@@ -121,7 +121,36 @@ $result = mysqli_query($conn, $sql);
 
                                     <tr>
                                         <td class="td-04">生日<span style="color:red;">*</span></td>
-                                        <td><input type="text" name="birthday" class="input-4"></td>
+                                        <td><select name="birthday_y" id="b_y"></select>年
+                                            <select name="birthday_m" id="b_m"></select>月
+                                            <select name="birthday_d" id="b_d"></select>日
+                                        </td>
+                                        <script>
+                                            var y = "";
+                                            for (var i = 1920; i <= 2017; i++) {
+                                                y += '<option value="' + i + '">' + i + '</option>';
+                                            }
+                                            document.getElementById('b_y').innerHTML = y;
+
+                                            var m = "";
+                                            for (var i = 1; i <= 12; i++) {
+                                                m += '<option value="' + i + '">' + padLeft(i+"",2) + '</option>';
+                                            }
+                                            document.getElementById('b_m').innerHTML = m;
+
+                                            var d = "";
+                                            for (var i = 1; i <= 31; i++) {
+                                                d += '<option value="' + i + '">' + padLeft(i+"",2) + '</option>';
+                                            }
+                                            document.getElementById('b_d').innerHTML = d;
+
+                                            function padLeft(str,lenght){
+                                                if(str.length >= lenght)
+                                                    return str;
+                                                else
+                                                    return padLeft("0" +str,lenght);
+                                            }
+                                        </script>
                                     </tr>
 
                                     <tr hidden="hidden">
