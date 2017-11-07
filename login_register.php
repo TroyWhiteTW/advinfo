@@ -202,6 +202,7 @@ $result = mysqli_query($conn, $sql);
                                         <td><select name="area" id="s_area"></td>
                                     </tr>
                                     <script>
+
                                         document.getElementById('s_city').innerHTML =
                                             '<option value="臺北市">臺北市</option>' +
                                             '<option value="新北市">新北市</option>' +
@@ -225,6 +226,7 @@ $result = mysqli_query($conn, $sql);
                                             '<option value="澎湖縣">澎湖縣</option>' +
                                             '<option value="金門縣">金門縣</option>' +
                                             '<option value="連江縣">連江縣</option>';
+
                                         document.getElementById('s_area').innerHTML =
                                             '<option value="中正區">中正區</option>\n' +
                                             '<option value="大同區">大同區</option>\n' +
@@ -265,9 +267,13 @@ $result = mysqli_query($conn, $sql);
                                         };
                                         
                                         document.getElementById('s_city').addEventListener('change', function (e) {
-                                            console.log(e.target.value);
+                                            var areaData = areaObj[e.target.value];
+                                            var html = "";
+                                            for(var i=0;i<areaData.length;i++){
+                                                html += '<option value="'+areaData[i]+'">'+areaData[i]+'</option>';
+                                            }
+                                            document.getElementById('s_area').innerHTML = html;
                                         });
-
 
                                     </script>
 
