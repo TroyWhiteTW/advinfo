@@ -6,6 +6,7 @@ $isLogin = !empty($_SESSION['user']);
 <?php
 
 $hasProid = !empty($_GET['proid']);// 從 GET 取得產品 id
+$proid = 0;
 
 if ($hasProid) {
 
@@ -131,7 +132,7 @@ if ($hasProid) {
 
                                         <?php
                                         if ($product['stock'] > 0) {
-                                            echo '<select name="" id="" >';
+                                            echo '<select name="" id="sc" >';
                                             for ($i = 1; $i <= $product['stock']; $i++) {
                                                 echo '<option value="' . $i . '">' . $i . '</option>';
                                                 if ($i == 10) {
@@ -146,8 +147,35 @@ if ($hasProid) {
 
                                     </div>
                                     <div class="buy-btn-area">
-                                        <div class="buy-btn">加入購物車</div>
-                                        <div class="buy-btn">直接購買</div>
+                                        <div id="addCart" class="buy-btn">加入購物車</div>
+                                        <script>
+                                            $('#addCart').click(function () {
+                                                $.ajax({
+                                                    url: "./add_cart.php",
+                                                    type: 'POST',
+                                                    data: {
+                                                        proid:<?= $proid?>,
+                                                        count: $('#sc').val()
+                                                    },
+                                                    error: function () {
+                                                        alert('發生錯誤');
+                                                    },
+                                                    success: function (response) {
+                                                        alert(response);
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                        <form method="post" action="cart_1.php">
+                                            <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
+                                            <input id="purchaseCount" name="count" value="" hidden="hidden">
+                                            <input type="submit" class="buy-btn" value="直接購買">
+                                        </form>
+                                        <script>
+                                            $('#sc').change(function () {
+                                                $('#purchaseCount').val($('#sc').val());
+                                            });
+                                        </script>
                                     </div>
                                     <div class="pay-way">可付款方式：</div>
                                     <div class="pay-icon"><img src="img/visa.png" alt=""></div>

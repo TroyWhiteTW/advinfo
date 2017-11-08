@@ -260,12 +260,12 @@ $result = mysqli_query($conn, $sql);
                                             "金門縣": ["金城鎮", "金湖鎮", "金沙鎮", "金寧鄉", "烈嶼鄉", "烏坵鄉"],
                                             "連江縣": ["南竿鄉", "北竿鄉", "莒光鄉", "東引鄉"]
                                         };
-                                        
+
                                         document.getElementById('s_city').addEventListener('change', function (e) {
                                             var areaData = areaObj[e.target.value];
                                             var html = "";
-                                            for(var i=0;i<areaData.length;i++){
-                                                html += '<option value="'+areaData[i]+'">'+areaData[i]+'</option>';
+                                            for (var i = 0; i < areaData.length; i++) {
+                                                html += '<option value="' + areaData[i] + '">' + areaData[i] + '</option>';
                                             }
                                             document.getElementById('s_area').innerHTML = html;
                                         });
