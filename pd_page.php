@@ -120,7 +120,7 @@ if ($hasProid) {
                                 <div class="product-tittle"><?php echo $product['proname']; ?></div>
                                 <div class="product-info"><?php echo $product['prointro']; ?></div>
                                 <div style="margin-top:10px;">
-                                    <div class="price-unit">NTS</div>
+                                    <div class="price-unit">NT$</div>
                                     <div class="price-big"><?php echo $product['price']; ?></div>
                                     <div class="goods">庫存數量：<?php echo $product['stock']; ?></div>
                                 </div>
@@ -129,11 +129,16 @@ if ($hasProid) {
                                 <div style="margin-top:10px;">
                                     <div class="number">數量
                                         <select name="" id="">
-                                            <option selected="selected" value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="3">4</option>
-                                            <option value="3">5</option>
+                                            <option selected="selected" value="0">0</option>
+
+                                            <?php
+                                            if ($product['stock'] > 0) {
+                                                for ($i = 1; $i <= $product['stock']; $i++) {
+                                                    echo '<option value="' . $i . '">' . $i . '</option>';
+                                                }
+                                            }
+                                            ?>
+
                                         </select>
                                     </div>
                                     <div class="buy-btn-area">
@@ -151,6 +156,10 @@ if ($hasProid) {
 
                             <div class="form-tittle">
                                 <div class="pd-intro-tittle">商品介紹</div>
+                                <div><?php echo $product['prodetail']; ?></div>
+                            </div>
+
+                            <div class="form-tittle">
                                 <img src="img/pd_01.jpg" alt="" width="100%">
                             </div>
 
