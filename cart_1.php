@@ -7,6 +7,7 @@ $isLogin = !empty($_SESSION['user']);
 // 產品分類
 $sql = "select * from proclass where parent = 0 order by no";
 $result = mysqli_query($conn, $sql);
+$result->close();
 //if (mysqli_num_rows($result) > 0) {
 //    while ($row = mysqli_fetch_assoc($result)) {
 //        $proclass[] = array(
@@ -19,6 +20,21 @@ $result = mysqli_query($conn, $sql);
 //    echo 'E1';
 //    return;
 //}
+
+//從購物車取得商品資訊
+$sql_pk = "\"(";
+if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
+    $keys = array_keys($_SESSION['shop_cart']);
+    foreach ($keys as $v) {
+        $sql_pk .= $v . ",";
+    }
+    $sql_pk = substr($sql_pk, 0, -1);
+    $sql_pk .= ")\";";
+}
+$sql_pro_cart = "SELECT * FROM products WHERE proid IN " . $sql_pk;
+$rs_cart = mysqli_query($conn, $sql_pro_cart);
+var_dump(sqlite_fetch_object($rs_cart));
+return;
 ?>
 <!doctype html>
 <html>
