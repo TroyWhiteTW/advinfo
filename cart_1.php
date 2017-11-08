@@ -22,19 +22,19 @@ $result->close();
 //}
 
 //從購物車取得商品資訊
-$sql_pk = "\"(";
+
 if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
     $keys = array_keys($_SESSION['shop_cart']);
+    $sql_pk = "\"(";
     foreach ($keys as $v) {
-        $sql_pk .= $v . ",";
+        $sql_pk .= "\"$v\"" . ",";
     }
     $sql_pk = substr($sql_pk, 0, -1);
     $sql_pk .= ")\";";
+    $sql_pro_cart = "SELECT * FROM products WHERE proid IN " . $sql_pk;
+    $rs_cart = mysqli_query($conn, $sql_pro_cart);
+    var_dump($rs_cart);
 }
-$sql_pro_cart = "SELECT * FROM products WHERE proid IN " . $sql_pk;
-$rs_cart = mysqli_query($conn, $sql_pro_cart);
-var_dump(sqlite_fetch_object($rs_cart));
-return;
 ?>
 <!doctype html>
 <html>
