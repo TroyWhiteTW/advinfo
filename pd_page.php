@@ -128,18 +128,22 @@ if ($hasProid) {
                                 <div class="goods-number">商品編號：<?php echo $product['proid']; ?></div>
                                 <div style="margin-top:10px;">
                                     <div class="number">數量
-                                        <select name="" id="">
-                                            <option selected="selected" value="0">0</option>
 
-                                            <?php
-                                            if ($product['stock'] > 0) {
-                                                for ($i = 1; $i <= $product['stock']; $i++) {
-                                                    echo '<option value="' . $i . '">' . $i . '</option>';
+                                        <?php
+                                        if ($product['stock'] > 0) {
+                                            echo '<select name="" id="" >';
+                                            for ($i = 1; $i <= $product['stock']; $i++) {
+                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                                if ($i == 10) {
+                                                    break;
                                                 }
                                             }
-                                            ?>
+                                            echo '</select >';
+                                        } else {
+                                            echo '<span style="color: red">商品缺貨</span>';
+                                        }
+                                        ?>
 
-                                        </select>
                                     </div>
                                     <div class="buy-btn-area">
                                         <div class="buy-btn">加入購物車</div>
