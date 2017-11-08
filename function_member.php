@@ -58,121 +58,73 @@ $isLogin = !empty($_SESSION['user']);
 
                         <div class="content-article">
 
-                            <div class="form-tittle">帳號：
+                            <div class="form-tittle">
+                                帳號：
                                 <div class="form-input-2"><?php echo $_SESSION['user'][7]; ?></div>
                                 <a href="password_modify.php"><input type="submit" value="修改密碼"></a>
                             </div>
 
-                            <div class="form-tittle">聘級：
+                            <div class="form-tittle">
+                                聘級：
                                 <div class="form-input-2"><?php echo $_SESSION['user'][4]; ?></div>
                             </div>
 
-                            <div class="form-tittle">推薦ID：
+                            <div class="form-tittle">
+                                推薦ID：
                                 <div class="form-input-2"><?php echo $_SESSION['user'][5]; ?></div>
                                 <input type="submit" value="推薦表">
                             </div>
 
-                            <div class="form-tittle">推薦連結：
+                            <div class="form-tittle">
+                                推薦連結：
                                 <div class="form-input-2">資料填入</div>
                                 <input type="submit" value="複製">
                             </div>
 
-                            <div class="form-tittle">姓名：<input name="" id="" type="text" class="input-2"></div>
-
-                            <div class="form-tittle">生日：
-                                <select name="" id="">
-                                    <option selected="selected" value="0">請選擇年</option>
-                                    <option value="1">2000</option>
-                                    <option value="2">1999</option>
-                                    <option value="3">1998</option>
-                                    <option value="4">1997</option>
-                                    <option value="5">1996</option>
-                                    <option value="6">1995</option>
-                                    <option value="7">1994</option>
-                                    <option value="8">1993</option>
-                                    <option value="9">1992</option>
-                                    <option value="10">1991</option>
-                                    <option value="11">1990</option>
-                                    <option value="12">1989</option>
-                                    <option value="13">1988</option>
-                                    <option value="14">1987</option>
-                                    <option value="15">1986</option>
-                                    <option value="16">1985</option>
-                                    <option value="17">1984</option>
-                                    <option value="18">1983</option>
-                                    <option value="19">1982</option>
-                                    <option value="20">1981</option>
-                                    <option value="21">1980</option>
-                                </select>
-                                <select name="" id="">
-                                    <option selected="selected" value="0">請選擇月</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                                <select name="" id="">
-                                    <option selected="selected" value="0">請選擇日</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="24">24</option>
-                                    <option value="25">25</option>
-                                    <option value="26">26</option>
-                                    <option value="27">27</option>
-                                    <option value="28">28</option>
-                                    <option value="29">29</option>
-                                    <option value="30">30</option>
-                                    <option value="31">31</option>
-                                </select>
+                            <div class="form-tittle">
+                                姓名：
+                                <div class="form-input-2"><?php echo $_SESSION['user'][2]; ?></div>
                             </div>
 
-                            <div class="form-tittle">性別：：<input type="radio" value="male" name="sex">男<input
-                                        type="radio"
-                                        value="femal"
-                                        name="sex">女
+                            <div class="form-tittle">
+                                生日：
+                                <div class="form-input-2"><?php echo $_SESSION['user'][6]; ?></div>
                             </div>
 
-                            <div class="form-tittle">電子信箱：<input name="" id="" type="text" class="input-2"></div>
+                            <div class="form-tittle">
+                                性別：
+                                <div class="form-input-2"><?php
+                                    switch ($_SESSION['user'][3]) {
+                                        case 'M':
+                                            echo '男';
+                                            break;
+                                        case 'F':
+                                            echo '女';
+                                            break;
+                                    }
+                                    ?></div>
+                            </div>
 
-                            <div class="form-tittle">聯繫電話：<input name="" id="" type="text" class="input-2"></div>
+                            <div class="form-tittle">
+                                電子信箱：<input name="" id="" type="text" class="input-2">
+                            </div>
 
-                            <div class="form-tittle"><span style="color:red;">*</span>手機：
-                                <input name="" id="" type="text" class="input-2">
+                            <div class="form-tittle">
+                                聯繫電話：<input name="" id="" type="text" class="input-2">
+                            </div>
+
+                            <div class="form-tittle">
+                                <span style="color:red;">*</span>
+                                手機：<input name="" id="" type="text" class="input-2">
                                 <input type="submit" value="驗證手機">
                             </div>
 
-                            <div class="form-tittle"><span style="color:red;">*</span>聯繫地址：<input type="checkbox"
-                                                                                                  checked="checked">台澎金馬<span
-                                        style="color:red; font-size:12px;">(預設勾選)</span>
+                            <div class="form-tittle">
+
+                                <span style="color:red;">*</span>
+                                聯繫地址：
+                                <input type="checkbox" checked="checked">台澎金馬
+                                <span style="color:red; font-size:12px;">(預設勾選)</span>
                                 <div class="form-tittle">
                                     <select name="" id="">
                                         <option selected="selected" value="0">請選擇縣市</option>
@@ -185,9 +137,17 @@ $isLogin = !empty($_SESSION['user']);
                                         <option value="2">C</option>
                                     </select>
                                 </div>
+
                                 <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
-                                <div class="form-tittle">統一編號：<input name="" id="" type="text" class="input-2"></div>
-                                <div class="form-tittle">公司抬頭：<input name="" id="" type="text" class="input-2"></div>
+
+                            </div>
+
+                            <div class="form-tittle">
+                                統一編號：<input name="" id="" type="text" class="input-2">
+                            </div>
+
+                            <div class="form-tittle">
+                                公司抬頭：<input name="" id="" type="text" class="input-2">
                             </div>
 
                         </div>
