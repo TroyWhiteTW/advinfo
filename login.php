@@ -71,7 +71,7 @@ $result = mysqli_query($conn, $sql);
 
                                     <tr>
                                         <td class="td-04">會員帳號</td>
-                                        <td><input type="text" name="account" class="input-4"><a
+                                        <td><input type="text" name="email" class="input-4"><a
                                                     href="login_forget1.php"><span> 忘記帳號</span></a></td>
                                     </tr>
 
@@ -240,7 +240,7 @@ $result = mysqli_query($conn, $sql);
         var isDataCorrect = true;
         var errorMessage = "";
 
-        var account = $('input[name="account"]').val().trim();
+        var account = $('input[name="email"]').val().trim();
         var password = $('input[name="password"]').val().trim();
         var validate_code = $('input[name="validate_code"]').val().trim();
 

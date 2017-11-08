@@ -62,35 +62,43 @@ $result = mysqli_query($conn, $sql);
 
                 </div>
 
-                <div class="content-area">
+                <?php if ($isLogin): ?>
 
-                    <div class="content-article">
+                    <div class="content-area">
 
-                        <div class="login-area">
+                        <div class="content-article">
 
-                            <div class="login-tittle">修改密碼</div>
+                            <div class="login-area">
 
-                            <form id="password_modify_form" action="password_reset.php" method="post">
+                                <div class="login-tittle">修改密碼</div>
 
-                                <div class="login-input">
-                                    請輸入新密碼<input type="password" name="password" class="input-4">
-                                </div>
+                                <form id="password_modify_form" action="password_reset.php" method="post">
 
-                                <div class="login-input">
-                                    請確認新密碼<input type="password" name="password_c" class="input-4">
-                                </div>
+                                    <div class="login-input">
+                                        請輸入新密碼<input type="password" name="password" class="input-4">
+                                    </div>
 
-                                <div class="login-info">
-                                    <input type="submit" class="login-btn" value="確認送出">
-                                </div>
+                                    <div class="login-input">
+                                        請確認新密碼<input type="password" name="password_c" class="input-4">
+                                    </div>
 
-                            </form>
+                                    <div class="login-info">
+                                        <input type="submit" class="login-btn" value="確認送出">
+                                    </div>
+
+                                </form>
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                <?php else: ?>
+
+                    <h3>請先登入</h3>
+
+                <?php endif; ?>
 
             </div>
 
@@ -202,31 +210,34 @@ $result = mysqli_query($conn, $sql);
 
         var isDataCorrect = true;
 
+        var errorMessage = "";
+
         var password = $('input[name="password"]').val().trim();
         var password_c = $('input[name="password_c"]').val().trim();
 
         //檢查密碼格式
         if (password.length < 8 || password.length > 20) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，字數必須在8-20之間');
+            errorMessage += '密碼格式錯誤，字數必須在8-20之間。\n';
         }
         if (!password.match(/[0-9]/) || !password.match(/[a-zA-Z]/)) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，必須至少擁有一個數字及英文');
+            errorMessage += '密碼格式錯誤，必須至少擁有一個數字及英文。\n';
         }
         if (password.match(/\s/)) {
             isDataCorrect = false;
-            alert('密碼格式錯誤，請勿包含空白鍵。');
+            errorMessage += '密碼格式錯誤，請勿包含空白鍵。\n';
         }
         if (password !== password_c) {
             isDataCorrect = false;
-            alert('密碼確認必須與密碼相同');
+            errorMessage += '密碼確認必須與密碼相同。\n';
         }
         if (password.length === 0) {
             isDataCorrect = false;
-            alert('請輸入密碼。');
+            errorMessage += '請輸入密碼。\n';
         }
         if (isDataCorrect === false) {
+            alert(errorMessage);
             e.preventDefault();
         }
     })

@@ -12,6 +12,9 @@ checkData($_POST, $errorMessage);
 
 if (empty($errorMessage)) {
 
+    //組合生日字串
+    $_POST['birthday'] = $_POST['birthday_y'] . '-' . $_POST['birthday_m'] . '-' . $_POST['birthday_d'];
+
     //檢查驗證碼
     if ($_POST['validate_code'] !== $_SESSION['check_word']) {
         echo "驗證碼錯誤，3秒後跳轉回登入頁...";
@@ -20,7 +23,7 @@ if (empty($errorMessage)) {
     }
 
     //比對有無同帳號
-    $sqlCheckAccountExist = 'SELECT * FROM members WHERE account=' . "\"" . $_POST['account'] . "\"";
+    $sqlCheckAccountExist = 'SELECT * FROM members WHERE email=' . "\"" . $_POST['email'] . "\"";
     $rs = mysqli_query($conn, $sqlCheckAccountExist);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
     if (count($row) !== 0) {
@@ -80,7 +83,7 @@ function checkData($post, &$msg)
 {
     foreach ($post as $k => $v) {
         switch ($k) {
-            case 'account':
+            case 'email':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 chechEmail($k, $msg);
@@ -128,6 +131,18 @@ function checkData($post, &$msg)
                 chechEmail($k, $msg);
                 break;
             case 'validate_code':
+                checkEmpty($k, $msg);
+                checkSpace($k, $msg);
+                break;
+            case 'birthday_y':
+                checkEmpty($k, $msg);
+                checkSpace($k, $msg);
+                break;
+            case 'birthday_m':
+                checkEmpty($k, $msg);
+                checkSpace($k, $msg);
+                break;
+            case 'birthday_d':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 break;
@@ -245,17 +260,20 @@ function checkType($k, &$msg)
 function encodeRegisterData($rawDataArray)
 {
     $dataArray = [
-        "account" => "\"\"",
+        'id' => "\"zjttw_" . date("YmdHis", time()) . "\"",
         "password" => "\"\"",
         "name" => "\"\"",
         "gender" => "\"\"",
         "level" => "\"\"",
         "referral" => "\"\"",
+        "birthday" => "\"\"",
         "email" => "\"\"",
         "phone" => "\"\"",
         "mobile" => "\"\"",
         "company_no" => "\"\"",
         "invoice_title" => "\"\"",
+        "city" => "\"\"",
+        "area" => "\"\"",
         "address" => "\"\"",
         "constore" => "\"\"",
         "regtime" => "\"" . date("Y-m-d H:i:s", time()) . "\"",
@@ -269,8 +287,6 @@ function encodeRegisterData($rawDataArray)
         if (!empty($rawDataArray[$k])) {
             if ($k === "password") {
                 $dataArray[$k] = "\"" . password_hash($rawDataArray[$k], PASSWORD_DEFAULT) . "\"";
-            } else if ($k === "email") {
-                $dataArray[$k] = "\"" . $rawDataArray['account'] . "\"";
             } else {
                 $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
             }

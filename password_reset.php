@@ -14,7 +14,7 @@ if (empty($errorMessage)) {
 
     //檢查通過 寫入資料庫
 
-    $sql = 'UPDATE members SET password = ' . "\"" . password_hash($_POST['password'], PASSWORD_DEFAULT) . "\"" . ' WHERE id = ' . $_SESSION['user'][0];
+    $sql = 'UPDATE members SET password=' . "\"" . password_hash($_POST['password'], PASSWORD_DEFAULT) . "\"" . ' WHERE id=' . "\"" . $_SESSION['user'][0] . "\"";
 
     $result = mysqli_query($conn, $sql);
     if ($result === true) {
