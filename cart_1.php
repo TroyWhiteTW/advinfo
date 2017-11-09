@@ -112,46 +112,46 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                             $html = [];
                             $count = count($recordArray);
                             for ($i = 0; $i < $count; $i++) {
-                                $html[] .= '<tr class="td-02">';
+                                $html[] = '<tr class="td-02">';
                                 // 商品名稱
-                                $html[] .= '<td>';
-                                $html[] .= $recordArray[$i]['proname'];
-                                $html[] .= "<br/>\n";
-                                $html[] .= '<span style="color:red;">';
-                                $html[] .= '產品編號：';
-                                $html[] .= $recordArray[$i]['proid'];
-                                $html[] .= '<span style="color:red;">';
-                                $html[] .= '</span>';
-                                $html[] .= '</td>';
+                                $html[] = '<td>';
+                                $html[] = $recordArray[$i]['proname'];
+                                $html[] = "<br/>\n";
+                                $html[] = '<span style="color:red;">';
+                                $html[] = '產品編號：';
+                                $html[] = $recordArray[$i]['proid'];
+                                $html[] = '<span style="color:red;">';
+                                $html[] = '</span>';
+                                $html[] = '</td>';
                                 // 數量
-                                $html[] .= '<td>';
-                                $html[] .= '<select>';
+                                $html[] = '<td>';
+                                $html[] = '<select>';
                                 // select -> option
                                 $optionCount = ($recordArray[$i]['stock'] > 10 ? 10 : $recordArray[$i]['stock']);
                                 for ($j = 1; $j <= $optionCount; $j++) {
                                     if ($j == $_SESSION['shop_cart'][$recordArray[$i]['proid']]) {
-                                        $html[] .= '<option value="' . $j . '" selected>' . $j . '</option>';
+                                        $html[] = '<option value="' . $j . '" selected>' . $j . '</option>';
                                     } else {
-                                        $html[] .= '<option value="' . $j . '">' . $j . '</option>';
+                                        $html[] = '<option value="' . $j . '">' . $j . '</option>';
                                     }
                                 }
                                 // select -> option
-                                $html[] .= '</select>';
-                                $html[] .= '</td>';
+                                $html[] = '</select>';
+                                $html[] = '</td>';
                                 // 價格
-                                $html[] .= '<td>';
-                                $html[] .= $recordArray[$i]['price'];
-                                $html[] .= '</td>';
+                                $html[] = '<td>';
+                                $html[] = $recordArray[$i]['price'];
+                                $html[] = '</td>';
                                 // PV
-                                $html[] .= '<td>';
-                                $html[] .= $recordArray[$i]['PV'];
-                                $html[] .= '</td>';
+                                $html[] = '<td>';
+                                $html[] = $recordArray[$i]['PV'];
+                                $html[] = '</td>';
                                 // 刪除
-                                $html[] .= '<td>';
-                                $html[] .= '<button onclick="deleteProd(this,' . $recordArray[$i]['proid'] . ')" class="glyphicon glyphicon-trash"></button>';
-                                $html[] .= '</td>';
+                                $html[] = '<td>';
+                                $html[] = '<button onclick="deleteProd(this,' . $recordArray[$i]['proid'] . ')" class="glyphicon glyphicon-trash"></button>';
+                                $html[] = '</td>';
 
-                                $html[] .= '</tr>';
+                                $html[] = '</tr>';
                             }
 
                             echo implode("\n", $html);
