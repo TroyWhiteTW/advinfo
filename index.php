@@ -69,6 +69,7 @@ if (mysqli_num_rows($result) > 0) {
 ?>
 <!doctype html>
 <html>
+
 <head>
 
     <?php include 'http_head.php'; ?>
@@ -85,214 +86,10 @@ if (mysqli_num_rows($result) > 0) {
 
         <div class="row content no-margin-rl ">
 
-            <div class="col-xs-2 left-area hidden-xs " style="">
-                <div class=" left-move ">
+            <div class="col-sm-2 left-area hidden-xs " style="">
 
+                <?php include 'side_bar.php'; ?>
 
-                    <div class="logo ">
-                        <a href="index.html">
-                            <img src="img/logo.jpg" style="" alt="">
-                        </a>
-                    </div>
-
-                    <div class="menu-area">
-
-                        <ul class="fullheight" style="overflow:auto;">
-
-
-                            <li>
-                                <a class="sidebar-menu">
-                                    套裝組合
-                                    <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                </a>
-                                <ul class="sidebar-sub">
-                                    <li>
-                                        <a class="sidebar-level2" href="#">
-                                            次類別一
-                                            <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                        </a>
-                                        <ul class="sidebar-sub3 ">
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別一
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別二
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                    <li>
-                                        <a class="sidebar-level2" href="#">
-                                            次類別二
-                                            <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                        </a>
-                                        <ul class="sidebar-sub3 ">
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別一
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別二
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-
-
-                            <li>
-                                <a class="sidebar-menu">
-                                    膠囊類
-                                    <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                </a>
-                                <ul class="sidebar-sub">
-                                    <li>
-                                        <a class="sidebar-level2" href="#">
-                                            次類別一
-                                            <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                        </a>
-                                        <ul class="sidebar-sub3 ">
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別一
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別二
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-
-                            <li>
-                                <a class="sidebar-menu">
-                                    萃取液
-                                    <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                </a>
-                                <ul class="sidebar-sub">
-                                    <li>
-                                        <a class="sidebar-level2" href="#">
-                                            次類別一
-                                            <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                        </a>
-                                        <ul class="sidebar-sub3 ">
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別一
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別二
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-                            <li>
-                                <a class="sidebar-menu">
-                                    健康器材
-                                    <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                </a>
-                                <ul class="sidebar-sub">
-                                    <li>
-                                        <a class="sidebar-level2" href="#">
-                                            次類別一
-                                            <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                        </a>
-                                        <ul class="sidebar-sub3 ">
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別一
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別二
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-                            <li>
-                                <a class="sidebar-menu">
-                                    養身食品
-                                    <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                </a>
-                                <ul class="sidebar-sub">
-                                    <li>
-                                        <a class="sidebar-level2" href="#">
-                                            次類別一
-                                            <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                        </a>
-                                        <ul class="sidebar-sub3 ">
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別一
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別二
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-                            <li>
-                                <a class="sidebar-menu">
-                                    滴丸
-                                    <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                </a>
-                                <ul class="sidebar-sub">
-                                    <li>
-                                        <a class="sidebar-level2" href="#">
-                                            次類別一
-                                            <i class="fa fa-angle-right angle-right" aria-hidden="true"></i>
-                                        </a>
-                                        <ul class="sidebar-sub3 ">
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別一
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    第三層類別二
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-
-                        </ul>
-                    </div>
-
-                </div>
             </div>
 
             <div class="col-sm-10">
@@ -317,7 +114,7 @@ if (mysqli_num_rows($result) > 0) {
                     echo '<div class="product-area">';
                     echo '<div class="tag" style="background:' . $protag['color'] . '">';
                     echo '<div class="tag-name">' . $protag['name'] . '</div>';
-                    echo '<div class="more"><a href="pd_query.html">more</a></div>';
+                    echo '<div class="more"><a href="pd_query.php">more</a></div>';
                     echo '</div>';
 
                     echo '<div id="sildes-portfolio" class="owl-carousel owl-theme " style="padding:0 8px;">';
@@ -325,7 +122,7 @@ if (mysqli_num_rows($result) > 0) {
                     foreach ($products[$tagno] as $product) {
                         echo '<div class="item">';
                         echo '<div class="pd-carousel" >';
-                        echo '<a href="pd_page.html">';
+                        echo '<a href="pd_page.php">';
                         // 搜尋該商品的主圖
                         $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
                         $result = mysqli_query($conn, $sql);

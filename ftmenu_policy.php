@@ -4,22 +4,17 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
+// Page資料
+$sql = "select * from pages where `name` = '服務政策'";
+$pages = array();
 $result = mysqli_query($conn, $sql);
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
-// TODO: 待補側邊攔，目前是 hard code
+if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+} else {
+    // 錯誤 查詢結果
+    echo 'E1';
+    return;
+}
 ?>
 <!doctype html>
 <html>
@@ -56,7 +51,7 @@ $result = mysqli_query($conn, $sql);
 
                         <li><img src="img/process_icon.png" alt=""></li>
 
-                        <li><a href="login.php">會員登入</a></li>
+                        <li><a href="">服務政策</a></li>
 
                     </ul>
 
@@ -64,12 +59,10 @@ $result = mysqli_query($conn, $sql);
 
                 <div class="content-area">
 
-                    <div class="content-article"></div>
+                    <div class="content-article"><?php echo $row['content']; ?></div>
 
                     <div class="btn-area">
-
-                        <a href="index.php"><input type="submit" value="返回首頁" ></a>
-
+                        <a href="index.php"><input type="submit" value="返回首頁"></a>
                     </div>
 
                 </div>
