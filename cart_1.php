@@ -4,37 +4,27 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
-$result = mysqli_query($conn, $sql);
-$result->close();
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
+
+$recordArray = [];
 
 //從購物車取得商品資訊
-
 if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
     $keys = array_keys($_SESSION['shop_cart']);
-    $sql_pk = "\"(";
+    $sql_pk = "(";
     foreach ($keys as $v) {
-        $sql_pk .= "\"$v\"" . ",";
+        $sql_pk .= "'$v'" . ",";
     }
     $sql_pk = substr($sql_pk, 0, -1);
-    $sql_pk .= ")\";";
+    $sql_pk .= ")";
     $sql_pro_cart = "SELECT * FROM products WHERE proid IN " . $sql_pk;
     $rs_cart = mysqli_query($conn, $sql_pro_cart);
-    var_dump($rs_cart);
+//    var_dump($sql_pro_cart);
+//    var_dump(mysqli_num_rows($rs_cart));
+    while ($record = mysqli_fetch_assoc($rs_cart)) {
+        $recordArray[] = $record;
+    }
 }
+
 ?>
 <!doctype html>
 <html>
@@ -83,19 +73,19 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                         <ul>
 
-                            <li><a href="cart_1.php">1.確認商品</a></li>
+                            <li class="btn btn-danger disabled">1.確認商品</li>
 
                             <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><a href="cart_2.php">2.收件人資訊</a></li>
+                            <li class="btn btn-default disabled">2.收件人資訊</li>
 
                             <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><a href="cart_3.php">3.確認訂單資料</a></li>
+                            <li class="btn btn-default disabled">3.確認訂單資料</li>
 
                             <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><a href="cart_4.php">4.完成確認</a></li>
+                            <li class="btn btn-default disabled">4.完成確認</li>
 
                         </ul>
 
@@ -117,51 +107,78 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                 <td>刪除</td>
                             </tr>
 
-                            <tr class="td-02">
-                                <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span style="color:red;">(產品編號)</span><br><br></td>
-                                <td><select>
-                                        <option value="1" selected>1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select></td>
-                                <td>$200</td>
-                                <td>199</td>
-                                <td><img src="img/trash.png" alt=""></td>
-                            </tr>
+                            <?php
 
-                            <tr class="td-02">
-                                <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span style="color:red;">(產品編號)</span><br><br></td>
-                                <td><select>
-                                        <option value="1" selected>1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select></td>
-                                <td>$200</td>
-                                <td>199</td>
-                                <td><img src="img/trash.png" alt=""></td>
-                            </tr>
+                            $html = [];
+                            $count = count($recordArray);
+                            for ($i = 0; $i < $count; $i++) {
+                                $html[] .= '<tr class="td-02">';
+                                // 商品名稱
+                                $html[] .= '<td>';
+                                $html[] .= $recordArray[$i]['proname'];
+                                $html[] .= "<br/>\n";
+                                $html[] .= '<span style="color:red;">';
+                                $html[] .= '產品編號：';
+                                $html[] .= $recordArray[$i]['proid'];
+                                $html[] .= '<span style="color:red;">';
+                                $html[] .= '</span>';
+                                $html[] .= '</td>';
+                                // 數量
+                                $html[] .= '<td>';
+                                $html[] .= '<select>';
+                                // select -> option
+                                $optionCount = ($recordArray[$i]['stock'] > 10 ? 10 : $recordArray[$i]['stock']);
+                                for ($j = 1; $j <= $optionCount; $j++) {
+                                    if ($j == $_SESSION['shop_cart'][$recordArray[$i]['proid']]) {
+                                        $html[] .= '<option value="' . $j . '" selected>' . $j . '</option>';
+                                    } else {
+                                        $html[] .= '<option value="' . $j . '">' . $j . '</option>';
+                                    }
+                                }
+                                // select -> option
+                                $html[] .= '</select>';
+                                $html[] .= '</td>';
+                                // 價格
+                                $html[] .= '<td>';
+                                $html[] .= $recordArray[$i]['price'];
+                                $html[] .= '</td>';
+                                // PV
+                                $html[] .= '<td>';
+                                $html[] .= $recordArray[$i]['PV'];
+                                $html[] .= '</td>';
+                                // 刪除
+                                $html[] .= '<td>';
+                                $html[] .= '<button onclick="deleteProd(this,' . $recordArray[$i]['proid'] . ')" class="glyphicon glyphicon-trash"></button>';
+                                $html[] .= '</td>';
 
-                            <tr class="td-02">
-                                <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span style="color:red;">(產品編號)</span><br><br></td>
-                                <td><select>
-                                        <option value="1" selected>1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select></td>
-                                <td>$200</td>
-                                <td>199</td>
-                                <td><img src="img/trash.png" alt=""></td>
-                            </tr>
+                                $html[] .= '</tr>';
+                            }
+
+                            echo implode("\n", $html);
+
+                            ?>
 
                             </tbody>
 
                         </table>
+                        <script>
+                            function deleteProd(node, id) {
+                                $.ajax({
+                                    url: "./delete_prod.php",
+                                    type: 'POST',
+                                    data: {
+                                        proid: id
+                                    },
+                                    error: function () {
+                                        alert('發生錯誤');
+                                    },
+                                    success: function (response) {
+                                        alert('成功刪除');
+                                        node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
+                                    }
+                                });
+                            }
+                        </script>
 
                         <div class="pv-area">
                             <div class="pv-textarea">商品總PV</div>
