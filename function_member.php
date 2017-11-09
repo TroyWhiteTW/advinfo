@@ -56,121 +56,128 @@ $isLogin = !empty($_SESSION['user']);
                             </ul>
                         </div>
 
-                        <div class="content-article">
+                        <form method="post" action="memberUpdate.php">
 
-                            <div class="form-tittle">
-                                帳號：
-                                <div class="form-input-2"><?php echo $_SESSION['user'][7]; ?></div>
-                                <a href="password_modify.php"><input type="submit" value="修改密碼"></a>
-                            </div>
+                            <div class="content-article">
 
-                            <div class="form-tittle">
-                                聘級：
-                                <div class="form-input-2"><?php echo $_SESSION['user'][4]; ?></div>
-                            </div>
-
-                            <div class="form-tittle">
-                                推薦ID：
-                                <div class="form-input-2"><?php echo $_SESSION['user'][5]; ?></div>
-                                <input type="submit" value="推薦表">
-                            </div>
-
-                            <div class="form-tittle">
-                                推薦連結：
-                                <div class="form-input-2">資料填入</div>
-                                <input type="submit" value="複製">
-                            </div>
-
-                            <div class="form-tittle">
-                                姓名：
-                                <div class="form-input-2"><?php echo $_SESSION['user'][2]; ?></div>
-                            </div>
-
-                            <div class="form-tittle">
-                                生日：
-                                <div class="form-input-2"><?php echo $_SESSION['user'][6]; ?></div>
-                            </div>
-
-                            <div class="form-tittle">
-                                性別：
-                                <div class="form-input-2"><?php
-                                    switch ($_SESSION['user'][3]) {
-                                        case 'M':
-                                            echo '男';
-                                            break;
-                                        case 'F':
-                                            echo '女';
-                                            break;
-                                    }
-                                    ?></div>
-                            </div>
-
-                            <div class="form-tittle">
-                                電子信箱：<input name="" id="" type="text" class="input-2">
-                            </div>
-
-                            <div class="form-tittle">
-                                聯繫電話：<input name="" id="" type="text" class="input-2">
-                            </div>
-
-                            <div class="form-tittle">
-                                <span style="color:red;">*</span>
-                                手機：<input name="" id="" type="text" class="input-2">
-                                <input type="submit" value="驗證手機">
-                            </div>
-
-                            <div class="form-tittle">
-
-                                <span style="color:red;">*</span>
-                                聯繫地址：
-                                <input type="checkbox" checked="checked">台澎金馬
-                                <span style="color:red; font-size:12px;">(預設勾選)</span>
                                 <div class="form-tittle">
-                                    <select name="" id="">
-                                        <option selected="selected" value="0">請選擇縣市</option>
-                                        <option value="1">B</option>
-                                        <option value="2">C</option>
-                                    </select>
-                                    <select name="" id="">
-                                        <option selected="selected" value="0">請選擇區別</option>
-                                        <option value="1">B</option>
-                                        <option value="2">C</option>
-                                    </select>
+                                    帳號：
+                                    <div class="form-input-2"><?php echo $_SESSION['user'][7]; ?></div>
+                                    <a class="btn btn-default btn-xs" href="password_modify.php">修改密碼</a>
                                 </div>
 
-                                <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+                                <div class="form-tittle">
+                                    聘級：
+                                    <div class="form-input-2"><?php echo $_SESSION['user'][4]; ?></div>
+                                </div>
+
+                                <div class="form-tittle">
+                                    推薦ID：
+                                    <div class="form-input-2"><?php echo $_SESSION['user'][5]; ?></div>
+                                    <a class="btn btn-default btn-xs" href="">推薦表</a>
+                                </div>
+
+                                <div class="form-tittle">
+                                    推薦連結：
+                                    <div class="form-input-2">資料填入</div>
+                                    <a class="btn btn-default btn-xs" href="">複製</a>
+                                </div>
+
+                                <div class="form-tittle">
+                                    姓名：
+                                    <div class="form-input-2"><?php echo $_SESSION['user'][2]; ?></div>
+                                </div>
+
+                                <div class="form-tittle">
+                                    生日：
+                                    <div class="form-input-2"><?php echo $_SESSION['user'][6]; ?></div>
+                                </div>
+
+                                <div class="form-tittle">
+                                    性別：
+                                    <div class="form-input-2"><?php
+                                        switch ($_SESSION['user'][3]) {
+                                            case 'M':
+                                                echo '男';
+                                                break;
+                                            case 'F':
+                                                echo '女';
+                                                break;
+                                        }
+                                        ?></div>
+                                </div>
+
+                                <div class="form-tittle">
+                                    電子信箱：<input name="" id="" type="text" class="input-2">
+                                </div>
+
+                                <div class="form-tittle">
+                                    聯繫電話：<input name="" id="" type="text" class="input-2">
+                                </div>
+
+                                <div class="form-tittle">
+                                    <span style="color:red;">*</span>
+                                    手機：<input name="" id="" type="text" class="input-2">
+                                    <a class="btn btn-default btn-xs" href="">驗證手機</a>
+                                </div>
+
+                                <div class="form-tittle">
+
+                                    <span style="color:red;">*</span>
+                                    聯繫地址：
+                                    <input type="checkbox" checked="checked">台澎金馬
+                                    <span style="color:red; font-size:12px;">(預設勾選)</span>
+                                    <div class="form-tittle">
+                                        <select name="" id="">
+                                            <option selected="selected" value="0">請選擇縣市</option>
+                                            <option value="1">B</option>
+                                            <option value="2">C</option>
+                                        </select>
+                                        <select name="" id="">
+                                            <option selected="selected" value="0">請選擇區別</option>
+                                            <option value="1">B</option>
+                                            <option value="2">C</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+
+                                </div>
+
+                                <div class="form-tittle">
+                                    統一編號：<input name="" id="" type="text" class="input-2">
+                                </div>
+
+                                <div class="form-tittle">
+                                    公司抬頭：<input name="" id="" type="text" class="input-2">
+                                </div>
 
                             </div>
 
-                            <div class="form-tittle">
-                                統一編號：<input name="" id="" type="text" class="input-2">
+                            <div class="content-article">
+                                <div class="function-area">
+                                    <ul>
+                                        <li><a href=""><input type="button" id="" name="" class="" value="全家取貨門市"></a>
+                                        </li>
+                                        <li><a href=""><input type="button" id="" name="" class="" value="OK取貨門市"></a>
+                                        </li>
+                                        <li><a href=""><input type="button" id="" name="" class="" value="萊爾富取貨門市"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-tittle">門市名稱：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+                                <div class="form-tittle">門市地址：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
                             </div>
 
-                            <div class="form-tittle">
-                                公司抬頭：<input name="" id="" type="text" class="input-2">
+                            <div class="btn-area">
+                                <input type="submit" value="確認提交">
                             </div>
 
-                        </div>
-
-                        <div class="content-article">
-                            <div class="function-area">
-                                <ul>
-                                    <li><a href=""><input type="button" id="" name="" class="" value="全家取貨門市"></a></li>
-                                    <li><a href=""><input type="button" id="" name="" class="" value="OK取貨門市"></a></li>
-                                    <li><a href=""><input type="button" id="" name="" class="" value="萊爾富取貨門市"></a></li>
-                                </ul>
-                            </div>
-                            <div class="form-tittle">門市名稱：
-                                <div class="form-input-2">資料填入</div>
-                            </div>
-                            <div class="form-tittle">門市地址：
-                                <div class="form-input-2">資料填入</div>
-                            </div>
-                        </div>
-
-                        <div class="btn-area">
-                            <a href=""><input type="submit" value="確認提交"></a>
-                        </div>
+                        </form>
 
                     </div>
 
