@@ -4,10 +4,20 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
+//強制開啟 PHP 錯誤訊錫
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
+
+// 引入訂單的 DAO class
+require __DIR__ . '/OrdersDAO.php';
 
 //判斷 SESSION 裡是否有訂單資訊，若無代表是初次進入；若有代表是從後面的頁面返回，幫使用者填入訂單中已有的值
-empty($_SESSION['orders']) ? $orders = new OrdersDAO() : $orders = $_SESSION['orders'];
-empty($_SESSION['order_detail']) ? $orderDetail = new OrderDetailDAO() : $orderDetail = $_SESSION['order_detail'];
+if (empty($_SESSION['orders'])) {
+    $_SESSION['orders'] = serialize(new OrdersDAO());
+}
+$orders = $_SESSION['orders'];
+//echo serialize($orders);
+//return;
 
 //從購物車取得商品資訊
 $recordArray = [];

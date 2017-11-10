@@ -303,7 +303,7 @@ $result = mysqli_query($conn, $sql);
 
                 <a href="cart_2.php"><input type="submit" value="返回上一步"></a>
 
-                <a href="cart_4.php"><input type="submit" value="確認，下一步"></a>
+                <a href="cart_3_to_4.php"><input type="submit" value="確認，下一步"></a>
 
             </div>
 

@@ -198,7 +198,7 @@ $result = mysqli_query($conn, $sql);
 
                     <a href="cart_1.php"><input type="submit" value="返回上一步"></a>
 
-                    <a href="cart_3.php"><input type="submit" value="確認，下一步"></a>
+                    <a href="cart_2_to_3.php"><input type="submit" value="確認，下一步"></a>
 
                 </div>
 
