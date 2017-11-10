@@ -5,9 +5,13 @@ $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
 
-$recordArray = [];
+//判斷 SESSION 裡是否有訂單資訊，若無代表是初次進入；若有代表是從後面的頁面返回，幫使用者填入訂單中已有的值
+empty($_SESSION['orders']) ? $orders = new OrdersDAO() : $orders = $_SESSION['orders'];
+empty($_SESSION['order_detail']) ? $orderDetail = new OrderDetailDAO() : $orderDetail = $_SESSION['order_detail'];
 
 //從購物車取得商品資訊
+$recordArray = [];
+
 if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
     $keys = array_keys($_SESSION['shop_cart']);
     $sql_pk = "(";
@@ -61,239 +65,333 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                         <li><img src="img/process_icon.png" alt=""></li>
 
-                        <li><a href="login.php">會員登入</a></li>
+                        <li><a href="cart_1.php">購物車</a></li>
 
                     </ul>
 
                 </div>
 
-                <div class="content-area">
+                <?php if ($isLogin): ?>
 
-                    <div class="cart-area">
+                    <div class="content-area">
 
-                        <ul>
+                        <div class="cart-area">
 
-                            <li class="btn btn-danger disabled">1.確認商品</li>
+                            <ul>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-danger disabled">1.確認商品</li>
 
-                            <li class="btn btn-default disabled">2.收件人資訊</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">2.收件人資訊</li>
 
-                            <li class="btn btn-default disabled">3.確認訂單資料</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">3.確認訂單資料</li>
 
-                            <li class="btn btn-default disabled">4.完成確認</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                        </ul>
+                                <li class="btn btn-default disabled">4.完成確認</li>
 
-                    </div>
+                            </ul>
 
-                    <div class="content-article">
+                        </div>
 
-                        <div class="form-name">購物車</div>
+                        <form method="post" action="cart_1_to_2.php">
 
-                        <table width="100%" border="1" style="margin-top:10px;">
+                            <!-- 購物內容 -->
+                            <div class="content-article">
 
-                            <tbody>
+                                <div class="form-name">購物車</div>
 
-                            <tr class="tb-tittle">
-                                <td>商品名稱</td>
-                                <td>數量</td>
-                                <td>價格</td>
-                                <td>PV</td>
-                                <td>刪除</td>
-                            </tr>
+                                <table width="100%" border="1" style="margin-top:10px;">
 
-                            <?php
+                                    <tbody>
 
-                            $html = [];
-                            $count = count($recordArray);
-                            for ($i = 0; $i < $count; $i++) {
-                                $html[] = '<tr class="td-02">';
-                                // 商品名稱
-                                $html[] = '<td>';
-                                $html[] = $recordArray[$i]['proname'];
-                                $html[] = "<br/>\n";
-                                $html[] = '<span style="color:red;">';
-                                $html[] = '產品編號：';
-                                $html[] = $recordArray[$i]['proid'];
-                                $html[] = '<span style="color:red;">';
-                                $html[] = '</span>';
-                                $html[] = '</td>';
-                                // 數量
-                                $html[] = '<td>';
-                                $html[] = '<select>';
-                                // select -> option
-                                $optionCount = ($recordArray[$i]['stock'] > 10 ? 10 : $recordArray[$i]['stock']);
-                                for ($j = 1; $j <= $optionCount; $j++) {
-                                    if ($j == $_SESSION['shop_cart'][$recordArray[$i]['proid']]) {
-                                        $html[] = '<option value="' . $j . '" selected>' . $j . '</option>';
-                                    } else {
-                                        $html[] = '<option value="' . $j . '">' . $j . '</option>';
+                                    <tr class="tb-tittle">
+                                        <td>商品名稱</td>
+                                        <td>數量</td>
+                                        <td>價格</td>
+                                        <td>PV</td>
+                                        <td>刪除</td>
+                                    </tr>
+
+                                    <?php
+
+                                    $html = [];
+                                    $count = count($recordArray);
+                                    for ($i = 0; $i < $count; $i++) {
+                                        $html[] = '<tr class="td-02">';
+                                        // 商品名稱
+                                        $html[] = '<td>';
+                                        $html[] = $recordArray[$i]['proname'];
+                                        $html[] = "<br/>\n";
+                                        $html[] = '<span style="color:red;">';
+                                        $html[] = '產品編號：';
+                                        $html[] = $recordArray[$i]['proid'];
+                                        $html[] = '<span style="color:red;">';
+                                        $html[] = '</span>';
+                                        $html[] = '</td>';
+                                        // 數量
+                                        $html[] = '<td>';
+                                        $html[] = '<select>';
+                                        // select -> option
+                                        $optionCount = ($recordArray[$i]['stock'] > 10 ? 10 : $recordArray[$i]['stock']);
+                                        for ($j = 1; $j <= $optionCount; $j++) {
+                                            if ($j == $_SESSION['shop_cart'][$recordArray[$i]['proid']]) {
+                                                $html[] = '<option value="' . $j . '" selected>' . $j . '</option>';
+                                            } else {
+                                                $html[] = '<option value="' . $j . '">' . $j . '</option>';
+                                            }
+                                        }
+                                        // select -> option
+                                        $html[] = '</select>';
+                                        $html[] = '</td>';
+                                        // 價格
+                                        $html[] = '<td>';
+                                        $html[] = $recordArray[$i]['price'];
+                                        $html[] = '</td>';
+                                        // PV
+                                        $html[] = '<td>';
+                                        $html[] = $recordArray[$i]['PV'];
+                                        $html[] = '</td>';
+                                        // 刪除
+                                        $html[] = '<td>';
+                                        $html[] = '<button onclick="deleteProd(this,' . $recordArray[$i]['proid'] . ')" class="glyphicon glyphicon-trash"></button>';
+                                        $html[] = '</td>';
+
+                                        $html[] = '</tr>';
                                     }
-                                }
-                                // select -> option
-                                $html[] = '</select>';
-                                $html[] = '</td>';
-                                // 價格
-                                $html[] = '<td>';
-                                $html[] = $recordArray[$i]['price'];
-                                $html[] = '</td>';
-                                // PV
-                                $html[] = '<td>';
-                                $html[] = $recordArray[$i]['PV'];
-                                $html[] = '</td>';
-                                // 刪除
-                                $html[] = '<td>';
-                                $html[] = '<button onclick="deleteProd(this,' . $recordArray[$i]['proid'] . ')" class="glyphicon glyphicon-trash"></button>';
-                                $html[] = '</td>';
 
-                                $html[] = '</tr>';
-                            }
+                                    echo implode("\n", $html);
 
-                            echo implode("\n", $html);
+                                    ?>
 
-                            ?>
+                                    </tbody>
 
-                            </tbody>
-
-                        </table>
-                        <script>
-                            function deleteProd(node, id) {
-                                $.ajax({
-                                    url: "./delete_prod.php",
-                                    type: 'POST',
-                                    data: {
-                                        proid: id
-                                    },
-                                    error: function () {
-                                        alert('發生錯誤');
-                                    },
-                                    success: function (response) {
-                                        alert('成功刪除');
-                                        node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
+                                </table>
+                                <script>
+                                    function deleteProd(node, id) {
+                                        $.ajax({
+                                            url: "./delete_prod.php",
+                                            type: 'POST',
+                                            data: {
+                                                proid: id
+                                            },
+                                            error: function () {
+                                                alert('發生錯誤');
+                                            },
+                                            success: function (response) {
+                                                alert('成功刪除');
+                                                node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
+                                            }
+                                        });
                                     }
-                                });
-                            }
-                        </script>
+                                </script>
 
-                        <div class="pv-area">
-                            <div class="pv-textarea">商品總PV</div>
-                            <div class="pv-textarea">XXXX</div>
-                            <div class="pv-textarea">PV</div>
-                        </div>
+                                <div class="pv-area">
+                                    <div class="pv-textarea">商品總PV</div>
+                                    <div class="pv-textarea">XXXX</div>
+                                    <div class="pv-textarea">PV</div>
+                                </div>
 
-                        <div class="price-area">
-                            <div class="price-textarea">商品總金額</div>
-                            <div class="price-textarea">XXXX</div>
-                            <div class="price-textarea">元</div>
-                        </div>
+                                <div class="price-area">
+                                    <div class="price-textarea">商品總金額</div>
+                                    <div class="price-textarea">XXXX</div>
+                                    <div class="price-textarea">元</div>
+                                </div>
+
+                            </div>
+
+                            <!-- 配送方式 -->
+                            <div class="content-article">
+
+                                <div class="form-name">
+                                    配送方式
+                                </div>
+
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="fedex" value="">
+                                        便利商店取貨(須先付款)60元
+                                    </label>
+                                </div>
+
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="fedex" value="">
+                                        宅配/快遞 60元
+                                    </label>
+                                </div>
+
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="fedex" value="">
+                                        宅配/快遞(貨到付款)60元
+                                    </label>
+                                </div>
+
+                                <div class="form-tittle">
+
+                                    <label>
+                                        <input type="radio" name="fedex" value="">
+                                        營業據點取貨(須先付款)60元
+                                    </label>
+
+                                    <div class="form-tittle" style="margin-left:20px;">
+                                        <select>
+                                            <option selected="selected" value="0">請選擇營業據點</option>
+                                            <option value="1">A</option>
+                                            <option value="2">B</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="info-area">
+                                    <div class="info-textarea">根據訂單商品及配送方式計算運費</div>
+                                </div>
+
+                                <div class="price-area">
+                                    <div class="price-textarea">+運費：</div>
+                                    <div class="price-textarea">--</div>
+                                    <div class="price-textarea">元</div>
+                                </div>
+
+                                <div class="price-area">
+                                    <div class="price-textarea">應付總金額：</div>
+                                    <div class="price-textarea">XXX</div>
+                                    <div class="price-textarea">元</div>
+                                </div>
+
+                            </div>
+
+                            <!-- 折抵方式 -->
+                            <div class="content-article">
+
+                                <div class="form-name">
+                                    折抵方式
+                                </div>
+
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="discount" value="">
+                                        不使用折抵
+                                    </label>
+                                </div>
+
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="discount" value="">
+                                        使用電子錢包折抵
+                                    </label>
+                                </div>
+
+                                <div class="form-tittle">
+
+                                    <div class="price-textarea">
+                                        餘額
+                                    </div>
+
+                                    <div class="price-textarea" style="color:blue;">
+                                        xxxx
+                                    </div>
+
+                                    <div class="price-textarea unit">
+                                        元
+                                    </div>
+
+                                </div>
+
+                                <div class="form-tittle">
+                                    折抵金額：
+                                    <input type="text" name="" id="" class="input-6">
+                                    元
+                                </div>
+
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="discount" value="">
+                                        使用紅利折抵
+                                    </label>
+                                </div>
+
+                                <div class="form-tittle">
+
+                                    <div class="price-textarea">
+                                        餘額
+                                    </div>
+
+                                    <div class="price-textarea" style="color:blue;">
+                                        xxxx
+                                    </div>
+
+                                    <div class="price-textarea unit">
+                                        元
+                                    </div>
+
+                                </div>
+
+                                <div class="form-tittle">
+                                    折抵金額：
+                                    <input type="text" name="" id="" class="input-6">
+                                    元
+                                </div>
+
+                                <div class="price-area">
+                                    <div class="price-textarea">應付總金額：</div>
+                                    <div class="price-textarea">XXX</div>
+                                    <div class="price-textarea">元</div>
+                                </div>
+
+                            </div>
+
+                            <!-- 付款方式 -->
+                            <div class="content-article">
+
+                                <div class="form-name">付款方式</div>
+
+                                <div class="form-tittle"><label><input type="radio" name="pay_type"
+                                                                       value="">信用卡一次付清</label>
+                                </div>
+
+                                <div class="form-tittle"><label><input type="radio" name="pay_type"
+                                                                       value="">信用卡付款(分期)</label></div>
+
+                                <div class="form-tittle"><label><input type="radio" name="pay_type"
+                                                                       value="">貨到付款(宅配)</label></div>
+
+                            </div>
+
+                            <!-- 發票資訊-->
+                            <div class="content-article">
+
+                                <div class="form-name">發票資訊</div>
+
+                                <div class="form-tittle"><label><input type="radio" name="invoice" value="">個人發票</label>
+                                </div>
+
+                                <div class="form-tittle"><label><input type="radio" name="invoice"
+                                                                       value="">公司戶頭票</label>
+                                </div>
+
+                                <div class="form-tittle">統一編號：<input name="" id="" type="text" class="input-2"></div>
+
+                                <div class="form-tittle">公司抬頭：<input name="" id="" type="text" class="input-2"></div>
+
+                            </div>
+
+                            <div class="btn-area"><input type="submit" value="確認，下一步"></a></div>
+
+                        </form>
 
                     </div>
 
-                    <div class="content-article">
+                <?php else: ?>
 
-                        <div class="form-name">配送方式</div>
+                    <h3>請先登入</h3>
 
-                        <div class="form-tittle"><label><input type="radio" name="" value="">便利商店取貨(須先付款) 60元</label>
-                        </div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">宅配/快遞 60元</label></div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">宅配/快遞(貨到付款) 60元</label>
-                        </div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">營業據點取貨(須先付款) 60元</label>
-                            <div class="form-tittle" style="margin-left:20px;">
-                                <select>
-                                    <option selected="selected" value="0">請選擇營業據點</option>
-                                    <option value="1">A</option>
-                                    <option value="2">B</option>
-                                </select></div>
-                        </div>
-
-                        <div class="info-area">
-                            <div class="info-textarea">根據訂單商品及配送方式計算運費</div>
-                        </div>
-
-                        <div class="price-area">
-                            <div class="price-textarea">+運費：</div>
-                            <div class="price-textarea">--</div>
-                            <div class="price-textarea">元</div>
-                        </div>
-
-                        <div class="price-area">
-                            <div class="price-textarea">應付總金額：</div>
-                            <div class="price-textarea">XXX</div>
-                            <div class="price-textarea">元</div>
-                        </div>
-
-                    </div>
-
-                    <div class="content-article">
-                        <div class="form-name">折抵方式</div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">不使用折抵</label></div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">使用電子錢包折抵</label></div>
-
-                        <div class="form-tittle">
-                            <div class="price-textarea">餘額</div>
-                            <div class="price-textarea" style="color:blue;">xxxx</div>
-                            <div class="price-textarea unit">元</div>
-                        </div>
-
-                        <div class="form-tittle">折抵金額：<input type="text" name="" id="" class="input-6">元</div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">使用紅利折抵</label></div>
-
-                        <div class="form-tittle">
-                            <div class="price-textarea">餘額</div>
-                            <div class="price-textarea" style="color:blue;">xxxx</div>
-                            <div class="price-textarea unit">元</div>
-                        </div>
-
-                        <div class="form-tittle">折抵金額：<input type="text" name="" id="" class="input-6">元</div>
-
-                        <div class="price-area">
-                            <div class="price-textarea">應付總金額：</div>
-                            <div class="price-textarea">XXX</div>
-                            <div class="price-textarea">元</div>
-                        </div>
-                    </div>
-
-                    <div class="content-article">
-
-                        <div class="form-name">付款方式</div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">信用卡一次付清</label></div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">信用卡付款(分期)</label></div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">貨到付款(宅配)</label></div>
-
-                    </div>
-
-                    <div class="content-article">
-
-                        <div class="form-name">發票資訊</div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">個人發票</label></div>
-
-                        <div class="form-tittle"><label><input type="radio" name="" value="">公司戶頭票</label></div>
-
-                        <div class="form-tittle">統一編號：<input name="" id="" type="text" class="input-2"></div>
-
-                        <div class="form-tittle">公司抬頭：<input name="" id="" type="text" class="input-2"></div>
-
-                    </div>
-
-                    <div class="btn-area"><a href="cart_2.php"><input type="submit" value="確認，下一步"></a></div>
-
-                </div>
+                <?php endif; ?>
 
             </div>
 
@@ -342,7 +440,6 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
         }
     });
 
-
     //新增側邊欄
 
     //側邊欄滑動
@@ -364,7 +461,6 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
             $('body').removeClass('body-back');
         }
     }).resize();
-
 
     //下拉選單判斷
     $('.sidebar-menu').click(function () {

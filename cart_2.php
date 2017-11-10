@@ -67,19 +67,19 @@ $result = mysqli_query($conn, $sql);
 
                         <ul>
 
-                            <li class="select"><a href="cart_1.php">1.確認商品</a></li>
+                            <li class="btn btn-default disabled">1.確認商品</li>
 
                             <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><a href="cart_2.php">2.收件人資訊</a></li>
+                            <li class="btn btn-danger disabled">2.收件人資訊</li>
 
                             <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><a href="cart_3.php">3.確認訂單資料</a></li>
+                            <li class="btn btn-default disabled">3.確認訂單資料</li>
 
                             <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><a href="cart_4.php">4.完成確認</a></li>
+                            <li class="btn btn-default disabled">4.完成確認</li>
 
                         </ul>
 
