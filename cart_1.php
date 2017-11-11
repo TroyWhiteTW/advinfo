@@ -4,10 +4,6 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-//強制開啟 PHP 錯誤訊錫
-ini_set('display_errors', '1');
-error_reporting(E_ALL);
-
 // 引入訂單的 DAO class
 require __DIR__ . '/OrdersDAO.php';
 
@@ -387,7 +383,11 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                             </div>
 
-                            <div class="btn-area"><input type="submit" value="確認，下一步"></a></div>
+                            <div class="btn-area">
+
+                                <input type="submit" class="btn btn-success" value="確認，下一步">
+
+                            </div>
 
                         </form>
 

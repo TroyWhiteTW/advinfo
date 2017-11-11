@@ -4,21 +4,17 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
-$result = mysqli_query($conn, $sql);
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
+// 引入訂單的 DAO class
+require __DIR__ . '/OrdersDAO.php';
+
+//判斷 SESSION 裡是否有訂單資訊，若無代表是初次進入；若有代表是從後面的頁面返回，幫使用者填入訂單中已有的值
+if (empty($_SESSION['orders'])) {
+    $_SESSION['orders'] = serialize(new OrdersDAO());
+}
+$orders = $_SESSION['orders'];
+//echo serialize($orders);
+//return;
+
 ?>
 <!doctype html>
 <html>
@@ -61,45 +57,53 @@ $result = mysqli_query($conn, $sql);
 
                 </div>
 
-                <div class="content-area">
+                <?php if ($isLogin): ?>
 
-                    <div class="cart-area">
+                    <div class="content-area">
 
-                        <ul>
+                        <div class="cart-area">
 
-                            <li class="btn btn-default disabled">1.確認商品</li>
+                            <ul>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">1.確認商品</li>
 
-                            <li class="btn btn-default disabled">2.收件人資訊</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">2.收件人資訊</li>
 
-                            <li class="btn btn-default disabled">3.確認訂單資料</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">3.確認訂單資料</li>
 
-                            <li class="btn btn-danger disabled">4.完成確認</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                        </ul>
+                                <li class="btn btn-danger disabled">4.完成確認</li>
+
+                            </ul>
+
+                        </div>
+
+                        <div class="content-article">
+
+                            <div class="form-tittle">親愛的會員你好：</div>
+
+                            <div class="form-content"><br><br>訂單已完成，感謝您的購買！<br><br><br></div>
+
+                        </div>
+
+                        <div class="btn-area">
+
+                            <a href="index.php" class="btn btn-success">返回首頁</a>
+
+                        </div>
 
                     </div>
 
-                    <div class="content-article">
+                <?php else: ?>
 
-                        <div class="form-tittle">親愛的會員你好：</div>
+                    <h3>請先登入</h3>
 
-                        <div class="form-content"><br><br>訂單已完成，感謝您的購買！<br><br><br></div>
-
-                    </div>
-
-                    <div class="btn-area">
-
-                        <a href="index.php"><input type="submit" value="返回首頁"></a>
-
-                    </div>
-
-                </div>
+                <?php endif; ?>
 
             </div>
 

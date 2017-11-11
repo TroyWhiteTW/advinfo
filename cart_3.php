@@ -4,21 +4,17 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
-$result = mysqli_query($conn, $sql);
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
+// 引入訂單的 DAO class
+require __DIR__ . '/OrdersDAO.php';
+
+//判斷 SESSION 裡是否有訂單資訊，若無代表是初次進入；若有代表是從後面的頁面返回，幫使用者填入訂單中已有的值
+if (empty($_SESSION['orders'])) {
+    $_SESSION['orders'] = serialize(new OrdersDAO());
+}
+$orders = $_SESSION['orders'];
+//echo serialize($orders);
+//return;
+
 ?>
 <!doctype html>
 <html>
@@ -61,249 +57,263 @@ $result = mysqli_query($conn, $sql);
 
                 </div>
 
-                <div class="content-area">
+                <?php if ($isLogin): ?>
 
-                    <div class="cart-area">
+                    <div class="content-area">
 
-                        <ul>
+                        <div class="cart-area">
 
-                            <li class="btn btn-default disabled">1.確認商品</li>
+                            <ul>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">1.確認商品</li>
 
-                            <li class="btn btn-default disabled">2.收件人資訊</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">2.收件人資訊</li>
 
-                            <li class="btn btn-danger disabled">3.確認訂單資料</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-danger disabled">3.確認訂單資料</li>
 
-                            <li class="btn btn-default disabled">4.完成確認</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                        </ul>
+                                <li class="btn btn-default disabled">4.完成確認</li>
 
-                    </div>
-
-                    <div class="content-article">
-
-                        <div class="form-name">購物車</div>
-
-                        <table width="100%" border="1" style="margin-top:10px;">
-
-                            <tbody>
-
-                            <tr class="tb-tittle">
-
-                                <td>商品名稱</td>
-
-                                <td>數量</td>
-
-                                <td>價格</td>
-
-                                <td>PV</td>
-
-                                <td>刪除</td>
-
-                            </tr>
-
-                            <tr class="td-02">
-
-                                <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span style="color:red;">(產品編號)</span><br><br></td>
-
-                                <td><select>
-                                        <option value="1" selected>1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select></td>
-
-                                <td>$200</td>
-
-                                <td>199</td>
-
-                                <td><img src="img/trash.png" alt=""></td>
-
-                            </tr>
-
-                            </tbody>
-
-                        </table>
-
-                        <div class="pv-area">
-
-                            <div class="pv-textarea">商品總PV</div>
-
-                            <div class="pv-textarea">XXXX</div>
-
-                            <div class="pv-textarea">PV</div>
+                            </ul>
 
                         </div>
 
-                        <div class="price-area">
+                        <form method="post" action="cart_3_to_4.php">
 
-                            <div class="price-textarea">商品總金額</div>
+                            <div class="content-article">
 
-                            <div class="price-textarea">X,XXX</div>
+                                <div class="form-name">購物車</div>
 
-                            <div class="price-textarea">元</div>
+                                <table width="100%" border="1" style="margin-top:10px;">
 
-                        </div>
+                                    <tbody>
+
+                                    <tr class="tb-tittle">
+
+                                        <td>商品名稱</td>
+
+                                        <td>數量</td>
+
+                                        <td>價格</td>
+
+                                        <td>PV</td>
+
+                                        <td>刪除</td>
+
+                                    </tr>
+
+                                    <tr class="td-02">
+
+                                        <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span
+                                                    style="color:red;">(產品編號)</span><br><br>
+                                        </td>
+
+                                        <td><select>
+                                                <option value="1" selected>1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select></td>
+
+                                        <td>$200</td>
+
+                                        <td>199</td>
+
+                                        <td><img src="img/trash.png" alt=""></td>
+
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                                <div class="pv-area">
+
+                                    <div class="pv-textarea">商品總PV</div>
+
+                                    <div class="pv-textarea">XXXX</div>
+
+                                    <div class="pv-textarea">PV</div>
+
+                                </div>
+
+                                <div class="price-area">
+
+                                    <div class="price-textarea">商品總金額</div>
+
+                                    <div class="price-textarea">X,XXX</div>
+
+                                    <div class="price-textarea">元</div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="content-article">
+
+                                <div class="form-name">配送方式</div>
+
+                                <div class="form-input">便利商店取貨(須先付款) 60元</div>
+
+                                <div class="price-area">
+
+                                    <div class="price-textarea">+運費：</div>
+
+                                    <div class="price-textarea">--</div>
+
+                                    <div class="price-textarea">元</div>
+
+                                </div>
+
+                                <div class="price-area">
+
+                                    <div class="price-textarea">訂單總金額：</div>
+
+                                    <div class="price-textarea">--</div>
+
+                                    <div class="price-textarea">元</div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="content-article">
+
+                                <div class="form-name">折抵方式</div>
+
+                                <div class="form-input">使用電子錢包折抵</div>
+
+                                <div class="form-tittle">折抵金額：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="price-area">
+
+                                    <div class="price-textarea">應付總金額</div>
+
+                                    <div class="price-textarea">X,XXX</div>
+
+                                    <div class="price-textarea">元</div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="content-article">
+
+                                <div class="form-name">付款方式</div>
+
+                                <div class="form-input">信用卡付款(一次付清)</div>
+
+                            </div>
+
+                            <div class="content-article">
+
+                                <div class="form-name">取貨門市</div>
+
+                                <div class="form-input">便利商店名稱(資料填入)</div>
+
+                                <div class="form-tittle">門市名稱：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">門市地址：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                            </div>
+
+                            <div class="content-article">
+
+                                <div class="form-name">訂購人資料</div>
+
+                                <div class="form-tittle">姓名：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">電子信箱：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">聯繫電話：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">手機：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">聯繫地址：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                            </div>
+
+                            <div class="content-article">
+
+                                <div class="form-name">收件人資料</div>
+
+                                <div class="form-tittle">姓名：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">電子信箱：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">聯繫電話：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">手機：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">聯繫地址：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                            </div>
+
+                            <div class="content-article">
+
+                                <div class="form-name">發票資訊</div>
+
+                                <div class="form-tittle">個人發票</div>
+
+                                <div class="form-tittle">統一編號：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                                <div class="form-tittle">公司抬頭：
+                                    <div class="form-input-2">資料填入</div>
+                                </div>
+
+                            </div>
+
+                            <div class="btn-area">
+
+                                <a href="cart_2.php" class="btn btn-warning">返回上一步</a>
+
+                                <input type="submit" class="btn btn-success" value="確認，下一步">
+
+                            </div>
+
+                        </form>
 
                     </div>
 
-                    <div class="content-article">
+                <?php else: ?>
 
-                        <div class="form-name">配送方式</div>
+                    <h3>請先登入</h3>
 
-                        <div class="form-input">便利商店取貨(須先付款) 60元</div>
-
-                        <div class="price-area">
-
-                            <div class="price-textarea">+運費：</div>
-
-                            <div class="price-textarea">--</div>
-
-                            <div class="price-textarea">元</div>
-
-                        </div>
-
-                        <div class="price-area">
-
-                            <div class="price-textarea">訂單總金額：</div>
-
-                            <div class="price-textarea">--</div>
-
-                            <div class="price-textarea">元</div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="content-article">
-
-                        <div class="form-name">折抵方式</div>
-
-                        <div class="form-input">使用電子錢包折抵</div>
-
-                        <div class="form-tittle">折抵金額：
-                            <div class="form-input-2">資料填入</div>
-                        </div>
-
-                        <div class="price-area">
-
-                            <div class="price-textarea">應付總金額</div>
-
-                            <div class="price-textarea">X,XXX</div>
-
-                            <div class="price-textarea">元</div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="content-article">
-
-                        <div class="form-name">付款方式</div>
-
-                        <div class="form-input">信用卡付款(一次付清)</div>
-
-                    </div>
-
-                </div>
-
-                <div class="content-article">
-
-                    <div class="form-name">取貨門市</div>
-
-                    <div class="form-input">便利商店名稱(資料填入)</div>
-
-                    <div class="form-tittle">門市名稱：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">門市地址：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                </div>
-
-                <div class="content-article">
-
-                    <div class="form-name">訂購人資料</div>
-
-                    <div class="form-tittle">姓名：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">電子信箱：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">聯繫電話：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">手機：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">聯繫地址：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                </div>
-
-                <div class="content-article">
-
-                    <div class="form-name">收件人資料</div>
-
-                    <div class="form-tittle">姓名：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">電子信箱：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">聯繫電話：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">手機：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">聯繫地址：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                </div>
-
-                <div class="content-article">
-
-                    <div class="form-name">發票資訊</div>
-
-                    <div class="form-tittle">個人發票</div>
-
-                    <div class="form-tittle">統一編號：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                    <div class="form-tittle">公司抬頭：
-                        <div class="form-input-2">資料填入</div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="btn-area">
-
-                <a href="cart_2.php"><input type="submit" value="返回上一步"></a>
-
-                <a href="cart_3_to_4.php"><input type="submit" value="確認，下一步"></a>
+                <?php endif; ?>
 
             </div>
 

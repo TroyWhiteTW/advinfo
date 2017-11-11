@@ -4,21 +4,17 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
-$result = mysqli_query($conn, $sql);
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
+// 引入訂單的 DAO class
+require __DIR__ . '/OrdersDAO.php';
+
+//判斷 SESSION 裡是否有訂單資訊，若無代表是初次進入；若有代表是從後面的頁面返回，幫使用者填入訂單中已有的值
+if (empty($_SESSION['orders'])) {
+    $_SESSION['orders'] = serialize(new OrdersDAO());
+}
+$orders = $_SESSION['orders'];
+//echo serialize($orders);
+//return;
+
 ?>
 <!doctype html>
 <html>
@@ -61,146 +57,208 @@ $result = mysqli_query($conn, $sql);
 
                 </div>
 
-                <div class="content-area">
+                <?php if ($isLogin): ?>
 
-                    <div class="cart-area">
+                    <div class="content-area">
 
-                        <ul>
+                        <div class="cart-area">
 
-                            <li class="btn btn-default disabled">1.確認商品</li>
+                            <ul>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">1.確認商品</li>
 
-                            <li class="btn btn-danger disabled">2.收件人資訊</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-danger disabled">2.收件人資訊</li>
 
-                            <li class="btn btn-default disabled">3.確認訂單資料</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                            <li><img src="img/process_icon.png" alt=""></li>
+                                <li class="btn btn-default disabled">3.確認訂單資料</li>
 
-                            <li class="btn btn-default disabled">4.完成確認</li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                        </ul>
+                                <li class="btn btn-default disabled">4.完成確認</li>
 
-                    </div>
+                            </ul>
 
-                    <div class="content-article">
+                        </div>
 
-                        <div class="form-name">訂購人資料</div>
+                        <form method="post" action="cart_2_to_3.php">
 
-                        <div class="form-tittle">姓名：<input name="" id="" type="text" class="input-2"></div>
+                            <div class="content-article">
 
-                        <div class="form-tittle">電子信箱：<input name="" id="" type="text" class="input-2"></div>
+                                <div class="form-name">訂購人資料</div>
 
-                        <div class="form-tittle">聯繫電話：<input name="" id="" type="text" class="input-2"></div>
+                                <div class="form-tittle">
+                                    姓名：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
 
-                        <div class="form-tittle"><span style="color:red;">*</span>手機：<input name="" id="" type="text"
-                                                                                            class="input-2"></div>
+                                <div class="form-tittle">
+                                    電子信箱：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
 
-                        <div class="form-tittle"><span style="color:red;">*</span>聯繫地址：<input type="checkbox"
-                                                                                              checked="checked">台澎金馬<span
-                                    style="color:red; font-size:12px;">(預設勾選)</span>
+                                <div class="form-tittle">
+                                    聯繫電話：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
 
-                            <div class="form-tittle">
+                                <div class="form-tittle">
+                                    <span style="color:red;">*</span>
+                                    手機：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
 
-                                <select name="" id="">
-                                    <option selected="selected" value="0">請選擇縣市</option>
-                                    <option value="1">B</option>
-                                    <option value="2">C</option>
-                                </select>
+                                <div class="form-tittle">
+                                    <span style="color:red;">*</span>
+                                    聯繫地址：
+                                    <input type="checkbox" checked="checked">
+                                    台澎金馬
+                                    <span style="color:red; font-size:12px;">(預設勾選)</span>
 
-                                <select name="" id="">
-                                    <option selected="selected" value="0">請選擇區別</option>
-                                    <option value="1">B</option>
-                                    <option value="2">C</option>
-                                </select>
+                                    <div class="form-tittle">
 
-                                <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+                                        <select name="" id="">
+                                            <option selected="selected" value="0">請選擇縣市</option>
+                                            <option value="1">B</option>
+                                            <option value="2">C</option>
+                                        </select>
+
+                                        <select name="" id="">
+                                            <option selected="selected" value="0">請選擇區別</option>
+                                            <option value="1">B</option>
+                                            <option value="2">C</option>
+                                        </select>
+
+                                        <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
-                        </div>
+                            <div class="content-article">
 
-                    </div>
+                                <div class="form-name">收件人資料</div>
 
-                    <div class="content-article">
+                                <div class="form-tittle">
+                                    <div class="check-box">
+                                        <input type="checkbox">
+                                    </div>
+                                    同步為訂購人資料
+                                </div>
 
-                        <div class="form-name">收件人資料</div>
+                                <div class="form-tittle">
+                                    姓名：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
 
-                        <div class="form-tittle">
-                            <div class="check-box"><input type="checkbox"></div>
-                            同步為訂購人資料
-                        </div>
+                                <div class="form-tittle">
+                                    電子信箱：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
 
-                        <div class="form-tittle">姓名：<input name="" id="" type="text" class="input-2"></div>
+                                <div class="form-tittle">
+                                    聯繫電話：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
 
-                        <div class="form-tittle">電子信箱：<input name="" id="" type="text" class="input-2"></div>
+                                <div class="form-tittle">
+                                    <span style="color:red;">*</span>
+                                    手機：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
 
-                        <div class="form-tittle">聯繫電話：<input name="" id="" type="text" class="input-2"></div>
+                                <div class="form-tittle">
+                                    <span style="color:red;">*</span>
+                                    聯繫地址：
+                                    <input type="checkbox" checked="checked">
+                                    台澎金馬
+                                    <span style="color:red; font-size:12px;">(預設勾選)</span>
 
-                        <div class="form-tittle"><span style="color:red;">*</span>手機：<input name="" id="" type="text"
-                                                                                            class="input-2"></div>
+                                    <div class="form-tittle">
 
-                        <div class="form-tittle"><span style="color:red;">*</span>聯繫地址：<input type="checkbox"
-                                                                                              checked="checked">台澎金馬<span
-                                    style="color:red; font-size:12px;">(預設勾選)</span>
+                                        <select name="" id="">
+                                            <option selected="selected" value="0">請選擇縣市</option>
+                                            <option value="1">B</option>
+                                            <option value="2">C</option>
+                                        </select>
 
-                            <div class="form-tittle">
+                                        <select name="" id="">
+                                            <option selected="selected" value="0">請選擇區別</option>
+                                            <option value="1">B</option>
+                                            <option value="2">C</option>
+                                        </select>
 
-                                <select name="" id="">
-                                    <option selected="selected" value="0">請選擇縣市</option>
-                                    <option value="1">B</option>
-                                    <option value="2">C</option>
-                                </select>
+                                        <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
 
-                                <select name="" id="">
-                                    <option selected="selected" value="0">請選擇區別</option>
-                                    <option value="1">B</option>
-                                    <option value="2">C</option>
-                                </select>
+                                    </div>
 
-                                <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+                                </div>
 
                             </div>
 
-                        </div>
+                            <div class="content-article">
+
+                                <div class="form-name">取貨門市</div>
+
+                                <div class="function-area">
+
+                                    <ul>
+
+                                        <li>
+                                            <a href="">
+                                                <input type="button" id="" name="" class="" value="全家取貨門市">
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="">
+                                                <input type="button" id="" name="" class="" value="OK取貨門市">
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="">
+                                                <input type="button" id="" name="" class="" value="萊爾富取貨門市">
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+                                <div class="form-tittle">
+                                    門市名稱：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
+
+                                <div class="form-tittle">
+                                    門市地址：
+                                    <input name="" id="" type="text" class="input-2">
+                                </div>
+
+                            </div>
+
+                            <div class="btn-area">
+
+                                <a href="cart_1.php" class="btn btn-warning">返回上一步</a>
+
+                                <input type="submit" class="btn btn-success" value="確認，下一步">
+
+                            </div>
+
+                        </form>
 
                     </div>
 
-                </div>
+                <?php else: ?>
 
-                <div class="content-article">
+                    <h3>請先登入</h3>
 
-                    <div class="form-name">取貨門市</div>
-
-                    <div class="function-area">
-
-                        <ul>
-
-                            <li><a href=""><input type="button" id="" name="" class="" value="全家取貨門市"></a></li>
-
-                            <li><a href=""><input type="button" id="" name="" class="" value="OK取貨門市"></a></li>
-
-                            <li><a href=""><input type="button" id="" name="" class="" value="萊爾富取貨門市"></a></li>
-
-                        </ul>
-
-                    </div>
-
-                    <div class="form-tittle">門市名稱：<input name="" id="" type="text" class="input-2"></div>
-
-                    <div class="form-tittle">門市地址：<input name="" id="" type="text" class="input-2"></div>
-
-                </div>
-
-                <div class="btn-area">
-
-                    <a href="cart_1.php"><input type="submit" value="返回上一步"></a>
-
-                    <a href="cart_2_to_3.php"><input type="submit" value="確認，下一步"></a>
-
-                </div>
+                <?php endif; ?>
 
             </div>
 
