@@ -44,6 +44,9 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
 }
 
 // unset $_SESSION['orders']
+unset($_SESSION['orders']);
+unset($_SESSION['shop_cart']);
+//var_dump($_SESSION['orders']);
 
 // 跳轉到 cart_4.php
 header('Location:cart_4.php');
