@@ -85,29 +85,30 @@ $orders = $_SESSION['orders'];
 
                         <form method="post" action="cart_2_to_3.php">
 
+                            <!-- 訂購人資料 -->
                             <div class="content-article">
 
                                 <div class="form-name">訂購人資料</div>
 
                                 <div class="form-tittle">
                                     姓名：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="sub_name" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
                                     電子信箱：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="sub_email" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
                                     聯繫電話：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="sub_phone" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="sub_mobile" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
@@ -131,7 +132,9 @@ $orders = $_SESSION['orders'];
                                             <option value="2">C</option>
                                         </select>
 
-                                        <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+                                        <div class="form-tittle">
+                                            <input name="sub_address" id="" type="text" class="input-3">
+                                        </div>
 
                                     </div>
 
@@ -139,6 +142,7 @@ $orders = $_SESSION['orders'];
 
                             </div>
 
+                            <!-- 收件人資料 -->
                             <div class="content-article">
 
                                 <div class="form-name">收件人資料</div>
@@ -152,23 +156,23 @@ $orders = $_SESSION['orders'];
 
                                 <div class="form-tittle">
                                     姓名：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="rec_name" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
                                     電子信箱：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="rec_email" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
                                     聯繫電話：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="rec_phone" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="rec_mobile" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
@@ -192,7 +196,9 @@ $orders = $_SESSION['orders'];
                                             <option value="2">C</option>
                                         </select>
 
-                                        <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
+                                        <div class="form-tittle">
+                                            <input name="rec_address" id="" type="text" class="input-3">
+                                        </div>
 
                                     </div>
 
@@ -200,6 +206,7 @@ $orders = $_SESSION['orders'];
 
                             </div>
 
+                            <!-- 取貨門市 -->
                             <div class="content-article">
 
                                 <div class="form-name">取貨門市</div>
@@ -232,12 +239,12 @@ $orders = $_SESSION['orders'];
 
                                 <div class="form-tittle">
                                     門市名稱：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="store_name" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
                                     門市地址：
-                                    <input name="" id="" type="text" class="input-2">
+                                    <input name="store_addr" id="" type="text" class="input-2">
                                 </div>
 
                             </div>
