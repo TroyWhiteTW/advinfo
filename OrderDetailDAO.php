@@ -14,7 +14,7 @@ class OrderDetailDAO
     public $PV = null;//PV值
     public $bonuce = null;//紅利值
 
-    public function save()
+    public function save($conn)
     {
 
         //check all data is null or not
@@ -42,8 +42,8 @@ class OrderDetailDAO
 //        var_dump($sql);
 //        return;
 
-        $conn = @mysqli_connect('localhost', 'root', 'root', 'bradchao') or die("Server Busy");
-        mysqli_set_charset($conn, "UTF8");
+//        $conn = @mysqli_connect('localhost', 'root', 'root', 'bradchao') or die("Server Busy");
+//        mysqli_set_charset($conn, "UTF8");
 
         $result = mysqli_query($conn, $sql);
         if ($result === true) {

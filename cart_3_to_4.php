@@ -25,7 +25,7 @@ $orders->returnapply = '0000-00-00 00:00:00';
 $orders->returntime = '0000-00-00 00:00:00';
 $orders->refundtime = '0000-00-00 00:00:00';
 
-$orders->save();
+$orders->save($conn);
 
 foreach ($_SESSION['shop_cart'] as $k => $v) {
     $orderDetail = new OrderDetailDAO();
@@ -40,7 +40,7 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
     $orderDetail->PV = 0;
     $orderDetail->bonuce = 0;
 
-    $orderDetail->save();
+    $orderDetail->save($conn);
 }
 
 // unset $_SESSION['orders']
