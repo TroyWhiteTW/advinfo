@@ -222,21 +222,21 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="fedex" value="">
+                                        <input type="radio" name="ship_no" value="1">
                                         便利商店取貨(須先付款)60元
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="fedex" value="">
+                                        <input type="radio" name="ship_no" value="2">
                                         宅配/快遞 60元
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="fedex" value="">
+                                        <input type="radio" name="ship_no" value="3">
                                         宅配/快遞(貨到付款)60元
                                     </label>
                                 </div>
@@ -244,7 +244,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                 <div class="form-tittle">
 
                                     <label>
-                                        <input type="radio" name="fedex" value="">
+                                        <input type="radio" name="ship_no" value="4">
                                         營業據點取貨(須先付款)60元
                                     </label>
 
@@ -285,43 +285,21 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="">
+                                        <input type="radio" name="discount" value="1">
                                         不使用折抵
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="">
+                                        <input type="radio" name="discount" value="2">
                                         使用電子錢包折抵
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
-
-                                    <div class="price-textarea">
-                                        餘額
-                                    </div>
-
-                                    <div class="price-textarea" style="color:blue;">
-                                        xxxx
-                                    </div>
-
-                                    <div class="price-textarea unit">
-                                        元
-                                    </div>
-
-                                </div>
-
-                                <div class="form-tittle">
-                                    折抵金額：
-                                    <input type="text" name="" id="" class="input-6">
-                                    元
-                                </div>
-
-                                <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="">
+                                        <input type="radio" name="discount" value="3">
                                         使用紅利折抵
                                     </label>
                                 </div>
@@ -344,7 +322,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     折抵金額：
-                                    <input type="text" name="" id="" class="input-6">
+                                    <input type="text" name="discount_price" id="" class="input-6">
                                     元
                                 </div>
 
@@ -361,15 +339,26 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-name">付款方式</div>
 
-                                <div class="form-tittle"><label><input type="radio" name="pay_type"
-                                                                       value="">信用卡一次付清</label>
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="pay_no" value="1">
+                                        信用卡一次付清
+                                    </label>
                                 </div>
 
-                                <div class="form-tittle"><label><input type="radio" name="pay_type"
-                                                                       value="">信用卡付款(分期)</label></div>
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="pay_no" value="2">
+                                        信用卡付款(分期)
+                                    </label>
+                                </div>
 
-                                <div class="form-tittle"><label><input type="radio" name="pay_type"
-                                                                       value="">貨到付款(宅配)</label></div>
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="pay_no" value="3">
+                                        貨到付款(宅配)
+                                    </label>
+                                </div>
 
                             </div>
 
@@ -378,16 +367,23 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-name">發票資訊</div>
 
-                                <div class="form-tittle"><label><input type="radio" name="invoice" value="">個人發票</label>
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="invoice" value="1">
+                                        個人發票
+                                    </label>
                                 </div>
 
-                                <div class="form-tittle"><label><input type="radio" name="invoice"
-                                                                       value="">公司戶頭票</label>
+                                <div class="form-tittle">
+                                    <label>
+                                        <input type="radio" name="invoice" value="2">
+                                        公司戶頭票
+                                    </label>
                                 </div>
 
-                                <div class="form-tittle">統一編號：<input name="" id="" type="text" class="input-2"></div>
+                                <div class="form-tittle">統一編號：<input name="company_no" id="" type="text" class="input-2"></div>
 
-                                <div class="form-tittle">公司抬頭：<input name="" id="" type="text" class="input-2"></div>
+                                <div class="form-tittle">公司抬頭：<input name="invoice_title" id="" type="text" class="input-2"></div>
 
                             </div>
 
