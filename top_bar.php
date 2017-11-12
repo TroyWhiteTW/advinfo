@@ -30,11 +30,17 @@
 
             <ul>
 
-                <li><a href="index.php"><div class="index-icon"></div></a></li>
+                <li><a href="index.php">
+                        <div class="index-icon"></div>
+                    </a></li>
 
-                <li><a href="login.php"><div class="member-icon"></div></a></li>
+                <li><a href="login.php">
+                        <div class="member-icon"></div>
+                    </a></li>
 
-                <li><a href="cart_1.php"><div class="cart-icon"></div></a></li>
+                <li><a href="cart_1.php">
+                        <div class="cart-icon"></div>
+                    </a></li>
 
             </ul>
 
@@ -59,7 +65,9 @@
         ?>
 
         <ul>
-            <li><a href="index.php">首頁<div class="index-icon"></div></a></li>
+            <li><a href="index.php">首頁
+                    <div class="index-icon"></div>
+                </a></li>
 
             <?php
 
@@ -83,10 +91,12 @@
         ?>
 
         <div class="search show_border">
-            <div class="search-input">
-                <input type="text" name="input-1" id="input-1" class="input-1" placeholder="搜尋商品">
-            </div>
-            <div class="search-btn"></div>
+            <form method="post" action="pd_query.php">
+                <div class="search-input">
+                    <input type="text" name="search" id="" class="input-1" placeholder="搜尋商品">
+                </div>
+                <input type="submit" class="search-btn" value="">
+            </form>
         </div>
 
     </div>
@@ -97,9 +107,11 @@
 <!-- mobile footer search bar -->
 <div class="ft-search">
     <div class="search">
-        <div class="search-input">
-            <input type="text" name="search_input" id="search_input" class="input-1" placeholder="搜尋商品"></div>
-        <div class="search-btn"></div>
+        <form method="post" action="pd_query.php">
+            <div class="search-input">
+                <input type="text" name="search" id="" class="input-1" placeholder="搜尋商品"></div>
+            <input type="submit" class="search-btn" value="">
+        </form>
     </div>
 </div>
 <!-- mobile footer search bar -->
