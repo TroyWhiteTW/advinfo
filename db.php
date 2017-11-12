@@ -3,10 +3,10 @@
 //$conn = @mysqli_connect('localhost','foxking','b31209','bradchao') or die("Server Busy");
 $dbHost = 'localhost';
 $dbUser = 'root';
-$dbPassword = '';
+$dbPassword = 'root';
 $dbName = 'bradchao';
 
-$conn = @mysqli_connect('localhost', 'root', '', 'bradchao') or die("Server Busy");
+$conn = @mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName) or die("Server Busy");
 
 // if (mysqli_connect_errno()){
 // 	$return = array('result' => '-2' );

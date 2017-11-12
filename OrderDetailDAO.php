@@ -14,7 +14,7 @@ class OrderDetailDAO
     public $PV = null;//PV值
     public $bonuce = null;//紅利值
 
-    public function save($mysqli, $errors)
+    public function save(mysqli $mysqli, $errors)
     {
 
         //check all data is null or not
