@@ -140,7 +140,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = '</td>';
                                         // 數量
                                         $html[] = '<td>';
-                                        $html[] = '<select>';
+                                        $html[] = '<select class="prodCount" onchange="doTotal()" >';
                                         // select -> option
                                         $optionCount = ($recordArray[$i]['stock'] > 10 ? 10 : $recordArray[$i]['stock']);
                                         for ($j = 1; $j <= $optionCount; $j++) {
@@ -154,11 +154,11 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = '</select>';
                                         $html[] = '</td>';
                                         // 價格
-                                        $html[] = '<td>';
+                                        $html[] = '<td class="priceValue">';
                                         $html[] = $recordArray[$i]['price'];
                                         $html[] = '</td>';
                                         // PV
-                                        $html[] = '<td>';
+                                        $html[] = '<td class="pvValue">';
                                         $html[] = $recordArray[$i]['PV'];
                                         $html[] = '</td>';
                                         // 刪除
@@ -167,6 +167,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = '</td>';
 
                                         $html[] = '</tr>';
+
                                     }
 
                                     echo implode("\n", $html);
@@ -206,6 +207,40 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                     <div class="price-textarea">XXXX</div>
                                     <div class="price-textarea">元</div>
                                 </div>
+
+                                <script>
+                                    var totalPvNode = $('.pv-area > .pv-textarea:nth-child(2)')[0];
+                                    var totalPriceNode = $('.price-area > .price-textarea:nth-child(2)')[0];
+
+                                    doTotal();
+
+                                    function doTotal() {
+                                        var totalPrice = 0;
+                                        var totlaPV = 0;
+                                        var tbody = document.getElementsByTagName("tbody")[0];
+                                        var td02s = tbody.getElementsByClassName("td-02");
+                                        for (var i = 0; i < td02s.length; i++) {
+                                            var price = td02s[i].getElementsByClassName("priceValue")[0].innerHTML;
+                                            var pv = td02s[i].getElementsByClassName("pvValue")[0].innerHTML;
+                                            var count = getSelectedNode(td02s[i].getElementsByClassName("prodCount")[0]).value;
+                                            totalPrice += parseInt(price) * parseInt(count);
+                                            totlaPV += parseInt(pv) * parseInt(count);
+                                        }
+                                        totalPriceNode.innerHTML = totalPrice+"";
+                                        totalPvNode.innerHTML = totlaPV+"";
+                                    }
+
+                                    function getSelectedNode(selectNode) {
+                                        var selectedNode = (function (nodes) {
+                                            for (var i in nodes) {
+                                                if (nodes[i].selected === true) {
+                                                    return nodes[i];
+                                                }
+                                            }
+                                        })(selectNode);
+                                        return selectedNode;
+                                    }
+                                </script>
 
                             </div>
 
@@ -377,9 +412,11 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                     </label>
                                 </div>
 
-                                <div class="form-tittle">統一編號：<input name="company_no" id="" type="text" class="input-2"></div>
+                                <div class="form-tittle">統一編號：<input name="company_no" id="" type="text"
+                                                                     class="input-2"></div>
 
-                                <div class="form-tittle">公司抬頭：<input name="invoice_title" id="" type="text" class="input-2"></div>
+                                <div class="form-tittle">公司抬頭：<input name="invoice_title" id="" type="text"
+                                                                     class="input-2"></div>
 
                             </div>
 
