@@ -64,12 +64,12 @@ class OrdersDAO
     {
 
         //check all data is null or not
-        foreach ($this as $k => $v) {
-            if ($v === null) {
-                echo "存入資料庫失敗 , 欄位 $k 為 null";
-                return;
-            }
-        }
+//        foreach ($this as $k => $v) {
+//            if ($v === null) {
+//                echo "存入資料庫失敗 , 欄位 $k 為 null";
+//                return;
+//            }
+//        }
         //check all data is null or not
 
         //insert to DB
