@@ -163,7 +163,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = '</td>';
                                         // 刪除
                                         $html[] = '<td>';
-                                        $html[] = '<button onclick="deleteProd(this,' . $recordArray[$i]['proid'] . ')" class="glyphicon glyphicon-trash"></button>';
+                                        $html[] = '<div onclick="deleteProd(this,' . $recordArray[$i]['proid'] . ')" class="glyphicon glyphicon-trash"></div>';
                                         $html[] = '</td>';
 
                                         $html[] = '</tr>';
@@ -177,6 +177,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                     </tbody>
 
                                 </table>
+
                                 <script>
                                     function deleteProd(node, id) {
                                         $.ajax({
@@ -198,13 +199,13 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="pv-area">
                                     <div class="pv-textarea">商品總PV</div>
-                                    <div class="pv-textarea">XXXX</div>
+                                    <div class="pv-textarea"></div>
                                     <div class="pv-textarea">PV</div>
                                 </div>
 
                                 <div class="price-area">
                                     <div class="price-textarea">商品總金額</div>
-                                    <div class="price-textarea">XXXX</div>
+                                    <div class="price-textarea"></div>
                                     <div class="price-textarea">元</div>
                                 </div>
 
@@ -226,8 +227,8 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                             totalPrice += parseInt(price) * parseInt(count);
                                             totlaPV += parseInt(pv) * parseInt(count);
                                         }
-                                        totalPriceNode.innerHTML = totalPrice+"";
-                                        totalPvNode.innerHTML = totlaPV+"";
+                                        totalPriceNode.innerHTML = totalPrice + "";
+                                        totalPvNode.innerHTML = totlaPV + "";
                                     }
 
                                     function getSelectedNode(selectNode) {
@@ -412,11 +413,15 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                     </label>
                                 </div>
 
-                                <div class="form-tittle">統一編號：<input name="company_no" id="" type="text"
-                                                                     class="input-2"></div>
+                                <div class="form-tittle">
+                                    統一編號：
+                                    <input name="company_no" id="" type="text" class="input-2">
+                                </div>
 
-                                <div class="form-tittle">公司抬頭：<input name="invoice_title" id="" type="text"
-                                                                     class="input-2"></div>
+                                <div class="form-tittle">
+                                    公司抬頭：
+                                    <input name="invoice_title" id="" type="text" class="input-2">
+                                </div>
 
                             </div>
 

@@ -15,6 +15,26 @@ $orders = $_SESSION['orders'];
 //echo serialize($orders);
 //return;
 
+//從購物車取得商品資訊
+$recordArray = [];
+
+if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
+    $keys = array_keys($_SESSION['shop_cart']);
+    $sql_pk = "(";
+    foreach ($keys as $v) {
+        $sql_pk .= "'$v'" . ",";
+    }
+    $sql_pk = substr($sql_pk, 0, -1);
+    $sql_pk .= ")";
+    $sql_pro_cart = "SELECT * FROM products WHERE proid IN " . $sql_pk;
+    $rs_cart = mysqli_query($conn, $sql_pro_cart);
+//    var_dump($sql_pro_cart);
+//    var_dump(mysqli_num_rows($rs_cart));
+    while ($record = mysqli_fetch_assoc($rs_cart)) {
+        $recordArray[] = $record;
+    }
+}
+
 ?>
 <!doctype html>
 <html>
@@ -94,64 +114,88 @@ $orders = $_SESSION['orders'];
                                     <tbody>
 
                                     <tr class="tb-tittle">
-
                                         <td>商品名稱</td>
-
                                         <td>數量</td>
-
                                         <td>價格</td>
-
                                         <td>PV</td>
-
-                                        <td>刪除</td>
-
                                     </tr>
 
-                                    <tr class="td-02">
+                                    <?php
 
-                                        <td>商品名稱商品名稱11字 <br>商品名稱商品名稱11字 <br><span
-                                                    style="color:red;">(產品編號)</span><br><br>
-                                        </td>
+                                    $html = [];
+                                    $count = count($recordArray);
+                                    for ($i = 0; $i < $count; $i++) {
+                                        $html[] = '<tr class="td-02">';
+                                        // 商品名稱
+                                        $html[] = '<td>';
+                                        $html[] = $recordArray[$i]['proname'];
+                                        $html[] = "<br/>\n";
+                                        $html[] = '<span style="color:red;">';
+                                        $html[] = '產品編號：';
+                                        $html[] = $recordArray[$i]['proid'];
+                                        $html[] = '<span style="color:red;">';
+                                        $html[] = '</span>';
+                                        $html[] = '</td>';
+                                        // 數量
+                                        $html[] = '<td class="prodCount">';
+                                        $html[] = $_SESSION['shop_cart'][$recordArray[$i]['proid']];
+                                        $html[] = '</td>';
+                                        // 價格
+                                        $html[] = '<td class="priceValue">';
+                                        $html[] = $recordArray[$i]['price'];
+                                        $html[] = '</td>';
+                                        // PV
+                                        $html[] = '<td class="pvValue">';
+                                        $html[] = $recordArray[$i]['PV'];
+                                        $html[] = '</td>';
 
-                                        <td><select>
-                                                <option value="1" selected>1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select></td>
+                                        $html[] = '</tr>';
 
-                                        <td>$200</td>
+                                    }
 
-                                        <td>199</td>
+                                    echo implode("\n", $html);
 
-                                        <td><img src="img/trash.png" alt=""></td>
-
-                                    </tr>
+                                    ?>
 
                                     </tbody>
 
                                 </table>
 
                                 <div class="pv-area">
-
                                     <div class="pv-textarea">商品總PV</div>
-
-                                    <div class="pv-textarea">XXXX</div>
-
+                                    <div class="pv-textarea"></div>
                                     <div class="pv-textarea">PV</div>
-
                                 </div>
 
                                 <div class="price-area">
-
                                     <div class="price-textarea">商品總金額</div>
-
-                                    <div class="price-textarea">X,XXX</div>
-
+                                    <div class="price-textarea"></div>
                                     <div class="price-textarea">元</div>
-
                                 </div>
+
+                                <script>
+                                    var totalPvNode = $('.pv-area > .pv-textarea:nth-child(2)')[0];
+                                    var totalPriceNode = $('.price-area > .price-textarea:nth-child(2)')[0];
+
+                                    doTotal();
+
+                                    function doTotal() {
+                                        var totalPrice = 0;
+                                        var totlaPV = 0;
+                                        var tbody = document.getElementsByTagName("tbody")[0];
+                                        var td02s = tbody.getElementsByClassName("td-02");
+                                        for (var i = 0; i < td02s.length; i++) {
+                                            var price = td02s[i].getElementsByClassName("priceValue")[0].innerHTML;
+                                            var pv = td02s[i].getElementsByClassName("pvValue")[0].innerHTML;
+                                            var count = td02s[i].getElementsByClassName("prodCount")[0].innerHTML;
+                                            totalPrice += parseInt(price) * parseInt(count);
+                                            totlaPV += parseInt(pv) * parseInt(count);
+                                        }
+                                        totalPriceNode.innerHTML = totalPrice + "";
+                                        totalPvNode.innerHTML = totlaPV + "";
+                                    }
+
+                                </script>
 
                             </div>
 
