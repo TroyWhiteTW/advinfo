@@ -107,11 +107,20 @@
 <!-- mobile footer search bar -->
 <div class="ft-search">
     <div class="search">
-        <form method="post" action="pd_query.php">
+        <form id="search_form" method="post" action="pd_query.php">
             <div class="search-input">
                 <input type="text" name="search" id="" class="input-1" placeholder="搜尋商品"></div>
             <input type="submit" class="search-btn" value="">
         </form>
     </div>
 </div>
+<script>
+    document.getElementById('search_form').addEventListener('submit', function (e) {
+        var searchWord = e.target.getElementsByClassName('input-1')[0].value;
+        if(searchWord.trim() === ""){
+            alert('請輸入欲搜索的商品名稱');
+            e.preventDefault();
+        }
+    });
+</script>
 <!-- mobile footer search bar -->
