@@ -12,7 +12,9 @@ if (empty($_SESSION['orders'])) {
     $_SESSION['orders'] = serialize(new OrdersDAO());
 }
 $orders = $_SESSION['orders'];
-//echo serialize($orders);
+/** @var OrdersDAO $orders */
+$orders = unserialize($orders);
+//var_dump(unserialize($orders));
 //return;
 
 //從購物車取得商品資訊
@@ -105,6 +107,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                         <form method="post" action="cart_3_to_4.php">
 
+                            <!-- 購物內容 -->
                             <div class="content-article">
 
                                 <div class="form-name">購物車</div>
@@ -199,11 +202,29 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                             </div>
 
+                            <!-- 配送方式 -->
                             <div class="content-article">
 
                                 <div class="form-name">配送方式</div>
 
-                                <div class="form-input">便利商店取貨(須先付款) 60元</div>
+                                <?php
+
+                                switch ($orders->ship_no) {
+                                    case 1:
+                                        echo '<div class="form-input">便利商店取貨(須先付款) 60元</div>';
+                                        break;
+                                    case 2:
+                                        echo '<div class="form-input">宅配/快遞 60元</div>';
+                                        break;
+                                    case 3:
+                                        echo '<div class="form-input">宅配/快遞(貨到付款) 60元</div>';
+                                        break;
+                                    case 4:
+                                        echo '<div class="form-input">營業據點取貨(須先付款) 60元</div>';
+                                        break;
+                                }
+
+                                ?>
 
                                 <div class="price-area">
 
@@ -227,21 +248,32 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                             </div>
 
+                            <!-- 折抵方式 -->
                             <div class="content-article">
 
                                 <div class="form-name">折抵方式</div>
 
-                                <div class="form-input">使用電子錢包折抵</div>
-
-                                <div class="form-tittle">折抵金額：
-                                    <div class="form-input-2">資料填入</div>
-                                </div>
+                                <?php
+                                switch ($orders->discount) {
+                                    case 0:
+                                        echo '<div class="form-input">不使用折抵</div>';
+                                        break;
+                                    case 1:
+                                        echo '<div class="form-input">使用電子錢包折抵</div>';
+                                        echo '<div class="form-tittle">折抵金額：<div class="form-input-2">' . $orders->discount_price . '</div></div>';
+                                        break;
+                                    case 2:
+                                        echo '<div class="form-input">使用紅利折抵</div>';
+                                        echo '<div class="form-tittle">折抵金額：<div class="form-input-2">' . $orders->discount_price . '</div></div>';
+                                        break;
+                                }
+                                ?>
 
                                 <div class="price-area">
 
                                     <div class="price-textarea">應付總金額</div>
 
-                                    <div class="price-textarea">X,XXX</div>
+                                    <div class="price-textarea">--</div>
 
                                     <div class="price-textarea">元</div>
 
@@ -249,94 +281,123 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                             </div>
 
+                            <!-- 付款方式 -->
                             <div class="content-article">
 
                                 <div class="form-name">付款方式</div>
 
-                                <div class="form-input">信用卡付款(一次付清)</div>
+                                <?php
+
+                                switch ($orders->pay_no) {
+                                    case 1:
+                                        echo '<div class="form-input">信用卡付款(一次付清)</div>';
+                                        break;
+                                    case 2:
+                                        echo '<div class="form-input">信用卡付款(分期)</div>';
+                                        break;
+                                    case 3:
+                                        echo '<div class="form-input">貨到付款(宅配)</div>';
+                                        break;
+                                }
+                                ?>
 
                             </div>
 
+                            <!-- 取貨門市 -->
                             <div class="content-article">
 
                                 <div class="form-name">取貨門市</div>
 
-                                <div class="form-input">便利商店名稱(資料填入)</div>
+                                <!--<div class="form-input">便利商店名稱(資料填入)</div>-->
 
                                 <div class="form-tittle">門市名稱：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->store_name ?></div>
                                 </div>
 
                                 <div class="form-tittle">門市地址：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->store_addr ?></div>
                                 </div>
 
                             </div>
 
+                            <!-- 訂購人資料 -->
                             <div class="content-article">
 
                                 <div class="form-name">訂購人資料</div>
 
                                 <div class="form-tittle">姓名：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->sub_name ?></div>
                                 </div>
 
                                 <div class="form-tittle">電子信箱：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->sub_email ?></div>
                                 </div>
 
                                 <div class="form-tittle">聯繫電話：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->sub_phone ?></div>
                                 </div>
 
                                 <div class="form-tittle">手機：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->sub_mobile ?></div>
                                 </div>
 
                                 <div class="form-tittle">聯繫地址：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->sub_address ?></div>
                                 </div>
 
                             </div>
 
+                            <!-- 收件人資料 -->
                             <div class="content-article">
 
                                 <div class="form-name">收件人資料</div>
 
                                 <div class="form-tittle">姓名：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->rec_name ?></div>
                                 </div>
 
                                 <div class="form-tittle">電子信箱：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->rec_email ?></div>
                                 </div>
 
                                 <div class="form-tittle">聯繫電話：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->rec_phone ?></div>
                                 </div>
 
                                 <div class="form-tittle">手機：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->rec_mobile ?></div>
                                 </div>
 
                                 <div class="form-tittle">聯繫地址：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->rec_address ?></div>
                                 </div>
 
                             </div>
 
+                            <!-- 發票資訊-->
                             <div class="content-article">
 
                                 <div class="form-name">發票資訊</div>
 
-                                <div class="form-tittle">個人發票</div>
+                                <?php
+                                switch ($orders->invoice) {
+                                    case 1:
+                                        echo '<div class="form-tittle">個人發票</div>';
+                                        break;
+                                    case 2:
+                                        echo '<div class="form-tittle">公司戶頭票</div>';
+                                        break;
+                                }
+                                ?>
+
+                                <hr/>
 
                                 <div class="form-tittle">統一編號：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->company_no ?></div>
                                 </div>
 
                                 <div class="form-tittle">公司抬頭：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"><?= $orders->invoice_title ?></div>
                                 </div>
 
                             </div>
