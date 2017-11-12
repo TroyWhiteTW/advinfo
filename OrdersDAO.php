@@ -60,7 +60,7 @@ class OrdersDAO
     public $returntime = null;//實際退貨時間
     public $refundtime = null;//退款時間
 
-    public function save($conn)
+    public function save($mysqli, $errors)
     {
 
         //check all data is null or not
@@ -95,11 +95,12 @@ class OrdersDAO
 //        $conn = @mysqli_connect('localhost', 'root', 'root', 'bradchao') or die("Server Busy");
 //        mysqli_set_charset($conn, "UTF8");
 
-        $result = mysqli_query($conn, $sql);
+        $result = $mysqli->query($sql);
         if ($result === true) {
             echo "訂單OK";
 //            header("Refresh:3;url=index.php");
         } else {
+            array_push($errors, 'OrdersDAO save error.');
             echo "發生未預期錯誤...";
         }
 //        $result->close();

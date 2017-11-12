@@ -14,7 +14,7 @@ class OrderDetailDAO
     public $PV = null;//PV值
     public $bonuce = null;//紅利值
 
-    public function save($conn)
+    public function save($mysqli, $errors)
     {
 
         //check all data is null or not
@@ -50,11 +50,27 @@ class OrderDetailDAO
 //        $conn = @mysqli_connect('localhost', 'root', 'root', 'bradchao') or die("Server Busy");
 //        mysqli_set_charset($conn, "UTF8");
 
-        $result = mysqli_query($conn, $sql);
+        $result = $mysqli->query($sql);
         if ($result === true) {
             echo "訂單OK";
+
+            $sql2 = "SELECT stock FROM products WHERE proid = '$this->proid'";
+            $rs2 = $mysqli->query($sql2);
+            $stock = (int)(mysqli_fetch_assoc($rs2)['stock']);
+            if ($stock - $this->qty < 0) {
+                array_push($errors, 'not enough stock for order.');
+            } else {
+                $sql3 = "UPDATE products SET stock='$stock - $this->qty' WHERE proid='$this->proid'";
+                $rs3 = $mysqli->query($sql3);
+                if ($rs3 === false) {
+                    array_push($errors,'update error.');
+                }
+            }
+//            $rs2->free();
+            $rs2->close();
 //            header("Refresh:3;url=index.php");
         } else {
+            array_push($errors, 'OrderDetailDAO save error.');
             echo "發生未預期錯誤...";
         }
 //        $result->close();

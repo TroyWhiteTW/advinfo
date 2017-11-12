@@ -25,7 +25,20 @@ $orders->returnapply = '0000-00-00 00:00:00';
 $orders->returntime = '0000-00-00 00:00:00';
 $orders->refundtime = '0000-00-00 00:00:00';
 
-$orders->save($conn);
+//for transition
+$mysqli = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
+$errors = [];
+
+if ($mysqli->connect_errno) {
+    echo "Sorry, this website is experiencing problems.";
+    echo "Error: Failed to make a MySQL connection, here is why: \n";
+    echo "Errno: " . $mysqli->connect_errno . "\n";
+    echo "Error: " . $mysqli->connect_error . "\n";
+    exit;
+}
+
+$mysqli->autocommit(false);
+$orders->save(@$mysqli, @$errors);
 
 foreach ($_SESSION['shop_cart'] as $k => $v) {
     $orderDetail = new OrderDetailDAO();
@@ -40,14 +53,33 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
     $orderDetail->PV = 0;
     $orderDetail->bonuce = 0;
 
-    $orderDetail->save($conn);
+    $orderDetail->save(@$mysqli, @$errors);
 }
 
-// unset $_SESSION['orders']
-unset($_SESSION['orders']);
-unset($_SESSION['shop_cart']);
-//var_dump($_SESSION['orders']);
+if (empty($errors)) {
+
+    //無錯誤 所有資料寫入成功
+    $mysqli->commit();
+
+    unset($_SESSION['orders']);
+    unset($_SESSION['shop_cart']);
+    header('Location:cart_4.php');
 
 // 跳轉到 cart_4.php
-header('Location:cart_4.php');
+    header('Location:cart_4.php');
+
+} else {
+    //有錯誤
+    $mysqli->rollback();
+    var_dump($errors);
+}
+
+//// unset $_SESSION['orders']
+//unset($_SESSION['orders']);
+//unset($_SESSION['shop_cart']);
+////var_dump($_SESSION['orders']);
+//
+//// 跳轉到 cart_4.php
+//header('Location:cart_4.php');
+$mysqli->close();
 exit;
