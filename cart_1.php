@@ -280,13 +280,13 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         營業據點取貨(須先付款)60元
                                     </label>
 
-                                    <div class="form-tittle" style="margin-left:20px;">
-                                        <select>
-                                            <option selected="selected" value="0">請選擇營業據點</option>
-                                            <option value="1">A</option>
-                                            <option value="2">B</option>
-                                        </select>
-                                    </div>
+<!--                                    <div class="form-tittle" style="margin-left:20px;">-->
+<!--                                        <select>-->
+<!--                                            <option selected="selected" value="0">請選擇營業據點</option>-->
+<!--                                            <option value="1">A</option>-->
+<!--                                            <option value="2">B</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
 
                                 </div>
 
@@ -317,40 +317,40 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="1">
+                                        <input type="radio" name="discount" value="0">
                                         不使用折抵
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="2">
+                                        <input type="radio" name="discount" value="1">
                                         使用電子錢包折抵
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="3">
+                                        <input type="radio" name="discount" value="2">
                                         使用紅利折抵
                                     </label>
                                 </div>
 
-                                <div class="form-tittle">
-
-                                    <div class="price-textarea">
-                                        餘額
-                                    </div>
-
-                                    <div class="price-textarea" style="color:blue;">
-                                        xxxx
-                                    </div>
-
-                                    <div class="price-textarea unit">
-                                        元
-                                    </div>
-
-                                </div>
+<!--                                <div class="form-tittle">-->
+<!---->
+<!--                                    <div class="price-textarea">-->
+<!--                                        餘額-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="price-textarea" style="color:blue;">-->
+<!--                                        xxxx-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="price-textarea unit">-->
+<!--                                        元-->
+<!--                                    </div>-->
+<!---->
+<!--                                </div>-->
 
                                 <div class="form-tittle">
                                     折抵金額：
