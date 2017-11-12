@@ -4,115 +4,64 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-$isSearch = !empty($_POST['search']);
-if ($isSearch) {
-    $search = trim($_POST['search']);
-
-    // 商品標籤資料 -> 商品資料
-    $sql = "select * from protags order by sort";
-    $protags = array();
-    $products = array(); // $products[tag][product]
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $protags[] = array(
-                'no' => "{$row['no']}",
-                'name' => "{$row['name']}",
-                'pic' => "{$row['pic']}",
-                'color' => "{$row['color']}"
-            );
-            // 以下針對該標籤的商品取出
-            $tagno = $row['no'];
-            $products[$tagno] = array();
-            $sql2 = "select * from products where protags = $tagno and status = 3 and proname LIKE '%$search%'";
-            $result2 = mysqli_query($conn, $sql2);
-            if (mysqli_num_rows($result2) > 0) {
-                while ($row2 = mysqli_fetch_assoc($result2)) {
-                    $products[$tagno][] = array(
-                        'proid' => "{$row2['proid']}",
-                        'proname' => "{$row2['proname']}",
-                        'prointro' => "{$row2['prointro']}",
-                        'pcno' => "{$row2['pcno']}",
-                        'price' => "{$row2['price']}",
-                        'pv' => "{$row2['PV']}",
-                        'bonuce' => "{$row2['bonuce']}",
-                        'stock' => "{$row2['stock']}",
-                        'prodetail' => "{$row2['prodetail']}",
-                        'weight' => "{$row2['weight']}",
-                        'size' => "{$row2['size']}",
-                        'promo_price' => "{$row2['promo_price']}",
-                        'promo_pv' => "{$row2['promo_PV']}",
-                        'promo_bonuce' => "{$row2['promo_bonuce']}"
-                    );
-                }
-            }
-//var_dump($products);return;
-        }
-    } else {
-        // 錯誤 查詢結果
-        echo 'E2';
-        return;
-    }
-}
-
 // 產品分類
 $sql = "select * from proclass where parent = 0 order by no";
 $result = mysqli_query($conn, $sql);
-//	if (mysqli_num_rows($result) > 0){
-//		while ($row = mysqli_fetch_assoc($result)){
-//			$proclass[] = array(
-//					'no' => "{$row['no']}",
-//					'pcname' => "{$row['pcname']}"
-//			);
-//		}
-//	}else{
-//		// 錯誤 查詢結果
-//		echo 'E1';
-//		return;
-//	}
-//
-//	// 輪播
-//	$sql = "select * from banners where status = 1 order by sort";
-//	$result = mysqli_query($conn, $sql);
-//	if (mysqli_num_rows($result) > 0){
-//		while ($row = mysqli_fetch_assoc($result)){
-//			$banners[] = array(
-//					'pic' => "{$row['pic']}",
-//					'url' => "{$row['url']}"
-//			);
-//		}
-//	}else{
-//		// 錯誤 查詢結果
-//		echo 'E2';
-//		return;
-//	}
-//
-//	$queryPcno1 = -1;  // 全部種類
-//	if (isset($_REQUEST['pcno1'])) $queryPcno1 = $_REQUEST['pcno1'];
-//	$queryPcno3 = -1; // 全部新品,促銷, 普通
-//	if (isset($_REQUEST['pcno3'])) $queryPcno3 = $_REQUEST['pcno3'];
-//	$queryOrder = -1; // -1 不排序; 1 低到高; 2 高到低
-//	if (isset($_REQUEST['order'])) $queryOrder = $_REQUEST['order'];
-//
-//	// 商品資訊
-//	$sql = "select * from products,proclass where proclass.no=products.pcno1 and products.status=3";
-//    if ($queryPcno1!=-1){
-//        $sql .= " and products.pcno1='{$queryPcno1}'";
-//    }
-//    if ($queryPcno3!=-1){
-//        $sql .= " and products.pcno3='{$queryPcno3}'";
-//    }
-//    if ($queryOrder==1){
-//        $sql .= " order by products.price desc";
-//    }else if ($queryOrder==2){
-//        $sql .= " order by products.price asc";
-//    }
-//
-//    $products = array();
-//	$result = mysqli_query($conn, $sql);
-//    while ($row = mysqli_fetch_assoc($result)){
-//        $products[] = $row;
-//    }
+	if (mysqli_num_rows($result) > 0){
+		while ($row = mysqli_fetch_assoc($result)){
+			$proclass[] = array(
+					'no' => "{$row['no']}",
+					'pcname' => "{$row['pcname']}"
+			);
+		}
+	}else{
+		// 錯誤 查詢結果
+		echo 'E1';
+		return;
+	}
+
+	// 輪播
+	$sql = "select * from banners where status = 1 order by sort";
+	$result = mysqli_query($conn, $sql);
+	if (mysqli_num_rows($result) > 0){
+		while ($row = mysqli_fetch_assoc($result)){
+			$banners[] = array(
+					'pic' => "{$row['pic']}",
+					'url' => "{$row['url']}"
+			);
+		}
+	}else{
+		// 錯誤 查詢結果
+		echo 'E2';
+		return;
+	}
+
+	$queryPcno1 = -1;  // 全部種類
+	if (isset($_REQUEST['pcno1'])) $queryPcno1 = $_REQUEST['pcno1'];
+	$queryPcno3 = -1; // 全部新品,促銷, 普通
+	if (isset($_REQUEST['pcno3'])) $queryPcno3 = $_REQUEST['pcno3'];
+	$queryOrder = -1; // -1 不排序; 1 低到高; 2 高到低
+	if (isset($_REQUEST['order'])) $queryOrder = $_REQUEST['order'];
+
+	// 商品資訊
+	$sql = "select * from products,proclass where proclass.no=products.pcno1 and products.status=3";
+    if ($queryPcno1!=-1){
+        $sql .= " and products.pcno1='{$queryPcno1}'";
+    }
+    if ($queryPcno3!=-1){
+        $sql .= " and products.pcno3='{$queryPcno3}'";
+    }
+    if ($queryOrder==1){
+        $sql .= " order by products.price desc";
+    }else if ($queryOrder==2){
+        $sql .= " order by products.price asc";
+    }
+
+    $products = array();
+	$result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result)){
+        $products[] = $row;
+    }
 
 ?>
 <!doctype html>
@@ -142,58 +91,6 @@ $result = mysqli_query($conn, $sql);
 
             <div class="col-sm-10">
 
-                <?php if ($isSearch): ?>
-
-                    <div class="beard">
-                        <ul>
-                            <li><a href="index.php">首頁</a></li>
-                            <li><img src="img/process_icon.png" alt=""></li>
-                            <li><h3>商品查詢</h3></li>
-                        </ul>
-                    </div>
-
-                    <?php
-                    // 開始該標籤的商品
-                    foreach ($protags as $protag) {
-                        echo '<div class="product-area">';
-                        echo '<div class="tag" style="background:' . $protag['color'] . '">';
-                        echo '<div class="tag-name">' . $protag['name'] . '</div>';
-                        echo '<div class="more"><a href="pd_query.php">more</a></div>';
-                        echo '</div>';
-
-                        echo '<div id="sildes-portfolio" class="owl-carousel owl-theme " style="padding:0 8px;">';
-                        $tagno = $protag['no'];
-                        foreach ($products[$tagno] as $product) {
-                            echo '<div class="item">';
-                            echo '<div class="pd-carousel" >';
-                            echo '<a href="pd_page.php?proid=' . $product['proid'] . '">';
-                            // 搜尋該商品的主圖
-                            $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
-                            $result = mysqli_query($conn, $sql);
-                            if (mysqli_num_rows($result) > 0) {
-                                // 撈出主圖
-                                $row = mysqli_fetch_assoc($result);
-                                echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
-                            } else {
-                                echo '<div class="pd-pic"></div>';
-                            }
-                            echo '<div class="pd-name">' . $product['proname'] . '</div>';
-                            echo '<div class="pd-type">滴丸</div>';
-                            echo '<div class="pd-pv">' . $product['pv'] . '</div>';
-                            echo '<div class="pd-price">價格$' . $product['price'] . '元</div>';
-
-                            if ($protag['pic'] != '0') {
-                                echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
-                            }
-
-                            echo '</a></div></div>';
-                        }
-                        echo '</div>';
-                        echo '</div>';
-                    }
-                    ?>
-
-                <?php else: ?>
 
                     <div class="beard">
                         <ul>
@@ -207,26 +104,23 @@ $result = mysqli_query($conn, $sql);
                         <div class="function-area">
                             <ul>
                                 <li>
-                                    <input type="button" onclick="location.href='?pcno3=1';" class="tag-value-hot btn-1"
-                                           value="新品上市">
+                                    <input type="button" onclick="location.href='?pcno3=1';" class="tag-value-hot btn-1" value="新品上市">
                                 </li>
                                 <li>
-                                    <input type="button" onclick="location.href='?pcno3=2';"
-                                           class="tag-value-promot btn-1" value="促銷商品">
+                                    <input type="button" onclick="location.href='?pcno3=2';" class="tag-value-promot btn-1" value="促銷商品">
                                 </li>
                                 <li>
-                                    <input type="button" onclick="location.href='?order=1';"
-                                           class="tag-value-price btn-1" value="價格:低-高">
+                                    <input type="button" onclick="location.href='?order=1';" class="tag-value-price btn-1" value="價格:低-高">
                                 </li>
                                 <li>
-                                    <input type="button" onclick="location.href='?order=1';"
-                                           class="tag-value-price btn-1" value="價格:高-低">
+                                    <input type="button" onclick="location.href='?order=1';" class="tag-value-price btn-1" value="價格:高-低">
                                 </li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="product-area">
+
                         <div class="product-list">
 
                             <?php
@@ -263,9 +157,8 @@ $result = mysqli_query($conn, $sql);
                             ?>
 
                         </div>
-                    </div>
 
-                <?php endif; ?>
+                    </div>
 
             </div>
 
