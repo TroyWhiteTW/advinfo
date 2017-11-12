@@ -24,7 +24,7 @@ if ($isSearch) {
             // 以下針對該標籤的商品取出
             $tagno = $row['no'];
             $products[$tagno] = array();
-            $sql2 = "select * from products where protags = $tagno and status = 3 and proname = '$search'";
+            $sql2 = "select * from products where protags = $tagno and status = 3 and proname LIKE '%$search%'";
             $result2 = mysqli_query($conn, $sql2);
             if (mysqli_num_rows($result2) > 0) {
                 while ($row2 = mysqli_fetch_assoc($result2)) {
@@ -46,7 +46,7 @@ if ($isSearch) {
                     );
                 }
             }
-//var_dump($sql2);return;
+//var_dump($products);return;
         }
     } else {
         // 錯誤 查詢結果
@@ -166,7 +166,7 @@ $result = mysqli_query($conn, $sql);
                         foreach ($products[$tagno] as $product) {
                             echo '<div class="item">';
                             echo '<div class="pd-carousel" >';
-                            echo '<a href="pd_page.php">';
+                            echo '<a href="pd_page.php?proid=' . $product['proid'] . '">';
                             // 搜尋該商品的主圖
                             $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
                             $result = mysqli_query($conn, $sql);

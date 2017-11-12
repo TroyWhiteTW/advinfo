@@ -123,7 +123,7 @@ if (mysqli_num_rows($result) > 0) {
                     foreach ($products[$tagno] as $product) {
                         echo '<div class="item">';
                         echo '<div class="pd-carousel" >';
-                        echo '<a href="pd_page.php">';
+                        echo '<a href="pd_page.php?proid=' . $product['proid'] . '">';
                         // 搜尋該商品的主圖
                         $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
                         $result = mysqli_query($conn, $sql);
