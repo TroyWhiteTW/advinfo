@@ -10,7 +10,7 @@ $isLogin = !empty($_SESSION['user']);
 // GET order = 1 => 低到高排序
 // GET order = 2 => 高到低排序
 
-$sql = 'SELECT * FROM products,protags WHERE protags.no=products.pcno AND products.status=3';
+$sql = 'SELECT * FROM products,protags WHERE protags.no=products.protags AND products.status=3';
 
 if (!isset($_GET['protags'])) {
 
@@ -32,7 +32,7 @@ if (!isset($_GET['protags'])) {
 
 } else {
 
-    $sql .= ' and products.pcno=' . $_GET['protags'];
+    $sql .= ' and products.protags=' . $_GET['protags'];
 
     if (!isset($_GET['order'])) {
         $sql .= ' order by products.price desc';
