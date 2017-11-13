@@ -8,7 +8,7 @@ $isSearch = !empty($_GET['search']);
 if ($isSearch) {
     $search = trim($_GET['search']);
 
-    $sql = 'SELECT * FROM products,protags WHERE protags.no=products.pcno AND products.status=3';
+    $sql = 'SELECT * FROM products,protags WHERE protags.no=products.protags AND products.status=3';
     $sql .= ' AND proname LIKE ' . '\'%' . $search . '%\'';
 
 //var_dump($sql);return;
