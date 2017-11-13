@@ -10,9 +10,10 @@ $proid = 0;
 
 if ($hasProid) {
 
-    $proid = (int)trim($_GET['proid']);// 產品 id 處理
+    $proid = trim($_GET['proid']);// 產品 id 處理
 
-    $sql = 'SELECT * FROM products WHERE proid = ' . $proid;
+    $sql = 'SELECT * FROM products WHERE proid = ' . '\'' . $proid . '\'';
+
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // 撈該筆資料的全部欄位資料
@@ -154,7 +155,7 @@ if ($hasProid) {
                                                     url: "./add_cart.php",
                                                     type: 'POST',
                                                     data: {
-                                                        proid:<?= $proid?>,
+                                                        proid:<?= '\'' . $proid . '\''?>,
                                                         count: $('#sc').val()
                                                     },
                                                     error: function () {
@@ -167,7 +168,7 @@ if ($hasProid) {
                                             });
                                         </script>
                                         <form method="post" action="purchase.php">
-                                            <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
+                                            <input id="" name="proid" value="<?= '\'' . $proid . '\''?>" hidden="hidden">
                                             <input id="purchaseCount" name="count" value="1" hidden="hidden">
                                             <input type="submit" class="buy-btn" value="直接購買">
                                         </form>
