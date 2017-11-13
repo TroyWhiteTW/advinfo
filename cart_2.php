@@ -94,48 +94,53 @@ $orders = unserialize($orders);
 
                                 <div class="form-tittle">
                                     姓名：
-                                    <input name="sub_name" id="" type="text" class="input-2">
+                                    <input name="sub_name" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][2] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     電子信箱：
-                                    <input name="sub_email" id="" type="text" class="input-2">
+                                    <input name="sub_email" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][7] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     聯繫電話：
-                                    <input name="sub_phone" id="" type="text" class="input-2">
+                                    <input name="sub_phone" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][8] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
-                                    <input name="sub_mobile" id="" type="text" class="input-2">
+                                    <input name="sub_mobile" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][9] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     聯繫地址：
-<!--                                    <input type="checkbox" checked="checked">-->
-<!--                                    台澎金馬-->
-<!--                                    <span style="color:red; font-size:12px;">(預設勾選)</span>-->
+                                    <!--                                    <input type="checkbox" checked="checked">-->
+                                    <!--                                    台澎金馬-->
+                                    <!--                                    <span style="color:red; font-size:12px;">(預設勾選)</span>-->
 
                                     <div class="form-tittle">
 
-<!--                                        <select name="" id="">-->
-<!--                                            <option selected="selected" value="0">請選擇縣市</option>-->
-<!--                                            <option value="1">B</option>-->
-<!--                                            <option value="2">C</option>-->
-<!--                                        </select>-->
-<!---->
-<!--                                        <select name="" id="">-->
-<!--                                            <option selected="selected" value="0">請選擇區別</option>-->
-<!--                                            <option value="1">B</option>-->
-<!--                                            <option value="2">C</option>-->
-<!--                                        </select>-->
+                                        <!--                                        <select name="" id="">-->
+                                        <!--                                            <option selected="selected" value="0">請選擇縣市</option>-->
+                                        <!--                                            <option value="1">B</option>-->
+                                        <!--                                            <option value="2">C</option>-->
+                                        <!--                                        </select>-->
+                                        <!---->
+                                        <!--                                        <select name="" id="">-->
+                                        <!--                                            <option selected="selected" value="0">請選擇區別</option>-->
+                                        <!--                                            <option value="1">B</option>-->
+                                        <!--                                            <option value="2">C</option>-->
+                                        <!--                                        </select>-->
 
                                         <div class="form-tittle">
-                                            <input name="sub_address" id="" type="text" class="input-3">
+                                            <input size="40" name="sub_address" id="" type="text" class="input-3"
+                                                   value="<?= $_SESSION['user'][12] . $_SESSION['user'][13] . $_SESSION['user'][14] ?>">
                                         </div>
 
                                     </div>
@@ -145,61 +150,67 @@ $orders = unserialize($orders);
                             </div>
 
                             <!-- 收件人資料 -->
-                            <div class="content-article">
+                            <div id="rec_set" class="content-article">
 
                                 <div class="form-name">收件人資料</div>
 
                                 <div class="form-tittle">
                                     <div class="check-box">
-                                        <input type="checkbox">
+                                        <input id="rec_check" type="checkbox" checked>
                                     </div>
                                     同步為訂購人資料
                                 </div>
 
                                 <div class="form-tittle">
                                     姓名：
-                                    <input name="rec_name" id="" type="text" class="input-2">
+                                    <input name="rec_name" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][2] ?>" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     電子信箱：
-                                    <input name="rec_email" id="" type="text" class="input-2">
+                                    <input name="rec_email" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][7] ?>" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     聯繫電話：
-                                    <input name="rec_phone" id="" type="text" class="input-2">
+                                    <input name="rec_phone" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][8] ?>" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
-                                    <input name="rec_mobile" id="" type="text" class="input-2">
+                                    <input name="rec_mobile" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][9] ?>" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     聯繫地址：
-<!--                                    <input type="checkbox" checked="checked">-->
-<!--                                    台澎金馬-->
-<!--                                    <span style="color:red; font-size:12px;">(預設勾選)</span>-->
+                                    <!--                                    <input type="checkbox" checked="checked">-->
+                                    <!--                                    台澎金馬-->
+                                    <!--                                    <span style="color:red; font-size:12px;">(預設勾選)</span>-->
 
                                     <div class="form-tittle">
 
-<!--                                        <select name="" id="">-->
-<!--                                            <option selected="selected" value="0">請選擇縣市</option>-->
-<!--                                            <option value="1">B</option>-->
-<!--                                            <option value="2">C</option>-->
-<!--                                        </select>-->
-<!---->
-<!--                                        <select name="" id="">-->
-<!--                                            <option selected="selected" value="0">請選擇區別</option>-->
-<!--                                            <option value="1">B</option>-->
-<!--                                            <option value="2">C</option>-->
-<!--                                        </select>-->
+                                        <!--                                        <select name="" id="">-->
+                                        <!--                                            <option selected="selected" value="0">請選擇縣市</option>-->
+                                        <!--                                            <option value="1">B</option>-->
+                                        <!--                                            <option value="2">C</option>-->
+                                        <!--                                        </select>-->
+                                        <!---->
+                                        <!--                                        <select name="" id="">-->
+                                        <!--                                            <option selected="selected" value="0">請選擇區別</option>-->
+                                        <!--                                            <option value="1">B</option>-->
+                                        <!--                                            <option value="2">C</option>-->
+                                        <!--                                        </select>-->
 
                                         <div class="form-tittle">
-                                            <input name="rec_address" id="" type="text" class="input-3">
+                                            <input size="40" disabled="disabled" name="rec_address" id="" type="text"
+                                                   class="input-3"
+                                                   value="<?= $_SESSION['user'][12] . $_SESSION['user'][13] . $_SESSION['user'][14] ?>">
                                         </div>
 
                                     </div>
@@ -207,6 +218,22 @@ $orders = unserialize($orders);
                                 </div>
 
                             </div>
+
+                            <script>
+                                var recCheck = $('#rec_check')[0];
+                                recCheck.addEventListener('change', function () {
+                                    enableRecInput(this.checked);
+                                });
+
+                                function enableRecInput(enable) {
+                                    var nodes = document.getElementById('rec_set').getElementsByTagName('input');
+                                    for (var n in nodes) {
+                                        if (nodes[n].type === 'text') {
+                                            nodes[n].disabled = enable;
+                                        }
+                                    }
+                                }
+                            </script>
 
                             <!-- 取貨門市 -->
                             <div class="content-article">
