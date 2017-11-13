@@ -8,51 +8,16 @@ $isSearch = !empty($_GET['search']);
 if ($isSearch) {
     $search = trim($_GET['search']);
 
-    // 商品標籤資料 -> 商品資料
-    $sql = "select * from protags order by sort";
-    $protags = array();
-    $products = array(); // $products[tag][product]
+    $sql = 'SELECT * FROM products,protags WHERE protags.no=products.pcno AND products.status=3';
+    $sql .= ' AND proname LIKE ' . '\'%' . $search . '%\'';
+
+//var_dump($sql);return;
+    $products = array();
     $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $protags[] = array(
-                'no' => "{$row['no']}",
-                'name' => "{$row['name']}",
-                'pic' => "{$row['pic']}",
-                'color' => "{$row['color']}"
-            );
-            // 以下針對該標籤的商品取出
-            $tagno = $row['no'];
-            $products[$tagno] = array();
-            $sql2 = "select * from products where protags = $tagno and status = 3 and proname LIKE '%$search%'";
-            $result2 = mysqli_query($conn, $sql2);
-            if (mysqli_num_rows($result2) > 0) {
-                while ($row2 = mysqli_fetch_assoc($result2)) {
-                    $products[$tagno][] = array(
-                        'proid' => "{$row2['proid']}",
-                        'proname' => "{$row2['proname']}",
-                        'prointro' => "{$row2['prointro']}",
-                        'pcno' => "{$row2['pcno']}",
-                        'price' => "{$row2['price']}",
-                        'pv' => "{$row2['PV']}",
-                        'bonuce' => "{$row2['bonuce']}",
-                        'stock' => "{$row2['stock']}",
-                        'prodetail' => "{$row2['prodetail']}",
-                        'weight' => "{$row2['weight']}",
-                        'size' => "{$row2['size']}",
-                        'promo_price' => "{$row2['promo_price']}",
-                        'promo_pv' => "{$row2['promo_PV']}",
-                        'promo_bonuce' => "{$row2['promo_bonuce']}"
-                    );
-                }
-            }
-//var_dump($products);return;
-        }
-    } else {
-        // 錯誤 查詢結果
-        echo 'E2';
-        return;
+    while ($row = mysqli_fetch_assoc($result)) {
+        $products[] = $row;
     }
+
 }
 
 ?>
@@ -94,44 +59,38 @@ if ($isSearch) {
                     </div>
 
                     <?php
-                    // 開始該標籤的商品
-                    foreach ($protags as $protag) {
-                        echo '<div class="product-area">';
-                        echo '<div class="tag" style="background:' . $protag['color'] . '">';
-                        echo '<div class="tag-name">' . $protag['name'] . '</div>';
-                        echo '<div class="more"><a href="pd_query.php">more</a></div>';
-                        echo '</div>';
 
-                        echo '<div id="sildes-portfolio" class="owl-carousel owl-theme " style="padding:0 8px;">';
-                        $tagno = $protag['no'];
-                        foreach ($products[$tagno] as $product) {
-                            echo '<div class="item">';
-                            echo '<div class="pd-carousel" >';
-                            echo '<a href="pd_page.php?proid=' . $product['proid'] . '">';
-                            // 搜尋該商品的主圖
-                            $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
-                            $result = mysqli_query($conn, $sql);
-                            if (mysqli_num_rows($result) > 0) {
-                                // 撈出主圖
-                                $row = mysqli_fetch_assoc($result);
-                                echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
-                            } else {
-                                echo '<div class="pd-pic"></div>';
-                            }
-                            echo '<div class="pd-name">' . $product['proname'] . '</div>';
-                            echo '<div class="pd-type">滴丸</div>';
-                            echo '<div class="pd-pv">' . $product['pv'] . '</div>';
-                            echo '<div class="pd-price">價格$' . $product['price'] . '元</div>';
+                    foreach ($products as $product) {
 
-                            if ($protag['pic'] != '0') {
-                                echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
-                            }
-
-                            echo '</a></div></div>';
+                        echo '<div class="pd">';
+                        echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
+                        echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
+                        echo "<div class='pd-name'>{$product['proname']}</div>";
+                        echo "<div class='pd-type'>{$product['name']}</div>";
+                        if ($isLogin) {
+                            echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
                         }
-                        echo '</div>';
+
+                        // 促銷商品
+                        if ($product['protags'] == 2) {
+                            echo "<div class='pd-price'>促銷價$ {$product['price']}元</div>";
+                        } else {
+                            echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
+                        }
+
+                        // 左上方的圖標
+                        if ($product['protags'] == 1) {
+                            // 新品上市
+                            echo '<div class="tag-type"><img src="img/tag_new.png" alt=""></div>';
+                        } else if ($product['protags'] == 2) {
+                            // 促銷商品
+                            echo '<div class="tag-type"><img src="img/tag_promot.png" alt=""></div>';
+                        }
+
+                        echo '</a>';
                         echo '</div>';
                     }
+
                     ?>
 
                 <?php else: ?>
