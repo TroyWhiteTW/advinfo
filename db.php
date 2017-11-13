@@ -4,7 +4,7 @@
 $dbHost = 'localhost';
 $dbUser = 'root';
 $dbPassword = 'root';
-$dbName = 'bradchao';
+$dbName = 'advinfo';
 
 $conn = @mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName) or die("Server Busy");
 
