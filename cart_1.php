@@ -136,7 +136,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = "<br/>\n";
                                         $html[] = '<span style="color:red;">';
                                         $html[] = '產品編號：';
-                                        $html[] = $recordArray[$i]['proid'];
+                                        $html[] = '\''.$recordArray[$i]['proid'].'\'';
                                         $html[] = '<span style="color:red;">';
                                         $html[] = '</span>';
                                         $html[] = '</td>';
@@ -165,7 +165,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = '</td>';
                                         // 刪除
                                         $html[] = '<td>';
-                                        $html[] = '<div onclick="deleteProd(this,' . $recordArray[$i]['proid'] . ')" class="glyphicon glyphicon-trash"></div>';
+                                        $html[] = '<div onclick="deleteProd(this,'.'\'' . $recordArray[$i]['proid'].'\'' . ')" class="glyphicon glyphicon-trash"></div>';
                                         $html[] = '</td>';
 
                                         $html[] = '</tr>';
@@ -194,6 +194,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                             success: function (response) {
                                                 alert('成功刪除');
                                                 node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
+                                                doTotal();
                                             }
                                         });
                                     }
