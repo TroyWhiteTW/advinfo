@@ -12,6 +12,8 @@ if (empty($_SESSION['orders'])) {
     $_SESSION['orders'] = serialize(new OrdersDAO());
 }
 $orders = $_SESSION['orders'];
+/** @var OrdersDAO $orders */
+$orders = unserialize($orders);
 //echo serialize($orders);
 //return;
 
