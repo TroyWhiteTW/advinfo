@@ -48,15 +48,15 @@ if ($isSearch) {
 
             <div class="col-sm-10">
 
-                <?php if ($isSearch): ?>
+                <div class="beard">
+                    <ul>
+                        <li><a href="index.php">首頁</a></li>
+                        <li><img src="img/process_icon.png" alt=""></li>
+                        <li><h3>商品查詢</h3></li>
+                    </ul>
+                </div>
 
-                    <div class="beard">
-                        <ul>
-                            <li><a href="index.php">首頁</a></li>
-                            <li><img src="img/process_icon.png" alt=""></li>
-                            <li><h3>商品查詢</h3></li>
-                        </ul>
-                    </div>
+                <?php if ($isSearch): ?>
 
                     <?php
 
@@ -91,9 +91,15 @@ if ($isSearch) {
                         echo '</div>';
                     }
 
+                    if ($products == null) {
+                        echo '<h3>查詢不到商品</h3>';
+                    }
+
                     ?>
 
                 <?php else: ?>
+
+                    <h3>查詢不到商品</h3>
 
                 <?php endif; ?>
 
