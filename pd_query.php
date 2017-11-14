@@ -90,7 +90,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <ul>
                         <li><a href="index.php">首頁</a></li>
                         <li><img src="img/process_icon.png" alt=""></li>
-                        <li><a href="">商品類別</a></li>
+                        <li><a href="pd_query.php">商品類別</a></li>
                     </ul>
                 </div>
 
@@ -141,6 +141,23 @@ while ($row = mysqli_fetch_assoc($result)) {
                         }
                     }
                 </script>
+
+                <hr/>
+
+                <?php
+
+                $panelSql = 'SELECT * FROM proclass WHERE status=1 AND parent=0 ORDER BY sort ASC';
+                $panelRes = mysqli_query($conn, $panelSql);
+                while ($row = mysqli_fetch_assoc($panelRes)) {
+                    echo '<div class="panel panel-default">';
+                    echo '<div class="panel-heading">'.$row['pcname'].'</div>';
+                    echo '<div class="panel-body">';
+                    echo 'Basic panel example';
+                    echo '</div>';
+                    echo '</div>';
+                }
+
+                ?>
 
                 <div class="product-area">
 
