@@ -2,6 +2,11 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
+
+if ($isLogin) {
+    header('Location:index.php');
+    exit;
+}
 ?>
 <?php
 // 產品分類
@@ -50,7 +55,7 @@ $result = mysqli_query($conn, $sql);
                     <ul>
                         <li><a href="index.php">首頁</a></li>
                         <li><img src="img/process_icon.png" alt=""></li>
-                        <li><a href="login.php">會員登入</a></li>
+                        <li><a href="">加入會員</a></li>
                     </ul>
                 </div>
                 <div class="content-area">
@@ -109,10 +114,10 @@ $result = mysqli_query($conn, $sql);
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td class="td-04">聘級</td>
-                                        <td><input type="text" name="level" class="input-4"></td>
-                                    </tr>
+                                    <!--                                    <tr hidden="hidden">-->
+                                    <!--                                        <td class="td-04">聘級</td>-->
+                                    <!--                                        <td><input type="text" name="level" class="input-4"></td>-->
+                                    <!--                                    </tr>-->
 
                                     <tr>
                                         <td class="td-04">推薦者帳號</td>
@@ -127,7 +132,7 @@ $result = mysqli_query($conn, $sql);
                                         </td>
                                         <script>
                                             var y = "";
-                                            for (var i = 1920; i <= 2017; i++) {
+                                            for (var i = 1970; i <= 2017; i++) {
                                                 y += '<option value="' + i + '">' + i + '</option>';
                                             }
                                             document.getElementById('b_y').innerHTML = y;
@@ -177,15 +182,15 @@ $result = mysqli_query($conn, $sql);
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td class="td-04">統一編號</td>
-                                        <td><input type="text" name="company_no" class="input-4"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="td-04">發票抬頭</td>
-                                        <td><input type="text" name="invoice_title" class="input-4"></td>
-                                    </tr>
+                                    <!--                                    <tr hidden="hidden">-->
+                                    <!--                                        <td class="td-04">統一編號</td>-->
+                                    <!--                                        <td><input type="text" name="company_no" class="input-4"></td>-->
+                                    <!--                                    </tr>-->
+                                    <!---->
+                                    <!--                                    <tr hidden="hidden">-->
+                                    <!--                                        <td class="td-04">發票抬頭</td>-->
+                                    <!--                                        <td><input type="text" name="invoice_title" class="input-4"></td>-->
+                                    <!--                                    </tr>-->
 
                                     <tr>
                                         <td class="td-04">縣市<span style="color:red;">*</span></td>
@@ -277,30 +282,31 @@ $result = mysqli_query($conn, $sql);
                                         <td><input type="text" name="address" class="input-4"></td>
                                     </tr>
 
-                                    <tr>
-                                        <td class="td-04">常用便利商店門市</td>
-                                        <td><input type="text" name="constore" class="input-4"></td>
-                                    </tr>
+                                    <!--                                    <tr hidden="hidden">-->
+                                    <!--                                        <td class="td-04">常用便利商店門市</td>-->
+                                    <!--                                        <td><input type="text" name="constore" class="input-4"></td>-->
+                                    <!--                                    </tr>-->
 
-                                    <tr>
-                                        <td class="td-04">會員類別<span style="color:red;">*</span></td>
-                                        <td>
-                                            <select name="type" class="input-4">
-                                                <option value="1">一般會員</option>
-                                                <option value="2">直銷會員</option>
-                                            </select>
-                                        </td>
-                                    </tr>
+                                    <!--                                    <tr hidden="hidden">-->
+                                    <!--                                        <td class="td-04">會員類別<span style="color:red;">*</span></td>-->
+                                    <!--                                        <td>-->
+                                    <!--                                            <select name="type" class="input-4">-->
+                                    <!--                                                <option value="1">一般會員</option>-->
+                                    <!--                                                <option value="2">直銷會員</option>-->
+                                    <!--                                            </select>-->
+                                    <!--                                        </td>-->
+                                    <!--                                    </tr>-->
 
                                     <tr>
                                         <td class="td-04">驗證碼<span style="color:red;">*</span></td>
                                         </td>
-                                        <td><input type="text" name="validate_code" class="input-5">
+                                        <td><input id="validate_code" type="text" name="validate_code" class="input-5">
                                             <span id="captcha"><img src="captcha.php" width="100" height="25"/></span>
                                             <a style="cursor: pointer" id="change_captcha">換一張</a>
                                             <script>
                                                 document.getElementById('change_captcha').addEventListener('click', function () {
                                                     document.getElementById('captcha').innerHTML = "<img src=\"captcha.php\" width=\"100\" height=\"25\"/>";
+                                                    document.getElementById('form_submit').disabled = true;
                                                 });
                                             </script>
                                         </td>
@@ -310,7 +316,7 @@ $result = mysqli_query($conn, $sql);
                                 </table>
 
                                 <div class="login-info">
-                                    <input type="submit" class="login-btn" value="確認送出">
+                                    <input id="form_submit" type="submit" class="btn btn-default" value="確認送出" disabled="disabled">
                                 </div>
 
                             </form>
@@ -377,21 +383,21 @@ $result = mysqli_query($conn, $sql);
         var password_c = $('input[name="password_c"]').val().trim();
         var name = $('input[name="name"]').val().trim();
         var gender = $('select[name="gender"]').val().trim();
-        var level = $('input[name="level"]').val().trim();
+//        var level = $('input[name="level"]').val().trim();
         var referral = $('input[name="referral"]').val().trim();
         var birthday_y = $('select[name="birthday_y"]').val().trim();
         var birthday_m = $('select[name="birthday_m"]').val().trim();
         var birthday_d = $('select[name="birthday_d"]').val().trim();
         var phone = $('input[name="phone"]').val().trim();
         var mobile = $('input[name="mobile"]').val().trim();
-        var company_no = $('input[name="company_no"]').val().trim();
-        var invoice_title = $('input[name="invoice_title"]').val().trim();
+//        var company_no = $('input[name="company_no"]').val().trim();
+//        var invoice_title = $('input[name="invoice_title"]').val().trim();
         var city = $('select[name="city"]').val().trim();
         var area = $('select[name="area"]').val().trim();
         var address = $('input[name="address"]').val().trim();
-        var constore = $('input[name="constore"]').val().trim();
-        var type = $('select[name="type"]').val().trim();
-        var validate_code = $('input[name="validate_code"]').val().trim();
+//        var constore = $('input[name="constore"]').val().trim();
+//        var type = $('select[name="type"]').val().trim();
+//        var validate_code = $('input[name="validate_code"]').val().trim();
 
         //檢查帳號格式
         var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
@@ -469,19 +475,19 @@ $result = mysqli_query($conn, $sql);
             errorMessage += '請輸入聯繫地址。\n';
         }
         //檢查驗證碼格式
-        if (validate_code.length === 0) {
-            isDataCorrect = false;
-            errorMessage += '請輸入驗證碼。\n';
-        }
-        if (validate_code.match(/\s/)) {
-            isDataCorrect = false;
-            errorMessage += '驗證碼格式錯誤，請勿包含空白鍵。\n';
-        }
+//        if (validate_code.length === 0) {
+//            isDataCorrect = false;
+//            errorMessage += '請輸入驗證碼。\n';
+//        }
+//        if (validate_code.match(/\s/)) {
+//            isDataCorrect = false;
+//            errorMessage += '驗證碼格式錯誤，請勿包含空白鍵。\n';
+//        }
         //檢查聘級 level
-        if (level.match(/\s/)) {
-            isDataCorrect = false;
-            errorMessage += '聘級格式錯誤，請勿包含空白鍵。\n';
-        }
+//        if (level.match(/\s/)) {
+//            isDataCorrect = false;
+//            errorMessage += '聘級格式錯誤，請勿包含空白鍵。\n';
+//        }
         //檢查性別 gender
         if (gender.match(/\s/)) {
             isDataCorrect = false;
@@ -528,19 +534,19 @@ $result = mysqli_query($conn, $sql);
             errorMessage += '請輸入生日日期。\n';
         }
         //檢查統一編號 company_no
-        if (company_no.match(/[^\d]/)) {
-            isDataCorrect = false;
-            errorMessage += '統一編號格式錯誤，請輸入數字。\n';
-        }
-        if (company_no.match(/\s/)) {
-            isDataCorrect = false;
-            errorMessage += '統一編號格式錯誤，請勿包含空白鍵。\n';
-        }
-        //檢查發票抬頭 invoice_title
-        if (invoice_title.match(/\s/)) {
-            isDataCorrect = false;
-            errorMessage += '發票抬頭格式錯誤，請勿包含空白鍵。\n';
-        }
+//        if (company_no.match(/[^\d]/)) {
+//            isDataCorrect = false;
+//            errorMessage += '統一編號格式錯誤，請輸入數字。\n';
+//        }
+//        if (company_no.match(/\s/)) {
+//            isDataCorrect = false;
+//            errorMessage += '統一編號格式錯誤，請勿包含空白鍵。\n';
+//        }
+//        //檢查發票抬頭 invoice_title
+//        if (invoice_title.match(/\s/)) {
+//            isDataCorrect = false;
+//            errorMessage += '發票抬頭格式錯誤，請勿包含空白鍵。\n';
+//        }
         //檢查縣市 city
         if (city.match(/\s/)) {
             isDataCorrect = false;
@@ -559,22 +565,21 @@ $result = mysqli_query($conn, $sql);
             isDataCorrect = false;
             errorMessage += '請輸入鄉鎮區。\n';
         }
-        //檢查常用便利商店門市 constore
-        if (constore.match(/\s/)) {
-            isDataCorrect = false;
-            errorMessage += '常用便利商店門市格式錯誤，請勿包含空白鍵。\n';
-        }
-        //檢查會員類別 type
-        if (type !== "1" && type !== "2") {
-            isDataCorrect = false;
-            errorMessage += '會員類別格式錯誤。\n';
-        }
+//        //檢查常用便利商店門市 constore
+//        if (constore.match(/\s/)) {
+//            isDataCorrect = false;
+//            errorMessage += '常用便利商店門市格式錯誤，請勿包含空白鍵。\n';
+//        }
+//        //檢查會員類別 type
+//        if (type !== "1" && type !== "2") {
+//            isDataCorrect = false;
+//            errorMessage += '會員類別格式錯誤。\n';
+//        }
         if (isDataCorrect === false) {
             alert(errorMessage);
             e.preventDefault();
         }
-    })
-    ;
+    });
     //註冊表單提交檢查
 
 </script>

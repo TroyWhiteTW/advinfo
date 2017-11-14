@@ -32,8 +32,9 @@ if (empty($errorMessage)) {
         //SESSION 設定
         $_SESSION['user'] = $row;
 
-        echo "登入成功，3秒後跳轉回首頁...";
-        header("Refresh:3;url=index.php");
+//        echo "登入成功，3秒後跳轉回首頁...";
+//        header("Refresh:3;url=index.php");
+        header('Location:index.php');
     } else {
         echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
         header("Refresh:3;url=login.php");

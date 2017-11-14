@@ -16,11 +16,11 @@ if (empty($errorMessage)) {
     $_POST['birthday'] = $_POST['birthday_y'] . '-' . $_POST['birthday_m'] . '-' . $_POST['birthday_d'];
 
     //檢查驗證碼
-    if ($_POST['validate_code'] !== $_SESSION['check_word']) {
-        echo "驗證碼錯誤，3秒後跳轉回登入頁...";
-        header("Refresh:3;url=login.php");
-        exit;
-    }
+//    if ($_POST['validate_code'] !== $_SESSION['check_word']) {
+//        echo "驗證碼錯誤，3秒後跳轉回登入頁...";
+//        header("Refresh:3;url=login.php");
+//        exit;
+//    }
 
     //比對有無同帳號
     $sqlCheckAccountExist = 'SELECT * FROM members WHERE email=' . "\"" . $_POST['email'] . "\"";
@@ -279,7 +279,7 @@ function encodeRegisterData($rawDataArray)
         "regtime" => "\"" . date("Y-m-d H:i:s", time()) . "\"",
         "verifycode" => "\"\"",
         "verifytime" => "\"0\"",
-        "type" => "\"\"",
+        "type" => "\"1\"",
         "status" => "\"0\""
     ];
 
