@@ -94,6 +94,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     </ul>
                 </div>
 
+                <!-- btn -->
                 <div class="content-area">
                     <div class="row">
                         <div class="col-sm-12">
@@ -141,21 +142,22 @@ while ($row = mysqli_fetch_assoc($result)) {
                         }
                     }
                 </script>
+                <!-- btn -->
 
                 <hr/>
 
                 <?php
 
-                $panelSql = 'SELECT * FROM proclass WHERE status=1 AND parent=0 ORDER BY sort ASC';
-                $panelRes = mysqli_query($conn, $panelSql);
-                while ($row = mysqli_fetch_assoc($panelRes)) {
-                    echo '<div class="panel panel-default">';
-                    echo '<div class="panel-heading">'.$row['pcname'].'</div>';
-                    echo '<div class="panel-body">';
-                    echo 'Basic panel example';
-                    echo '</div>';
-                    echo '</div>';
-                }
+                //                $panelSql = 'SELECT * FROM proclass WHERE status=1 AND parent=0 ORDER BY sort ASC';
+                //                $panelRes = mysqli_query($conn, $panelSql);
+                //                while ($row = mysqli_fetch_assoc($panelRes)) {
+                //                    echo '<div class="panel panel-default">';
+                //                    echo '<div class="panel-heading">'.$row['pcname'].'</div>';
+                //                    echo '<div class="panel-body">';
+                //                    echo 'Basic panel example';
+                //                    echo '</div>';
+                //                    echo '</div>';
+                //                }
 
                 ?>
 
@@ -165,54 +167,102 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                         <?php
 
-                        foreach ($products as $product) {
+                        $getNo = null;
+                        if (isset($_GET['no'])) {
+                            $getNo = (int)trim($_GET['no']);
+                        }
+                        $getParent = null;
+                        if (isset($_GET['parent'])) {
+                            $getParent = (int)trim($_GET['parent']);
+                        }
 
-                            echo '<div class="pd">';
-                            echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
+                        $panelSql = 'SELECT * FROM proclass WHERE status=1 ORDER BY sort ASC';
+                        $panelRows = [];
+                        $panelRes = mysqli_query($conn, $panelSql);
+                        while ($row = mysqli_fetch_assoc($panelRes)) {
+                            $panelRows[] = $row;
+                        }
+                        $panelRowsCount = count($panelRows);
 
-                            //echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
 
-                            // 搜尋該商品的主圖
-                            $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
-                            $result = mysqli_query($conn, $sql);
-                            if (mysqli_num_rows($result) > 0) {
-                                // 撈出主圖
-                                $row = mysqli_fetch_assoc($result);
-                                echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
-                            } else {
-                                echo '<div class="pd-pic"></div>';
+                        
+
+
+
+                        foreach ($panelRows as $one) {
+                            if ($one['parent'] == 0) {
+                                echo '<div class="panel panel-default">';
+                                echo '<div class="panel-heading">' . $one['pcname'] . '</div>';
+                                echo '<div class="panel-body">';
+
+                                searchProducts($one['no']);
+
+                                foreach ($panelRows as $two) {
+                                    if ($two['parent'] == $one['no'] && $one['parent'] == 0) {
+
+                                        searchProducts($two['no']);
+
+                                        foreach ($panelRows as $three) {
+                                            if ($three['parent'] == $two['no'] && $two['parent'] != 0) {
+
+                                                searchProducts($three['no']);
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                                echo '</div>';
+                                echo '</div>';
                             }
+                        }
+
+                        function searchProducts($no)
+                        {
+                            global $products, $conn, $isLogin;
+
+                            foreach ($products as $product) {
+                                if ($no == $product['pcno']) {
+
+                                    echo '<div class="pd">';
+                                    echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
+
+                                    //echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
+
+                                    // 搜尋該商品的主圖
+                                    $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
+                                    $result = mysqli_query($conn, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+                                        // 撈出主圖
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
+                                    } else {
+                                        echo '<div class="pd-pic"></div>';
+                                    }
 
 
-                            echo "<div class='pd-name'>{$product['proname']}</div>";
-                            echo "<div class='pd-type'>{$product['name']}</div>";
-                            if ($isLogin) {
-                                echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                    echo "<div class='pd-name'>{$product['proname']}</div>";
+                                    echo "<div class='pd-type'>{$product['name']}</div>";
+                                    if ($isLogin) {
+                                        echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                    }
+
+                                    // 促銷商品
+                                    if ($product['protags'] == 2) {
+                                        echo "<div class='pd-price'>促銷價$ {$product['price']}元</div>";
+                                    } else {
+                                        echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
+                                    }
+
+                                    if ($protag['pic'] != '0') {
+                                        echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                                    }
+
+                                    echo '</a>';
+                                    echo '</div>';
+
+                                }
                             }
-
-                            // 促銷商品
-                            if ($product['protags'] == 2) {
-                                echo "<div class='pd-price'>促銷價$ {$product['price']}元</div>";
-                            } else {
-                                echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
-                            }
-
-                            if ($protag['pic'] != '0') {
-                                echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
-                            }
-
-
-//                             // 左上方的圖標
-//                             if ($product['protags'] == 1) {
-//                                 // 新品上市
-//                                 echo '<div class="tag-type"><img src="img/tag_new.png" alt=""></div>';
-//                             } else if ($product['protags'] == 2) {
-//                                 // 促銷商品
-//                                 echo '<div class="tag-type"><img src="img/tag_promot.png" alt=""></div>';
-//                             }
-
-                            echo '</a>';
-                            echo '</div>';
                         }
 
                         ?>
