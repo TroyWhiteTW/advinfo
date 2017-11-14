@@ -152,10 +152,24 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                             echo '<div class="pd">';
                             echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
-                            echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
+
+                            //echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
+
+                            // 搜尋該商品的主圖
+                            $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
+                            $result = mysqli_query($conn, $sql);
+                            if (mysqli_num_rows($result) > 0) {
+                                // 撈出主圖
+                                $row = mysqli_fetch_assoc($result);
+                                echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
+                            } else {
+                                echo '<div class="pd-pic"></div>';
+                            }
+
+
                             echo "<div class='pd-name'>{$product['proname']}</div>";
                             echo "<div class='pd-type'>{$product['name']}</div>";
-                            if($isLogin){
+                            if ($isLogin) {
                                 echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
                             }
 
@@ -166,14 +180,19 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
                             }
 
-                            // 左上方的圖標
-                            if ($product['protags'] == 1) {
-                                // 新品上市
-                                echo '<div class="tag-type"><img src="img/tag_new.png" alt=""></div>';
-                            } else if ($product['protags'] == 2) {
-                                // 促銷商品
-                                echo '<div class="tag-type"><img src="img/tag_promot.png" alt=""></div>';
+                            if ($protag['pic'] != '0') {
+                                echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
                             }
+
+
+//                             // 左上方的圖標
+//                             if ($product['protags'] == 1) {
+//                                 // 新品上市
+//                                 echo '<div class="tag-type"><img src="img/tag_new.png" alt=""></div>';
+//                             } else if ($product['protags'] == 2) {
+//                                 // 促銷商品
+//                                 echo '<div class="tag-type"><img src="img/tag_promot.png" alt=""></div>';
+//                             }
 
                             echo '</a>';
                             echo '</div>';
