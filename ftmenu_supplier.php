@@ -111,64 +111,6 @@ if (mysqli_num_rows($result) > 0) {
             }
         }
     });
-
-
-    //新增側邊欄
-
-    //側邊欄滑動
-    $('#left-open').click(function () {
-        // 顯示隱藏側邊欄
-        $('.sidebar').toggleClass('sidebar-view');
-        // body畫面變暗+鎖住網頁滾輪
-        $('body').toggleClass('body-back');
-    });
-
-    $(window).resize(function () {
-        //減去tobar 高度
-        var bh = $(window).height() - 51;
-        $('.fullheight').height(bh);
-
-        var bw = $(window).width();
-        if (bw >= 768) {
-            $('.sidebar').removeClass('sidebar-view');
-            $('body').removeClass('body-back');
-        }
-    }).resize();
-
-
-    //下拉選單判斷
-    $('.sidebar-menu').click(function () {
-        console.log('L1 clicked');
-        var display = $(this).next('.sidebar-sub').css('display');
-
-        $('.sidebar-sub').css('display', 'none');
-
-        if (display == "block") {
-            //$(this).next('.sidebar-sub').css('display', 'none');
-            $(this).next('.sidebar-sub').slideUp();
-        } else if (display == "none") {
-            //$(this).next('.sidebar-sub').css('display', 'block');
-            $(this).next('.sidebar-sub').slideDown();
-        }
-    });
-
-    $('.sidebar-level2').click(function () {
-        console.log('L2 clicked');
-        var display2 = $(this).next('.sidebar-sub3').css('display');
-        console.log(display2);
-        $('.sidebar-sub3').css('display', 'none');
-
-        if (display2 == "block") {
-            //$(this).next('.sidebar-sub3').css('display', 'none');
-            $(this).next('.sidebar-sub3').slideUp();
-        } else if (display2 == "none") {
-            //$(this).next('.sidebar-sub3').css('display', 'block');
-            $(this).next('.sidebar-sub3').slideDown();
-        }
-    });
-
-    //新增側邊欄
-
 </script>
 
 </body>

@@ -9,5 +9,5 @@ if ($isLogin) {
 } else {
     header('Location:index.php');
 }
+
 exit;
-?>
