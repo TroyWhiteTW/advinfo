@@ -2,6 +2,14 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
+if (!$isLogin) {
+    header('Location:index.php');
+    exit;
+}
+if(!preg_match("/cart_2.php$/",$_SERVER['HTTP_REFERER'])){
+    header('Location:index.php');
+    exit;
+}
 ?>
 <?php
 // 引入訂單的 DAO class

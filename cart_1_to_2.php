@@ -2,6 +2,14 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
+if (!$isLogin) {
+    header('Location:index.php');
+    exit;
+}
+if(!preg_match("/cart_1.php$/",$_SERVER['HTTP_REFERER'])){
+    header('Location:index.php');
+    exit;
+}
 ?>
 <?php
 require __DIR__ . '/OrdersDAO.php';

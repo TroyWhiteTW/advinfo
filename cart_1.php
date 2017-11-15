@@ -2,6 +2,10 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
+if (!$isLogin) {
+    header('Location:index.php');
+    exit;
+}
 ?>
 <?php
 // 引入訂單的 DAO class
@@ -136,7 +140,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = "<br/>\n";
                                         $html[] = '<span style="color:red;">';
                                         $html[] = '產品編號：';
-                                        $html[] = '\''.$recordArray[$i]['proid'].'\'';
+                                        $html[] = '\'' . $recordArray[$i]['proid'] . '\'';
                                         $html[] = '<span style="color:red;">';
                                         $html[] = '</span>';
                                         $html[] = '</td>';
@@ -165,7 +169,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = '</td>';
                                         // 刪除
                                         $html[] = '<td>';
-                                        $html[] = '<div onclick="deleteProd(this,'.'\'' . $recordArray[$i]['proid'].'\'' . ')" class="glyphicon glyphicon-trash"></div>';
+                                        $html[] = '<div onclick="deleteProd(this,' . '\'' . $recordArray[$i]['proid'] . '\'' . ')" class="glyphicon glyphicon-trash"></div>';
                                         $html[] = '</td>';
 
                                         $html[] = '</tr>';
@@ -192,9 +196,10 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                                 alert('發生錯誤');
                                             },
                                             success: function (response) {
-                                                alert('成功刪除');
+//                                                alert('成功刪除');
                                                 node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
                                                 doTotal();
+                                                updateSubmitStatus();
                                             }
                                         });
                                     }
@@ -283,13 +288,13 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         營業據點取貨(須先付款)60元
                                     </label>
 
-<!--                                    <div class="form-tittle" style="margin-left:20px;">-->
-<!--                                        <select>-->
-<!--                                            <option selected="selected" value="0">請選擇營業據點</option>-->
-<!--                                            <option value="1">A</option>-->
-<!--                                            <option value="2">B</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
+                                    <!--                                    <div class="form-tittle" style="margin-left:20px;">-->
+                                    <!--                                        <select>-->
+                                    <!--                                            <option selected="selected" value="0">請選擇營業據點</option>-->
+                                    <!--                                            <option value="1">A</option>-->
+                                    <!--                                            <option value="2">B</option>-->
+                                    <!--                                        </select>-->
+                                    <!--                                    </div>-->
 
                                 </div>
 
@@ -339,21 +344,21 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                     </label>
                                 </div>
 
-<!--                                <div class="form-tittle">-->
-<!---->
-<!--                                    <div class="price-textarea">-->
-<!--                                        餘額-->
-<!--                                    </div>-->
-<!---->
-<!--                                    <div class="price-textarea" style="color:blue;">-->
-<!--                                        xxxx-->
-<!--                                    </div>-->
-<!---->
-<!--                                    <div class="price-textarea unit">-->
-<!--                                        元-->
-<!--                                    </div>-->
-<!---->
-<!--                                </div>-->
+                                <!--                                <div class="form-tittle">-->
+                                <!---->
+                                <!--                                    <div class="price-textarea">-->
+                                <!--                                        餘額-->
+                                <!--                                    </div>-->
+                                <!---->
+                                <!--                                    <div class="price-textarea" style="color:blue;">-->
+                                <!--                                        xxxx-->
+                                <!--                                    </div>-->
+                                <!---->
+                                <!--                                    <div class="price-textarea unit">-->
+                                <!--                                        元-->
+                                <!--                                    </div>-->
+                                <!---->
+                                <!--                                </div>-->
 
                                 <div class="form-tittle">
                                     折抵金額：
@@ -430,7 +435,22 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                             <div class="btn-area">
 
-                                <input type="submit" class="btn btn-success" value="確認，下一步">
+                                <?php
+                                if (empty($_SESSION['shop_cart']) || count($_SESSION['shop_cart']) === 0) {
+                                    echo '<input id="cart1submit" type="submit" class="btn btn-success" value="確認，下一步" disabled="disabled">';
+                                } else {
+                                    echo '<input id="cart1submit" type="submit" class="btn btn-success" value="確認，下一步">';
+                                }
+                                ?>
+
+                                <script>
+                                    function updateSubmitStatus() {
+                                        var count = document.getElementsByClassName('td-02').length;
+                                        if (count === 0) {
+                                            document.getElementById('cart1submit').disabled = true;
+                                        }
+                                    }
+                                </script>
 
                             </div>
 
