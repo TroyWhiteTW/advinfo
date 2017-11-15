@@ -71,10 +71,6 @@ if (empty($errors)) {
 
     unset($_SESSION['orders']);
     unset($_SESSION['shop_cart']);
-    header('Location:cart_4.php');
-
-// 跳轉到 cart_4.php
-    header('Location:cart_4.php');
 
 } else {
     //有錯誤
@@ -82,12 +78,8 @@ if (empty($errors)) {
     var_dump($errors);
 }
 
-//// unset $_SESSION['orders']
-//unset($_SESSION['orders']);
-//unset($_SESSION['shop_cart']);
-////var_dump($_SESSION['orders']);
 //
-//// 跳轉到 cart_4.php
-//header('Location:cart_4.php');
+// 跳轉到 cart_4.php
 $mysqli->close();
+header('Location:cart_4.php');
 exit;
