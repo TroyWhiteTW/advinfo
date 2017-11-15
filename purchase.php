@@ -8,7 +8,7 @@ if ($isLogin) {
 
     if (!empty($_POST['proid']) && !empty($_POST['count'])) {
 
-        $_POST['proid'] = (int)trim($_POST['proid']);
+        $_POST['proid'] = trim($_POST['proid']);
         $_POST['count'] = (int)trim($_POST['count']);
 
         if (gettype($_SESSION['shop_cart']) !== 'array') {

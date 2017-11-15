@@ -168,7 +168,7 @@ if ($hasProid) {
                                             });
                                         </script>
                                         <form method="post" action="purchase.php">
-                                            <input id="" name="proid" value="<?= '\'' . $proid . '\''?>" hidden="hidden">
+                                            <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
                                             <input id="purchaseCount" name="count" value="1" hidden="hidden">
                                             <input type="submit" class="buy-btn" value="直接購買">
                                         </form>
