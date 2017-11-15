@@ -19,13 +19,14 @@
             while ($row = mysqli_fetch_assoc($sideBarRes)) {
                 $sideRows[] = $row;
             }
-            $sideRowsCount = count($sideRows);
+
+            $kind = 0;
 
             foreach ($sideRows as $one) {
                 if ($one['parent'] == 0) {
                     echo '<ul class="list-group">';
                     echo '<li class="list-group-item list-group-item-success">';
-                    echo '<a href="pd_query.php?no=' . $one['no'] . '&parent=' . $one['parent'] . '">';
+                    echo '<a href="pd_query.php?kind=' . $kind . '&class=' . 1 . '">';
                     echo $one['pcname'];//第一階
                     echo '</a>';
                     echo '</li>';
@@ -33,7 +34,7 @@
                     foreach ($sideRows as $two) {
                         if ($two['parent'] == $one['no'] && $one['parent'] == 0) {
                             echo '<li class="list-group-item list-group-item-info">';
-                            echo '<a href="pd_query.php?no=' . $two['no'] . '&parent=' . $two['parent'] . '">';
+                            echo '<a href="pd_query.php?kind=' . $kind . '&class=' . 2 . '">';
                             echo $two['pcname'];//第二階
                             echo '</a>';
                             echo '</li>';
@@ -41,7 +42,7 @@
                             foreach ($sideRows as $three) {
                                 if ($three['parent'] == $two['no'] && $two['parent'] != 0) {
                                     echo '<li class="list-group-item list-group-item-warning"">';
-                                    echo '<a href="pd_query.php?no=' . $three['no'] . '&parent=' . $three['parent'] . '">';
+                                    echo '<a href="pd_query.php?kind=' . $kind . '&class=' . 3 . '">';
                                     echo $three['pcname'];//第三階
                                     echo '</a>';
                                     echo '</li>';
@@ -52,6 +53,7 @@
                     }
 
                     echo '</ul>';
+                    $kind++;
                 }
             }
 
