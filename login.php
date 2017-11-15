@@ -183,6 +183,31 @@ $result = mysqli_query($conn, $sql);
         }
     });
 
+    //ajax檢查驗證碼
+    var validate = document.getElementById('validate_code');
+    validate.addEventListener('blur', function () {
+        $.ajax({
+            url: "./check_captcha_ajax.php",
+            type: 'POST',
+            data: {
+                validate_code:this.value
+            },
+            error: function () {
+                alert('驗證過程發生錯誤');
+            },
+            success: function (response) {
+                if(response === 's'){
+                    document.getElementById('type1login').disabled = false;
+                    document.getElementById('type2login').disabled = false;
+                } else {
+                    alert('驗證碼錯誤，請重新輸入。');
+                    document.getElementById('type1login').disabled = true;
+                    document.getElementById('type2login').disabled = true;
+                }
+            }
+        });
+    });
+
     //登入表單提交檢查
     var form = document.getElementById('login_form');
 
