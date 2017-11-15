@@ -146,7 +146,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = '</td>';
                                         // 數量
                                         $html[] = '<td>';
-                                        $html[] = '<select class="prodCount" onchange="doTotal();doFedexTotal();" >';
+                                        $html[] = '<select name="' . $recordArray[$i]['proid'] . '" class="prodCount" onchange="doTotal();doFedexTotal();" >';
                                         // select -> option
                                         $optionCount = ($recordArray[$i]['stock'] > 10 ? 10 : $recordArray[$i]['stock']);
                                         for ($j = 1; $j <= $optionCount; $j++) {
@@ -459,8 +459,8 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                 var personalInvNode = document.getElementsByName('invoice')[0];
                                 var componyInvNode = document.getElementsByName('invoice')[1];
 
-                                personalInvNode.addEventListener('change',allowInvInput.bind(null,true));
-                                componyInvNode.addEventListener('change',allowInvInput.bind(null,false));
+                                personalInvNode.addEventListener('change', allowInvInput.bind(null, true));
+                                componyInvNode.addEventListener('change', allowInvInput.bind(null, false));
 
                                 function allowInvInput(allow) {
                                     document.getElementsByName('company_no')[0].disabled = allow;

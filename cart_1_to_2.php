@@ -6,7 +6,7 @@ if (!$isLogin) {
     header('Location:index.php');
     exit;
 }
-if(!preg_match("/cart_1.php$/",$_SERVER['HTTP_REFERER'])){
+if (!preg_match("/cart_1.php$/", $_SERVER['HTTP_REFERER'])) {
     header('Location:index.php');
     exit;
 }
@@ -25,6 +25,12 @@ foreach ($_POST as $k => $v) {
 
 /** @var OrdersDAO $orders */
 $orders = unserialize($_SESSION['orders']);
+
+//var_dump($_SESSION['shop_cart']);return;
+foreach ($_SESSION['shop_cart'] as $k => $v) {
+    $_SESSION['shop_cart'][$k] = $_POST[$k];
+}
+//var_dump($_SESSION['shop_cart']);return;
 
 //設定訂單 orders id date
 $orders->ordid = time();
