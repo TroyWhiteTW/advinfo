@@ -4,22 +4,6 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
-$result = mysqli_query($conn, $sql);
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
-// TODO: 待補側邊攔，目前是 hard code
 ?>
 <!doctype html>
 <html>
@@ -68,38 +52,37 @@ $result = mysqli_query($conn, $sql);
 
                         <form method="post" action="service.php">
 
-                            <div class="form-tittle">請選擇問題類型：<select name="" id="">
+                            <div class="form-tittle">請選擇問題類型：<select name="cstype_no" id="">
                                     <option selected="selected" value="0">請選擇</option>
-                                    <option value="1">B</option>
-                                    <option value="2">C</option>
+                                    <option value="999">其他</option>
                                 </select></div>
 
                             <div class="form-tittle">姓名：
-                                <div class="input-area"><input name="" id="" type="text"></div>
+                                <div class="input-area"><input name="name" id="" type="text"></div>
                             </div>
 
                             <div class="form-tittle">電話：
-                                <div class="input-area"><input name="" id="" type="text"></div>
+                                <div class="input-area"><input name="phone" id="" type="text"></div>
                             </div>
 
                             <div class="form-tittle">電子郵件：
-                                <div class="input-area"><input name="" id="" type="text"></div>
+                                <div class="input-area"><input name="email" id="" type="text"></div>
                             </div>
 
                             <div class="form-tittle">問題內容</div>
 
                             <div class="form-tittle">
-                                <div class="input_area"><textarea cols="35" rows="10"></textarea></div>
+                                <div class="input_area"><textarea name="content" cols="35" rows="10"></textarea></div>
                             </div>
 
-                            <input type="submit" value="送出">
+                            <input type="submit" value="送出" class="btn btn-success">
 
                         </form>
 
                     </div>
 
                     <div class="btn-area">
-                        <a href="index.php">返回首頁</a>
+                        <a href="index.php" class="btn btn-default">返回首頁</a>
                     </div>
 
                 </div>
