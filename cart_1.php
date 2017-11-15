@@ -271,14 +271,14 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                 <div class="form-tittle">
                                     <label>
                                         <input type="radio" name="ship_no" value="2">
-                                        宅配/快遞 <span>999</span>元
+                                        宅配/快遞 <span>100</span>元
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
                                         <input type="radio" name="ship_no" value="3">
-                                        宅配/快遞(貨到付款) <span>40</span>元
+                                        宅配/快遞(貨到付款) <span>60</span>元
                                     </label>
                                 </div>
 

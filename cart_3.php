@@ -6,7 +6,7 @@ if (!$isLogin) {
     header('Location:index.php');
     exit;
 }
-if(!preg_match("/cart_2.php$/",$_SERVER['HTTP_REFERER'])){
+if (!preg_match("/cart_2.php$/", $_SERVER['HTTP_REFERER'])) {
     header('Location:index.php');
     exit;
 }
@@ -45,6 +45,10 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
     }
 }
 
+$total = 0;
+$tPV = 0;
+$fare = 0;
+$discount = 0;
 ?>
 <!doctype html>
 <html>
@@ -162,6 +166,8 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                         $html[] = '</tr>';
 
+                                        $total += $_SESSION['shop_cart'][$recordArray[$i]['proid']] * $recordArray[$i]['price'];
+                                        $tPV += $_SESSION['shop_cart'][$recordArray[$i]['proid']] * $recordArray[$i]['PV'];
                                     }
 
                                     echo implode("\n", $html);
@@ -174,39 +180,15 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="pv-area">
                                     <div class="pv-textarea">商品總PV</div>
-                                    <div class="pv-textarea"></div>
+                                    <div class="pv-textarea"><?= $tPV ?></div>
                                     <div class="pv-textarea">PV</div>
                                 </div>
 
                                 <div class="price-area">
                                     <div class="price-textarea">商品總金額</div>
-                                    <div class="price-textarea"></div>
+                                    <div class="price-textarea"><?= $total ?></div>
                                     <div class="price-textarea">元</div>
                                 </div>
-
-                                <script>
-                                    var totalPvNode = $('.pv-area > .pv-textarea:nth-child(2)')[0];
-                                    var totalPriceNode = $('.price-area > .price-textarea:nth-child(2)')[0];
-
-                                    doTotal();
-
-                                    function doTotal() {
-                                        var totalPrice = 0;
-                                        var totlaPV = 0;
-                                        var tbody = document.getElementsByTagName("tbody")[0];
-                                        var td02s = tbody.getElementsByClassName("td-02");
-                                        for (var i = 0; i < td02s.length; i++) {
-                                            var price = td02s[i].getElementsByClassName("priceValue")[0].innerHTML;
-                                            var pv = td02s[i].getElementsByClassName("pvValue")[0].innerHTML;
-                                            var count = td02s[i].getElementsByClassName("prodCount")[0].innerHTML;
-                                            totalPrice += parseInt(price) * parseInt(count);
-                                            totlaPV += parseInt(pv) * parseInt(count);
-                                        }
-                                        totalPriceNode.innerHTML = totalPrice + "";
-                                        totalPvNode.innerHTML = totlaPV + "";
-                                    }
-
-                                </script>
 
                             </div>
 
@@ -219,16 +201,20 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 switch ($orders->ship_no) {
                                     case 1:
+                                        $fare = 60;
                                         echo '<div class="form-input">便利商店取貨(須先付款) 60元</div>';
                                         break;
                                     case 2:
-                                        echo '<div class="form-input">宅配/快遞 60元</div>';
+                                        $fare = 100;
+                                        echo '<div class="form-input">宅配/快遞 100元</div>';
                                         break;
                                     case 3:
+                                        $fare = 60;
                                         echo '<div class="form-input">宅配/快遞(貨到付款) 60元</div>';
                                         break;
                                     case 4:
-                                        echo '<div class="form-input">營業據點取貨(須先付款) 60元</div>';
+                                        $fare = 30;
+                                        echo '<div class="form-input">營業據點取貨(須先付款) 30元</div>';
                                         break;
                                 }
 
@@ -238,7 +224,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                     <div class="price-textarea">+運費：</div>
 
-                                    <div class="price-textarea">--</div>
+                                    <div class="price-textarea"><?= $fare ?></div>
 
                                     <div class="price-textarea">元</div>
 
@@ -248,7 +234,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                     <div class="price-textarea">訂單總金額：</div>
 
-                                    <div class="price-textarea">--</div>
+                                    <div class="price-textarea"><?= $total + $fare ?></div>
 
                                     <div class="price-textarea">元</div>
 
@@ -264,13 +250,16 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                 <?php
                                 switch ($orders->discount) {
                                     case 0:
+                                        $discount = 0;
                                         echo '<div class="form-input">不使用折抵</div>';
                                         break;
                                     case 1:
+                                        $discount = 0;
                                         echo '<div class="form-input">使用電子錢包折抵</div>';
                                         echo '<div class="form-tittle">折抵金額：<div class="form-input-2">' . $orders->discount_price . '</div></div>';
                                         break;
                                     case 2:
+                                        $discount = 0;
                                         echo '<div class="form-input">使用紅利折抵</div>';
                                         echo '<div class="form-tittle">折抵金額：<div class="form-input-2">' . $orders->discount_price . '</div></div>';
                                         break;
@@ -281,7 +270,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                     <div class="price-textarea">應付總金額</div>
 
-                                    <div class="price-textarea">--</div>
+                                    <div class="price-textarea"><?= $total + $fare - $discount ?></div>
 
                                     <div class="price-textarea">元</div>
 

@@ -164,7 +164,7 @@ $orders = unserialize($orders);
 
                                 <div class="form-tittle">
                                     <div class="check-box">
-                                        <input id="rec_check" type="checkbox" checked>
+                                        <input name="rec_check" id="rec_check" type="checkbox" checked>
                                     </div>
                                     同步為訂購人資料
                                 </div>

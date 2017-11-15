@@ -36,14 +36,25 @@ $orders->sub_email = $_POST['sub_email'];
 $orders->sub_address = $_POST['sub_address'];
 
 //(POST) 收件人資料
-$orders->rec_name = $_POST['rec_name'];
-$orders->rec_phone = $_POST['rec_phone'];
-$orders->rec_mobile = $_POST['rec_mobile'];
-$orders->rec_email = $_POST['rec_email'];
-$orders->rec_zip = '';
-$orders->rec_city = '';
-$orders->rec_area = '';
-$orders->rec_address = $_POST['rec_address'];
+if ($_POST['rec_check']=='on'){
+    $orders->rec_name = $_POST['sub_name'];
+    $orders->rec_phone = $_POST['sub_phone'];
+    $orders->rec_mobile = $_POST['sub_mobile'];
+    $orders->rec_email = $_POST['sub_email'];
+    $orders->rec_zip = '';
+    $orders->rec_city = '';
+    $orders->rec_area = '';
+    $orders->rec_address = $_POST['sub_address'];
+}else{
+    $orders->rec_name = $_POST['rec_name'];
+    $orders->rec_phone = $_POST['rec_phone'];
+    $orders->rec_mobile = $_POST['rec_mobile'];
+    $orders->rec_email = $_POST['rec_email'];
+    $orders->rec_zip = '';
+    $orders->rec_city = '';
+    $orders->rec_area = '';
+    $orders->rec_address = $_POST['rec_address'];
+}
 
 //(POST) 取貨門市
 $orders->store_name = $_POST['store_name'];
