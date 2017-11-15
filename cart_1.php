@@ -146,7 +146,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         $html[] = '</td>';
                                         // 數量
                                         $html[] = '<td>';
-                                        $html[] = '<select class="prodCount" onchange="doTotal()" >';
+                                        $html[] = '<select class="prodCount" onchange="doTotal();doFedexTotal();" >';
                                         // select -> option
                                         $optionCount = ($recordArray[$i]['stock'] > 10 ? 10 : $recordArray[$i]['stock']);
                                         for ($j = 1; $j <= $optionCount; $j++) {
@@ -199,6 +199,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 //                                                alert('成功刪除');
                                                 node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
                                                 doTotal();
+                                                doFedexTotal();
                                                 updateSubmitStatus();
                                             }
                                         });
@@ -207,19 +208,19 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="pv-area">
                                     <div class="pv-textarea">商品總PV</div>
-                                    <div class="pv-textarea"></div>
+                                    <div id="tpv" class="pv-textarea"></div>
                                     <div class="pv-textarea">PV</div>
                                 </div>
 
                                 <div class="price-area">
                                     <div class="price-textarea">商品總金額</div>
-                                    <div class="price-textarea"></div>
+                                    <div id="tpc" class="price-textarea"></div>
                                     <div class="price-textarea">元</div>
                                 </div>
 
                                 <script>
-                                    var totalPvNode = $('.pv-area > .pv-textarea:nth-child(2)')[0];
-                                    var totalPriceNode = $('.price-area > .price-textarea:nth-child(2)')[0];
+                                    var totalPvNode = $('#tpv')[0];
+                                    var totalPriceNode = $('#tpc')[0];
 
                                     doTotal();
 
@@ -254,7 +255,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                             </div>
 
                             <!-- 配送方式 -->
-                            <div class="content-article">
+                            <div id="fedex_way" class="content-article">
 
                                 <div class="form-name">
                                     配送方式
@@ -262,22 +263,22 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="ship_no" value="1">
-                                        便利商店取貨(須先付款)60元
+                                        <input type="radio" name="ship_no" value="1" checked="checked">
+                                        便利商店取貨(須先付款) <span>60</span>元
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
                                         <input type="radio" name="ship_no" value="2">
-                                        宅配/快遞 60元
+                                        宅配/快遞 <span>999</span>元
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
                                         <input type="radio" name="ship_no" value="3">
-                                        宅配/快遞(貨到付款)60元
+                                        宅配/快遞(貨到付款) <span>40</span>元
                                     </label>
                                 </div>
 
@@ -285,7 +286,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                     <label>
                                         <input type="radio" name="ship_no" value="4">
-                                        營業據點取貨(須先付款)60元
+                                        營業據點取貨(須先付款) <span>30</span>元
                                     </label>
 
                                     <!--                                    <div class="form-tittle" style="margin-left:20px;">-->
@@ -304,17 +305,38 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="price-area">
                                     <div class="price-textarea">+運費：</div>
-                                    <div class="price-textarea">--</div>
+                                    <div id="fedex_price" class="price-textarea">--</div>
                                     <div class="price-textarea">元</div>
                                 </div>
 
                                 <div class="price-area">
                                     <div class="price-textarea">應付總金額：</div>
-                                    <div class="price-textarea">XXX</div>
+                                    <div id="tpc2" class="price-textarea">XXX</div>
                                     <div class="price-textarea">元</div>
                                 </div>
 
                             </div>
+
+                            <script>
+                                var fedexPriceNode = $('#fedex_price')[0];
+                                var totalPriceNode2 = $('#tpc2')[0];
+
+                                doFedexTotal();
+
+                                function doFedexTotal() {
+                                    var fPrice = parseInt($('#fedex_way input:checked').next()[0].innerHTML);
+                                    fedexPriceNode.innerHTML = fPrice + "";
+
+                                    totalPriceNode2.innerHTML = (parseInt(totalPriceNode.innerHTML) + fPrice) + "";
+                                }
+
+                                var ships = document.getElementsByName('ship_no');
+                                for (var i = 0; i < ships.length; i++) {
+                                    ships[i].addEventListener('change', function () {
+                                        doFedexTotal();
+                                    });
+                                }
+                            </script>
 
                             <!-- 折抵方式 -->
                             <div class="content-article">
@@ -325,21 +347,21 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="0">
+                                        <input type="radio" name="discount" value="0" checked="checked">
                                         不使用折抵
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="1">
+                                        <input type="radio" name="discount" value="1" disabled="disabled">
                                         使用電子錢包折抵
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="2">
+                                        <input type="radio" name="discount" value="2" disabled="disabled">
                                         使用紅利折抵
                                     </label>
                                 </div>
@@ -362,13 +384,13 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     折抵金額：
-                                    <input type="text" name="discount_price" id="" class="input-6">
+                                    <input type="text" name="discount_price" id="" class="input-6" disabled="disabled">
                                     元
                                 </div>
 
                                 <div class="price-area">
                                     <div class="price-textarea">應付總金額：</div>
-                                    <div class="price-textarea">XXX</div>
+                                    <div class="price-textarea">--</div>
                                     <div class="price-textarea">元</div>
                                 </div>
 
@@ -381,21 +403,21 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="pay_no" value="1">
+                                        <input type="radio" name="pay_no" value="1" disabled="disabled">
                                         信用卡一次付清
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="pay_no" value="2">
+                                        <input type="radio" name="pay_no" value="2" disabled="disabled">
                                         信用卡付款(分期)
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="pay_no" value="3">
+                                        <input type="radio" name="pay_no" value="3" disabled="disabled">
                                         貨到付款(宅配)
                                     </label>
                                 </div>
@@ -409,7 +431,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="invoice" value="1">
+                                        <input type="radio" name="invoice" value="1" checked="checked">
                                         個人發票
                                     </label>
                                 </div>
@@ -423,15 +445,28 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     統一編號：
-                                    <input name="company_no" id="" type="text" class="input-2">
+                                    <input name="company_no" id="" type="text" class="input-2" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     公司抬頭：
-                                    <input name="invoice_title" id="" type="text" class="input-2">
+                                    <input name="invoice_title" id="" type="text" class="input-2" disabled="disabled">
                                 </div>
 
                             </div>
+
+                            <script>
+                                var personalInvNode = document.getElementsByName('invoice')[0];
+                                var componyInvNode = document.getElementsByName('invoice')[1];
+
+                                personalInvNode.addEventListener('change',allowInvInput.bind(null,true));
+                                componyInvNode.addEventListener('change',allowInvInput.bind(null,false));
+
+                                function allowInvInput(allow) {
+                                    document.getElementsByName('company_no')[0].disabled = allow;
+                                    document.getElementsByName('invoice_title')[0].disabled = allow;
+                                }
+                            </script>
 
                             <div class="btn-area">
 
