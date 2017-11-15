@@ -60,36 +60,191 @@ if ($isSearch) {
 
                     <?php
 
-                    foreach ($products as $product) {
-
-                        echo '<div class="pd">';
-                        echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
-                        echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
-                        echo "<div class='pd-name'>{$product['proname']}</div>";
-                        echo "<div class='pd-type'>{$product['name']}</div>";
-                        if ($isLogin) {
-                            echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
-                        }
-
-                        // 促銷商品
-                        if ($product['protags'] == 2) {
-                            echo "<div class='pd-price'>促銷價$ {$product['price']}元</div>";
-                        } else {
-                            echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
-                        }
-
-                        // 左上方的圖標
-                        if ($product['protags'] == 1) {
-                            // 新品上市
-                            echo '<div class="tag-type"><img src="img/tag_new.png" alt=""></div>';
-                        } else if ($product['protags'] == 2) {
-                            // 促銷商品
-                            echo '<div class="tag-type"><img src="img/tag_promot.png" alt=""></div>';
-                        }
-
-                        echo '</a>';
-                        echo '</div>';
+                    $panelSql = 'SELECT * FROM proclass WHERE status=1 ORDER BY sort ASC';
+                    $panelRows = [];
+                    $panelRes = mysqli_query($conn, $panelSql);
+                    while ($row = mysqli_fetch_assoc($panelRes)) {
+                        $panelRows[] = $row;
                     }
+
+                    foreach ($panelRows as $one) {
+                        if ($one['parent'] == 0) {
+                            echo '<div class="panel panel-default">';
+                            echo '<div class="panel-heading">' . $one['pcname'] . '</div>';
+                            echo '<div class="panel-body">';
+
+                            foreach ($products as $product) {
+                                if ($one['no'] == $product['pcno']) {
+
+                                    echo '<div class="pd">';
+                                    echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
+
+                                    //echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
+
+                                    // 搜尋該商品的主圖
+                                    $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
+                                    $result = mysqli_query($conn, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+                                        // 撈出主圖
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
+                                    } else {
+                                        echo '<div class="pd-pic"></div>';
+                                    }
+
+
+                                    echo "<div class='pd-name'>{$product['proname']}</div>";
+                                    echo "<div class='pd-type'>{$product['name']}</div>";
+                                    if ($isLogin) {
+                                        echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                    }
+
+                                    // 促銷商品
+                                    if ($product['protags'] == 2) {
+                                        echo "<div class='pd-price'>促銷價$ {$product['price']}元</div>";
+                                    } else {
+                                        echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
+                                    }
+
+                                    if ($protag['pic'] != '0') {
+                                        echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                                    }
+
+                                    echo '</a>';
+                                    echo '</div>';
+                                }
+                            }
+
+                            foreach ($panelRows as $two) {
+                                if ($two['parent'] == $one['no'] && $one['parent'] == 0) {
+
+                                    foreach ($products as $product) {
+                                        if ($two['no'] == $product['pcno']) {
+
+                                            echo '<div class="pd">';
+                                            echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
+
+                                            //echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
+
+                                            // 搜尋該商品的主圖
+                                            $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
+                                            $result = mysqli_query($conn, $sql);
+                                            if (mysqli_num_rows($result) > 0) {
+                                                // 撈出主圖
+                                                $row = mysqli_fetch_assoc($result);
+                                                echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
+                                            } else {
+                                                echo '<div class="pd-pic"></div>';
+                                            }
+
+
+                                            echo "<div class='pd-name'>{$product['proname']}</div>";
+                                            echo "<div class='pd-type'>{$product['name']}</div>";
+                                            if ($isLogin) {
+                                                echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                            }
+
+                                            // 促銷商品
+                                            if ($product['protags'] == 2) {
+                                                echo "<div class='pd-price'>促銷價$ {$product['price']}元</div>";
+                                            } else {
+                                                echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
+                                            }
+
+                                            if ($protag['pic'] != '0') {
+                                                echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                                            }
+
+                                            echo '</a>';
+                                            echo '</div>';
+                                        }
+                                    }
+
+                                    foreach ($panelRows as $three) {
+                                        if ($three['parent'] == $two['no'] && $two['parent'] != 0) {
+
+                                            foreach ($products as $product) {
+                                                if ($three['no'] == $product['pcno']) {
+
+                                                    echo '<div class="pd">';
+                                                    echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
+
+                                                    //echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
+
+                                                    // 搜尋該商品的主圖
+                                                    $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
+                                                    $result = mysqli_query($conn, $sql);
+                                                    if (mysqli_num_rows($result) > 0) {
+                                                        // 撈出主圖
+                                                        $row = mysqli_fetch_assoc($result);
+                                                        echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
+                                                    } else {
+                                                        echo '<div class="pd-pic"></div>';
+                                                    }
+
+
+                                                    echo "<div class='pd-name'>{$product['proname']}</div>";
+                                                    echo "<div class='pd-type'>{$product['name']}</div>";
+                                                    if ($isLogin) {
+                                                        echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                                    }
+
+                                                    // 促銷商品
+                                                    if ($product['protags'] == 2) {
+                                                        echo "<div class='pd-price'>促銷價$ {$product['price']}元</div>";
+                                                    } else {
+                                                        echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
+                                                    }
+
+                                                    if ($protag['pic'] != '0') {
+                                                        echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                                                    }
+
+                                                    echo '</a>';
+                                                    echo '</div>';
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                    }
+
+//                    foreach ($products as $product) {
+//
+//                        echo '<div class="pd">';
+//                        echo "<a href='pd_page.php?proid=" . $product['proid'] . "'>";
+//                        echo '<div class="pd-pic"><img src="img/pd_01.jpg" alt=""/></div>';
+//                        echo "<div class='pd-name'>{$product['proname']}</div>";
+//                        echo "<div class='pd-type'>{$product['name']}</div>";
+//                        if ($isLogin) {
+//                            echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+//                        }
+//
+//                        // 促銷商品
+//                        if ($product['protags'] == 2) {
+//                            echo "<div class='pd-price'>促銷價$ {$product['price']}元</div>";
+//                        } else {
+//                            echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
+//                        }
+//
+//                        // 左上方的圖標
+//                        if ($product['protags'] == 1) {
+//                            // 新品上市
+//                            echo '<div class="tag-type"><img src="img/tag_new.png" alt=""></div>';
+//                        } else if ($product['protags'] == 2) {
+//                            // 促銷商品
+//                            echo '<div class="tag-type"><img src="img/tag_promot.png" alt=""></div>';
+//                        }
+//
+//                        echo '</a>';
+//                        echo '</div>';
+//                    }
 
                     if ($products == null) {
                         echo '<h3>查詢不到商品</h3>';
