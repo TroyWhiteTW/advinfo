@@ -300,7 +300,7 @@ $result = mysqli_query($conn, $sql);
                                     <tr>
                                         <td class="td-04">驗證碼<span style="color:red;">*</span></td>
                                         </td>
-                                        <td><input id="validate_code" type="text" name="validate_code" class="input-5">
+                                        <td><input onkeyup="ajaxForCheckCaptcha();" id="validate_code" type="text" name="validate_code" class="input-5">
                                             <span id="captcha"><img src="captcha.php" width="100" height="25"/></span>
                                             <a style="cursor: pointer" id="change_captcha">換一張</a>
                                             <script>
@@ -316,7 +316,8 @@ $result = mysqli_query($conn, $sql);
                                 </table>
 
                                 <div class="login-info">
-                                    <input id="form_submit" type="submit" class="btn btn-default" value="確認送出" disabled="disabled">
+                                    <input id="form_submit" type="submit" class="btn btn-default" value="確認送出"
+                                           disabled="disabled">
                                 </div>
 
                             </form>
@@ -372,13 +373,12 @@ $result = mysqli_query($conn, $sql);
     });
 
     //ajax檢查驗證碼
-    var validate = document.getElementById('validate_code');
-    validate.addEventListener('blur', function () {
+    function ajaxForCheckCaptcha() {
         $.ajax({
             url: "./check_captcha_ajax.php",
             type: 'POST',
             data: {
-                validate_code:this.value
+                validate_code:document.getElementById('validate_code').value
             },
             error: function () {
                 alert('驗證過程發生錯誤');
@@ -387,12 +387,11 @@ $result = mysqli_query($conn, $sql);
                 if(response === 's'){
                     document.getElementById('form_submit').disabled = false;
                 } else {
-                    alert('驗證碼錯誤，請重新輸入。');
                     document.getElementById('form_submit').disabled = true;
                 }
             }
         });
-    });
+    }
 
     //註冊表單提交檢查
     var form = document.getElementById('register_form');
