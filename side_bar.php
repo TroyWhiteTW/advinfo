@@ -9,7 +9,7 @@
 
     <div class="menu-area">
 
-        <ul class="fullheight" style="overflow:auto;">
+<!--        <ul class="fullheight" style="overflow:auto;">-->
 
             <?php
 
@@ -63,7 +63,7 @@
 
             ?>
 
-        </ul>
+<!--        </ul>-->
 
         <script>
             setCrossButton();
