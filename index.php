@@ -115,7 +115,7 @@ if (mysqli_num_rows($result) > 0) {
                     echo '<div class="product-area">';
                     echo '<div class="tag" style="background:' . $protag['color'] . '">';
                     echo '<div class="tag-name">' . $protag['name'] . '</div>';
-                    echo '<div class="more"><a href="pd_query.php">more</a></div>';
+                    echo '<div class="more"><a href="pd_query.php?protags=' . $protag['no'] . '">more</a></div>';
                     echo '</div>';
 
                     echo '<div id="sildes-portfolio" class="owl-carousel owl-theme " style="padding:0 8px;">';
