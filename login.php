@@ -88,8 +88,10 @@ $result = mysqli_query($conn, $sql);
 
                                     <tr>
                                         <td class="td-04">驗證碼</td>
-                                        <td><input onkeyup="ajaxForCheckCaptcha();" id="validate_code" type="text" name="validate_code" class="input-5">
+                                        <td><input onkeyup="ajaxForCheckCaptcha();" id="validate_code" type="text"
+                                                   name="validate_code" class="input-5">
                                             <span id="captcha"><img src="captcha.php" width="100" height="25"/></span>
+                                            <span id="captchaIcon" class="glyphicon glyphicon-remove"></span>
                                             <a style="cursor: pointer" id="change_captcha">換一張</a>
                                             <script>
                                                 document.getElementById('change_captcha').addEventListener('click', function () {
@@ -105,8 +107,10 @@ $result = mysqli_query($conn, $sql);
                                     <tr>
                                         <td colspan="2" style="text-align:center;">
                                             <input id="typeData" name="type" value="0" hidden="hidden">
-                                            <input id="type1login" type="submit" class="btn btn-default" value="商城會員登入" disabled="disabled">
-                                            <input id="type2login" type="submit" class="btn btn-default" value="珍菌堂會員登入" disabled="disabled">
+                                            <input id="type1login" type="submit" class="btn btn-default" value="商城會員登入"
+                                                   disabled="disabled">
+                                            <input id="type2login" type="submit" class="btn btn-default" value="珍菌堂會員登入"
+                                                   disabled="disabled">
                                             <script>
                                                 document.getElementById('type1login').addEventListener('click', function () {
                                                     document.getElementById('typeData').value = "1";
@@ -189,18 +193,26 @@ $result = mysqli_query($conn, $sql);
             url: "./check_captcha_ajax.php",
             type: 'POST',
             data: {
-                validate_code:document.getElementById('validate_code').value
+                validate_code: document.getElementById('validate_code').value
             },
             error: function () {
                 alert('驗證過程發生錯誤');
             },
             success: function (response) {
-                if(response === 's'){
+                if (response === 's') {
                     document.getElementById('type1login').disabled = false;
                     document.getElementById('type2login').disabled = false;
+                    if (document.getElementById('captchaIcon').classList.contains('glyphicon-remove')) {
+                        document.getElementById('captchaIcon').classList.remove('glyphicon-remove');
+                        document.getElementById('captchaIcon').classList.add('glyphicon-ok');
+                    }
                 } else {
                     document.getElementById('type1login').disabled = true;
                     document.getElementById('type2login').disabled = true;
+                    if (document.getElementById('captchaIcon').classList.contains('glyphicon-ok')) {
+                        document.getElementById('captchaIcon').classList.remove('glyphicon-ok');
+                        document.getElementById('captchaIcon').classList.add('glyphicon-remove');
+                    }
                 }
             }
         });
