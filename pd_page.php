@@ -93,28 +93,43 @@ if ($hasProid) {
 
                                 <div class="pic-small " style="">
 
-                                    <div class="pic-s contentbtn thumb_selected "
+                                    <div onclick="changeImg(this)" class="pic-s contentbtn thumb_selected "
                                          style="background-image:url('img/pd_01.jpg');">
 
                                     </div>
 
-                                    <div class="pic-s contentbtn  " style="background-image:url('img/pd_02.jpg');">
+                                    <div onclick="changeImg(this)" class="pic-s contentbtn  "
+                                         style="background-image:url('img/pd_02.jpg');">
 
                                     </div>
 
-                                    <div class="pic-s contentbtn  " style="background-image:url('img/pd_03.jpg');">
+                                    <div onclick="changeImg(this)" class="pic-s contentbtn  "
+                                         style="background-image:url('img/pd_03.jpg');">
 
                                     </div>
 
-                                    <div class="pic-s contentbtn  " style="background-image:url('img/pd_04.jpg');">
+                                    <div onclick="changeImg(this)" class="pic-s contentbtn  "
+                                         style="background-image:url('img/pd_04.jpg');">
 
                                     </div>
 
-                                    <div class="pic-s contentbtn  " style="background-image:url('img/pd_05.jpg');">
+                                    <div onclick="changeImg(this)" class="pic-s contentbtn  "
+                                         style="background-image:url('img/pd_05.jpg');">
 
                                     </div>
 
                                 </div>
+
+                                <script>
+                                    function changeImg(e) {
+                                        document.getElementById('prod_img').src = e.style.backgroundImage.slice(5, -2);
+                                        var divs = document.getElementsByClassName('pic-small')[0].getElementsByTagName('div');
+                                        for (var i = 0; i < divs.length; i++) {
+                                            divs[i].classList.remove('thumb_selected');
+                                        }
+                                        e.classList.add('thumb_selected');
+                                    }
+                                </script>
 
                             </div>
 
