@@ -73,7 +73,15 @@ if ($hasProid) {
 
                                 <div class="product-pic">
 
-                                    <img src="img/pd_01.jpg" id="prod_img" alt="" style="width:100%;">
+                                    <?php
+                                    $picSql = "SELECT * FROM productpics WHERE proid='" . $product['proid'] . "' AND sort=1";
+                                    $picRes = mysqli_query($conn, $picSql);
+                                    while ($row = mysqli_fetch_assoc($picRes)) {
+                                        echo '<img src="upload/product/' . $row['picfile'] . '" id="prod_img" alt="" style="width:100%;">';
+                                    }
+                                    ?>
+
+<!--                                    <img src="img/pd_01.jpg" id="prod_img" alt="" style="width:100%;">-->
 
                                     <div class="tag-type">
 
@@ -93,30 +101,37 @@ if ($hasProid) {
 
                                 <div class="pic-small " style="">
 
-                                    <div onclick="changeImg(this)" class="pic-s contentbtn thumb_selected "
-                                         style="background-image:url('img/pd_01.jpg');">
+                                    <?php
+                                    $picSql = "SELECT * FROM productpics WHERE proid='" . $product['proid'] . "' ORDER BY sort ASC";
+                                    $picRes = mysqli_query($conn, $picSql);
+                                    while ($row = mysqli_fetch_assoc($picRes)) {
+                                        $html = '';
+                                        $html .= '<div onclick="changeImg(this)" class="pic-s contentbtn';
+                                        if ($row['sort'] == 1) {
+                                            $html .= ' thumb_selected';
+                                        }
+                                        $html .= ' " style="background-image:url(\'upload/product/';
+                                        $html .= $row['picfile'];
+                                        $html .= '\');">';
+                                        echo $html;
+                                        echo '</div>';
+                                    }
+                                    ?>
 
-                                    </div>
-
-                                    <div onclick="changeImg(this)" class="pic-s contentbtn  "
-                                         style="background-image:url('img/pd_02.jpg');">
-
-                                    </div>
-
-                                    <div onclick="changeImg(this)" class="pic-s contentbtn  "
-                                         style="background-image:url('img/pd_03.jpg');">
-
-                                    </div>
-
-                                    <div onclick="changeImg(this)" class="pic-s contentbtn  "
-                                         style="background-image:url('img/pd_04.jpg');">
-
-                                    </div>
-
-                                    <div onclick="changeImg(this)" class="pic-s contentbtn  "
-                                         style="background-image:url('img/pd_05.jpg');">
-
-                                    </div>
+                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn thumb_selected " style="background-image:url('img/pd_01.jpg');">-->
+                                    <!--                                    </div>-->
+                                    <!---->
+                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn " style="background-image:url('img/pd_02.jpg');">-->
+                                    <!--                                    </div>-->
+                                    <!---->
+                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn " style="background-image:url('img/pd_03.jpg');">-->
+                                    <!--                                    </div>-->
+                                    <!---->
+                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn " style="background-image:url('img/pd_04.jpg');">-->
+                                    <!--                                    </div>-->
+                                    <!---->
+                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn " style="background-image:url('img/pd_05.jpg');">-->
+                                    <!--                                    </div>-->
 
                                 </div>
 
@@ -207,17 +222,31 @@ if ($hasProid) {
                                 <div><?php echo $product['prodetail']; ?></div>
                             </div>
 
-                            <div class="form-tittle">
-                                <img src="img/pd_01.jpg" alt="" width="100%">
-                            </div>
+                            <hr/>
 
-                            <div class="form-tittle">
-                                <img src="img/pd_02.jpg" alt="" width="100%">
-                            </div>
+                            <?php
+                            $picSql = "SELECT * FROM productpics WHERE proid='" . $product['proid'] . "' ORDER BY sort ASC";
+                            $picRes = mysqli_query($conn, $picSql);
+                            while ($row = mysqli_fetch_assoc($picRes)) {
+                                $html = '';
+                                $html .= '<div class="form-tittle">';
+                                $html .= '<img src="upload/product/' . $row['picfile'] . '" alt="" width="100%">';
+                                echo $html;
+                                echo '</div>';
+                            }
+                            ?>
 
-                            <div class="form-tittle">
-                                <img src="img/pd_03.jpg" alt="" width="100%">
-                            </div>
+                            <!--                            <div class="form-tittle">-->
+                            <!--                                <img src="img/pd_01.jpg" alt="" width="100%">-->
+                            <!--                            </div>-->
+                            <!---->
+                            <!--                            <div class="form-tittle">-->
+                            <!--                                <img src="img/pd_02.jpg" alt="" width="100%">-->
+                            <!--                            </div>-->
+                            <!---->
+                            <!--                            <div class="form-tittle">-->
+                            <!--                                <img src="img/pd_03.jpg" alt="" width="100%">-->
+                            <!--                            </div>-->
 
                         </div>
 
