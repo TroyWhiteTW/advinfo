@@ -3,7 +3,7 @@ include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
 if (!$isLogin) {
-    header('Location:index.php');
+    header('Location:login.php');
     exit;
 }
 ?>
