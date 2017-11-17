@@ -298,10 +298,10 @@ function sendEmail()
 
 function send2Mail($towhom, $title, $mesg)
 {
-    $to = $towhom;
+    $to = 'service@taironlife.com';
     $subject = $title;
     $message = $mesg;
-    $headers = 'From:  service@taironlife.com' . "\r\n" .
+    $headers = 'From:  ' . $towhom . "\r\n" .
         'Reply-To:  service@taironlife.com' . "\r\n" .
         'MIME-Version: 1.0' . "\r\n" .
         'Content-type:text/html;charset=UTF-8' . "\r\n" .
