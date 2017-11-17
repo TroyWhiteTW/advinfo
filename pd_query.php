@@ -113,8 +113,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     "\n";
                             }
                             ?>
-                            <a id="plth" href="" class="btn btn-info" role="button">價格排序：低->高</a>
-                            <a id="phtl" href="" class="btn btn-info" role="button">價格排序：高->低</a>
+                            <a id="phtl" href="" class="btn btn-info" role="button">價格排序：低->高</a>
+                            <a id="plth" href="" class="btn btn-info" role="button">價格排序：高->低</a>
                         </div>
                     </div>
                 </div>
