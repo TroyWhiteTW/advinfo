@@ -9,7 +9,7 @@ $sql = "select * from pages where `name` = '供應商資訊'";
 $pages = array();
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
+    $rowpage = mysqli_fetch_assoc($result);
 } else {
     // 錯誤 查詢結果
     echo 'E1';
@@ -57,7 +57,7 @@ if (mysqli_num_rows($result) > 0) {
 
                 <div class="content-area">
 
-                    <div class="content-article"><?php echo $row['content']; ?></div>
+                    <div class="content-article"><?php echo $rowpage['content']; ?></div>
 
                     <div class="btn-area">
                         <a href="index.php"><input type="submit" value="返回首頁"></a>
