@@ -136,7 +136,20 @@ if (mysqli_num_rows($result) > 0) {
                         }
                         echo '<div class="pd-name">' . $product['proname'] . '</div>';
                         echo '<div class="pd-type">滴丸</div>';
-                        echo '<div class="pd-pv">' . $product['pv'] . '</div>';
+
+                        if ($isLogin) {
+                            switch ($_SESSION['user'][20]) {
+                                case 1:
+                                    echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                    break;
+                                case 2:
+                                    echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                    break;
+                            }
+                        } else {
+                            echo '<div class="pd-pv">請登入後查看</div>';
+                        }
+
                         echo '<div class="pd-price">價格$' . $product['price'] . '元</div>';
 
                         if ($protag['pic'] != '0') {

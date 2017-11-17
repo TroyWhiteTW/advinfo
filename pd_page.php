@@ -156,7 +156,22 @@ if ($hasProid) {
                                     <div class="price-big"><?php echo $product['price']; ?></div>
                                     <div class="goods">庫存數量：<?php echo $product['stock']; ?></div>
                                 </div>
-                                <div class="pv-number">PV值：<?php echo $product['PV']; ?></div>
+
+                                <?php
+                                if ($isLogin) {
+                                    switch ($_SESSION['user'][20]) {
+                                        case 1:
+                                            echo '<div class="pv-number">紅利：' . $product['bonuce'] . '</div>';
+                                            break;
+                                        case 2:
+                                            echo '<div class="pv-number">PV：' . $product['PV'] . '</div>';
+                                            break;
+                                    }
+                                } else {
+                                    echo '<div class="pv-number">請登入後查看</div>';
+                                }
+                                ?>
+
                                 <div class="goods-number">商品編號：<?php echo $product['proid']; ?></div>
                                 <div style="margin-top:10px;">
                                     <div class="number">數量

@@ -253,8 +253,18 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                                                 echo "<div class='pd-name'>{$product['proname']}</div>";
                                                 echo "<div class='pd-type'>{$product['name']}</div>";
+
                                                 if ($isLogin) {
-                                                    echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                                    switch ($_SESSION['user'][20]) {
+                                                        case 1:
+                                                            echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                                            break;
+                                                        case 2:
+                                                            echo '<div class="pd-pv">PV：' . $product['PV'] . '</div>';
+                                                            break;
+                                                    }
+                                                } else {
+                                                    echo '<div class="pd-pv">請登入後查看</div>';
                                                 }
 
                                                 // 促銷商品
@@ -296,8 +306,18 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                                                 echo "<div class='pd-name'>{$product['proname']}</div>";
                                                 echo "<div class='pd-type'>{$product['name']}</div>";
+
                                                 if ($isLogin) {
-                                                    echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                                    switch ($_SESSION['user'][20]) {
+                                                        case 1:
+                                                            echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                                            break;
+                                                        case 2:
+                                                            echo '<div class="pd-pv">PV：' . $product['PV'] . '</div>';
+                                                            break;
+                                                    }
+                                                } else {
+                                                    echo '<div class="pd-pv">請登入後查看</div>';
                                                 }
 
                                                 // 促銷商品
@@ -339,8 +359,18 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                                                 echo "<div class='pd-name'>{$product['proname']}</div>";
                                                 echo "<div class='pd-type'>{$product['name']}</div>";
+
                                                 if ($isLogin) {
-                                                    echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                                    switch ($_SESSION['user'][20]) {
+                                                        case 1:
+                                                            echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                                            break;
+                                                        case 2:
+                                                            echo '<div class="pd-pv">PV：' . $product['PV'] . '</div>';
+                                                            break;
+                                                    }
+                                                } else {
+                                                    echo '<div class="pd-pv">請登入後查看</div>';
                                                 }
 
                                                 // 促銷商品
@@ -455,8 +485,18 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                                     echo "<div class='pd-name'>{$product['proname']}</div>";
                                     echo "<div class='pd-type'>{$product['name']}</div>";
+
                                     if ($isLogin) {
-                                        echo "<div class='pd-pv'>PV/紅利：{$product['PV']}</div>";
+                                        switch ($_SESSION['user'][20]) {
+                                            case 1:
+                                                echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                                break;
+                                            case 2:
+                                                echo '<div class="pd-pv">PV：' . $product['PV'] . '</div>';
+                                                break;
+                                        }
+                                    } else {
+                                        echo '<div class="pd-pv">請登入後查看</div>';
                                     }
 
                                     // 促銷商品
