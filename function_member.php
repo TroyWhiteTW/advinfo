@@ -4,7 +4,6 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
-// TODO: 待補側邊攔，目前是 hard code
 ?>
 <!doctype html>
 <html>
@@ -47,12 +46,21 @@ $isLogin = !empty($_SESSION['user']);
 
                         <div class="function-area">
                             <ul>
-                                <li><a href="function_member.php"><input type="button" id="" name=""
-                                                                         class="tag-value-select" value="個人資料"></a></li>
-                                <li><a href="function_orderquery.php"><input type="button" id="" name="" class=""
-                                                                             value="訂單查詢"></a></li>
-                                <li><a href="function_bonusquery.php"><input type="button" id="" name="" class=""
-                                                                             value="重銷獎金查詢/規則"></a></li>
+                                <li>
+                                    <a href="function_member.php">
+                                        <input type="button" id="" name="" class="tag-value-select" value="個人資料">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="function_orderquery.php">
+                                        <input type="button" id="" name="" class="" value="訂單查詢">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="function_bonusquery.php">
+                                        <input type="button" id="" name="" class="" value="重銷獎金查詢/規則">
+                                    </a>
+                                </li>
                             </ul>
                         </div>
 
@@ -108,16 +116,22 @@ $isLogin = !empty($_SESSION['user']);
                                 </div>
 
                                 <div class="form-tittle">
-                                    電子信箱：<input name="" id="" type="text" class="input-2">
+                                    電子信箱：
+                                    <input name="email" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][7] ?>">
                                 </div>
 
                                 <div class="form-tittle">
-                                    聯繫電話：<input name="" id="" type="text" class="input-2">
+                                    聯繫電話：
+                                    <input name="phone" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][8] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
-                                    手機：<input name="" id="" type="text" class="input-2">
+                                    手機：
+                                    <input name="mobile" id="" type="text" class="input-2"
+                                           value="<?= $_SESSION['user'][9] ?>">
                                     <a class="btn btn-default btn-xs" href="">驗證手機</a>
                                 </div>
 
@@ -125,31 +139,33 @@ $isLogin = !empty($_SESSION['user']);
 
                                     <span style="color:red;">*</span>
                                     聯繫地址：
-                                    <input type="checkbox" checked="checked">台澎金馬
-                                    <span style="color:red; font-size:12px;">(預設勾選)</span>
+                                    <!--                                    <input type="checkbox" checked="checked">台澎金馬-->
+                                    <!--                                    <span style="color:red; font-size:12px;">(預設勾選)</span>-->
+                                    <!--                                    <div class="form-tittle">-->
+                                    <!--                                        <select name="" id="">-->
+                                    <!--                                            <option selected="selected" value="0">請選擇縣市</option>-->
+                                    <!--                                            <option value="1">B</option>-->
+                                    <!--                                            <option value="2">C</option>-->
+                                    <!--                                        </select>-->
+                                    <!--                                        <select name="" id="">-->
+                                    <!--                                            <option selected="selected" value="0">請選擇區別</option>-->
+                                    <!--                                            <option value="1">B</option>-->
+                                    <!--                                            <option value="2">C</option>-->
+                                    <!--                                        </select>-->
+                                    <!--                                    </div>-->
+
                                     <div class="form-tittle">
-                                        <select name="" id="">
-                                            <option selected="selected" value="0">請選擇縣市</option>
-                                            <option value="1">B</option>
-                                            <option value="2">C</option>
-                                        </select>
-                                        <select name="" id="">
-                                            <option selected="selected" value="0">請選擇區別</option>
-                                            <option value="1">B</option>
-                                            <option value="2">C</option>
-                                        </select>
+                                        <input name="address" id="" type="text" class="input-3" value="<?= $_SESSION['user'][14] ?>">
                                     </div>
 
-                                    <div class="form-tittle"><input name="" id="" type="text" class="input-3"></div>
-
                                 </div>
 
                                 <div class="form-tittle">
-                                    統一編號：<input name="" id="" type="text" class="input-2">
+                                    統一編號：<input name="company_no" id="" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
-                                    公司抬頭：<input name="" id="" type="text" class="input-2">
+                                    公司抬頭：<input name="" id="invoice_title" type="text" class="input-2">
                                 </div>
 
                             </div>
