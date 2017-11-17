@@ -24,7 +24,7 @@ if (empty($errorMessage)) {
 
     $result = mysqli_query($conn, $sql);
     if ($result === true) {
-        send2Mail($_POST['email'], 'service mail', 'service mail mesg');
+        send2Mail($_POST['email'], 'service mail', $_POST['content']);
         echo "感謝您的意見，我們將盡快與您聯繫答覆；3秒後跳轉回首頁...";
         header("Refresh:3;url=index.php");
     } else {
