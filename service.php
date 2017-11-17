@@ -24,7 +24,8 @@ if (empty($errorMessage)) {
 
     $result = mysqli_query($conn, $sql);
     if ($result === true) {
-        echo "感謝您的意見，我們香盡快與您聯繫答覆；3秒後跳轉回首頁...";
+        send2Mail();
+        echo "感謝您的意見，我們將盡快與您聯繫答覆；3秒後跳轉回首頁...";
         header("Refresh:3;url=index.php");
     } else {
         echo "發生未預期錯誤...";
@@ -251,6 +252,61 @@ function encodeRegisterData($rawDataArray)
     }
 
     return $dataArray;
+}
+
+function sendEmail()
+{
+    require 'PHPMailer/PHPMailerAutoload.php';
+
+    $mail = new PHPMailer;
+
+//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    // TODO: 寄件者的 gmail 帳號
+    $mail->Username = 'test@gmail.com';                 // SMTP username
+    // TODO: 寄件者的 gmail 密碼
+    $mail->Password = 'test';                           // SMTP password
+    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 587;                                    // TCP port to connect to
+
+    $mail->setFrom('service@taironlife.com', 'Mailer');
+//$mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
+    $mail->addAddress($_POST['email']);               // Name is optional
+//$mail->addReplyTo('info@example.com', 'Information');
+//$mail->addCC('cc@example.com');
+//$mail->addBCC('bcc@example.com');
+
+//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+    $mail->isHTML(true);                                  // Set email format to HTML
+
+    $mail->Subject = 'Reset Password!';
+    $mail->Body = 'a';
+//    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    if (!$mail->send()) {
+//        echo '無法寄送電子信件至您填寫的電子信箱';
+//        echo '<br/>';
+//        echo 'Mailer Error: ' . $mail->ErrorInfo;
+    } else {
+        echo '感謝您的意見，我們將盡快與您聯繫答覆；3秒後跳轉回首頁...';
+    }
+}
+
+function send2Mail($towhom, $title, $mesg)
+{
+    $to = $towhom;
+    $subject = $title;
+    $message = $mesg;
+    $headers = 'From:  service@taironlife.com' . "\r\n" .
+        'Reply-To:  service@taironlife.com' . "\r\n" .
+        'MIME-Version: 1.0' . "\r\n" .
+        'Content-type:text/html;charset=UTF-8' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+    mail($to, $subject, $message, $headers);
 }
 
 exit;
