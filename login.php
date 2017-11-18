@@ -107,10 +107,8 @@ $result = mysqli_query($conn, $sql);
                                     <tr>
                                         <td colspan="2" style="text-align:center;">
                                             <input id="typeData" name="type" value="0" hidden="hidden">
-                                            <input id="type1login" type="submit" class="btn btn-default" value="商城會員登入"
-                                                   disabled="disabled">
-                                            <input id="type2login" type="submit" class="btn btn-default" value="珍菌堂會員登入"
-                                                   disabled="disabled">
+                                            <input id="type1login" type="submit" class="btn btn-default" value="商城會員登入">
+                                            <input id="type2login" type="submit" class="btn btn-default" value="珍菌堂會員登入">
                                             <script>
                                                 document.getElementById('type1login').addEventListener('click', function () {
                                                     document.getElementById('typeData').value = "1";
@@ -200,15 +198,11 @@ $result = mysqli_query($conn, $sql);
             },
             success: function (response) {
                 if (response === 's') {
-                    document.getElementById('type1login').disabled = false;
-                    document.getElementById('type2login').disabled = false;
                     if (document.getElementById('captchaIcon').classList.contains('glyphicon-remove')) {
                         document.getElementById('captchaIcon').classList.remove('glyphicon-remove');
                         document.getElementById('captchaIcon').classList.add('glyphicon-ok');
                     }
                 } else {
-                    document.getElementById('type1login').disabled = true;
-                    document.getElementById('type2login').disabled = true;
                     if (document.getElementById('captchaIcon').classList.contains('glyphicon-ok')) {
                         document.getElementById('captchaIcon').classList.remove('glyphicon-ok');
                         document.getElementById('captchaIcon').classList.add('glyphicon-remove');

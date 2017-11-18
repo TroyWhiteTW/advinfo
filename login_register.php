@@ -318,8 +318,7 @@ $result = mysqli_query($conn, $sql);
                                 </table>
 
                                 <div class="login-info">
-                                    <input id="form_submit" type="submit" class="btn btn-default" value="確認送出"
-                                           disabled="disabled">
+                                    <input id="form_submit" type="submit" class="btn btn-default" value="確認送出">
                                 </div>
 
                             </form>
@@ -387,13 +386,11 @@ $result = mysqli_query($conn, $sql);
             },
             success: function (response) {
                 if (response === 's') {
-                    document.getElementById('form_submit').disabled = false;
                     if (document.getElementById('captchaIcon').classList.contains('glyphicon-remove')) {
                         document.getElementById('captchaIcon').classList.remove('glyphicon-remove');
                         document.getElementById('captchaIcon').classList.add('glyphicon-ok');
                     }
                 } else {
-                    document.getElementById('form_submit').disabled = true;
                     if (document.getElementById('captchaIcon').classList.contains('glyphicon-ok')) {
                         document.getElementById('captchaIcon').classList.remove('glyphicon-ok');
                         document.getElementById('captchaIcon').classList.add('glyphicon-remove');
