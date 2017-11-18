@@ -102,13 +102,13 @@ while ($row = mysqli_fetch_assoc($result)) {
                             <?php
                             $protagsSql = 'SELECT * FROM protags';
                             $tagsRes = mysqli_query($conn, $protagsSql);
-                            while ($row = mysqli_fetch_assoc($tagsRes)) {
+                            while ($tagsRow = mysqli_fetch_assoc($tagsRes)) {
                                 echo '<a href="pd_query.php?protags=' .
-                                    $row['no'] .
+                                    $tagsRow['no'] .
                                     '" class="btn" role="button" style="color: white;background-color: ' .
-                                    $row['color'] .
+                                    $tagsRow['color'] .
                                     ';">' .
-                                    $row['name'] .
+                                    $tagsRow['name'] .
                                     '</a>' .
                                     "\n";
                             }
@@ -274,8 +274,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                                     echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
                                                 }
 
-                                                if ($protag['pic'] != '0') {
-                                                    echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                                                if ($product['protags'] != '0') {
+                                                    echo '<div class="tag-type"><img src="upload/product/' . $product['pic'] . '" alt=""></div>';
                                                 }
 
                                                 echo '</a>';
@@ -327,8 +327,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                                     echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
                                                 }
 
-                                                if ($protag['pic'] != '0') {
-                                                    echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                                                if ($product['protags'] != '0') {
+                                                    echo '<div class="tag-type"><img src="upload/product/' . $product['pic'] . '" alt=""></div>';
                                                 }
 
                                                 echo '</a>';
@@ -380,8 +380,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                                     echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
                                                 }
 
-                                                if ($protag['pic'] != '0') {
-                                                    echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                                                if ($product['protags'] != '0') {
+                                                    echo '<div class="tag-type"><img src="upload/product/' . $product['pic'] . '" alt=""></div>';
                                                 }
 
                                                 echo '</a>';
@@ -506,8 +506,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                         echo "<div class='pd-price'>價格$ {$product['promo_price']}元</div>";
                                     }
 
-                                    if ($protag['pic'] != '0') {
-                                        echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                                    if ($product['protags'] != '0') {
+                                        echo '<div class="tag-type"><img src="upload/product/' . $product['pic'] . '" alt=""></div>';
                                     }
 
                                     echo '</a>';
