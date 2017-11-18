@@ -57,6 +57,10 @@ if ($hasProid) {
                     <ul>
                         <li><a href="index.php">首頁</a></li>
                         <li><img src="img/process_icon.png" alt=""></li>
+                        <?php
+
+
+                        ?>
                         <li><a href="pd_query.php">類別</a></li>
                         <li><img src="img/process_icon.png" alt=""></li>
                         <li><a href="">商品頁</a></li>
@@ -81,7 +85,7 @@ if ($hasProid) {
                                     }
                                     ?>
 
-<!--                                    <img src="img/pd_01.jpg" id="prod_img" alt="" style="width:100%;">-->
+                                    <!--                                    <img src="img/pd_01.jpg" id="prod_img" alt="" style="width:100%;">-->
 
                                     <div class="tag-type">
 
@@ -240,15 +244,15 @@ if ($hasProid) {
                             <hr/>
 
                             <?php
-//                            $picSql = "SELECT * FROM productpics WHERE proid='" . $product['proid'] . "' ORDER BY sort ASC";
-//                            $picRes = mysqli_query($conn, $picSql);
-//                            while ($row = mysqli_fetch_assoc($picRes)) {
-//                                $html = '';
-//                                $html .= '<div class="form-tittle">';
-//                                $html .= '<img src="upload/product/' . $row['picfile'] . '" alt="" width="100%">';
-//                                echo $html;
-//                                echo '</div>';
-//                            }
+                            //                            $picSql = "SELECT * FROM productpics WHERE proid='" . $product['proid'] . "' ORDER BY sort ASC";
+                            //                            $picRes = mysqli_query($conn, $picSql);
+                            //                            while ($row = mysqli_fetch_assoc($picRes)) {
+                            //                                $html = '';
+                            //                                $html .= '<div class="form-tittle">';
+                            //                                $html .= '<img src="upload/product/' . $row['picfile'] . '" alt="" width="100%">';
+                            //                                echo $html;
+                            //                                echo '</div>';
+                            //                            }
                             ?>
 
                             <!--                            <div class="form-tittle">-->

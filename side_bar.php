@@ -9,64 +9,70 @@
 
     <div class="menu-area">
 
-<!--        <ul class="fullheight" style="overflow:auto;">-->
+        <!-- <ul class="fullheight" style="overflow:auto;"> -->
 
-            <?php
+        <?php
 
-            $sideBarSql = 'SELECT * FROM proclass WHERE status=1 ORDER BY sort ASC';
-            $sideRows = [];
-            $sideBarRes = mysqli_query($conn, $sideBarSql);
-            while ($row = mysqli_fetch_assoc($sideBarRes)) {
-                $sideRows[] = $row;
-            }
+        $classOne = [];
+        $classOneSql = 'SELECT A.no AS first_no, A.pcname AS first_name FROM proclass A WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC';
+        $classOneRes = mysqli_query($conn, $classOneSql);
+        while ($classOneRow = mysqli_fetch_assoc($classOneRes)) {
+            $classOne[] = $classOneRow;
+        }
 
-            $kind = 0;
-            $s = 1;
-            $t = 1;
+        $classTwo = [];
+        $classTwoSql = 'SELECT A.no AS first_no, A.pcname AS first_name, B.no AS second_no, B.pcname AS second_name FROM proclass A LEFT JOIN proclass B ON A.no=B.parent WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC, B.sort ASC';
+        $classTwoRes = mysqli_query($conn, $classTwoSql);
+        while ($classTwoRow = mysqli_fetch_assoc($classTwoRes)) {
+            $classTwo[] = $classTwoRow;
+        }
 
-            foreach ($sideRows as $one) {
-                if ($one['parent'] == 0) {
-                    echo '<ul class="list-group sbar">';
-                    echo '<li class="list-group-item list-group-item-success c1">';
-                    echo '<a href="pd_query.php?no=' . $one['no'] . '&kind=' . $kind . '&class=' . 1 . '">';
-                    echo $one['pcname'] . ' ';//第一階
+        $classThree = [];
+        $classThreeSql = 'SELECT A.no AS first_no, A.pcname AS first_name, B.no AS second_no, B.pcname AS second_name, C.no AS third_no, C.pcname AS third_name FROM proclass A LEFT JOIN proclass B ON A.no=B.parent LEFT JOIN proclass C ON B.no=C.parent WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC, B.sort ASC, C.sort ASC';
+        $classThreeRes = mysqli_query($conn, $classThreeSql);
+        while ($classThreeRow = mysqli_fetch_assoc($classThreeRes)) {
+            $classThree[] = $classThreeRow;
+        }
+
+        foreach ($classOne as $item1) {
+            echo '<ul class="list-group sbar">';
+
+            echo '<li class="list-group-item list-group-item-success c1">';
+            echo '<a href="pd_query.php?first=' . $item1['first_no'] . '&second=0&third=0">';
+            echo $item1['first_name'];
+            echo '</a>';
+            echo '</li>';
+
+            foreach ($classTwo as $item2) {
+                if ($item2['first_no'] == $item1['first_no']) {
+                    echo '<li class="list-group-item list-group-item-info c2" style="display:none">';
+                    echo '<a href="pd_query.php?first=' . $item1['first_no'] . '&second=' . $item2['second_no'] . '&third=0">';
+                    echo $item2['second_name'];
                     echo '</a>';
                     echo '</li>';
 
-                    foreach ($sideRows as $two) {
-                        if ($two['parent'] == $one['no'] && $one['parent'] == 0) {
-                            echo '<li class="list-group-item list-group-item-info c2" style="display:none">';
-                            echo '<a href="pd_query.php?no=' . $two['no'] . '&kind=' . $kind . '&class=' . 2 . '&s=' . $s . '">';
-                            echo $two['pcname'] . ' ';//第二階
+                    foreach ($classThree as $item3) {
+                        if ($item3['second_no'] == $item2['second_no']) {
+                            echo '<li class="list-group-item list-group-item-warning c3" style="display:none">';
+                            echo '<a href="pd_query.php?first=' . $item1['first_no'] . '&second=' . $item2['second_no'] . '&third=' . $item3['third_no'] . '">';
+                            echo $item3['third_name'];
                             echo '</a>';
                             echo '</li>';
-
-                            foreach ($sideRows as $three) {
-                                if ($three['parent'] == $two['no'] && $two['parent'] != 0) {
-                                    echo '<li class="list-group-item list-group-item-warning c3" style="display:none">';
-                                    echo '<a href="pd_query.php?no=' . $three['no'] . '&kind=' . $kind . '&class=' . 3 . '&s=' . $s . '&t=' . $t . '">';
-                                    echo $three['pcname'];//第三階
-                                    echo '</a>';
-                                    echo '</li>';
-                                    $t++;
-                                }
-                            }
-
-                            $s++;
                         }
                     }
-
-                    echo '</ul>';
-                    $kind++;
                 }
             }
 
-            ?>
+            echo '</ul>';
+        }
 
-<!--        </ul>-->
+        ?>
+
+        <!-- </ul> -->
 
         <script>
             setCrossButton();
+
             function setCrossButton() {
                 var sbars = document.getElementsByClassName('sbar');
                 for (var i = 0; i < sbars.length; i++) {
@@ -128,7 +134,7 @@
                     for (var i = 0; i < c3s.length; i++) {
                         c3s[i].style.display = 'none';
                     }
-                    if (node.getElementsByTagName('span').length > 0 && node.getElementsByTagName('span')[0].classList.contains('glyphicon-minus')){
+                    if (node.getElementsByTagName('span').length > 0 && node.getElementsByTagName('span')[0].classList.contains('glyphicon-minus')) {
                         node.getElementsByTagName('span')[0].classList.remove('glyphicon-minus');
                         node.getElementsByTagName('span')[0].classList.add('glyphicon-plus');
                     }
