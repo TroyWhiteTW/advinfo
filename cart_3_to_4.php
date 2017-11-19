@@ -89,6 +89,7 @@ function getMaxOdno($conn)
 {
     $rData = mysqli_query($conn, 'SELECT MAX(odno) as maxOdno FROM orderdetail;');
     $r = mysqli_fetch_assoc($rData);
+    $rData->close();
     return intval($r['maxOdno']);
 }
 exit;
