@@ -20,10 +20,10 @@ $orders = unserialize($_SESSION['orders']);
 
 $orders->pay_time = date('Y-m-d H:i:s', time());
 $orders->appredate = '0000-00-00 00:00:00';
-$orders->total_price = 0;
-$orders->freight = 0;
-$orders->PV = 0;
-$orders->bonuce = 0;
+//$orders->total_price = 0;
+//$orders->freight = 0;
+//$orders->PV = 0;
+//$orders->bonuce = 0;
 $orders->ordstatus = 0;
 $orders->shipstatus = 0;
 $orders->shiptime = '0000-00-00 00:00:00';
