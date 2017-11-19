@@ -10,17 +10,45 @@ $proid = 0;
 
 if ($hasProid) {
 
+    // product
     $proid = trim($_GET['proid']);// 產品 id 處理
 
-    $sql = 'SELECT * FROM products WHERE proid = ' . '\'' . $proid . '\'';
+    $productSql = 'SELECT products.proid, products.proname, products.price, products.PV, products.bonuce, products.stock, products.prodetail, products.protags, products.weight, products.size, products.promo_price, products.promo_PV, products.promo_bonuce, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status=3';
+    $productSql .= ' AND proid=\'' . $proid . '\'';
+    $productSql .= ') products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
 
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
+    $productRes = mysqli_query($conn, $productSql);
+
+    if (mysqli_num_rows($productRes) > 0) {
         // 撈該筆資料的全部欄位資料
-        $product = mysqli_fetch_assoc($result);
+        $product = mysqli_fetch_assoc($productRes);
     } else {
         // 錯誤
         $hasProid = false;
+    }
+
+    // protags
+//    $protags = [];
+//    $protagsSql = 'SELECT no, name, pic, color FROM protags';
+//    $protagsRes = mysqli_query($conn, $protagsSql);
+//    while ($protagsRow = mysqli_fetch_assoc($protagsRes)) {
+//        $protags[] = $protagsRow;
+//    }
+
+    // proclass
+    $proclass = [];
+    $proclassSql = 'SELECT no, parent, pcname FROM proclass WHERE status=1 ORDER BY sort ASC';
+    $proclassRes = mysqli_query($conn, $proclassSql);
+    while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
+        $proclass[] = $proclassRow;
+    }
+
+    // pics
+    $pics = [];
+    $picSql = 'SELECT proid, picname, picfile, sort FROM productpics WHERE proid=\'' . $product['proid'] . '\' ORDER BY sort ASC';
+    $picRes = mysqli_query($conn, $picSql);
+    while ($picsRow = mysqli_fetch_assoc($picRes)) {
+        $pics[] = $picsRow;
     }
 
 }
@@ -56,14 +84,33 @@ if ($hasProid) {
                 <div class="beard">
                     <ul>
                         <li><a href="index.php">首頁</a></li>
-                        <li><img src="img/process_icon.png" alt=""></li>
-                        <?php
-
-
-                        ?>
-                        <li><a href="pd_query.php">類別</a></li>
-                        <li><img src="img/process_icon.png" alt=""></li>
-                        <li><a href="">商品頁</a></li>
+                        <?php if ($hasProid): ?>
+                            <li><img src="img/process_icon.png" alt=""></li>
+                            <?php
+                            foreach ($proclass as $item) {
+                                if ($item['no'] == $product['pcno1']) {
+                                    echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                    break;
+                                }
+                            }
+                            echo '<li><img src="img/process_icon.png" alt=""></li>';
+                            foreach ($proclass as $item) {
+                                if ($item['no'] == $product['pcno2']) {
+                                    echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                    break;
+                                }
+                            }
+                            echo '<li><img src="img/process_icon.png" alt=""></li>';
+                            foreach ($proclass as $item) {
+                                if ($item['no'] == $product['pcno3']) {
+                                    echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                    break;
+                                }
+                            }
+                            echo '<li><img src="img/process_icon.png" alt=""></li>';
+                            echo '<li><h3>' . $product['proname'] . '</h3></li>';
+                            ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
 
@@ -78,65 +125,39 @@ if ($hasProid) {
                                 <div class="product-pic">
 
                                     <?php
-                                    $picSql = "SELECT * FROM productpics WHERE proid='" . $product['proid'] . "' AND sort=1";
-                                    $picRes = mysqli_query($conn, $picSql);
-                                    while ($row = mysqli_fetch_assoc($picRes)) {
-                                        echo '<img src="upload/product/' . $row['picfile'] . '" id="prod_img" alt="" style="width:100%;">';
+                                    foreach ($pics as $pic) {
+                                        if ($pic['sort'] == 1) {
+                                            echo '<img src="upload/product/' . $pic['picfile'] . '" id="prod_img" alt="" style="width:100%;">';
+                                            break;
+                                        }
                                     }
                                     ?>
 
-                                    <!--                                    <img src="img/pd_01.jpg" id="prod_img" alt="" style="width:100%;">-->
-
                                     <div class="tag-type">
-
                                         <?php
-                                        if ($product['pcno'] == 1) {
-                                            // 新品上市
-                                            echo '<img src="img/tag_new.png">';
-                                        } else if ($product['pcno'] == 2) {
-                                            // 促銷商品
-                                            echo '<img src="img/tag_promot.png">';
+                                        if ($product['protags'] != '0') {
+                                            echo '<img src="upload/product/' . $product['pic'] . '" alt="">';
                                         }
                                         ?>
-
                                     </div>
 
                                 </div>
 
                                 <div class="pic-small " style="">
-
                                     <?php
-                                    $picSql = "SELECT * FROM productpics WHERE proid='" . $product['proid'] . "' ORDER BY sort ASC";
-                                    $picRes = mysqli_query($conn, $picSql);
-                                    while ($row = mysqli_fetch_assoc($picRes)) {
+                                    foreach ($pics as $pic) {
                                         $html = '';
                                         $html .= '<div onclick="changeImg(this)" class="pic-s contentbtn';
-                                        if ($row['sort'] == 1) {
+                                        if ($pic['sort'] == 1) {
                                             $html .= ' thumb_selected';
                                         }
                                         $html .= ' " style="background-image:url(\'upload/product/';
-                                        $html .= $row['picfile'];
+                                        $html .= $pic['picfile'];
                                         $html .= '\');">';
                                         echo $html;
                                         echo '</div>';
                                     }
                                     ?>
-
-                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn thumb_selected " style="background-image:url('img/pd_01.jpg');">-->
-                                    <!--                                    </div>-->
-                                    <!---->
-                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn " style="background-image:url('img/pd_02.jpg');">-->
-                                    <!--                                    </div>-->
-                                    <!---->
-                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn " style="background-image:url('img/pd_03.jpg');">-->
-                                    <!--                                    </div>-->
-                                    <!---->
-                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn " style="background-image:url('img/pd_04.jpg');">-->
-                                    <!--                                    </div>-->
-                                    <!---->
-                                    <!--                                    <div onclick="changeImg(this)" class="pic-s contentbtn " style="background-image:url('img/pd_05.jpg');">-->
-                                    <!--                                    </div>-->
-
                                 </div>
 
                                 <script>
@@ -153,8 +174,11 @@ if ($hasProid) {
                             </div>
 
                             <div class="product-info-area">
+
                                 <div class="product-tittle"><?php echo $product['proname']; ?></div>
+
                                 <div class="product-info"><?php echo $product['prointro']; ?></div>
+
                                 <div style="margin-top:10px;">
                                     <div class="price-unit">NT$</div>
                                     <div class="price-big"><?php echo $product['price']; ?></div>
@@ -177,9 +201,10 @@ if ($hasProid) {
                                 ?>
 
                                 <div class="goods-number">商品編號：<?php echo $product['proid']; ?></div>
-                                <div style="margin-top:10px;">
-                                    <div class="number">數量
 
+                                <div style="margin-top:10px;">
+
+                                    <div class="number">數量
                                         <?php
                                         if ($product['stock'] > 0) {
                                             echo '<select name="" id="sc" >';
@@ -194,10 +219,12 @@ if ($hasProid) {
                                             echo '<span style="color: red">商品缺貨</span>';
                                         }
                                         ?>
-
                                     </div>
+
                                     <div class="buy-btn-area">
+
                                         <div id="addCart" class="buy-btn">加入購物車</div>
+
                                         <script>
                                             $('#addCart').click(function () {
                                                 $.ajax({
@@ -216,20 +243,27 @@ if ($hasProid) {
                                                 });
                                             });
                                         </script>
+
                                         <form method="post" action="purchase.php">
                                             <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
                                             <input id="purchaseCount" name="count" value="1" hidden="hidden">
                                             <input type="submit" class="buy-btn" value="直接購買">
                                         </form>
+
                                         <script>
                                             $('#sc').change(function () {
                                                 $('#purchaseCount').val($('#sc').val());
                                             });
                                         </script>
+
                                     </div>
+
                                     <div class="pay-way">可付款方式：</div>
+
                                     <div class="pay-icon"><img src="img/visa.png" alt=""></div>
+
                                 </div>
+
                             </div>
 
                         </div>
@@ -242,30 +276,6 @@ if ($hasProid) {
                             </div>
 
                             <hr/>
-
-                            <?php
-                            //                            $picSql = "SELECT * FROM productpics WHERE proid='" . $product['proid'] . "' ORDER BY sort ASC";
-                            //                            $picRes = mysqli_query($conn, $picSql);
-                            //                            while ($row = mysqli_fetch_assoc($picRes)) {
-                            //                                $html = '';
-                            //                                $html .= '<div class="form-tittle">';
-                            //                                $html .= '<img src="upload/product/' . $row['picfile'] . '" alt="" width="100%">';
-                            //                                echo $html;
-                            //                                echo '</div>';
-                            //                            }
-                            ?>
-
-                            <!--                            <div class="form-tittle">-->
-                            <!--                                <img src="img/pd_01.jpg" alt="" width="100%">-->
-                            <!--                            </div>-->
-                            <!---->
-                            <!--                            <div class="form-tittle">-->
-                            <!--                                <img src="img/pd_02.jpg" alt="" width="100%">-->
-                            <!--                            </div>-->
-                            <!---->
-                            <!--                            <div class="form-tittle">-->
-                            <!--                                <img src="img/pd_03.jpg" alt="" width="100%">-->
-                            <!--                            </div>-->
 
                         </div>
 

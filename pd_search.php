@@ -89,7 +89,7 @@ if ($isSearch) {
 
 // main pic
     $pics = [];
-    $picSql = "SELECT proid, picname, picfile FROM productpics WHERE sort=1";
+    $picSql = 'SELECT proid, picname, picfile FROM productpics WHERE sort=1';
     $picRes = mysqli_query($conn, $picSql);
     while ($picsRow = mysqli_fetch_assoc($picRes)) {
         $pics[] = $picsRow;
