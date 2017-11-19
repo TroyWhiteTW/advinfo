@@ -34,9 +34,11 @@ $orders->returntime = '0000-00-00 00:00:00';
 $orders->refundtime = '0000-00-00 00:00:00';
 
 //for transition
+
+$odno = getMaxOdno($conn);
+
 $mysqli = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
 $errors = [];
-
 if ($mysqli->connect_errno) {
     echo "Sorry, this website is experiencing problems.";
     echo "Error: Failed to make a MySQL connection, here is why: \n";
@@ -52,7 +54,7 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
     $orderDetail = new OrderDetailDAO();
 
     $orderDetail->ordid = $orders->ordid;
-    $orderDetail->odno = getMaxOdno(@$conn) + 1;
+//    $orderDetail->odno = $odno++;
     $orderDetail->proname = '';
     $orderDetail->proid = $k;
     $orderDetail->qty = $v;
@@ -61,7 +63,7 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
     $orderDetail->PV = 0;
     $orderDetail->bonuce = 0;
 
-    $orderDetail->save(@$mysqli, @$errors);
+    $orderDetail->save(@$mysqli, @$errors,++$odno);
 }
 
 if (empty($errors)) {
