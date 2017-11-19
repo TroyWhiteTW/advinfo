@@ -16,6 +16,7 @@ $productsSql = 'SELECT products.proid, products.proname, products.price, product
 if (!isset($_GET['order'])) {
     $productsSql .= ' ORDER BY products.price ASC';
 } else {
+    $_GET['order'] = (int)trim($_GET['order']);
     switch ($_GET['order']) {
         case 1:
             $productsSql .= ' ORDER BY products.price ASC';
@@ -35,6 +36,7 @@ while ($productsRow = mysqli_fetch_assoc($productsRes)) {
 }
 
 if (isset($_GET['protags'])) {
+    $_GET['protags'] = (int)trim($_GET['protags']);
     $tmpProducts = [];
     foreach ($products as $product) {
         if ($_GET['protags'] == $product['protags']) {
@@ -45,6 +47,10 @@ if (isset($_GET['protags'])) {
 }
 
 if (isset($_GET['first']) && isset($_GET['second']) && isset($_GET['third'])) {
+    $_GET['first'] = (int)trim($_GET['first']);
+    $_GET['second'] = (int)trim($_GET['second']);
+    $_GET['third'] = (int)trim($_GET['third']);
+
     $tmpProducts = [];
 
     if ($_GET['second'] == 0 && $_GET['third'] == 0) {
@@ -128,9 +134,22 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                         <li><img src="img/process_icon.png" alt=""></li>
                         <?php
                         if (!isset($_GET['protags'])) {
+                            if (isset($_GET['first']) && isset($_GET['second']) && isset($_GET['third'])) {
+                                if ($_GET['second'] == 0 && $_GET['third'] == 0) {
+
+                                } elseif ($_GET['third'] == 0) {
+
+                                } else {
+                                    
+                                }
+                            }
+
                             echo '<li><a href="pd_query.php">全部商品</a></li>';
                         } else {
                             switch ($_GET['protags']) {
+                                case 0:
+                                    echo '<li><a href="pd_query.php?protags=0">普通商品</a></li>';
+                                    break;
                                 case 1:
                                     echo '<li><a href="pd_query.php?protags=1">新品上架</a></li>';
                                     break;
