@@ -234,7 +234,7 @@ function checkType($k, &$msg)
 function encodeRegisterData($rawDataArray)
 {
     $dataArray = [
-        'cstype_no' => "\"\"",
+        'cstype' => "\"\"",
         "name" => "\"\"",
         "phone" => "\"\"",
         "email" => "\"\"",

@@ -52,7 +52,7 @@ $isLogin = !empty($_SESSION['user']);
 
                         <form method="post" action="service.php">
 
-                            <div class="form-tittle">請選擇問題類型：<select name="cstype_no" id="">
+                            <div class="form-tittle">請選擇問題類型：<select name="cstype" id="">
                                     <option selected="selected" value="0">請選擇</option>
                                     <option value="999">其他</option>
                                 </select></div>
