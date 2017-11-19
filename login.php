@@ -96,8 +96,6 @@ $result = mysqli_query($conn, $sql);
                                             <script>
                                                 document.getElementById('change_captcha').addEventListener('click', function () {
                                                     document.getElementById('captcha').innerHTML = "<img src=\"captcha.php\" width=\"100\" height=\"25\"/>";
-                                                    document.getElementById('type1login').disabled = true;
-                                                    document.getElementById('type2login').disabled = true;
                                                 });
                                             </script>
                                         </td>

@@ -6,7 +6,7 @@ if (!$isLogin) {
     header('Location:index.php');
     exit;
 }
-if(!preg_match("/cart_3.php$/",$_SERVER['HTTP_REFERER'])){
+if (!preg_match("/cart_3.php$/", $_SERVER['HTTP_REFERER'])) {
     header('Location:index.php');
     exit;
 }
@@ -52,7 +52,7 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
     $orderDetail = new OrderDetailDAO();
 
     $orderDetail->ordid = $orders->ordid;
-    $orderDetail->odno = $k;
+    $orderDetail->odno = getMaxOdno(@$conn) + 1;
     $orderDetail->proname = '';
     $orderDetail->proid = $k;
     $orderDetail->qty = $v;
@@ -84,4 +84,11 @@ if (empty($errors)) {
 // 跳轉到 cart_4.php
 $mysqli->close();
 //header('Location:cart_4.php');
+
+function getMaxOdno($conn)
+{
+    $rData = mysqli_query($conn, 'SELECT MAX(odno) as maxOdno FROM orderdetail;');
+    $r = mysqli_fetch_assoc($rData);
+    return intval($r['maxOdno']);
+}
 exit;
