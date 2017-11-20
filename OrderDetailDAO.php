@@ -14,8 +14,22 @@ class OrderDetailDAO
     public $PV = null;//PV值
     public $bonuce = null;//紅利值
 
-    public function save(mysqli $mysqli, $errors,$odno)
+    private function beforeSave($conn)
     {
+        $sql = 'SELECT proname,price,PV,bonuce FROM products WHERE proid=\'' . $this->proid . '\'';
+        $rs = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($rs);
+        $this->proname = $row['proname'];
+        $this->price = $row['price'];
+        $this->subtotal = (int)$this->qty * (int)$this->price;
+        $this->PV = $row['PV'];
+        $this->bonuce = $row['bonuce'];
+
+    }
+
+    public function save(mysqli $mysqli, $errors, $odno, $conn)
+    {
+        $this->beforeSave(@$conn);
 
         $this->odno = $odno;
 
@@ -65,7 +79,7 @@ class OrderDetailDAO
                 $sql3 = "UPDATE products SET stock='$stock - $this->qty' WHERE proid='$this->proid'";
                 $rs3 = $mysqli->query($sql3);
                 if ($rs3 === false) {
-                    array_push($errors,'update error.');
+                    array_push($errors, 'update error.');
                 }
             }
 //            $rs2->free();

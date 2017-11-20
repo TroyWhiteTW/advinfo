@@ -55,15 +55,15 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
 
     $orderDetail->ordid = $orders->ordid;
 //    $orderDetail->odno = $odno++;
-    $orderDetail->proname = '';
+//    $orderDetail->proname = '';
     $orderDetail->proid = $k;
     $orderDetail->qty = $v;
-    $orderDetail->price = 0;
-    $orderDetail->subtotal = 0;
-    $orderDetail->PV = 0;
-    $orderDetail->bonuce = 0;
+//    $orderDetail->price = 0;
+//    $orderDetail->subtotal = 0;
+//    $orderDetail->PV = 0;
+//    $orderDetail->bonuce = 0;
 
-    $orderDetail->save(@$mysqli, @$errors,++$odno);
+    $orderDetail->save(@$mysqli, @$errors, ++$odno, @$conn);
 }
 
 if (empty($errors)) {
@@ -94,4 +94,5 @@ function getMaxOdno($conn)
     $rData->close();
     return intval($r['maxOdno']);
 }
+
 exit;
