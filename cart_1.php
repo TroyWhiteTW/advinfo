@@ -289,13 +289,13 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                         營業據點取貨(須先付款) <span>30</span>元
                                     </label>
 
-                                    <!--                                    <div class="form-tittle" style="margin-left:20px;">-->
-                                    <!--                                        <select>-->
-                                    <!--                                            <option selected="selected" value="0">請選擇營業據點</option>-->
-                                    <!--                                            <option value="1">A</option>-->
-                                    <!--                                            <option value="2">B</option>-->
-                                    <!--                                        </select>-->
-                                    <!--                                    </div>-->
+                                    <div class="form-tittle" style="margin-left:20px;">
+                                        <select>
+                                            <option selected="selected" value="0">請選擇營業據點</option>
+                                            <option value="1">A</option>
+                                            <option value="2">B</option>
+                                        </select>
+                                    </div>
 
                                 </div>
 
@@ -354,14 +354,14 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="1" disabled="disabled">
+                                        <input type="radio" name="discount" value="1">
                                         使用電子錢包折抵
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="discount" value="2" disabled="disabled">
+                                        <input type="radio" name="discount" value="2">
                                         使用紅利折抵
                                     </label>
                                 </div>
@@ -384,7 +384,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     折抵金額：
-                                    <input type="text" name="discount_price" id="" class="input-6" disabled="disabled">
+                                    <input type="text" name="discount_price" id="" class="input-6">
                                     元
                                 </div>
 
@@ -403,21 +403,21 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="pay_no" value="1" disabled="disabled">
+                                        <input type="radio" name="pay_no" value="1">
                                         信用卡一次付清
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="pay_no" value="2" disabled="disabled">
+                                        <input type="radio" name="pay_no" value="2">
                                         信用卡付款(分期)
                                     </label>
                                 </div>
 
                                 <div class="form-tittle">
                                     <label>
-                                        <input type="radio" name="pay_no" value="3" disabled="disabled">
+                                        <input type="radio" name="pay_no" value="3">
                                         貨到付款(宅配)
                                     </label>
                                 </div>
