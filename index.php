@@ -4,15 +4,12 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 
 // 輪播資料
-$sql = "select * from banners where status=1 order by sort";
-$banners = array();
+$sql = 'SELECT name,pic,url,sort FROM banners WHERE status=1 ORDER BY sort';
+$banners = [];
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $banners[] = array(
-            'pic' => "{$row['pic']}",
-            'url' => "{$row['url']}"
-        );
+        $banners[] = $row;
     }
 } else {
     // 錯誤 查詢結果
@@ -74,140 +71,161 @@ if (mysqli_num_rows($result) > 0) {
 
     <?php include 'http_head.php'; ?>
 
+    <!-- Custom styles for this template -->
+    <link href="carousel.css" rel="stylesheet">
+
 </head>
 
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Brand</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
+        <a class="btn btn-default pull-left visible-xs" data-toggle="offcanvas" aria-label="Menu">
+            <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+        </a>
     </div><!-- /.container-fluid -->
 </nav>
 
 <div class="container">
 
-    <div class="row">
+    <div class="row row-offcanvas row-offcanvas-left">
 
-        <div class="col-md-2">
+        <div class="col-sm-2 sidebar-offcanvas" id="sidebar">
 
             <?php include 'side_bar.php'; ?>
 
         </div>
 
-        <div class="col-md-10">
+        <div class="col-sm-10">
 
-            <div class="bigbanner" style="">
-                <div class="owl-carousel fadeOut" style="">
+            <!-- Carousel
+            ================================================== -->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+
                     <?php
                     foreach ($banners as $banner) {
-                        echo "<a href='" . $banner['url'] . "'>";
-                        echo "<img src='" . "upload/banners/{$banner['pic']}" . "' style='' alt='' />";
-                        echo "</a>";
+
+                        if ($banner['sort'] == 1) {
+                            echo '<li data-target="#myCarousel" data-slide-to="' . $banner['sort'] . '" class="active"></li>';
+                        } else {
+                            echo '<li data-target="#myCarousel" data-slide-to="' . $banner['sort'] . '"></li>';
+                        }
+
                     }
-
                     ?>
-                </div>
 
-            </div>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+
+                    <!--                    <div class="item active">-->
+                    <!--                        <img class="first-slide"-->
+                    <!--                             src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="-->
+                    <!--                             alt="First slide">-->
+                    <!--                        <div class="container">-->
+                    <!--                            <div class="carousel-caption">-->
+                    <!--                                <h1>Example headline.</h1>-->
+                    <!--                                <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and-->
+                    <!--                                    "previous" Glyphicon buttons on the left and right might not load/display properly-->
+                    <!--                                    due to web browser security rules.</p>-->
+                    <!--                                <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+                    <?php
+                    foreach ($banners as $banner) {
+
+                        if ($banner['sort'] == 1) {
+                            echo '<div class="item active">';
+                        } else {
+                            echo '<div class="item">';
+                        }
+
+//                        echo '<a href="' . $banner['url'] . '">';
+                        echo '<img src="' . 'upload/banners/' . $banner['pic'] . '"/>';
+//                        echo '</a>';
+
+//                        echo '<div class="container">';
+//                        echo '<div class="carousel-caption">';
+//                        echo '<p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>';
+//                        echo '</div>';
+//                        echo '</div>';
+
+                        echo '</div>';
+
+                    }
+                    ?>
+
+                </div>
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div><!-- /.carousel -->
 
             <?php
             // 開始該標籤的商品
             foreach ($protags as $protag) {
-                echo '<div class="product-area">';
-                echo '<div class="tag" style="background:' . $protag['color'] . '">';
-                echo '<div class="tag-name">' . $protag['name'] . '</div>';
-                echo '<div class="more"><a href="pd_query.php?protags=' . $protag['no'] . '">more</a></div>';
+                echo '<div class="row" style="background:' . $protag['color'] . '">';
+                echo '<div class="col-sm-2">' . $protag['name'] . '</div>';
+                echo '<div class="col-sm-8"><br/><br/></div>';
+                echo '<div class="col-sm-2"><a href="pd_query.php?protags=' . $protag['no'] . '">more</a></div>';
                 echo '</div>';
 
-                echo '<div id="sildes-portfolio" class="owl-carousel owl-theme " style="padding:0 8px;">';
+                echo '<div class="row">';
                 $tagno = $protag['no'];
                 foreach ($products[$tagno] as $product) {
-                    echo '<div class="item">';
-                    echo '<div class="pd-carousel" >';
+                    echo '<div class="col-sm-6 col-md-4">';
+                    echo '<div class="thumbnail">';
+
                     echo '<a href="pd_page.php?proid=' . $product['proid'] . '">';
+
+                    if ($protag['pic'] != '0') {
+                        echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
+                    }
+
                     // 搜尋該商品的主圖
                     $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         // 撈出主圖
                         $row = mysqli_fetch_assoc($result);
-                        echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
+                        echo '<img src="upload/product/' . $row['picfile'] . '" alt=""/>';
                     } else {
-                        echo '<div class="pd-pic"></div>';
+                        echo '<img src="" alt="">';
                     }
-                    echo '<div class="pd-name">' . $product['proname'] . '</div>';
-                    echo '<div class="pd-type">滴丸</div>';
+
+                    echo '<div class="caption">';
+
+                    echo '<p>' . $product['proname'] . '</p>';
+                    echo '<p>滴丸</p>';
 
                     if ($isLogin) {
                         switch ($_SESSION['user'][20]) {
                             case 1:
-                                echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                echo '<p>紅利：' . $product['bonuce'] . '</p>';
                                 break;
                             case 2:
-                                echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                echo '<p>PV：' . $product['pv'] . '</p>';
                                 break;
                         }
                     } else {
-                        echo '<div class="pd-pv">請登入後查看</div>';
+                        echo '<p>請登入後查看</p>';
                     }
 
-                    echo '<div class="pd-price">價格$' . $product['price'] . '元</div>';
+                    echo '<p>價格$' . $product['price'] . '元</p>';
 
-                    if ($protag['pic'] != '0') {
-                        echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
-                    }
-
-                    echo '</a></div></div>';
+                    echo '</div>';
+                    echo '</a>';
+                    echo '</div>';
+                    echo '</div>';
                 }
-                echo '</div>';
                 echo '</div>';
             }
             ?>
@@ -216,11 +234,16 @@ if (mysqli_num_rows($result) > 0) {
 
     </div>
 
-    <hr/>
-
-    <?php include 'footer.php'; ?>
-
 </div>
+
+<hr/>
+
+<div class="container-fluid">
+    <?php include 'footer.php'; ?>
+</div>
+
+<?php include 'cdnscript.php'; ?>
+<script src="offcanvas.js"></script>
 
 </body>
 
