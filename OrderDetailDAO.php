@@ -68,16 +68,16 @@ class OrderDetailDAO
 //        mysqli_set_charset($conn, "UTF8");
 
         $result = $mysqli->query($sql);
+
         if ($result === true) {
             echo "訂單OK";
-
             $sql2 = "SELECT stock FROM products WHERE proid = '$this->proid'";
             $rs2 = $mysqli->query($sql2);
             $stock = (int)(mysqli_fetch_assoc($rs2)['stock']);
             if ($stock - $this->qty < 0) {
                 array_push($errors, 'not enough stock for order.');
             } else {
-                $sql3 = "UPDATE products SET stock='$stock - $this->qty' WHERE proid='$this->proid'";
+                $sql3 = "UPDATE products SET stock=$stock - $this->qty WHERE proid='$this->proid'";
                 $rs3 = $mysqli->query($sql3);
                 if ($rs3 === false) {
                     array_push($errors, 'update error.');
