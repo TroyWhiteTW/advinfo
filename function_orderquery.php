@@ -7,7 +7,7 @@ $isLogin = !empty($_SESSION['user']);
 // TODO: 待補側邊攔，目前是 hard code
 //拿到所有訂單
 $userEmail = $_SESSION['user'][7];
-$sql = "SELECT * FROM orders WHERE sub_account = '" . $userEmail . "'";
+$sql = "SELECT * FROM orders WHERE sub_account = '" . $userEmail . "' ORDER BY ordid DESC";
 $rs = mysqli_query($conn, $sql);
 $orderDataArray = [];
 while ($rowData = mysqli_fetch_assoc($rs)) {
@@ -67,78 +67,122 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
                         </div>
 
                         <?php
+
+                        function statusTranslate($num)
+                        {
+                            switch ($num) {
+                                case '0':
+                                    return '新訂單';
+                                    break;
+                                case '1':
+                                    return '處理中';
+                                    break;
+                                case '9':
+                                    return '訂單取消';
+                                    break;
+                                default:
+                                    return $num;
+                                    break;
+                            }
+                        }
+
+                        function discountTranslate($num)
+                        {
+                            switch ($num) {
+                                case '0':
+                                    return '不使用折抵';
+                                    break;
+                                case '1':
+                                    return '使用電子錢包折抵';
+                                    break;
+                                case '2':
+                                    return '使用紅利折抵';
+                                    break;
+                                default:
+                                    return $num;
+                                    break;
+                            }
+                        }
+
                         for ($i = 0; $i < count($orderDataArray); $i++) {
+
+//                            $nStatus = statusTranslate($orderDataArray[$i]['ordstatus']);
+
+                            $a = statusTranslate(1);
                             echo '<div class="content-article"><table width="100%" border="1"><tbody><tr class="tb-tittle"><td colspan="2">訂單編號</td></tr>';
                             echo '<tr class="td-02"><td colspan="2"><a href="function_orderinquire.php">' . $orderDataArray[$i]['ordid'] . '</a></td></tr>';
                             echo '<tr class="tb-tittle"><td>日期</td><td>狀態</td></tr>';
-                            echo '<tr class="td-02"><td>' . $orderDataArray[$i]['orddate'] . '</td><td>' . $orderDataArray[$i]['ordstatus'] . '</td></tr></tbody></table>';
+                            echo '<tr class="td-02"><td>' . $orderDataArray[$i]['orddate'] . '</td><td>' . statusTranslate($orderDataArray[$i]['ordstatus']) . '</td></tr></tbody></table>';
                             echo '<table width="100%" border="1"><tbody><tr class="tb-tittle"><td>總金額</td><td>折抵</td><td>應付金額</td></tr>';
                             echo '<tr class="td-02"><td>$' . $orderDataArray[$i]['total_price'] . '</td><td>$' . $orderDataArray[$i]['discount_price'] . '</td><td>$' . $orderDataArray[$i]['pay_price'] . '</td></tr>';
                             echo '<tr class="tb-tittle"><td>PV值</td><td>折抵方式</td><td>付款方式</td></tr>';
-                            echo '<tr class="td-02"><td>' . $orderDataArray[$i]['PV'] . '</td><td>' . $orderDataArray[$i]['discount'] . '</td><td>' . $orderDataArray[$i]['pay_no'] . '</td></tr></tbody></table>';
+                            echo '<tr class="td-02"><td>' . $orderDataArray[$i]['PV'] . '</td><td>' . discountTranslate($orderDataArray[$i]['discount']) . '</td><td>' . $orderDataArray[$i]['pay_no'] . '</td></tr></tbody></table>';
                             echo '<table width="100%" border="1"><tbody><tr class="tb-tittle"><td>退貨</td><td>明細</td></tr>';
                             echo '<tr class="td-02">';
                             echo '<td> -- </td>';
                             echo '<td><a href="function_orderinquire.php">明細</a></td>';
                             echo '</tr></tbody></table></div><br/>';
                         }
+
+
+
                         ?>
-<!--                        <div class="content-article">-->
-<!--                            <table width="100%" border="1">-->
-<!--                                <tbody>-->
-<!--                                <tr class="tb-tittle">-->
-<!--                                    <td colspan="2">訂單編號</td>-->
-<!--                                </tr>-->
-<!--                                <tr class="td-02">-->
-<!--                                    <td colspan="2"><a href="function_orderinquire.php">xxxxxxxxxxxx</a></td>-->
-<!--                                </tr>-->
-<!--                                <tr class="tb-tittle">-->
-<!--                                    <td>日期</td>-->
-<!--                                    <td>狀態</td>-->
-<!--                                </tr>-->
-<!--                                <tr class="td-02">-->
-<!--                                    <td>2017/07/21</td>-->
-<!--                                    <td>成立</td>-->
-<!--                                </tr>-->
-<!--                                </tbody>-->
-<!--                            </table>-->
-<!--                            <table width="100%" border="1">-->
-<!--                                <tbody>-->
-<!--                                <tr class="tb-tittle">-->
-<!--                                    <td>總金額</td>-->
-<!--                                    <td>折抵</td>-->
-<!--                                    <td>應付金額</td>-->
-<!--                                </tr>-->
-<!--                                <tr class="td-02">-->
-<!--                                    <td>$99,999</td>-->
-<!--                                    <td>$99,999</td>-->
-<!--                                    <td>$99,999</td>-->
-<!--                                </tr>-->
-<!--                                <tr class="tb-tittle">-->
-<!--                                    <td>PV值</td>-->
-<!--                                    <td>折抵方式</td>-->
-<!--                                    <td>付款方式</td>-->
-<!--                                </tr>-->
-<!--                                <tr class="td-02">-->
-<!--                                    <td>99,999</td>-->
-<!--                                    <td>&nbsp;</td>-->
-<!--                                    <td>&nbsp;</td>-->
-<!--                                </tr>-->
-<!--                                </tbody>-->
-<!--                            </table>-->
-<!--                            <table width="100%" border="1">-->
-<!--                                <tbody>-->
-<!--                                <tr class="tb-tittle">-->
-<!--                                    <td>退貨</td>-->
-<!--                                    <td>明細</td>-->
-<!--                                </tr>-->
-<!--                                <tr class="td-02">-->
-<!--                                    <td>退貨</td>-->
-<!--                                    <td><a href="function_orderinquire.php">明細</a></td>-->
-<!--                                </tr>-->
-<!--                                </tbody>-->
-<!--                            </table>-->
-<!--                        </div>-->
+                        <!--                        <div class="content-article">-->
+                        <!--                            <table width="100%" border="1">-->
+                        <!--                                <tbody>-->
+                        <!--                                <tr class="tb-tittle">-->
+                        <!--                                    <td colspan="2">訂單編號</td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr class="td-02">-->
+                        <!--                                    <td colspan="2"><a href="function_orderinquire.php">xxxxxxxxxxxx</a></td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr class="tb-tittle">-->
+                        <!--                                    <td>日期</td>-->
+                        <!--                                    <td>狀態</td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr class="td-02">-->
+                        <!--                                    <td>2017/07/21</td>-->
+                        <!--                                    <td>成立</td>-->
+                        <!--                                </tr>-->
+                        <!--                                </tbody>-->
+                        <!--                            </table>-->
+                        <!--                            <table width="100%" border="1">-->
+                        <!--                                <tbody>-->
+                        <!--                                <tr class="tb-tittle">-->
+                        <!--                                    <td>總金額</td>-->
+                        <!--                                    <td>折抵</td>-->
+                        <!--                                    <td>應付金額</td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr class="td-02">-->
+                        <!--                                    <td>$99,999</td>-->
+                        <!--                                    <td>$99,999</td>-->
+                        <!--                                    <td>$99,999</td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr class="tb-tittle">-->
+                        <!--                                    <td>PV值</td>-->
+                        <!--                                    <td>折抵方式</td>-->
+                        <!--                                    <td>付款方式</td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr class="td-02">-->
+                        <!--                                    <td>99,999</td>-->
+                        <!--                                    <td>&nbsp;</td>-->
+                        <!--                                    <td>&nbsp;</td>-->
+                        <!--                                </tr>-->
+                        <!--                                </tbody>-->
+                        <!--                            </table>-->
+                        <!--                            <table width="100%" border="1">-->
+                        <!--                                <tbody>-->
+                        <!--                                <tr class="tb-tittle">-->
+                        <!--                                    <td>退貨</td>-->
+                        <!--                                    <td>明細</td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr class="td-02">-->
+                        <!--                                    <td>退貨</td>-->
+                        <!--                                    <td><a href="function_orderinquire.php">明細</a></td>-->
+                        <!--                                </tr>-->
+                        <!--                                </tbody>-->
+                        <!--                            </table>-->
+                        <!--                        </div>-->
                     </div>
 
                 <?php else: ?>

@@ -39,7 +39,7 @@
 
             echo '<li class="list-group-item list-group-item-success c1">';
             echo '<a href="pd_query.php?first=' . $item1['first_no'] . '&second=0&third=0">';
-            echo $item1['first_name'];
+            echo $item1['first_name'].' ';
             echo '</a>';
             echo '</li>';
 
@@ -47,7 +47,7 @@
                 if ($item2['first_no'] == $item1['first_no']) {
                     echo '<li class="list-group-item list-group-item-info c2" style="display:none">';
                     echo '<a href="pd_query.php?first=' . $item1['first_no'] . '&second=' . $item2['second_no'] . '&third=0">';
-                    echo $item2['second_name'];
+                    echo $item2['second_name'].' ';
                     echo '</a>';
                     echo '</li>';
 
@@ -55,7 +55,7 @@
                         if ($item3['second_no'] == $item2['second_no']) {
                             echo '<li class="list-group-item list-group-item-warning c3" style="display:none">';
                             echo '<a href="pd_query.php?first=' . $item1['first_no'] . '&second=' . $item2['second_no'] . '&third=' . $item3['third_no'] . '">';
-                            echo $item3['third_name'];
+                            echo $item3['third_name'].' ';
                             echo '</a>';
                             echo '</li>';
                         }
