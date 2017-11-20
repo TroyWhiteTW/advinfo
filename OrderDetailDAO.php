@@ -24,6 +24,7 @@ class OrderDetailDAO
         $this->subtotal = (int)$this->qty * (int)$this->price;
         $this->PV = $row['PV'];
         $this->bonuce = $row['bonuce'];
+        $rs->close();
 
     }
 
