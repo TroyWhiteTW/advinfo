@@ -5,6 +5,29 @@ $isLogin = !empty($_SESSION['user']);
 ?>
 <?php
 // TODO: 待補側邊攔，目前是 hard code
+//先取得該用戶持有的所有訂單id
+$sql = "SELECT ordid FROM orders WHERE sub_account='" . $_SESSION['user'][7] . "'";
+$rs = mysqli_query($conn, $sql);
+$ordidArray = [];
+while ($row = mysqli_fetch_assoc($rs)) {
+    $ordidArray[] = $row['ordid'];
+}
+$rs->close();
+//若該用戶無此訂單 導回首頁
+if (!in_array($_REQUEST['ordid'], $ordidArray)) {
+    header('Location:index.php');
+    exit;
+}
+//取得該訂單明細
+$sql2 = "SELECT * FROM orderdetail WHERE ordid='" . $_REQUEST['ordid'] . "'";
+$rs2 = mysqli_query($conn, $sql2);
+$orderDetailData = [];
+while ($rowData = mysqli_fetch_assoc($rs2)) {
+    $orderDetailData[] = $rowData;
+}
+var_dump($orderDetailData);
+return;
+
 ?>
 <!doctype html>
 <html>

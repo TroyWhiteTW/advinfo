@@ -110,7 +110,7 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
 
                             $a = statusTranslate(1);
                             echo '<div class="content-article"><table width="100%" border="1"><tbody><tr class="tb-tittle"><td colspan="2">訂單編號</td></tr>';
-                            echo '<tr class="td-02"><td colspan="2"><a href="function_orderinquire.php">' . $orderDataArray[$i]['ordid'] . '</a></td></tr>';
+                            echo '<tr class="td-02"><td colspan="2"><a href="function_orderinquire.php?ordid='.$orderDataArray[$i]['ordid'].'">' . $orderDataArray[$i]['ordid'] . '</a></td></tr>';
                             echo '<tr class="tb-tittle"><td>日期</td><td>狀態</td></tr>';
                             echo '<tr class="td-02"><td>' . $orderDataArray[$i]['orddate'] . '</td><td>' . statusTranslate($orderDataArray[$i]['ordstatus']) . '</td></tr></tbody></table>';
                             echo '<table width="100%" border="1"><tbody><tr class="tb-tittle"><td>總金額</td><td>折抵</td><td>應付金額</td></tr>';
@@ -120,7 +120,7 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
                             echo '<table width="100%" border="1"><tbody><tr class="tb-tittle"><td>退貨</td><td>明細</td></tr>';
                             echo '<tr class="td-02">';
                             echo '<td> -- </td>';
-                            echo '<td><a href="function_orderinquire.php">明細</a></td>';
+                            echo '<td><a href="function_orderinquire.php?ordid='.$orderDataArray[$i]['ordid'].'">明細</a></td>';
                             echo '</tr></tbody></table></div><br/>';
                         }
 
