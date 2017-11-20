@@ -38,6 +38,7 @@ $orders->refundtime = '0000-00-00 00:00:00';
 $odno = getMaxOdno($conn);
 
 $mysqli = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
+mysqli_set_charset($mysqli, "UTF8");
 $errors = [];
 if ($mysqli->connect_errno) {
     echo "Sorry, this website is experiencing problems.";
