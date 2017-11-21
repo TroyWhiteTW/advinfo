@@ -2,8 +2,15 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
+$cstypes = [];
+$cstypesSql = 'SELECT no,name FROM cstypes ORDER BY no ASC';
+$cstypesRes = mysqli_query($conn, $cstypesSql);
+while ($cstypesRow = mysqli_fetch_assoc($cstypesRes)) {
+    $cstypes[] = $cstypesRow;
+}
+
+
 ?>
 <!doctype html>
 <html>
@@ -50,29 +57,40 @@ $isLogin = !empty($_SESSION['user']);
 
                     <div class="content-article">
 
-                        <form method="post" action="service.php">
+                        <form id="service_form" method="post" action="service.php">
 
-                            <div class="form-tittle">請選擇問題類型：<select name="cstype" id="">
-                                    <option selected="selected" value="0">請選擇</option>
-                                    <option value="999">其他</option>
+                            <div class="form-tittle">
+                                請選擇問題類型：
+                                <select name="cstype" id="cstype">
+                                    <?php
+                                    foreach ($cstypes as $cstype) {
+                                        if ($cstype['no'] == 0) {
+                                            echo '<option selected="selected" value="' . $cstype['no'] . '">' . $cstype['name'] . '</option>';
+                                        } else {
+                                            echo '<option value="' . $cstype['no'] . '">' . $cstype['name'] . '</option>';
+                                        }
+                                    }
+                                    ?>
                                 </select></div>
 
                             <div class="form-tittle">姓名：
-                                <div class="input-area"><input name="name" id="" type="text"></div>
+                                <div class="input-area"><input name="name" id="name" type="text"></div>
                             </div>
 
                             <div class="form-tittle">電話：
-                                <div class="input-area"><input name="phone" id="" type="text"></div>
+                                <div class="input-area"><input name="phone" id="phone" type="text"></div>
                             </div>
 
                             <div class="form-tittle">電子郵件：
-                                <div class="input-area"><input name="email" id="" type="text"></div>
+                                <div class="input-area"><input name="email" id="email" type="text"></div>
                             </div>
 
                             <div class="form-tittle">問題內容</div>
 
                             <div class="form-tittle">
-                                <div class="input_area"><textarea name="content" cols="35" rows="10"></textarea></div>
+                                <div class="input_area">
+                                    <textarea name="content" id="content" cols="35" rows="10"></textarea>
+                                </div>
                             </div>
 
                             <input type="submit" value="送出" class="btn btn-success">
@@ -133,6 +151,54 @@ $isLogin = !empty($_SESSION['user']);
             }
         }
     });
+
+    //表單提交檢查
+    var form = document.getElementById('service_form');
+
+    form.addEventListener('submit', function (e) {
+        var isDataCorrect = true;
+        var errorMessage = "";
+
+        var name = $('input[name="name"]').val().trim();
+        var phone = $('input[name="phone"]').val().trim();
+        var email = $('input[name="email"]').val().trim();
+        var content = $('textarea[name="content"]').val().trim();
+
+        if (name.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入姓名。\n';
+        }
+
+        if (phone.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入電話。\n';
+        }
+
+        var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
+        if (!email.match(email_regex)) {
+            isDataCorrect = false;
+            errorMessage += '電子信箱格式錯誤，請輸入電子信箱。\n';
+        }
+        if (email.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '電子信箱格式錯誤，請勿包含空白鍵。\n';
+        }
+        if (email.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入電子信箱。\n';
+        }
+
+        if (content.length === 0) {
+            isDataCorrect = false;
+            errorMessage += '請輸入問題內容。\n';
+        }
+
+        if (isDataCorrect === false) {
+            alert(errorMessage);
+            e.preventDefault();
+        }
+    });
+    //表單提交檢查
 </script>
 
 </body>
