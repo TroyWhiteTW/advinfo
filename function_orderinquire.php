@@ -25,9 +25,11 @@ $orderDetailData = [];
 while ($rowData = mysqli_fetch_assoc($rs2)) {
     $orderDetailData[] = $rowData;
 }
-var_dump($orderDetailData);
-return;
-
+$rs2->close();
+//取得該訂單 運費 freight 訂單總額 total_price 紅利折抵方式/金額 discount / discount_price 應付金額 pay_price
+$sql3 = "SELECT ordid,orddate,ordstatus,PV,freight,total_price,discount,discount_price,pay_price FROM orders WHERE ordid='" . $_REQUEST['ordid'] . "'";
+$rs3 = mysqli_query($conn, $sql3);
+$orderData = mysqli_fetch_assoc($rs3);
 ?>
 <!doctype html>
 <html>
@@ -85,13 +87,13 @@ return;
                                     <td>訂單編號</td>
                                 </tr>
                                 <tr class="td-02">
-                                    <td>xxxxxxxxxxxxx</td>
+                                    <td><?= $orderData['ordid'] ?></td>
                                 </tr>
                                 <tr class="tb-tittle">
                                     <td>訂單日期</td>
                                 </tr>
                                 <tr class="td-02">
-                                    <td>xxxxxxxxxxxxx</td>
+                                    <td><?= $orderData['orddate'] ?></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -106,47 +108,96 @@ return;
                                     <td>價格</td>
                                     <td>其他</td>
                                 </tr>
-                                <tr class="td-02">
-                                    <td>1</td>
-                                    <td>xxxxxxxxxxx<br><span style="color:#B80609">(產品編號)</span></td>
-                                    <td>訂單成立</td>
-                                    <td>1</td>
-                                    <td>20</td>
-                                    <td>$100</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>2</td>
-                                    <td>xxxxxxxxxxx<br><span style="color:#B80609">(產品編號)</span></td>
-                                    <td>訂單成立</td>
-                                    <td>1</td>
-                                    <td>60</td>
-                                    <td>$300</td>
-                                    <td>&nbsp;</td>
-                                </tr>
+                                <?php
+
+                                function statusTranslate($num)
+                                {
+                                    switch ($num) {
+                                        case '0':
+                                            return '新訂單';
+                                            break;
+                                        case '1':
+                                            return '處理中';
+                                            break;
+                                        case '9':
+                                            return '訂單取消';
+                                            break;
+                                        default:
+                                            return $num;
+                                            break;
+                                    }
+                                }
+
+                                function discountTranslate($num)
+                                {
+                                    switch ($num) {
+                                        case '0':
+                                            return '不使用折抵';
+                                            break;
+                                        case '1':
+                                            return '使用電子錢包折抵';
+                                            break;
+                                        case '2':
+                                            return '使用紅利折抵';
+                                            break;
+                                        default:
+                                            return $num;
+                                            break;
+                                    }
+                                }
+
+                                for ($i = 0; $i < count($orderDetailData); $i++) {
+                                    echo '<tr class="td-02">';
+                                    echo '<td>' . ($i + 1) . '</td>';
+                                    echo '<td>' . $orderDetailData[$i]['proid'] . '<br><span style="color:#B80609">(產品編號)</span></td>';
+                                    echo '<td>' . statusTranslate($orderData['ordstatus']) . '</td>';
+                                    echo '<td>' . $orderDetailData[$i]['qty'] . '</td>';
+                                    echo '<td>' . $orderDetailData[$i]['PV'] . '</td>';
+                                    echo '<td>' . $orderDetailData[$i]['price'] . '</td>';
+                                    echo '<td></td>';
+                                }
+                                ?>
+                                <!--                                <tr class="td-02">-->
+                                <!--                                    <td>1</td>-->
+                                <!--                                    <td>xxxxxxxxxxx<br><span style="color:#B80609">(產品編號)</span></td>-->
+                                <!--                                    <td>訂單成立</td>-->
+                                <!--                                    <td>1</td>-->
+                                <!--                                    <td>20</td>-->
+                                <!--                                    <td>$100</td>-->
+                                <!--                                    <td>&nbsp;</td>-->
+                                <!--                                </tr>-->
+                                <!--                                <tr class="td-02">-->
+                                <!--                                    <td>2</td>-->
+                                <!--                                    <td>xxxxxxxxxxx<br><span style="color:#B80609">(產品編號)</span></td>-->
+                                <!--                                    <td>訂單成立</td>-->
+                                <!--                                    <td>1</td>-->
+                                <!--                                    <td>60</td>-->
+                                <!--                                    <td>$300</td>-->
+                                <!--                                    <td>&nbsp;</td>-->
+                                <!--                                </tr>-->
                                 <tr class="td-02">
                                     <td colspan="3">&nbsp;</td>
                                     <td style="background-color:black;color:#fff;text-align:right;">運費</td>
                                     <td></td>
-                                    <td>$80</td>
+                                    <td>$<?= $orderData['freight'] ?></td>
                                 </tr>
                                 <tr class="td-02">
                                     <td colspan="3">&nbsp;</td>
                                     <td style="background-color:#B80609;color:#fff;text-align:right;">訂單總額</td>
-                                    <td>80</td>
-                                    <td>$480</td>
+                                    <td><?= $orderData['PV'] ?></td>
+                                    <td>$<?= $orderData['total_price'] ?></td>
                                 </tr>
                                 <tr class="td-02">
                                     <td colspan="3">&nbsp;</td>
                                     <td style="background-color:#E3770C;color:#fff;text-align:right;">折抵</td>
-                                    <td>紅利/電子錢包</td>
-                                    <td>$x,xxx</td>
+                                    <td><?= discountTranslate($orderData['discount']) ?></td>
+                                    <td>$<?= $orderData['discount_price'] ?></td>
                                 </tr>
                                 <tr class="td-02">
                                     <td colspan="3">&nbsp;</td>
                                     <td style="background-color:#B80609;color:#fff;text-align:right;">應付金額</td>
                                     <td></td>
-                                    <td>$x,xxx</td>
+                                    <td>$<?= $orderData['pay_price'] ?></td>
                                 </tr>
                                 </tbody>
                             </table>
