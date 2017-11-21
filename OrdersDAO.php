@@ -50,8 +50,14 @@ class OrdersDAO
     public $PV = null;//總PV值
     public $bonuce = null;//總紅利
 
-    public $ordstatus = null;//訂單狀態(0:新訂單,1:處理中….9:訂單取消)
-    public $shipstatus = null;//是否出貨(0:否/1:是)
+    public $cardno = null;//刷卡卡號後4碼(信用卡交易使用)
+    public $approvecode = null;//交易授權碼(信用卡交易使用)
+    public $pay_fail_reason = null;//付款失敗原因
+    public $moneyflow_no = null;//金流單號
+    public $logistic_no = null;//物流單號
+
+    public $ordstatus = null;//訂單狀態(0:新訂單,1:處理中,2:訂單確認,3:訂單失敗,4:訂單取消,5:已出貨,6:已結案,7:已退款,8:拒絕退貨(連動退貨中),9:訂單退貨)
+    public $shipstatus = null;//是否出貨物流狀態(0:運送中,1:已送達,2:已取貨,3:退貨中,4:已派車,5:已回倉,6:回驗中)
 
     public $shiptime = null;//出貨時間
     public $addtime = null;//建立時間
