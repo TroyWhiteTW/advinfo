@@ -2,8 +2,15 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
+$cstypes = [];
+$cstypesSql = 'SELECT no,name FROM cstypes ORDER BY no ASC';
+$cstypesRes = mysqli_query($conn, $cstypesSql);
+while ($cstypesRow = mysqli_fetch_assoc($cstypesRes)) {
+    $cstypes[] = $cstypesRow;
+}
+
+
 ?>
 <!doctype html>
 <html>
@@ -52,9 +59,18 @@ $isLogin = !empty($_SESSION['user']);
 
                         <form method="post" action="service.php">
 
-                            <div class="form-tittle">請選擇問題類型：<select name="cstype" id="">
-                                    <option selected="selected" value="0">請選擇</option>
-                                    <option value="999">其他</option>
+                            <div class="form-tittle">
+                                請選擇問題類型：
+                                <select name="cstype" id="">
+                                    <?php
+                                    foreach ($cstypes as $cstype) {
+                                        if ($cstype['no'] == 0) {
+                                            echo '<option selected="selected" value="' . $cstype['no'] . '">' . $cstype['name'] . '</option>';
+                                        } else {
+                                            echo '<option value="' . $cstype['no'] . '">' . $cstype['name'] . '</option>';
+                                        }
+                                    }
+                                    ?>
                                 </select></div>
 
                             <div class="form-tittle">姓名：
