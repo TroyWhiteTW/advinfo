@@ -82,36 +82,41 @@ if ($hasProid) {
             <div class="col-sm-10">
 
                 <div class="beard">
-                    <ul>
+
+                    <ol class="breadcrumb">
+
                         <li><a href="index.php">首頁</a></li>
+                        <!-- <li><a href="#">Library</a></li>-->
+                        <!-- <li class="active">Data</li>-->
+
                         <?php if ($hasProid): ?>
-                            <li><img src="img/process_icon.png" alt=""></li>
                             <?php
                             foreach ($proclass as $item) {
                                 if ($item['no'] == $product['pcno1']) {
-                                    echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                    echo '<li><a href="pd_query.php?first=' . $product['pcno1'] . '&second=0&third=0">' . $item['pcname'] . '</a></li>';
                                     break;
                                 }
                             }
-                            echo '<li><img src="img/process_icon.png" alt=""></li>';
                             foreach ($proclass as $item) {
                                 if ($item['no'] == $product['pcno2']) {
-                                    echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                    echo '<li><a href="pd_query.php?first=' . $product['pcno1'] . '&second=' . $product['pcno2'] . '&third=0">' . $item['pcname'] . '</a></li>';
                                     break;
                                 }
                             }
-                            echo '<li><img src="img/process_icon.png" alt=""></li>';
                             foreach ($proclass as $item) {
                                 if ($item['no'] == $product['pcno3']) {
-                                    echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                    echo '<li><a href="pd_query.php?first=' . $product['pcno1'] . '&second=' . $product['pcno2'] . '&third=' . $product['pcno3'] . '">' . $item['pcname'] . '</a></li>';
                                     break;
                                 }
                             }
-                            echo '<li><img src="img/process_icon.png" alt=""></li>';
-                            echo '<li><h3>' . $product['proname'] . '</h3></li>';
+                            echo '<li class="active">' . $product['proname'] . '</li>';
                             ?>
+                        <?php else: ?>
+                            <li class="active">商品資訊錯誤</li>
                         <?php endif; ?>
-                    </ul>
+
+                    </ol>
+
                 </div>
 
                 <?php if ($hasProid): ?>

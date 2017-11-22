@@ -129,87 +129,79 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
             <div class="col-sm-10">
 
                 <div class="beard">
-                    <ul>
+
+                    <ol class="breadcrumb">
+
                         <li><a href="index.php">首頁</a></li>
-                        <li><img src="img/process_icon.png" alt=""></li>
+                        <!-- <li><a href="#">Library</a></li>-->
+                        <!-- <li class="active">Data</li>-->
+
                         <?php
                         if (!isset($_GET['protags'])) {
                             if (isset($_GET['first']) && isset($_GET['second']) && isset($_GET['third'])) {
                                 if ($_GET['second'] == 0 && $_GET['third'] == 0) {
                                     foreach ($proclass as $item) {
                                         if ($_GET['first'] == $item['no']) {
-//                                            echo '<li><a href="pd_query.php">' . $item['pcname'] . '</a></li>';
-                                            echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
                                 } elseif ($_GET['third'] == 0) {
                                     foreach ($proclass as $item) {
                                         if ($_GET['first'] == $item['no']) {
-//                                            echo '<li><a href="pd_query.php">' . $item['pcname'] . '</a></li>';
-                                            echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
-                                    echo '<li><img src="img/process_icon.png" alt=""></li>';
                                     foreach ($proclass as $item) {
                                         if ($_GET['second'] == $item['no']) {
-//                                            echo '<li><a href="pd_query.php">' . $item['pcname'] . '</a></li>';
-                                            echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
                                 } else {
                                     foreach ($proclass as $item) {
                                         if ($_GET['first'] == $item['no']) {
-//                                            echo '<li><a href="pd_query.php">' . $item['pcname'] . '</a></li>';
-                                            echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
-                                    echo '<li><img src="img/process_icon.png" alt=""></li>';
                                     foreach ($proclass as $item) {
                                         if ($_GET['second'] == $item['no']) {
-//                                            echo '<li><a href="pd_query.php">' . $item['pcname'] . '</a></li>';
-                                            echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
-                                    echo '<li><img src="img/process_icon.png" alt=""></li>';
                                     foreach ($proclass as $item) {
                                         if ($_GET['third'] == $item['no']) {
-//                                            echo '<li><a href="pd_query.php">' . $item['pcname'] . '</a></li>';
-                                            echo '<li><h3>' . $item['pcname'] . '</h3></li>';
+                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
                                 }
                             } else {
-//                                echo '<li><a href="pd_query.php">全部商品</a></li>';
-                                echo '<li><h3>全部商品</h3></li>';
+                                echo '<li class="active">全部商品</li>';
                             }
                         } else {
                             switch ($_GET['protags']) {
                                 case 0:
-//                                    echo '<li><a href="pd_query.php?protags=0">普通商品</a></li>';
-                                    echo '<li><h3>普通商品</h3></li>';
+                                    echo '<li class="active">普通商品</li>';
                                     break;
                                 case 1:
-//                                    echo '<li><a href="pd_query.php?protags=1">新品上架</a></li>';
-                                    echo '<li><h3>新品上架</h3></li>';
+                                    echo '<li class="active">新品上架</li>';
                                     break;
                                 case 2:
-//                                    echo '<li><a href="pd_query.php?protags=2">促銷商品</a></li>';
-                                    echo '<li><h3>促銷商品</h3></li>';
+                                    echo '<li class="active">促銷商品</li>';
                                     break;
                                 default:
-//                                    echo '<li><a href="pd_query.php">全部商品</a></li>';
-                                    echo '<li><h3>全部商品</h3></li>';
+                                    echo '<li class="active">全部商品</li>';
                                     break;
                             }
                         }
                         ?>
-                    </ul>
+
+                    </ol>
+
                 </div>
 
                 <!-- btn -->
