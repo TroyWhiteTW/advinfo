@@ -142,39 +142,39 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                                 if ($_GET['second'] == 0 && $_GET['third'] == 0) {
                                     foreach ($proclass as $item) {
                                         if ($_GET['first'] == $item['no']) {
-                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
+                                            echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . $_GET['second'] . '&third=' . $_GET['third'] . '">' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
                                 } elseif ($_GET['third'] == 0) {
                                     foreach ($proclass as $item) {
                                         if ($_GET['first'] == $item['no']) {
-                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
+                                            echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . 0 . '&third=' . $_GET['third'] . '">' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
                                     foreach ($proclass as $item) {
                                         if ($_GET['second'] == $item['no']) {
-                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
+                                            echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . $_GET['second'] . '&third=' . $_GET['third'] . '">' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
                                 } else {
                                     foreach ($proclass as $item) {
                                         if ($_GET['first'] == $item['no']) {
-                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
+                                            echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . 0 . '&third=' . 0 . '">' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
                                     foreach ($proclass as $item) {
                                         if ($_GET['second'] == $item['no']) {
-                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
+                                            echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . $_GET['second'] . '&third=' . 0 . '">' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
                                     foreach ($proclass as $item) {
                                         if ($_GET['third'] == $item['no']) {
-                                            echo '<li><a>' . $item['pcname'] . '</a></li>';
+                                            echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . $_GET['second'] . '&third=' . $_GET['third'] . '">' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }

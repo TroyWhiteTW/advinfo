@@ -53,15 +53,13 @@ $orders = $_SESSION['orders'];
 
                 <div class="beard">
 
-                    <ul>
+                    <ol class="breadcrumb">
 
                         <li><a href="index.php">首頁</a></li>
-
-                        <li><img src="img/process_icon.png" alt=""></li>
-
                         <li><a href="cart_1.php">購物車</a></li>
+                        <li class="active">完成確認</li>
 
-                    </ul>
+                    </ol>
 
                 </div>
 

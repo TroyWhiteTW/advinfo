@@ -43,15 +43,12 @@ if (mysqli_num_rows($result) > 0) {
 
                 <div class="beard">
 
-                    <ul>
+                    <ol class="breadcrumb">
 
                         <li><a href="index.php">首頁</a></li>
+                        <li class="active">供應商資訊</li>
 
-                        <li><img src="img/process_icon.png" alt=""></li>
-
-                        <li><a href="">供應商資訊</a></li>
-
-                    </ul>
+                    </ol>
 
                 </div>
 

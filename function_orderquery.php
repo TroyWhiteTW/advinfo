@@ -44,11 +44,14 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
             <div class="col-sm-10">
 
                 <div class="beard">
-                    <ul>
+
+                    <ol class="breadcrumb">
+
                         <li><a href="index.php">首頁</a></li>
-                        <li><img src="img/process_icon.png" alt=""></li>
-                        <li><a href="function_member.php">會員專區</a></li>
-                    </ul>
+                        <li class="active">會員專區</li>
+
+                    </ol>
+
                 </div>
 
                 <?php if ($isLogin): ?>

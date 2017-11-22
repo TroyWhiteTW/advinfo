@@ -41,15 +41,12 @@ while ($cstypesRow = mysqli_fetch_assoc($cstypesRes)) {
 
                 <div class="beard">
 
-                    <ul>
+                    <ol class="breadcrumb">
 
                         <li><a href="index.php">首頁</a></li>
+                        <li class="active">客服中心</li>
 
-                        <li><img src="img/process_icon.png" alt=""></li>
-
-                        <li><a href="login.php">會員登入</a></li>
-
-                    </ul>
+                    </ol>
 
                 </div>
 
