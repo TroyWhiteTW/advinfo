@@ -41,6 +41,22 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
     }
 }
 
+// 配送方式
+$shiptypes = [];
+$shiptypesSql = 'SELECT shiptypes.no, shiptypes.name, shiptypes.type, shippings.platform, shippings.nocharge FROM shiptypes LEFT JOIN shippings ON shiptypes.no=shippings.shiptype WHERE shippings.status=1';
+$shiptypesRes = mysqli_query($conn, $shiptypesSql);
+while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
+    $shiptypes[] = $shiptypesRow;
+}
+
+// 付款方式
+$payments = [];
+$paymentsSql = 'SELECT no, name, platform, type FROM payments WHERE status=1';
+$paymentsRes = mysqli_query($conn, $paymentsSql);
+while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
+    $payments[] = $paymentsRow;
+}
+
 ?>
 <!doctype html>
 <html>
@@ -259,43 +275,32 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
                                     配送方式
                                 </div>
 
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="ship_no" value="1" checked="checked">
-                                        便利商店取貨(須先付款) <span>60</span>元
-                                    </label>
-                                </div>
-
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="ship_no" value="2">
-                                        宅配/快遞 <span>100</span>元
-                                    </label>
-                                </div>
-
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="ship_no" value="3">
-                                        宅配/快遞(貨到付款) <span>60</span>元
-                                    </label>
-                                </div>
-
-                                <div class="form-tittle">
-
-                                    <label>
-                                        <input type="radio" name="ship_no" value="4">
-                                        營業據點取貨(須先付款) <span>30</span>元
-                                    </label>
-
-                                    <div class="form-tittle" style="margin-left:20px;">
-                                        <select>
-                                            <option selected="selected" value="0">請選擇營業據點</option>
-                                            <option value="1">A</option>
-                                            <option value="2">B</option>
-                                        </select>
-                                    </div>
-
-                                </div>
+                                <?php
+                                foreach ($shiptypes as $shiptype) {
+                                    echo '<div class="form-tittle">';
+                                    echo '<label>';
+                                    if ($shiptype['no'] == 1) {
+                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['no'] . '" checked="checked">';
+                                    } else {
+                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['no'] . '">';
+                                    }
+                                    echo $shiptype['name'];
+                                    switch ($shiptype['type']) {
+                                        case 1:
+                                            echo '(需先付款)';
+                                            break;
+                                        case 2:
+                                            echo '(已付款)';
+                                            break;
+                                        case 3:
+                                            echo '(貨到付款)';
+                                            break;
+                                    }
+                                    echo ' <span>' . $shiptype['platform'] . '</span>元';
+                                    echo '</label>';
+                                    echo '</div>';
+                                }
+                                ?>
 
                                 <div class="info-area">
                                     <div class="info-textarea">根據訂單商品及配送方式計算運費</div>
@@ -399,26 +404,16 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
                                 <div class="form-name">付款方式</div>
 
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="pay_no" value="1">
-                                        信用卡一次付清
-                                    </label>
-                                </div>
-
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="pay_no" value="2">
-                                        信用卡付款(分期)
-                                    </label>
-                                </div>
-
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="pay_no" value="3">
-                                        貨到付款(宅配)
-                                    </label>
-                                </div>
+                                <?php
+                                foreach ($payments as $payment) {
+                                    echo '<div class="form-tittle">';
+                                    echo '<label>';
+                                    echo '<input type="radio" name="pay_no" value="' . $payment['no'] . '">';
+                                    echo $payment['name'];
+                                    echo '</label>';
+                                    echo '</div>';
+                                }
+                                ?>
 
                             </div>
 

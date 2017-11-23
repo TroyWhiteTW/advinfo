@@ -49,6 +49,23 @@ $total = 0;
 $tPV = 0;
 $fare = 0;
 $discount = 0;
+
+// 配送方式
+$shiptypes = [];
+$shiptypesSql = 'SELECT shiptypes.no, shiptypes.name, shiptypes.type, shippings.platform, shippings.nocharge FROM shiptypes LEFT JOIN shippings ON shiptypes.no=shippings.shiptype WHERE shippings.status=1';
+$shiptypesRes = mysqli_query($conn, $shiptypesSql);
+while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
+    $shiptypes[] = $shiptypesRow;
+}
+
+// 付款方式
+$payments = [];
+$paymentsSql = 'SELECT no, name, platform, type FROM payments WHERE status=1';
+$paymentsRes = mysqli_query($conn, $paymentsSql);
+while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
+    $payments[] = $paymentsRow;
+}
+
 ?>
     <!doctype html>
     <html>
@@ -196,26 +213,26 @@ $discount = 0;
                                     <div class="form-name">配送方式</div>
 
                                     <?php
-
-                                    switch ($orders->ship_no) {
-                                        case 1:
-                                            $fare = 60;
-                                            echo '<div class="form-input">便利商店取貨(須先付款) 60元</div>';
-                                            break;
-                                        case 2:
-                                            $fare = 100;
-                                            echo '<div class="form-input">宅配/快遞 100元</div>';
-                                            break;
-                                        case 3:
-                                            $fare = 60;
-                                            echo '<div class="form-input">宅配/快遞(貨到付款) 60元</div>';
-                                            break;
-                                        case 4:
-                                            $fare = 30;
-                                            echo '<div class="form-input">營業據點取貨(須先付款) 30元</div>';
-                                            break;
+                                    foreach ($shiptypes as $shiptype) {
+                                        if ($shiptype['no'] == $orders->ship_no) {
+                                            $fare = (int)$shiptype['platform'];
+                                            echo '<div class="form-input">';
+                                            echo $shiptype['name'];
+                                            switch ($shiptype['type']) {
+                                                case 1:
+                                                    echo '(需先付款)';
+                                                    break;
+                                                case 2:
+                                                    echo '(已付款)';
+                                                    break;
+                                                case 3:
+                                                    echo '(貨到付款)';
+                                                    break;
+                                            }
+                                            echo ' ' . $shiptype['platform'] . '元';
+                                            echo '</div>';
+                                        }
                                     }
-
                                     ?>
 
                                     <div class="price-area">
@@ -282,17 +299,12 @@ $discount = 0;
                                     <div class="form-name">付款方式</div>
 
                                     <?php
-
-                                    switch ($orders->pay_no) {
-                                        case 1:
-                                            echo '<div class="form-input">信用卡付款(一次付清)</div>';
-                                            break;
-                                        case 2:
-                                            echo '<div class="form-input">信用卡付款(分期)</div>';
-                                            break;
-                                        case 3:
-                                            echo '<div class="form-input">貨到付款(宅配)</div>';
-                                            break;
+                                    foreach ($payments as $payment) {
+                                        if ($payment['no'] == $orders->pay_no) {
+                                            echo '<div class="form-input">';
+                                            echo $payment['name'];
+                                            echo '</div>';
+                                        }
                                     }
                                     ?>
 
