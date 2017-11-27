@@ -67,6 +67,14 @@ if (mysqli_num_rows($result) > 0) {
     return;
 }
 
+// proclass
+$proclass = [];
+$proclassSql = 'SELECT no, pcname FROM proclass';
+$proclassRes = mysqli_query($conn, $proclassSql);
+while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
+    $proclass[] = $proclassRow;
+}
+
 ?>
 <!doctype html>
 <html>
@@ -74,6 +82,12 @@ if (mysqli_num_rows($result) > 0) {
 <head>
 
     <?php include 'http_head.php'; ?>
+
+<!--    <style>-->
+<!--        .product-area .pd-pic img {-->
+<!--            height: 250px;-->
+<!--        }-->
+<!--    </style>-->
 
 </head>
 
@@ -135,7 +149,14 @@ if (mysqli_num_rows($result) > 0) {
                             echo '<div class="pd-pic"></div>';
                         }
                         echo '<div class="pd-name">' . $product['proname'] . '</div>';
-                        echo '<div class="pd-type">滴丸</div>';
+
+                        foreach ($proclass as $item) {
+                            if ($item['no'] == $product['pcno']) {
+                                echo '<div class="pd-type">' . $item['pcname'] . '</div>';
+                            }
+                        }
+
+                        echo '</a>';
 
                         if ($isLogin) {
                             switch ($_SESSION['user'][20]) {
@@ -156,7 +177,7 @@ if (mysqli_num_rows($result) > 0) {
                             echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';
                         }
 
-                        echo '</a></div></div>';
+                        echo '</div></div>';
                     }
                     echo '</div>';
                     echo '</div>';
