@@ -28,13 +28,13 @@
 
         <div class="icon-area">
 
-            <?php
-            if ($isLogin) {
-                echo '<ul>-- Hi! ' . $_SESSION['user'][2] . '-- </ul>';
-            }
-            ?>
-
             <ul>
+
+                <?php
+                if ($isLogin) {
+                    echo '<li>-- Hi! ' . $_SESSION['user'][2] . '-- </li>';
+                }
+                ?>
 
                 <li>
                     <a href="index.php">
@@ -47,16 +47,9 @@
                 if ($isLogin) {
                     echo '<li><a href="function_member.php"><div class="member-icon"></div></a></li>';
                 } else {
-                    echo '<li><a href="login.php">登入<div class="member-icon"></div></a></li>';
+                    echo '<li><a href="login.php"><div class="member-icon"></div></a></li>';
                 }
                 ?>
-
-<!--                <li>-->
-<!--                    <a href="login.php">-->
-<!--                        <div class="member-icon">-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </li>-->
 
                 <li>
                     <a href="cart_1.php">
@@ -67,7 +60,7 @@
 
                 <?php
                 if ($isLogin) {
-                    echo '<li><a href="logout.php">登出<div class="glyphicon glyphicon-log-out"></div></a></li>';
+                    echo '<li><a href="logout.php">登出</a></li>';
                 }
                 ?>
 
@@ -116,13 +109,14 @@
                     </div>
                 </a>
             </li>
-        </ul>
 
-        <?php
-        if ($isLogin) {
-            echo '<ul><a href="logout.php">登出<div class="glyphicon glyphicon-log-out"></div></a></ul>';
-        }
-        ?>
+            <?php
+            if ($isLogin) {
+                echo '<li><a href="logout.php">登出</a></li>';
+            }
+            ?>
+
+        </ul>
 
         <div class="search show_border">
             <form id="search_form1" method="get" action="pd_search.php">
