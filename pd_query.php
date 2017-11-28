@@ -2,8 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
 // GET protags = null => 全部種類
 // GET protags = 1 => 新品
 // GET protags = 2 => 促銷
@@ -13,27 +12,43 @@ $isLogin = !empty($_SESSION['user']);
 $products = [];
 $productsSql = 'SELECT products.proid, products.proname, products.price, products.PV, products.bonuce, products.protags, products.promo_price, products.promo_PV, products.promo_bonuce, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status=3) products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
 
-if (!isset($_GET['order'])) {
-    $productsSql .= ' ORDER BY products.price ASC';
-} else {
-    $_GET['order'] = (int)trim($_GET['order']);
-    switch ($_GET['order']) {
-        case 1:
-            $productsSql .= ' ORDER BY products.price ASC';
-            break;
-        case 2:
-            $productsSql .= ' ORDER BY products.price DESC';
-            break;
-        default:
-            $productsSql .= ' ORDER BY products.price ASC';
-            break;
-    }
-}
-
 $productsRes = mysqli_query($conn, $productsSql);
 while ($productsRow = mysqli_fetch_assoc($productsRes)) {
     $products[] = $productsRow;
 }
+
+// sort
+$tmpArray = [];
+foreach ($products as $k => $v) {
+    if ($v['protags'] == 2) {
+        $tmpArray[$k] = $v['promo_price'];
+    } else {
+        $tmpArray[$k] = $v['price'];
+    }
+}
+
+if (!isset($_GET['order'])) {
+    asort($tmpArray);
+} else {
+    $_GET['order'] = (int)trim($_GET['order']);
+    switch ($_GET['order']) {
+        case 1:
+            asort($tmpArray);
+            break;
+        case 2:
+            arsort($tmpArray);
+            break;
+        default:
+            asort($tmpArray);
+            break;
+    }
+}
+
+$sortArray = [];
+foreach ($tmpArray as $k => $v) {
+    $sortArray[] = $products[$k];
+}
+$products = $sortArray;
 
 if (isset($_GET['protags'])) {
     $_GET['protags'] = (int)trim($_GET['protags']);

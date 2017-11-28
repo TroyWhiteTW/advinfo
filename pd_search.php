@@ -2,8 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
 $isSearch = !empty($_GET['search']);
 if ($isSearch) {
     $search = trim($_GET['search']);
@@ -13,22 +12,6 @@ if ($isSearch) {
     $productsSql = 'SELECT products.proid, products.proname, products.price, products.PV, products.bonuce, products.protags, products.promo_price, products.promo_PV, products.promo_bonuce, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status=3';
     $productsSql .= ' AND proname LIKE \'%' . $search . '%\'';
     $productsSql .= ') products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
-
-    if (!isset($_GET['order'])) {
-        $productsSql .= ' ORDER BY products.price ASC';
-    } else {
-        switch ($_GET['order']) {
-            case 1:
-                $productsSql .= ' ORDER BY products.price ASC';
-                break;
-            case 2:
-                $productsSql .= ' ORDER BY products.price DESC';
-                break;
-            default:
-                $productsSql .= ' ORDER BY products.price ASC';
-                break;
-        }
-    }
 
     $productsRes = mysqli_query($conn, $productsSql);
     while ($productsRow = mysqli_fetch_assoc($productsRes)) {
