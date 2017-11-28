@@ -2,8 +2,6 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
 
 $hasProid = !empty($_GET['proid']);// 從 GET 取得產品 id
 $proid = 0;
@@ -83,11 +81,10 @@ if ($hasProid) {
 
                 <div class="beard">
 
-                    <ol class="breadcrumb">
+                    <ul>
 
                         <li><a href="index.php">首頁</a></li>
-                        <!-- <li><a href="#">Library</a></li>-->
-                        <!-- <li class="active">Data</li>-->
+                        <li><img src="img/process_icon.png" alt=""></li>
 
                         <?php if ($hasProid): ?>
                             <?php
@@ -97,25 +94,28 @@ if ($hasProid) {
                                     break;
                                 }
                             }
+                            echo '<li><img src="img/process_icon.png" alt=""></li>';
                             foreach ($proclass as $item) {
                                 if ($item['no'] == $product['pcno2']) {
                                     echo '<li><a href="pd_query.php?first=' . $product['pcno1'] . '&second=' . $product['pcno2'] . '&third=0">' . $item['pcname'] . '</a></li>';
                                     break;
                                 }
                             }
+                            echo '<li><img src="img/process_icon.png" alt=""></li>';
                             foreach ($proclass as $item) {
                                 if ($item['no'] == $product['pcno3']) {
                                     echo '<li><a href="pd_query.php?first=' . $product['pcno1'] . '&second=' . $product['pcno2'] . '&third=' . $product['pcno3'] . '">' . $item['pcname'] . '</a></li>';
                                     break;
                                 }
                             }
-                            echo '<li class="active">' . $product['proname'] . '</li>';
+                            echo '<li><img src="img/process_icon.png" alt=""></li>';
+                            echo '<li><a>' . $product['proname'] . '</a></li>';
                             ?>
                         <?php else: ?>
                             <li class="active">商品資訊錯誤</li>
                         <?php endif; ?>
 
-                    </ol>
+                    </ul>
 
                 </div>
 

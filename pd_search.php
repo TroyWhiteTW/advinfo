@@ -126,25 +126,24 @@ if ($isSearch) {
 
                 <div class="beard">
 
-                    <ol class="breadcrumb">
+                    <ul>
 
                         <li><a href="index.php">首頁</a></li>
-                        <!-- <li><a href="#">Library</a></li>-->
-                        <!-- <li class="active">Data</li>-->
+                        <li><img src="img/process_icon.png" alt=""></li>
 
                         <?php if ($isSearch): ?>
                             <?php
                             if ($products == null) {
-                                echo '<li class="active">查詢不到商品</li>';
+                                echo '<li><a>查詢不到商品</a></li>';
                             } else {
-                                echo '<li class="active">商品查詢結果</li>';
+                                echo '<li><a>商品查詢結果</a></li>';
                             }
                             ?>
                         <?php else: ?>
-                            <li class="active">查詢不到商品</li>
+                            <li><a>查詢不到商品</a></li>
                         <?php endif; ?>
 
-                    </ol>
+                    </ul>
 
                 </div>
 

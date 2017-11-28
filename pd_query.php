@@ -130,11 +130,10 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
 
                 <div class="beard">
 
-                    <ol class="breadcrumb">
+                    <ul>
 
                         <li><a href="index.php">首頁</a></li>
-                        <!-- <li><a href="#">Library</a></li>-->
-                        <!-- <li class="active">Data</li>-->
+                        <li><img src="img/process_icon.png" alt=""></li>
 
                         <?php
                         if (!isset($_GET['protags'])) {
@@ -153,6 +152,7 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                                             break;
                                         }
                                     }
+                                    echo '<li><img src="img/process_icon.png" alt=""></li>';
                                     foreach ($proclass as $item) {
                                         if ($_GET['second'] == $item['no']) {
                                             echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . $_GET['second'] . '&third=' . $_GET['third'] . '">' . $item['pcname'] . '</a></li>';
@@ -166,12 +166,14 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                                             break;
                                         }
                                     }
+                                    echo '<li><img src="img/process_icon.png" alt=""></li>';
                                     foreach ($proclass as $item) {
                                         if ($_GET['second'] == $item['no']) {
                                             echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . $_GET['second'] . '&third=' . 0 . '">' . $item['pcname'] . '</a></li>';
                                             break;
                                         }
                                     }
+                                    echo '<li><img src="img/process_icon.png" alt=""></li>';
                                     foreach ($proclass as $item) {
                                         if ($_GET['third'] == $item['no']) {
                                             echo '<li><a href="pd_query.php?first=' . $_GET['first'] . '&second=' . $_GET['second'] . '&third=' . $_GET['third'] . '">' . $item['pcname'] . '</a></li>';
@@ -180,27 +182,27 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                                     }
                                 }
                             } else {
-                                echo '<li class="active">全部商品</li>';
+                                echo '<li><a>全部商品</a></li>';
                             }
                         } else {
                             switch ($_GET['protags']) {
                                 case 0:
-                                    echo '<li class="active">普通商品</li>';
+                                    echo '<li><a>普通商品</a></li>';
                                     break;
                                 case 1:
-                                    echo '<li class="active">新品上架</li>';
+                                    echo '<li><a>新品上架</a></li>';
                                     break;
                                 case 2:
-                                    echo '<li class="active">促銷商品</li>';
+                                    echo '<li><a>促銷商品</a></li>';
                                     break;
                                 default:
-                                    echo '<li class="active">全部商品</li>';
+                                    echo '<li><a>全部商品</a></li>';
                                     break;
                             }
                         }
                         ?>
 
-                    </ol>
+                    </ul>
 
                 </div>
 
