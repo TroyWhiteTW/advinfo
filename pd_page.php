@@ -317,8 +317,18 @@ if ($hasProid) {
                                 </tr>
                                 <tr>
                                     <td class="td-03">
-                                        <p>規格：<?php echo $product['size']; ?></p>
-                                        <p>重量：<?php echo $product['weight']; ?></p>
+                                        <p>規格：<?php
+                                            $a = $product['size'];
+                                            $regex = '/[^(0-9\.)]+/';
+                                            $b = preg_split($regex, $a);
+                                            $c = array_filter($b, function ($i) {
+                                                return $i != "";
+                                            });
+                                            echo '長：' . $c[1] . '公分，';
+                                            echo '寬：' . $c[2] . '公分，';
+                                            echo '高：' . $c[3] . '公分。';
+                                            ?></p>
+                                        <p>重量：<?php echo $product['weight'] . '公斤。'; ?></p>
                                     </td>
                                     <td class="td-03"><?php echo $product['memo']; ?></td>
                                 </tr>
