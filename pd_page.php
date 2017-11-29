@@ -249,17 +249,39 @@ if ($hasProid) {
                                             });
                                         </script>
 
-                                        <form method="post" action="purchase.php">
-                                            <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
-                                            <input id="purchaseCount" name="count" value="1" hidden="hidden">
-                                            <input type="submit" class="buy-btn" value="直接購買">
-                                        </form>
+                                        <?php if ($isLogin): ?>
 
-                                        <script>
-                                            $('#sc').change(function () {
-                                                $('#purchaseCount').val($('#sc').val());
-                                            });
-                                        </script>
+                                            <form id="directPurchase" method="post" action="purchase.php">
+                                                <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
+                                                <input id="purchaseCount" name="count" value="1" hidden="hidden">
+                                                <div id="directPurchaseDiv" class="buy-btn" value="直接購買">直接購買</div>
+                                            </form>
+
+                                            <script>
+                                                $('#sc').change(function () {
+                                                    $('#purchaseCount').val($('#sc').val());
+                                                });
+                                                $('#directPurchaseDiv').click(function () {
+                                                    document.getElementById("directPurchase").submit()
+                                                });
+                                            </script>
+
+                                        <?php else: ?>
+
+                                        <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
+                                        <input id="purchaseCount" name="count" value="1" hidden="hidden">
+                                            <div id="directPurchaseDiv" class="buy-btn" value="直接購買">直接購買</div>
+
+                                            <script>
+                                                $('#sc').change(function () {
+                                                    $('#purchaseCount').val($('#sc').val());
+                                                });
+                                                $('#directPurchaseDiv').click(function () {
+                                                    alert('請先登入');
+                                                });
+                                            </script>
+
+                                        <?php endif; ?>
 
                                     </div>
 
