@@ -192,7 +192,7 @@ if ($hasProid) {
 
                                 <?php
                                 if ($isLogin) {
-                                    switch ($_SESSION['user'][20]) {
+                                    switch ($_SESSION['user2']['type']) {
                                         case 1:
                                             echo '<div class="pv-number">紅利：' . $product['bonuce'] . '</div>';
                                             break;

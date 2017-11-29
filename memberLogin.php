@@ -27,10 +27,14 @@ if (empty($errorMessage)) {
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
 
+    $rs2 = mysqli_query($conn,$sql);
+    $row2 = mysqli_fetch_assoc($rs2);
+
     if ($row[7] === $_POST['email'] && password_verify($_POST['password'], $row[1])) {
 
         //SESSION 設定
         $_SESSION['user'] = $row;
+        $_SESSION['user2'] = $row2;
 
 //        echo "登入成功，3秒後跳轉回首頁...";
 //        header("Refresh:3;url=index.php");
@@ -40,6 +44,7 @@ if (empty($errorMessage)) {
         header("Refresh:3;url=login.php");
     }
     $rs->close();
+    $rs2->close();
 } else {
     echo "登入資料有誤:\n" . $errorMessage;
 }
