@@ -159,7 +159,7 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
                         echo '</a>';
 
                         if ($isLogin) {
-                            switch ($_SESSION['user'][20]) {
+                            switch ($_SESSION['user2']['type']) {
                                 case 1:
                                     echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
                                     break;
