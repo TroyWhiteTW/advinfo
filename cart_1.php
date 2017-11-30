@@ -406,12 +406,24 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                 <?php
                                 foreach ($payments as $payment) {
-                                    echo '<div class="form-tittle">';
-                                    echo '<label>';
-                                    echo '<input type="radio" name="pay_no" value="' . $payment['no'] . '">';
-                                    echo $payment['name'];
-                                    echo '</label>';
-                                    echo '</div>';
+                                    if ($payment['name'] == 'ATM') {
+                                        echo '<div class="form-tittle">';
+                                        echo '<label>';
+                                        echo '<input type="radio" name="pay_no" value="' . $payment['no'] . '">';
+                                        echo $payment['name'];
+                                        echo '</label>';
+                                        echo '</div>';
+                                    }
+                                }
+                                foreach ($payments as $payment) {
+                                    if ($payment['name'] != 'ATM') {
+                                        echo '<div class="form-tittle">';
+                                        echo '<label>';
+                                        echo '<input type="radio" name="pay_no" value="' . $payment['no'] . '">';
+                                        echo $payment['name'];
+                                        echo '</label>';
+                                        echo '</div>';
+                                    }
                                 }
                                 ?>
 
