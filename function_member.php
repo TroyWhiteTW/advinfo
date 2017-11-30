@@ -34,12 +34,13 @@ $isLogin = !empty($_SESSION['user']);
 
                 <div class="beard">
 
-                    <ol class="breadcrumb">
+                    <ul>
 
                         <li><a href="index.php">首頁</a></li>
-                        <li class="active">會員專區</li>
+                        <li><img src="img/process_icon.png" alt=""></li>
+                        <li><a>會員專區</a></li>
 
-                    </ol>
+                    </ul>
 
                 </div>
 
@@ -120,7 +121,8 @@ $isLogin = !empty($_SESSION['user']);
 
                                 <div class="form-tittle">
                                     電子信箱：
-                                    <input name="email" id="" type="text" class="input-2"
+                                    <br/>
+                                    <input name="email" id="" type="text" style="width: 50%;min-width: 200px;"
                                            value="<?= $_SESSION['user'][7] ?>">
                                 </div>
 
@@ -156,10 +158,9 @@ $isLogin = !empty($_SESSION['user']);
                                     <!--                                            <option value="2">C</option>-->
                                     <!--                                        </select>-->
                                     <!--                                    </div>-->
-
-                                    <div class="form-tittle">
-                                        <input name="address" id="" type="text" class="input-3" value="<?= $_SESSION['user'][14] ?>">
-                                    </div>
+                                    <br/>
+                                    <input name="address" id="" type="text" style="width: 50%;min-width: 200px;"
+                                           value="<?= $_SESSION['user'][14] ?>">
 
                                 </div>
 

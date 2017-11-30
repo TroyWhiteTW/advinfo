@@ -45,12 +45,13 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
 
                 <div class="beard">
 
-                    <ol class="breadcrumb">
+                    <ul>
 
                         <li><a href="index.php">首頁</a></li>
-                        <li class="active">會員專區</li>
+                        <li><img src="img/process_icon.png" alt=""></li>
+                        <li><a>會員專區</a></li>
 
-                    </ol>
+                    </ul>
 
                 </div>
 
