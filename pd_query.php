@@ -10,12 +10,27 @@ $isLogin = !empty($_SESSION['user']);
 // GET order = 2 => 高到低排序
 // all products
 $products = [];
-$productsSql = 'SELECT products.proid, products.proname, products.price, products.PV, products.bonuce, products.protags, products.promo_price, products.promo_PV, products.promo_bonuce, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status=3) products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
+$productsSql = 'SELECT products.proid, products.proname, products.price, products.PV, products.bonuce, products.uptime, products.downtime, products.status, products.protags, products.promo_price, products.promo_PV, products.promo_bonuce, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status=3 OR status=8) products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
 
 $productsRes = mysqli_query($conn, $productsSql);
 while ($productsRow = mysqli_fetch_assoc($productsRes)) {
     $products[] = $productsRow;
 }
+
+// status=8 依時間上架過濾
+$tmpArray = [];
+foreach ($products as $product) {
+    if ($product['status'] == 8) {
+        if (!(time() > strtotime($product['uptime']) && time() < strtotime($product['downtime']))) {
+
+        } else {
+            $tmpArray[] = $product;
+        }
+    } else {
+        $tmpArray[] = $product;
+    }
+}
+$products = $tmpArray;
 
 // sort
 $tmpArray = [];
