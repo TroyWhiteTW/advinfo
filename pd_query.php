@@ -226,6 +226,7 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                     <div class="row">
                         <div class="col-sm-12">
                             <a href="pd_query.php" class="btn btn-primary" role="button">全部商品</a>
+                            <a href="pd_query.php?protags=0" class="btn btn-warning" role="button">普通商品</a>
                             <?php
                             foreach ($protags as $protag) {
                                 echo '<a href="pd_query.php?protags=' .
