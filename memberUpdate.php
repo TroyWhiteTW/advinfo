@@ -35,6 +35,11 @@ if (empty($errorMessage)) {
         unset($_SESSION['user']);
         $_SESSION['user'] = $newRow;
 
+        $rs2 = mysqli_query($conn,$newSql);
+        $row2 = mysqli_fetch_assoc($rs2);
+        unset($_SESSION['user2']);
+        $_SESSION['user2'] = $row2;
+
         echo "會員資料修改成功，3秒後跳轉回...";
         header("Refresh:3;url=function_member.php");
     } else {
@@ -244,6 +249,7 @@ function checkType($k, &$msg)
 function encodeRegisterData($rawDataArray)
 {
     $dataArray = [
+        "name" => "\"\"",
         "email" => "\"\"",
         "phone" => "\"\"",
         "mobile" => "\"\"",

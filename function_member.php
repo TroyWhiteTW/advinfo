@@ -97,7 +97,7 @@ $isLogin = !empty($_SESSION['user']);
 
                                 <div class="form-tittle">
                                     姓名：
-                                    <div class="form-input-2"><?php echo $_SESSION['user'][2]; ?></div>
+                                    <input name="name" type="text" value="<?php echo $_SESSION['user2']['name']; ?>">
                                 </div>
 
                                 <div class="form-tittle">
