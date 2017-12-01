@@ -107,16 +107,25 @@ $isLogin = !empty($_SESSION['user']);
 
                                 <div class="form-tittle">
                                     性別：
-                                    <div class="form-input-2"><?php
-                                        switch ($_SESSION['user'][3]) {
+                                    <select name="gender">
+                                        <?php
+                                        switch ($_SESSION['user2']['gender']) {
                                             case 'M':
-                                                echo '男';
+                                                echo '<option value="M" selected>男</option>';
+                                                echo '<option value="F">女</option>';
                                                 break;
                                             case 'F':
-                                                echo '女';
+                                                echo '<option value="F" selected>女</option>';
+                                                echo '<option value="M">男</option>';
+                                                break;
+                                            default:
+                                                echo '<option>請選擇</option>';
+                                                echo '<option value="M">男</option>';
+                                                echo '<option value="F">女</option>';
                                                 break;
                                         }
-                                        ?></div>
+                                        ?>
+                                    </select>
                                 </div>
 
                                 <div class="form-tittle">

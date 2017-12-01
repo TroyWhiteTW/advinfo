@@ -250,6 +250,7 @@ function encodeRegisterData($rawDataArray)
 {
     $dataArray = [
         "name" => "\"\"",
+        "gender" => "\"\"",
         "email" => "\"\"",
         "phone" => "\"\"",
         "mobile" => "\"\"",
