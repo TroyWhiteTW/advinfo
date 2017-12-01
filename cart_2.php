@@ -6,7 +6,7 @@ if (!$isLogin) {
     header('Location:index.php');
     exit;
 }
-if(!preg_match("/cart_1\.php$/",$_SERVER['HTTP_REFERER']) && !preg_match("/cart_3\.php$/",$_SERVER['HTTP_REFERER'])){
+if (!preg_match("/cart_1\.php$/", $_SERVER['HTTP_REFERER']) && !preg_match("/cart_3\.php$/", $_SERVER['HTTP_REFERER'])) {
     header('Location:index.php');
     exit;
 }
@@ -238,7 +238,19 @@ $orders = unserialize($orders);
                                     for (var n in nodes) {
                                         if (nodes[n].type === 'text') {
                                             nodes[n].disabled = enable;
+                                            if (enable) {
+
+                                            } else {
+                                                nodes[n].value = '';
+                                            }
                                         }
+                                    }
+                                    if (enable) {
+                                        $('input[name="rec_name"]')[0].value = $('input[name="sub_name"]')[0].value;
+                                        $('input[name="rec_email"]')[0].value = $('input[name="sub_email"]')[0].value;
+                                        $('input[name="rec_phone"]')[0].value = $('input[name="sub_phone"]')[0].value;
+                                        $('input[name="rec_mobile"]')[0].value = $('input[name="sub_mobile"]')[0].value;
+                                        $('input[name="rec_address"]')[0].value = $('input[name="sub_address"]')[0].value;
                                     }
                                 }
                             </script>
