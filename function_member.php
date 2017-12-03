@@ -2,8 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
 ?>
 <!doctype html>
 <html>
@@ -186,19 +185,15 @@ $isLogin = !empty($_SESSION['user']);
                             <div class="content-article">
                                 <div class="function-area">
                                     <ul>
-                                        <li><a href=""><input type="button" id="" name="" class="" value="全家取貨門市"></a>
-                                        </li>
-                                        <li><a href=""><input type="button" id="" name="" class="" value="OK取貨門市"></a>
-                                        </li>
-                                        <li><a href=""><input type="button" id="" name="" class="" value="萊爾富取貨門市"></a>
+                                        <li><a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com"><input type="button" id="" name="" class="" value="選擇常用門市"></a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="form-tittle">門市名稱：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"></div>
                                 </div>
                                 <div class="form-tittle">門市地址：
-                                    <div class="form-input-2">資料填入</div>
+                                    <div class="form-input-2"></div>
                                 </div>
                             </div>
 
