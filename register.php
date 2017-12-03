@@ -47,7 +47,8 @@ if (empty($errorMessage)) {
 
     $result = mysqli_query($conn, $sql);
     if ($result === true) {
-        echo "註冊成功，3秒後跳轉回首頁...";
+        send2Mail($_POST['email'], 'service mail', '');
+        echo "註冊成功，請至您的電子信箱點擊驗證連結，以使用更多會員功能！\n3秒後跳轉回首頁...";
         header("Refresh:3;url=index.php");
     } else {
         echo "發生未預期錯誤...";
@@ -66,8 +67,6 @@ function f1($ks)
     return substr($str, 0, -1) . ")";
 }
 
-;
-
 function f2($ks, $vs)
 {
     $str = "(";
@@ -76,8 +75,6 @@ function f2($ks, $vs)
     }
     return substr($str, 0, -1) . ")";
 }
-
-;
 
 function checkData($post, &$msg)
 {
@@ -280,7 +277,7 @@ function encodeRegisterData($rawDataArray)
         "verifycode" => "\"\"",
         "verifytime" => "\"0\"",
         "type" => "\"1\"",
-        "status" => "\"0\""
+        "status" => "\"9\""
     ];
 
     foreach ($dataArray as $k => $v) {
@@ -293,6 +290,20 @@ function encodeRegisterData($rawDataArray)
         }
     }
     return $dataArray;
+}
+
+function send2Mail($towhom, $title, $mesg)
+{
+    $to = 'service@taironlife.com';
+    $subject = $title;
+    $link = 'http://advinfo.taironlife.com/reset_password_email.php?email=' . $_POST['email'] . '&hash_key=' . password_hash($_POST['email'], PASSWORD_DEFAULT);
+    $message = '請點擊連結驗證您的電子信箱！<br/><a href="' . $link . '">' . $link . '</a>';
+    $headers = 'From:  ' . 'service@taironlife.com' . "\r\n" .
+        'Reply-To:  service@taironlife.com' . "\r\n" .
+        'MIME-Version: 1.0' . "\r\n" .
+        'Content-type:text/html;charset=UTF-8' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+    mail($towhom, $subject, $message, $headers);
 }
 
 exit;

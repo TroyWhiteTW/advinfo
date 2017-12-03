@@ -80,6 +80,9 @@ if (!empty($_GET['email']) && !empty($_GET['hash_key'])) {
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
 
+    $rs2 = mysqli_query($conn,$sql);
+    $row2 = mysqli_fetch_assoc($rs2);
+
     if ($row === NULL) {
         echo '查無此帳號';
         return;
@@ -88,6 +91,7 @@ if (!empty($_GET['email']) && !empty($_GET['hash_key'])) {
     if ($row[7] === $_GET['email'] && $row[1] === $_GET['hash_key']) {
         //SESSION 設定
         $_SESSION['user'] = $row;
+        $_SESSION['user2'] = $row2;
 
         echo '3秒後跳轉回重設密碼頁...';
         header("Refresh:3;url=password_modify.php");
