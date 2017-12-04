@@ -88,7 +88,10 @@ $result = mysqli_query($conn, $sql);
 
                                     <td class="td-04">請輸入手機號碼</td>
 
-                                    <td><input type="text" name="" id="" class="input-4"><input type="submit" value="發送驗證簡訊"></td>
+                                    <td><input type="text" name="" id="mobile" class="input-4"><input id="sms"
+                                                                                                      type="button"
+                                                                                                      value="發送驗證簡訊">
+                                    </td>
 
                                 </tr>
 
@@ -163,6 +166,35 @@ $result = mysqli_query($conn, $sql);
                 items: 4
             }
         }
+    });
+
+    $('#sms').click(function () {
+        $.ajax({
+            url: "./smstest.php",
+            type: 'POST',
+            data: {
+                mobile: $('#mobile')[0].value
+            },
+            error: function () {
+                alert('發生錯誤');
+            },
+            success: function (response) {
+                var pos = response.indexOf("statuscode=");
+                var s = response.slice(pos + 11, pos + 12);
+                switch (s) {
+                    case "0":
+                    case "1":
+                    case "2":
+                    case "3":
+                    case "4":
+                        alert("驗證碼已寄出，請自手機查看。");
+                        break;
+                    default:
+                        alert('簡訊發送失敗請稍後再試。');
+                        break;
+                }
+            }
+        });
     });
 </script>
 
