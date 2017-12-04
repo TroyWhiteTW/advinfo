@@ -296,7 +296,7 @@ function send2Mail($towhom, $title, $mesg)
 {
     $to = 'service@taironlife.com';
     $subject = $title;
-    $link = 'http://advinfo.taironlife.com/reset_password_email.php?email=' . $_POST['email'] . '&hash_key=' . password_hash($_POST['email'], PASSWORD_DEFAULT);
+    $link = 'http://advinfo.taironlife.com/registerEmail.php?email=' . $_POST['email'] . '&hash_key=' . password_hash($_POST['email'], PASSWORD_DEFAULT);
     $message = '請點擊連結驗證您的電子信箱！<br/><a href="' . $link . '">' . $link . '</a>';
     $headers = 'From:  ' . 'service@taironlife.com' . "\r\n" .
         'Reply-To:  service@taironlife.com' . "\r\n" .
