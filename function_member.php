@@ -145,7 +145,7 @@ $isLogin = !empty($_SESSION['user']);
                                     手機：
                                     <input name="mobile" id="" type="text" class="input-2"
                                            value="<?= $_SESSION['user'][9] ?>">
-                                    <a class="btn btn-default btn-xs" href="">驗證手機</a>
+                                    <a class="btn btn-default btn-xs" href="login_start.php">驗證手機</a>
                                 </div>
 
                                 <div class="form-tittle">

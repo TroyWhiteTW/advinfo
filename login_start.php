@@ -7,19 +7,6 @@ $isLogin = !empty($_SESSION['user']);
 // 產品分類
 $sql = "select * from proclass where parent = 0 order by no";
 $result = mysqli_query($conn, $sql);
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
-// TODO: 待補側邊攔，目前是 hard code
 ?>
 <!doctype html>
 <html>
@@ -88,20 +75,20 @@ $result = mysqli_query($conn, $sql);
 
                                     <td class="td-04">請輸入手機號碼</td>
 
-                                    <td><input type="text" name="" id="mobile" class="input-4"><input id="sms"
-                                                                                                      type="button"
-                                                                                                      value="發送驗證簡訊">
+                                    <td>
+                                        <input type="text" name="" id="mobile" class="input-4">
+                                        <input id="sms" type="button" value="發送驗證簡訊">
                                     </td>
 
                                 </tr>
+                                <form method="post" action="verifyAccount.php">
+                                    <tr>
 
-                                <tr>
+                                        <td class="td-04">請輸入驗證碼</td>
 
-                                    <td class="td-04">請輸入驗證碼</td>
+                                        <td><input type="text" name="verifycode" id="verifycode" class="input-4"></td>
 
-                                    <td><input type="text" name="" id="" class="input-4"></td>
-
-                                </tr>
+                                    </tr>
 
                                 </tbody>
 
@@ -110,7 +97,7 @@ $result = mysqli_query($conn, $sql);
                             <div class="login-info">
                                 <input type="submit" value="確認" class="login-btn">
                             </div>
-
+                            </form>
                         </div>
 
                     </div>
