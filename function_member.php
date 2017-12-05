@@ -88,11 +88,26 @@ $isLogin = !empty($_SESSION['user']);
                                     <a class="btn btn-default btn-xs" href="">推薦表</a>
                                 </div>
 
+                                <script src="clipboard.min.js"></script>
+
                                 <div class="form-tittle">
                                     推薦連結：
                                     <div class="form-input-2">資料填入</div>
-                                    <a class="btn btn-default btn-xs" href="">複製</a>
+                                    <div class="btn btn-default btn-xs copy" data-clipboard-text="資料填入">複製</div>
                                 </div>
+
+                                <script>
+                                    var clipboard = new Clipboard('.copy');
+
+                                    clipboard.on('success', function(e) {
+
+                                        e.clearSelection();
+                                    });
+
+                                    clipboard.on('error', function(e) {
+
+                                    });
+                                </script>
 
                                 <div class="form-tittle">
                                     姓名：
@@ -185,7 +200,9 @@ $isLogin = !empty($_SESSION['user']);
                             <div class="content-article">
                                 <div class="function-area">
                                     <ul>
-                                        <li><a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com"><input type="button" id="" name="" class="" value="選擇常用門市"></a>
+                                        <li>
+                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com"><input
+                                                        type="button" id="" name="" class="" value="選擇常用門市"></a>
                                         </li>
                                     </ul>
                                 </div>
