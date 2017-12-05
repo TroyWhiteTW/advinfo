@@ -2,24 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
-$result = mysqli_query($conn, $sql);
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
-// TODO: 待補側邊攔，目前是 hard code
+
 ?>
 <!doctype html>
 <html>
@@ -72,9 +55,14 @@ $result = mysqli_query($conn, $sql);
 
                             <div class="login-info">請輸入您註冊時登記的手機號碼，系統將會自動發送您的註冊帳號到您的手機中</div>
 
-                            <div class="login-input">請輸入手機號碼<input type="text" name="" id="" class="input-4"></div>
+                            <div class="login-input">
+                                請輸入手機號碼
+                                <input type="text" name="" id="mobile" class="input-4">
+                            </div>
 
-                            <div class="login-info"><input type="submit" class="login-btn" value="確認送出"></div>
+                            <div class="login-info">
+                                <input id="sms" type="button" class="login-btn" value="確認送出">
+                            </div>
 
                         </div>
 
@@ -131,6 +119,35 @@ $result = mysqli_query($conn, $sql);
                 items: 4
             }
         }
+    });
+
+    $('#sms').click(function () {
+        $.ajax({
+            url: "./smstest.php",
+            type: 'POST',
+            data: {
+                mobile: $('#mobile')[0].value
+            },
+            error: function () {
+                alert('發生錯誤');
+            },
+            success: function (response) {
+                var pos = response.indexOf("statuscode=");
+                var s = response.slice(pos + 11, pos + 12);
+                switch (s) {
+                    case "0":
+                    case "1":
+                    case "2":
+                    case "3":
+                    case "4":
+                        alert("驗證碼已寄出，請自手機查看。");
+                        break;
+                    default:
+                        alert('簡訊發送失敗請稍後再試。');
+                        break;
+                }
+            }
+        });
     });
 </script>
 
