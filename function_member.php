@@ -88,25 +88,34 @@ $isLogin = !empty($_SESSION['user']);
                                     <a class="btn btn-default btn-xs" href="">推薦表</a>
                                 </div>
 
-                                <script src="clipboard.min.js"></script>
-
                                 <div class="form-tittle">
                                     推薦連結：
-                                    <div class="form-input-2">資料填入</div>
-                                    <div class="btn btn-default btn-xs copy" data-clipboard-text="資料填入">複製</div>
+                                    <div class="form-input-2"><span id="copyNode">資料填入</span></div>
+                                    <div id="copyBtn" class="btn btn-default btn-xs copy" data-clipboard-text="資料填入">
+                                        複製
+                                    </div>
                                 </div>
 
                                 <script>
-                                    var clipboard = new Clipboard('.copy');
+                                    var copyNode = document.getElementById('copyNode');
+                                    var copyBtn = document.getElementById('copyBtn');
 
-                                    clipboard.on('success', function(e) {
-
-                                        e.clearSelection();
+                                    copyBtn.addEventListener('click', function () {
+                                        if (copy(copyNode)) {
+                                            alert('複製成功');
+                                        } else {
+                                            alert('複製失敗');
+                                        }
                                     });
 
-                                    clipboard.on('error', function(e) {
-
-                                    });
+                                    function copy(node) {
+                                        var range = document.createRange();
+                                        range.selectNode(node);
+                                        window.getSelection().addRange(range);
+                                        var success = document.execCommand('copy');
+                                        window.getSelection().removeAllRanges();
+                                        return success;
+                                    }
                                 </script>
 
                                 <div class="form-tittle">
