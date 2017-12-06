@@ -2,8 +2,6 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
 
 $errorMessage = "";
 foreach ($_POST as $k => $v) {
@@ -250,6 +248,7 @@ function encodeRegisterData($rawDataArray)
 {
     $dataArray = [
         "name" => "\"\"",
+        "birthday" => "\"\"",
         "gender" => "\"\"",
         "email" => "\"\"",
         "phone" => "\"\"",

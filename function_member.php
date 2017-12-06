@@ -125,7 +125,9 @@ $isLogin = !empty($_SESSION['user']);
 
                                 <div class="form-tittle">
                                     生日：
-                                    <div class="form-input-2"><?php echo $_SESSION['user'][6]; ?></div>
+                                    <div class="form-input-2">
+                                        <input name="birthday" value="<?= $_SESSION['user'][6] ?>" type="date" title="生日"/>
+                                    </div>
                                 </div>
 
                                 <div class="form-tittle">
