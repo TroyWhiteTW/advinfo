@@ -73,50 +73,55 @@ $isLogin = !empty($_SESSION['user']);
 
                                 <div class="form-tittle">
                                     帳號：
-                                    <div class="form-input-2"><?php echo $_SESSION['user'][7]; ?></div>
+                                    <div class="form-input-2"><?php echo $_SESSION['user2']['email']; ?></div>
                                     <a class="btn btn-default btn-xs" href="password_modify.php">修改密碼</a>
                                 </div>
 
                                 <div class="form-tittle">
                                     聘級：
-                                    <div class="form-input-2"><?php echo $_SESSION['user'][4]; ?></div>
+                                    <div class="form-input-2"><?php echo $_SESSION['user2']['level']; ?></div>
                                 </div>
 
-                                <div class="form-tittle">
-                                    推薦ID：
-                                    <div class="form-input-2"><?php echo $_SESSION['user'][5]; ?></div>
-                                    <a class="btn btn-default btn-xs" href="">推薦表</a>
-                                </div>
+                                <?php if ($_SESSION['user2']['type'] == 2): ?>
 
-                                <div class="form-tittle">
-                                    推薦連結：
-                                    <div class="form-input-2"><span id="copyNode">資料填入</span></div>
-                                    <div id="copyBtn" class="btn btn-default btn-xs copy" data-clipboard-text="資料填入">
-                                        複製
+                                    <div class="form-tittle">
+                                        推薦ID：
+                                        <div class="form-input-2"><?php echo $_SESSION['user'][5]; ?></div>
+                                        <a class="btn btn-default btn-xs" href="">推薦表</a>
                                     </div>
-                                </div>
 
-                                <script>
-                                    var copyNode = document.getElementById('copyNode');
-                                    var copyBtn = document.getElementById('copyBtn');
+                                    <div class="form-tittle">
+                                        推薦連結：
+                                        <div class="form-input-2"><span id="copyNode">資料填入</span></div>
+                                        <div id="copyBtn" class="btn btn-default btn-xs copy"
+                                             data-clipboard-text="資料填入">
+                                            複製
+                                        </div>
+                                    </div>
 
-                                    copyBtn.addEventListener('click', function () {
-                                        if (copy(copyNode)) {
-                                            alert('複製成功');
-                                        } else {
-                                            alert('複製失敗');
+                                    <script>
+                                        var copyNode = document.getElementById('copyNode');
+                                        var copyBtn = document.getElementById('copyBtn');
+
+                                        copyBtn.addEventListener('click', function () {
+                                            if (copy(copyNode)) {
+                                                alert('複製成功');
+                                            } else {
+                                                alert('複製失敗');
+                                            }
+                                        });
+
+                                        function copy(node) {
+                                            var range = document.createRange();
+                                            range.selectNode(node);
+                                            window.getSelection().addRange(range);
+                                            var success = document.execCommand('copy');
+                                            window.getSelection().removeAllRanges();
+                                            return success;
                                         }
-                                    });
+                                    </script>
 
-                                    function copy(node) {
-                                        var range = document.createRange();
-                                        range.selectNode(node);
-                                        window.getSelection().addRange(range);
-                                        var success = document.execCommand('copy');
-                                        window.getSelection().removeAllRanges();
-                                        return success;
-                                    }
-                                </script>
+                                <?php endif; ?>
 
                                 <div class="form-tittle">
                                     姓名：
@@ -126,7 +131,8 @@ $isLogin = !empty($_SESSION['user']);
                                 <div class="form-tittle">
                                     生日：
                                     <div class="form-input-2">
-                                        <input name="birthday" value="<?= $_SESSION['user'][6] ?>" type="date" title="生日"/>
+                                        <input name="birthday" value="<?= $_SESSION['user2']['birthday'] ?>" type="date"
+                                               title="生日"/>
                                     </div>
                                 </div>
 
@@ -157,20 +163,20 @@ $isLogin = !empty($_SESSION['user']);
                                     電子信箱：
                                     <br/>
                                     <input name="email" id="" type="text" style="width: 50%;min-width: 200px;"
-                                           value="<?= $_SESSION['user'][7] ?>">
+                                           value="<?= $_SESSION['user2']['email'] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     聯繫電話：
                                     <input name="phone" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][8] ?>">
+                                           value="<?= $_SESSION['user2']['phone'] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
                                     <input name="mobile" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][9] ?>">
+                                           value="<?= $_SESSION['user2']['mobile'] ?>">
                                     <a class="btn btn-default btn-xs" href="login_start.php">驗證手機</a>
                                 </div>
 
@@ -194,7 +200,7 @@ $isLogin = !empty($_SESSION['user']);
                                     <!--                                    </div>-->
                                     <br/>
                                     <input name="address" id="" type="text" style="width: 50%;min-width: 200px;"
-                                           value="<?= $_SESSION['user'][14] ?>">
+                                           value="<?= $_SESSION['user2']['address'] ?>">
 
                                 </div>
 
