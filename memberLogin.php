@@ -30,7 +30,7 @@ if (empty($errorMessage)) {
     $rs2 = mysqli_query($conn,$sql);
     $row2 = mysqli_fetch_assoc($rs2);
 
-    if ($row[7] === $_POST['email'] && password_verify($_POST['password'], $row[1])) {
+    if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
 
         //SESSION 設定
         $_SESSION['user'] = $row;
