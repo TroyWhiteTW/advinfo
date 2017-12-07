@@ -2,10 +2,10 @@
 -- version 4.7.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Dec 06, 2017 at 10:53 PM
--- Server version: 5.6.36-cll-lve
--- PHP Version: 5.6.30
+-- 主機: localhost:3306
+-- 產生時間： 2017 年 12 月 07 日 23:31
+-- 伺服器版本: 5.6.36-cll-lve
+-- PHP 版本： 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,16 +19,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bradchao_ bradchao`
+-- 資料庫： `bradchao_ bradchao`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `banners`
+-- 資料表結構 `banners`
 --
 
-DROP TABLE IF EXISTS `banners`;
 CREATE TABLE `banners` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `name` varchar(29) NOT NULL COMMENT '輪播名稱',
@@ -42,24 +41,22 @@ CREATE TABLE `banners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='輪播橫幅';
 
 --
--- Dumping data for table `banners`
+-- 資料表的匯出資料 `banners`
 --
 
 INSERT INTO `banners` (`no`, `name`, `pic`, `url`, `sort`, `status`, `lang`, `addtime`, `updatetime`) VALUES
 (1, 'test1', '201711061159016357.jpg', 'http://advinfo.taironlife.com/index.php', -4, '1', '', '0000-00-00 00:00:00', '2017-11-06 11:59:09'),
 (2, 'test2', '201711061200098202.jpg', 'http://advinfo.taironlife.com/index.php', 1, '1', '', '0000-00-00 00:00:00', '2017-11-06 12:00:13'),
 (3, 'test3', '201711061200224078.jpg', 'http://advinfo.taironlife.com/index.php', 6, '1', '', '0000-00-00 00:00:00', '2017-11-06 12:00:25'),
-(4, '下班拉～～', '201711131036589378.jpg', '', 11, '0', '', '2017-11-13 10:37:03', '2017-12-04 16:01:02'),
 (5, '使用者故事', '201711131038269725.png', 'http://advinfo.taironlife.com/pd_page.php?proid=TEEEEEEST', 16, '1', '', '2017-11-13 10:38:29', '2017-11-28 16:22:57'),
 (6, '珍菌堂', '201712061556551860.png', '', 21, '1', '', '2017-12-06 15:57:02', '2017-12-06 15:57:02');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `checkout`
+-- 資料表結構 `checkout`
 --
 
-DROP TABLE IF EXISTS `checkout`;
 CREATE TABLE `checkout` (
   `id` int(11) NOT NULL COMMENT '結帳ID (PK)',
   `ordid` int(11) NOT NULL COMMENT '訂單ID',
@@ -76,15 +73,14 @@ CREATE TABLE `checkout` (
   `checkout_if` enum('Y','N') NOT NULL DEFAULT 'N' COMMENT '結帳狀態(Y代表已結,N代表未結)',
   `pay_if` enum('Y','N') NOT NULL DEFAULT 'N' COMMENT '撥款狀態(Y代表已發,N代表未發)',
   `mktime` datetime NOT NULL COMMENT '建立時間'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cstypes`
+-- 資料表結構 `cstypes`
 --
 
-DROP TABLE IF EXISTS `cstypes`;
 CREATE TABLE `cstypes` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `name` varchar(20) NOT NULL COMMENT '問題類別名稱',
@@ -94,22 +90,21 @@ CREATE TABLE `cstypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客服問題類別';
 
 --
--- Dumping data for table `cstypes`
+-- 資料表的匯出資料 `cstypes`
 --
 
 INSERT INTO `cstypes` (`no`, `name`, `lang`, `addtime`, `updatetime`) VALUES
 (1, '一般問題', '', '2017-11-17 11:13:06', '2017-11-17 11:13:06'),
 (2, '商品問題', '', '2017-11-21 16:42:02', '2017-11-21 16:42:02'),
 (3, '退貨相關', '', '2017-11-21 16:42:09', '2017-11-21 16:42:09'),
-(4, '雜七雜八', '', '2017-11-28 16:27:32', '2017-11-28 16:27:32');
+(4, '其他問題', '', '2017-11-28 16:27:32', '2017-12-07 11:08:57');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customerservices`
+-- 資料表結構 `customerservices`
 --
 
-DROP TABLE IF EXISTS `customerservices`;
 CREATE TABLE `customerservices` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `cstype` varchar(20) NOT NULL COMMENT '問題分類編號',
@@ -125,7 +120,7 @@ CREATE TABLE `customerservices` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客服資料';
 
 --
--- Dumping data for table `customerservices`
+-- 資料表的匯出資料 `customerservices`
 --
 
 INSERT INTO `customerservices` (`no`, `cstype`, `content`, `name`, `phone`, `email`, `reply`, `status`, `memo`, `addtime`, `updatetime`) VALUES
@@ -137,10 +132,9 @@ INSERT INTO `customerservices` (`no`, `cstype`, `content`, `name`, `phone`, `ema
 -- --------------------------------------------------------
 
 --
--- Table structure for table `floginlogs`
+-- 資料表結構 `floginlogs`
 --
 
-DROP TABLE IF EXISTS `floginlogs`;
 CREATE TABLE `floginlogs` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `memid` varchar(20) NOT NULL COMMENT '會員編號',
@@ -151,10 +145,9 @@ CREATE TABLE `floginlogs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `languages`
+-- 資料表結構 `languages`
 --
 
-DROP TABLE IF EXISTS `languages`;
 CREATE TABLE `languages` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `lang` varchar(10) NOT NULL COMMENT '語系代碼',
@@ -164,7 +157,7 @@ CREATE TABLE `languages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='語系資料';
 
 --
--- Dumping data for table `languages`
+-- 資料表的匯出資料 `languages`
 --
 
 INSERT INTO `languages` (`no`, `lang`, `name`, `addtime`, `updatetime`) VALUES
@@ -173,10 +166,9 @@ INSERT INTO `languages` (`no`, `lang`, `name`, `addtime`, `updatetime`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `logistics`
+-- 資料表結構 `logistics`
 --
 
-DROP TABLE IF EXISTS `logistics`;
 CREATE TABLE `logistics` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `name` varchar(50) NOT NULL COMMENT '物流業者名稱',
@@ -187,7 +179,7 @@ CREATE TABLE `logistics` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='物流業者資料';
 
 --
--- Dumping data for table `logistics`
+-- 資料表的匯出資料 `logistics`
 --
 
 INSERT INTO `logistics` (`no`, `name`, `freeprice`, `pic`, `addtime`, `updatetime`) VALUES
@@ -197,10 +189,9 @@ INSERT INTO `logistics` (`no`, `name`, `freeprice`, `pic`, `addtime`, `updatetim
 -- --------------------------------------------------------
 
 --
--- Table structure for table `managerlogs`
+-- 資料表結構 `managerlogs`
 --
 
-DROP TABLE IF EXISTS `managerlogs`;
 CREATE TABLE `managerlogs` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `account` varchar(20) NOT NULL COMMENT '管理者帳號',
@@ -215,7 +206,7 @@ CREATE TABLE `managerlogs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='後台管理者操作紀錄';
 
 --
--- Dumping data for table `managerlogs`
+-- 資料表的匯出資料 `managerlogs`
 --
 
 INSERT INTO `managerlogs` (`no`, `account`, `main_key`, `fun_key`, `action`, `descript`, `table`, `data`, `ip`, `addtime`) VALUES
@@ -2798,15 +2789,131 @@ INSERT INTO `managerlogs` (`no`, `account`, `main_key`, `fun_key`, `action`, `de
 (2573, 'test', 9, 1, 2, '列表', '', '', '122.116.150.119', '2017-12-06 17:29:04'),
 (2574, 'test', 7, 1, 2, '列表', '', '', '122.116.150.119', '2017-12-06 17:29:31'),
 (2575, 'test', 7, 2, 2, '列表', '', '', '122.116.150.119', '2017-12-06 17:29:33'),
-(2576, 'test', 4, 1, 2, '列表', '', '', '122.116.150.119', '2017-12-06 17:29:40');
+(2576, 'test', 4, 1, 2, '列表', '', '', '122.116.150.119', '2017-12-06 17:29:40'),
+(2577, 'test', 5, 1, 2, '列表', '', '', '122.116.150.119', '2017-12-07 10:46:01'),
+(2578, 'test', 4, 1, 2, '列表', '', '', '122.116.150.119', '2017-12-07 10:46:12'),
+(2579, 'test', 10, 1, 2, '列表', '', '', '122.116.150.119', '2017-12-07 10:46:40'),
+(2580, 'guest', 0, 0, 1, 'admin登入成功', '', '', '211.21.65.1', '2017-12-07 11:03:21'),
+(2581, 'guest', 4, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:03:32'),
+(2582, 'test', 10, 2, 2, '列表', '', '', '122.116.150.119', '2017-12-07 11:08:43'),
+(2583, 'test', 10, 2, 8, '其他問題 id:4', '', '', '122.116.150.119', '2017-12-07 11:08:57'),
+(2584, 'guest', 11, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:32'),
+(2585, 'guest', 11, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:35'),
+(2586, 'guest', 8, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:37'),
+(2587, 'guest', 8, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:38'),
+(2588, 'guest', 9, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:40'),
+(2589, 'guest', 1, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:42'),
+(2590, 'guest', 10, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:44'),
+(2591, 'guest', 10, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:46'),
+(2592, 'guest', 4, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:48'),
+(2593, 'guest', 5, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:50'),
+(2594, 'guest', 5, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:51'),
+(2595, 'guest', 7, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:54'),
+(2596, 'guest', 7, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:54'),
+(2597, 'guest', 7, 3, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:55'),
+(2598, 'guest', 3, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:57'),
+(2599, 'guest', 3, 5, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:58'),
+(2600, 'guest', 3, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:12:59'),
+(2601, 'guest', 3, 3, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:00'),
+(2602, 'guest', 3, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:01'),
+(2603, 'guest', 3, 3, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:05'),
+(2604, 'guest', 3, 5, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:06'),
+(2605, 'guest', 3, 4, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:09'),
+(2606, 'guest', 3, 3, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:10'),
+(2607, 'guest', 3, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:11'),
+(2608, 'guest', 3, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:25'),
+(2609, 'guest', 3, 5, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:26'),
+(2610, 'guest', 3, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:27'),
+(2611, 'guest', 3, 3, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:27'),
+(2612, 'guest', 3, 4, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:28'),
+(2613, 'guest', 7, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:31'),
+(2614, 'guest', 5, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:34'),
+(2615, 'guest', 10, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:36'),
+(2616, 'guest', 6, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:38'),
+(2617, 'guest', 6, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:39'),
+(2618, 'guest', 11, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:41'),
+(2619, 'guest', 11, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:42'),
+(2620, 'guest', 8, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:44'),
+(2621, 'guest', 8, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:45'),
+(2622, 'guest', 9, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:46'),
+(2623, 'guest', 2, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:48'),
+(2624, 'guest', 2, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:49'),
+(2625, 'guest', 5, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:53'),
+(2626, 'guest', 5, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:55'),
+(2627, 'guest', 5, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:13:58'),
+(2628, 'guest', 4, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:14:01'),
+(2629, 'guest', 7, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:14:03'),
+(2630, 'guest', 7, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:14:05'),
+(2631, 'guest', 7, 3, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:14:06'),
+(2632, 'guest', 2, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 11:14:36'),
+(2633, 'admin', 0, 0, 1, 'admin登入成功', '', '', '59.127.37.46', '2017-12-07 12:54:58'),
+(2634, 'admin', 4, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 12:55:05'),
+(2635, 'admin', 8, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 13:00:04'),
+(2636, 'admin', 9, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 13:00:12'),
+(2637, 'admin', 7, 2, 2, '列表', '', '', '59.127.37.46', '2017-12-07 13:00:21'),
+(2638, 'admin', 7, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 13:00:23'),
+(2639, 'admin', 4, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 13:03:59'),
+(2640, 'admin', 6, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 13:04:55'),
+(2641, 'admin', 4, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 13:05:00'),
+(2642, 'guest', 0, 0, 1, 'admin登入成功', '', '', '211.21.65.1', '2017-12-07 13:47:50'),
+(2643, 'guest', 7, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:54:08'),
+(2644, 'guest', 8, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:54:17'),
+(2645, 'guest', 9, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:54:27'),
+(2646, 'guest', 9, 1, 8, '紅陽 id:1', '', '', '211.21.65.1', '2017-12-07 13:54:53'),
+(2647, 'guest', 3, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:55:11'),
+(2648, 'guest', 3, 5, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:55:17'),
+(2649, 'guest', 3, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:55:18'),
+(2650, 'guest', 3, 5, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:55:27'),
+(2651, 'guest', 3, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:55:32'),
+(2652, 'guest', 3, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:59:08'),
+(2653, 'guest', 3, 5, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:59:09'),
+(2654, 'guest', 7, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:59:11'),
+(2655, 'guest', 4, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 13:59:15'),
+(2656, 'guest', 8, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 14:00:48'),
+(2657, 'admin', 0, 0, 1, 'admin登入成功', '', '', '120.108.127.29', '2017-12-07 14:37:55'),
+(2658, 'admin', 8, 1, 2, '列表', '', '', '120.108.127.29', '2017-12-07 14:41:38'),
+(2659, 'admin', 0, 0, 1, 'admin登入成功', '', '', '59.127.37.46', '2017-12-07 14:56:10'),
+(2660, 'admin', 6, 2, 2, '列表', '', '', '59.127.37.46', '2017-12-07 14:56:24'),
+(2661, 'guest', 0, 0, 1, 'admin登入成功', '', '', '211.21.65.1', '2017-12-07 15:02:19'),
+(2662, 'guest', 4, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:02:26'),
+(2663, 'guest', 9, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:02:52'),
+(2664, 'guest', 2, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:02:55'),
+(2665, 'guest', 2, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:02:56'),
+(2666, 'guest', 8, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:03:00'),
+(2667, 'guest', 11, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:03:02'),
+(2668, 'guest', 11, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:03:03'),
+(2669, 'guest', 10, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:03:04'),
+(2670, 'guest', 6, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:03:06'),
+(2671, 'guest', 6, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:03:07'),
+(2672, 'admin', 8, 2, 2, '列表', '', '', '59.127.37.46', '2017-12-07 15:21:15'),
+(2673, 'admin', 8, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 15:21:16'),
+(2674, 'admin', 8, 2, 2, '列表', '', '', '59.127.37.46', '2017-12-07 15:26:57'),
+(2675, 'admin', 8, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 15:27:13'),
+(2676, 'admin', 8, 2, 2, '列表', '', '', '59.127.37.46', '2017-12-07 15:28:49'),
+(2677, 'admin', 8, 1, 2, '列表', '', '', '59.127.37.46', '2017-12-07 15:28:51'),
+(2678, 'guest', 6, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:42:08'),
+(2679, 'guest', 11, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:42:27'),
+(2680, 'guest', 8, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:42:38'),
+(2681, 'guest', 9, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 15:42:54'),
+(2682, 'guest', 5, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 18:26:04'),
+(2683, 'guest', 3, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 18:26:14'),
+(2684, 'guest', 3, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 18:26:15'),
+(2685, 'guest', 5, 2, 2, '列表', '', '', '211.21.65.1', '2017-12-07 18:26:31'),
+(2686, 'guest', 5, 2, 8, '下班拉～～ id:4', '', '', '211.21.65.1', '2017-12-07 18:27:14'),
+(2687, 'guest', 5, 2, 16, '1筆資料(\'4\')', '', '', '211.21.65.1', '2017-12-07 18:27:29'),
+(2688, 'guest', 5, 2, 4, '１１１１１１ id:7', '', '', '211.21.65.1', '2017-12-07 18:28:32'),
+(2689, 'guest', 5, 2, 16, '1筆資料(\'7\')', '', '', '211.21.65.1', '2017-12-07 18:28:42'),
+(2690, 'guest', 4, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 19:11:16'),
+(2691, 'guest', 7, 1, 2, '列表', '', '', '211.21.65.1', '2017-12-07 19:11:22'),
+(2692, 'admin', 0, 0, 1, 'admin登入成功', '', '', '61.223.6.243', '2017-12-07 21:35:28'),
+(2693, 'admin', 7, 1, 2, '列表', '', '', '61.223.6.243', '2017-12-07 21:35:33');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `managers`
+-- 資料表結構 `managers`
 --
 
-DROP TABLE IF EXISTS `managers`;
 CREATE TABLE `managers` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `name` varchar(20) NOT NULL COMMENT '管理者姓名',
@@ -2823,21 +2930,20 @@ CREATE TABLE `managers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='後台管理員權限';
 
 --
--- Dumping data for table `managers`
+-- 資料表的匯出資料 `managers`
 --
 
 INSERT INTO `managers` (`no`, `name`, `account`, `password`, `rights`, `status`, `addtime`, `updatetime`, `mid`, `pic`, `logintime`, `ip`) VALUES
-(1, '無名管理員', 'admin', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, '1', '2017-10-31 00:00:00', '2017-11-06 15:04:39', '62c3cc36a4d606f75ad63c29f98d161d151254182382447g60nbddccb10a38e12rktc1vn4', '201711061504369145.png', '2017-12-06 14:30:23', '122.116.150.119'),
-(2, 'guest', 'guest', 'fe4ceeb01d43a6c29d8f4fe93313c6c1', 1, '1', '0000-00-00 00:00:00', '2017-11-30 15:16:58', 'c7ac4d62e98a28e336652c192c211c4c15124637427396992pn9j8m4pe8sdg6eu0sf46mo4', '201711071356422258.jpg', '2017-12-05 16:49:02', '211.21.65.1'),
+(1, '無名管理員', 'admin', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, '1', '2017-10-31 00:00:00', '2017-11-06 15:04:39', 'f18d7e46d3df5b22c3e5515ea906fd18151265372872732gvh78iotvus4m2k0951hc4jtc3', '201711061504369145.png', '2017-12-07 21:35:28', '61.223.6.243'),
+(2, 'guest', 'guest', 'fe4ceeb01d43a6c29d8f4fe93313c6c1', 1, '1', '0000-00-00 00:00:00', '2017-11-30 15:16:58', '19efa36be706d540a0ab1589af1b20da151264236436807p5beda5jq7abgqc5v2fp2led04', '201711071356422258.jpg', '2017-12-07 18:26:04', '211.21.65.1'),
 (3, 'guestguest', 'guestguest', 'fe4ceeb01d43a6c29d8f4fe93313c6c1', 4, '1', '0000-00-00 00:00:00', '2017-11-30 15:40:27', '9f1977b6ff3a73a3b380e3577a9d7b6a1512027642632851vem7bbud0vubguncj3fr4smg5', '201711301539591532.jpg', '2017-11-30 15:40:42', '211.21.65.1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `members`
+-- 資料表結構 `members`
 --
 
-DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members` (
   `id` varchar(20) NOT NULL COMMENT '會員編號(zjttw_xxxxxxxxx) (PK)',
   `password` varchar(100) NOT NULL COMMENT '密碼(MD5編碼後存放)',
@@ -2855,11 +2961,7 @@ CREATE TABLE `members` (
   `city` varchar(20) NOT NULL COMMENT '聯繫地址(縣市)',
   `area` varchar(20) NOT NULL COMMENT '聯繫地址(鄉鎮區)',
   `address` varchar(200) NOT NULL COMMENT '聯繫地址',
-  `constore_no` varchar(10) NOT NULL COMMENT '常用便利商店門市(門市編號)',
-  `constore_name` varchar(20) NOT NULL COMMENT '常用便利商店門市(門市名稱)',
-  `constore_tel` varchar(20) NOT NULL COMMENT '常用便利商店門市(門市電話)',
-  `constore_addr` varchar(200) NOT NULL COMMENT '常用便利商店門市(門市地址)',
-  `constore_cvs` varchar(10) NOT NULL COMMENT '常用便利商店門市(路順編碼)',
+  `constore` varchar(250) NOT NULL COMMENT '便利商店取貨門市資料(包含門市編號no、門市名稱name、門市電話tel、門市地址addr、路順編號cvs等，資料以Array方式Serialize後存放資料庫)',
   `regtime` datetime NOT NULL COMMENT '註冊時間',
   `verifycode` varchar(10) NOT NULL COMMENT '手機驗證碼',
   `verifytime` datetime NOT NULL COMMENT '驗證時間',
@@ -2870,30 +2972,29 @@ CREATE TABLE `members` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='會員資料';
 
 --
--- Dumping data for table `members`
+-- 資料表的匯出資料 `members`
 --
 
-INSERT INTO `members` (`id`, `password`, `name`, `gender`, `level`, `myreferral`, `referral`, `birthday`, `email`, `phone`, `mobile`, `company_no`, `invoice_title`, `city`, `area`, `address`, `constore_no`, `constore_name`, `constore_tel`, `constore_addr`, `constore_cvs`, `regtime`, `verifycode`, `verifytime`, `resaletime`, `upgradetime`, `type`, `status`) VALUES
-('zjttw_20171107205310', '$2y$10$3pwhLuApfFWutsX0149bWuhjzsF7L9aUD/2BruqHc3fbZExeRYPcq', '潘信宏', 'M', '', '', '', '0000-00-00', 'vincentpan2005@gmail.com', '0925102909', '0925102909', '', '', '台中市', '大里區', '光正路', '', '', '', '', '', '2017-11-07 20:53:10', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171112233010', 'abcdefg', '周周凱', 'M', 'top', '', '', '1991-11-02', 'khai@yahoo.com.tw', '0422228888', '0988888888', '12345678', '數位有限公司', '台中市', '南區', '忠明南路1000號', '', '', '', '', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '1'),
-('zjttw_20171114095012', '$2y$10$p07gjU4.HYCncyrey.QERu91oqj9M61esdubgO9kXOyl.nDovz0nm', 'troy', 'M', '', '', '', '1920-01-01', '1@yamil.com', '', '0123456789', '', '', '臺北市', '中正區', '01234', '', '', '', '', '', '2017-11-14 09:50:12', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171114102220', '$2y$10$8tUfOMjTiys3iP6d4AAgLeC.E88cT0dp83QW75aCq0vKprQuO4Wqa', '小昭', 'M', '', '', '', '1990-04-12', 'blueskyloverain@gmail.com', '', '0938088412', '', '', '新北市', '中和區', '景平路', '', '', '', '', '', '2017-11-14 10:22:20', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171114112110', '$2y$10$gQlYc/Bu2FvML5FqUoBl/.UgXa3.dQ98ZucYI7/vrE3d8J6BhuOk2', 'qqq', 'M', '', '', '', '1920-01-01', '1@aaa.bbb', '', '0000000000', '', '', '臺北市', '中正區', 'qqq', '', '', '', '', '', '2017-11-14 11:21:10', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171114163354', '$2y$10$m2q.bHybhkyxU8MYN39LQeAfQXUh2pgVn2EUnBRDldjEAXk/BnqQu', 'troy', 'M', '', '', '', '1920-01-01', '1@ymail.com', '', '0123456789', '', '', '臺北市', '中正區', '01234', '', '', '', '', '', '2017-11-14 16:33:54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171117094726', '$2y$10$k4fkY7g43L.fDm1WBon2k.EUNXwO5sRf4pLQuATf4Khz4.Lz3ycz6', 'aaa', 'M', '', '', '', '1970-01-01', 'ryan6617@gmail.com', '', '0298765432', '', '', '臺北市', '中正區', '0298765432', '', '', '', '', '', '2017-11-17 09:47:26', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171121114046', '$2y$10$AaFcLba1vTpauDKz92o0S.lME31EARsn8O82urh3WLenmLBMXDyrK', '', '', '', '', '', '0000-00-00', 'kevinchen0711@gmail.com', '', '', '', '', '', '', '', '', '', '', '', '', '2017-11-21 11:40:46', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171123212145', '$2y$10$ColHPqH10Mo2Wq7sfBkvpu3K4FoaL41Hu5oy1GKYQwdtxwYi7VCWS', '', '', '', '', 'vincentpan2005@gmail', '0000-00-00', 'rainlover@ms35.url.com.tw', '', '', '', '', '', '', '', '', '', '', '', '', '2017-11-23 21:21:45', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171130140654', '$2y$10$KvACfcEFoBp1CVEuFz0WYOJQoxvrxkZaLtL4mmwVicrAwS8wYI/6K', '', '', '', '', '', '0000-00-00', 'Richard@coder.com.tw', '', '', '', '', '', '', '', '', '', '', '', '', '2017-11-30 14:06:54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171204170833', '$2y$10$gHcJsT3j.7AQ.oyzFEEVHuQAH0CuH8bodfRY.8xqmvPGwXpiC3w/C', '', '', '', '', '', '0000-00-00', 'changtingweiforwork@gmail.com', '', '', '', '', '', '', '', '', '', '', '', '', '2017-12-04 17:08:33', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
-('zjttw_20171206165949', '$2y$10$dVI0tm/5oY8tmV/NuppEL.5DBdxR/nYShWPOij37TemzK9iD8TJ.m', '', '', '', '', '', '0000-00-00', 'hikkiw@gmail.com', '', '', '', '', '', '', '', '', '', '', '', '', '2017-12-06 16:59:49', '1512552184', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0');
+INSERT INTO `members` (`id`, `password`, `name`, `gender`, `level`, `myreferral`, `referral`, `birthday`, `email`, `phone`, `mobile`, `company_no`, `invoice_title`, `city`, `area`, `address`, `constore`, `regtime`, `verifycode`, `verifytime`, `resaletime`, `upgradetime`, `type`, `status`) VALUES
+('zjttw_20171107205310', '$2y$10$3pwhLuApfFWutsX0149bWuhjzsF7L9aUD/2BruqHc3fbZExeRYPcq', '潘信宏', 'M', '', '', '', '0000-00-00', 'vincentpan2005@gmail.com', '0925102909', '0925102909', '', '', '台中市', '大里區', '光正路', '', '2017-11-07 20:53:10', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171112233010', 'abcdefg', '周周凱', 'M', 'top', '', '', '1991-11-02', 'khai@yahoo.com.tw', '0422228888', '0988888888', '12345678', '數位有限公司', '台中市', '南區', '忠明南路1000號', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '1'),
+('zjttw_20171114095012', '$2y$10$p07gjU4.HYCncyrey.QERu91oqj9M61esdubgO9kXOyl.nDovz0nm', 'troy', 'M', '', '', '', '1920-01-01', '1@yamil.com', '', '0123456789', '', '', '臺北市', '中正區', '01234', '', '2017-11-14 09:50:12', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171114102220', '$2y$10$8tUfOMjTiys3iP6d4AAgLeC.E88cT0dp83QW75aCq0vKprQuO4Wqa', '小昭', 'M', '', '', '', '1990-04-12', 'blueskyloverain@gmail.com', '', '0938088412', '', '', '新北市', '中和區', '景平路', '', '2017-11-14 10:22:20', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171114112110', '$2y$10$gQlYc/Bu2FvML5FqUoBl/.UgXa3.dQ98ZucYI7/vrE3d8J6BhuOk2', 'qqq', 'M', '', '', '', '1920-01-01', '1@aaa.bbb', '', '0000000000', '', '', '臺北市', '中正區', 'qqq', '', '2017-11-14 11:21:10', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171114163354', '$2y$10$m2q.bHybhkyxU8MYN39LQeAfQXUh2pgVn2EUnBRDldjEAXk/BnqQu', 'troy', 'M', '', '', '', '1920-01-01', '1@ymail.com', '', '0123456789', '', '', '臺北市', '中正區', '01234', '', '2017-11-14 16:33:54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171117094726', '$2y$10$k4fkY7g43L.fDm1WBon2k.EUNXwO5sRf4pLQuATf4Khz4.Lz3ycz6', 'aaa', 'M', '', '', '', '1970-01-01', 'ryan6617@gmail.com', '', '0298765432', '', '', '臺北市', '中正區', '0298765432', '', '2017-11-17 09:47:26', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171121114046', '$2y$10$AaFcLba1vTpauDKz92o0S.lME31EARsn8O82urh3WLenmLBMXDyrK', '', '', '', '', '', '0000-00-00', 'kevinchen0711@gmail.com', '', '', '', '', '', '', '', '', '2017-11-21 11:40:46', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171123212145', '$2y$10$ColHPqH10Mo2Wq7sfBkvpu3K4FoaL41Hu5oy1GKYQwdtxwYi7VCWS', '', '', '', '', 'vincentpan2005@gmail', '0000-00-00', 'rainlover@ms35.url.com.tw', '', '', '', '', '', '', '', '', '2017-11-23 21:21:45', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171204170833', '$2y$10$gHcJsT3j.7AQ.oyzFEEVHuQAH0CuH8bodfRY.8xqmvPGwXpiC3w/C', '', '', '', '', '', '0000-00-00', 'changtingweiforwork@gmail.com', '', '', '', '', '', '', '', '', '2017-12-04 17:08:33', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171206165949', '$2y$10$dVI0tm/5oY8tmV/NuppEL.5DBdxR/nYShWPOij37TemzK9iD8TJ.m', '', '', '', '', '', '0000-00-00', 'hikkiw@gmail.com', '', '', '', '', '', '', '', '', '2017-12-06 16:59:49', '1512552184', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0'),
+('zjttw_20171207213129', '$2y$10$6jbUOEvQumerv0wVI2RkbubhzRM0syNC6H/Jc1rfjmrN2xxhCIe6u', '', '', '', '', '', '0000-00-00', 'richard@coder.com.tw', '', '', '', '', '', '', '', '', '2017-12-07 21:31:29', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '0');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `moneyflows`
+-- 資料表結構 `moneyflows`
 --
 
-DROP TABLE IF EXISTS `moneyflows`;
 CREATE TABLE `moneyflows` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `name` varchar(50) NOT NULL COMMENT '金流業者名稱',
@@ -2903,19 +3004,18 @@ CREATE TABLE `moneyflows` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金流業者資料';
 
 --
--- Dumping data for table `moneyflows`
+-- 資料表的匯出資料 `moneyflows`
 --
 
 INSERT INTO `moneyflows` (`no`, `name`, `pic`, `addtime`, `updatetime`) VALUES
-(1, '紅陽', '201711161858136324.jpg', '0000-00-00 00:00:00', '2017-11-30 13:43:13');
+(1, '紅陽', '201711161858136324.jpg', '0000-00-00 00:00:00', '2017-12-07 13:54:53');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orderdetail`
+-- 資料表結構 `orderdetail`
 --
 
-DROP TABLE IF EXISTS `orderdetail`;
 CREATE TABLE `orderdetail` (
   `ordid` varchar(20) NOT NULL COMMENT '訂單編號(PK)',
   `odno` int(11) NOT NULL COMMENT '項目流水號(PK)',
@@ -2929,7 +3029,7 @@ CREATE TABLE `orderdetail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='訂單子表';
 
 --
--- Dumping data for table `orderdetail`
+-- 資料表的匯出資料 `orderdetail`
 --
 
 INSERT INTO `orderdetail` (`ordid`, `odno`, `proname`, `proid`, `qty`, `price`, `subtotal`, `PV`, `bonuce`) VALUES
@@ -2940,10 +3040,9 @@ INSERT INTO `orderdetail` (`ordid`, `odno`, `proname`, `proid`, `qty`, `price`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- 資料表結構 `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `ordid` varchar(20) NOT NULL COMMENT '訂單編號(PK)',
   `orddate` date NOT NULL COMMENT '訂單日期',
@@ -2974,7 +3073,7 @@ CREATE TABLE `orders` (
   `installment` smallint(6) NOT NULL COMMENT '分期期數(0:無分期一次付清,3,6,12,18,24: 分期期數)',
   `pay_time` datetime NOT NULL COMMENT '結帳時間',
   `ship_no` int(11) NOT NULL COMMENT '配送方式(編號)',
-  `store_name` varchar(50) NOT NULL COMMENT '便利商店取貨門市名稱',
+  `constore` varchar(250) NOT NULL COMMENT '便利商店取貨門市資料',
   `store_addr` varchar(200) NOT NULL COMMENT '便利商店取貨門市地址',
   `appredate` datetime NOT NULL COMMENT '鑑賞期日期',
   `total_price` int(11) NOT NULL COMMENT '訂單總金額',
@@ -2996,20 +3095,19 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='訂單主表';
 
 --
--- Dumping data for table `orders`
+-- 資料表的匯出資料 `orders`
 --
 
-INSERT INTO `orders` (`ordid`, `orddate`, `sub_account`, `sub_name`, `sub_level`, `sub_phone`, `sub_mobile`, `sub_email`, `sub_address`, `rec_name`, `rec_phone`, `rec_mobile`, `rec_email`, `rec_zip`, `rec_city`, `rec_area`, `rec_address`, `invoice`, `company_no`, `invoice_title`, `discount`, `discount_price`, `pay_no`, `pay_price`, `ispay`, `pay_fail_reason`, `installment`, `pay_time`, `ship_no`, `store_name`, `store_addr`, `appredate`, `total_price`, `freight`, `PV`, `bonuce`, `cardno`, `approvecode`, `ordstatus`, `shipstatus`, `moneyflow_no`, `logistic_no`, `shiptime`, `addtime`, `updatetime`, `returnapply`, `returntime`, `refundtime`) VALUES
+INSERT INTO `orders` (`ordid`, `orddate`, `sub_account`, `sub_name`, `sub_level`, `sub_phone`, `sub_mobile`, `sub_email`, `sub_address`, `rec_name`, `rec_phone`, `rec_mobile`, `rec_email`, `rec_zip`, `rec_city`, `rec_area`, `rec_address`, `invoice`, `company_no`, `invoice_title`, `discount`, `discount_price`, `pay_no`, `pay_price`, `ispay`, `pay_fail_reason`, `installment`, `pay_time`, `ship_no`, `constore`, `store_addr`, `appredate`, `total_price`, `freight`, `PV`, `bonuce`, `cardno`, `approvecode`, `ordstatus`, `shipstatus`, `moneyflow_no`, `logistic_no`, `shiptime`, `addtime`, `updatetime`, `returnapply`, `returntime`, `refundtime`) VALUES
 ('000000001', '2017-11-12', 'zjttw_20171112233010', '周周凱', 'top', '11111111', '0988888888', 'khai@yahoo.com.tw', '台中市南區忠明南路1000號', '王小明', '0222223333', '0966666666', 'khai@yahoo.com.tw', '807', '高雄市', '三民區', '建工路666號', 'HG12345678', '22660000', '數位有限公司', '0', 0, 1, 1499, '0', '', 0, '0000-00-00 00:00:00', 1, '', '', '0000-00-00 00:00:00', 1399, 100, 1, 2, '', '', '0', '0', '', '1000018110', '0000-00-00 00:00:00', '2017-11-12 00:00:00', '2017-11-30 14:13:42', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 ('1510624288', '2017-11-14', '1@yamil.com', 'troy', '', '', '0123456789', '1@yamil.com', 'è‡ºåŒ—å¸‚ä¸­æ­£å€01234', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, '0', '', 0, '2017-11-14 09:51:46', 0, '', '', '0000-00-00 00:00:00', 0, 0, 0, 0, '', '', '0', '0', '', '', '0000-00-00 00:00:00', '2017-11-14 09:51:46', '2017-11-21 16:43:38', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pages`
+-- 資料表結構 `pages`
 --
 
-DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `name` varchar(20) NOT NULL COMMENT '頁面名稱',
@@ -3020,7 +3118,7 @@ CREATE TABLE `pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='靜態頁面';
 
 --
--- Dumping data for table `pages`
+-- 資料表的匯出資料 `pages`
 --
 
 INSERT INTO `pages` (`no`, `name`, `content`, `lang`, `addtime`, `updatetime`) VALUES
@@ -3036,10 +3134,9 @@ INSERT INTO `pages` (`no`, `name`, `content`, `lang`, `addtime`, `updatetime`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payments`
+-- 資料表結構 `payments`
 --
 
-DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `mfno` int(11) NOT NULL COMMENT '金流業者編號',
@@ -3055,27 +3152,26 @@ CREATE TABLE `payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='付款方式';
 
 --
--- Dumping data for table `payments`
+-- 資料表的匯出資料 `payments`
 --
 
 INSERT INTO `payments` (`no`, `mfno`, `name`, `platform`, `supplier`, `type`, `installment`, `forSupplier`, `status`, `addtime`, `updatetime`) VALUES
-(1, 1, '信用卡(一次付清)', 200, 100, 'C', 0, '1', '1', '0000-00-00 00:00:00', '2017-11-30 13:43:13'),
-(2, 1, 'ATM', 0, 0, 'A', 0, '1', '1', '0000-00-00 00:00:00', '2017-11-30 13:43:13'),
-(3, 1, '信用卡(分3期)', 100, 200, 'C', 3, '0', '1', '0000-00-00 00:00:00', '2017-11-30 13:43:13'),
-(4, 1, '信用卡(分3期)', 100, 200, 'C', 3, '0', '1', '2017-11-29 22:14:46', '2017-11-30 13:43:13'),
-(5, 1, '信用卡(分6期)', 100, 200, 'C', 6, '1', '1', '2017-11-29 22:14:57', '2017-11-30 13:43:13'),
-(6, 1, '信用卡(分9期)', 100, 200, 'C', 9, '1', '1', '2017-11-29 22:15:08', '2017-11-30 13:43:13'),
-(7, 1, '信用卡(分12期)', 100, 200, 'C', 12, '1', '1', '2017-11-29 22:15:20', '2017-11-30 13:43:13'),
-(8, 1, '信用卡(分18期)', 100, 200, 'C', 18, '1', '1', '2017-11-29 22:15:31', '2017-11-30 13:43:13'),
-(9, 1, '信用卡(分24期)', 100, 200, 'C', 24, '1', '1', '2017-11-29 22:15:39', '2017-11-30 13:43:13');
+(1, 1, '信用卡(一次付清)', 200, 100, 'C', 0, '1', '1', '0000-00-00 00:00:00', '2017-12-07 13:54:53'),
+(2, 1, 'ATM', 0, 0, 'A', 0, '1', '1', '0000-00-00 00:00:00', '2017-12-07 13:54:53'),
+(3, 1, '信用卡(分3期)', 100, 200, 'C', 3, '1', '1', '0000-00-00 00:00:00', '2017-12-07 13:54:53'),
+(4, 1, '信用卡(分3期)', 100, 200, 'C', 3, '1', '1', '2017-11-29 22:14:46', '2017-12-07 13:54:53'),
+(5, 1, '信用卡(分6期)', 100, 200, 'C', 6, '1', '1', '2017-11-29 22:14:57', '2017-12-07 13:54:53'),
+(6, 1, '信用卡(分9期)', 100, 200, 'C', 9, '1', '1', '2017-11-29 22:15:08', '2017-12-07 13:54:53'),
+(7, 1, '信用卡(分12期)', 100, 200, 'C', 12, '1', '1', '2017-11-29 22:15:20', '2017-12-07 13:54:53'),
+(8, 1, '信用卡(分18期)', 100, 200, 'C', 18, '1', '1', '2017-11-29 22:15:31', '2017-12-07 13:54:53'),
+(9, 1, '信用卡(分24期)', 100, 200, 'C', 24, '1', '1', '2017-11-29 22:15:39', '2017-12-07 13:54:53');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `proclass`
+-- 資料表結構 `proclass`
 --
 
-DROP TABLE IF EXISTS `proclass`;
 CREATE TABLE `proclass` (
   `no` int(11) NOT NULL COMMENT '類別編號 (PK)',
   `parent` int(11) NOT NULL COMMENT '上層編號(0:主類別，>0: 次類別)',
@@ -3088,7 +3184,7 @@ CREATE TABLE `proclass` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品類別';
 
 --
--- Dumping data for table `proclass`
+-- 資料表的匯出資料 `proclass`
 --
 
 INSERT INTO `proclass` (`no`, `parent`, `pcname`, `sort`, `status`, `lang`, `addtime`, `updatetime`) VALUES
@@ -3114,10 +3210,9 @@ INSERT INTO `proclass` (`no`, `parent`, `pcname`, `sort`, `status`, `lang`, `add
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productclass`
+-- 資料表結構 `productclass`
 --
 
-DROP TABLE IF EXISTS `productclass`;
 CREATE TABLE `productclass` (
   `no` int(11) NOT NULL COMMENT '圖片流水號(PK)',
   `proid` varchar(20) NOT NULL COMMENT '商品編號',
@@ -3129,7 +3224,7 @@ CREATE TABLE `productclass` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `productclass`
+-- 資料表的匯出資料 `productclass`
 --
 
 INSERT INTO `productclass` (`no`, `proid`, `pcno1`, `pcno2`, `pcno3`, `addtime`, `updatetime`) VALUES
@@ -3157,10 +3252,9 @@ INSERT INTO `productclass` (`no`, `proid`, `pcno1`, `pcno2`, `pcno3`, `addtime`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productpics`
+-- 資料表結構 `productpics`
 --
 
-DROP TABLE IF EXISTS `productpics`;
 CREATE TABLE `productpics` (
   `no` int(11) NOT NULL COMMENT '圖片流水號(PK)',
   `proid` varchar(20) NOT NULL COMMENT '商品編號',
@@ -3172,7 +3266,7 @@ CREATE TABLE `productpics` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品圖片';
 
 --
--- Dumping data for table `productpics`
+-- 資料表的匯出資料 `productpics`
 --
 
 INSERT INTO `productpics` (`no`, `proid`, `picname`, `picfile`, `sort`, `addtime`, `updatetime`) VALUES
@@ -3206,10 +3300,9 @@ INSERT INTO `productpics` (`no`, `proid`, `picname`, `picfile`, `sort`, `addtime
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- 資料表結構 `products`
 --
 
-DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `proid` varchar(20) NOT NULL COMMENT '商品編號 (PK)',
   `suppid` varchar(20) NOT NULL COMMENT '供應商ID',
@@ -3242,7 +3335,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品資料';
 
 --
--- Dumping data for table `products`
+-- 資料表的匯出資料 `products`
 --
 
 INSERT INTO `products` (`proid`, `suppid`, `proname`, `prointro`, `pcno`, `price`, `PV`, `bonuce`, `stock`, `prodetail`, `protags`, `weight`, `size`, `promo_start`, `promo_end`, `promo_price`, `promo_PV`, `promo_bonuce`, `uptime`, `downtime`, `memo`, `checkmemo`, `checktime`, `status`, `lang`, `viewcounts`, `addtime`, `updatetime`) VALUES
@@ -3268,10 +3361,9 @@ INSERT INTO `products` (`proid`, `suppid`, `proname`, `prointro`, `pcno`, `price
 -- --------------------------------------------------------
 
 --
--- Table structure for table `protags`
+-- 資料表結構 `protags`
 --
 
-DROP TABLE IF EXISTS `protags`;
 CREATE TABLE `protags` (
   `no` int(11) NOT NULL COMMENT '標籤編號(流水號) ',
   `name` varchar(20) NOT NULL COMMENT '標籤名稱',
@@ -3284,7 +3376,7 @@ CREATE TABLE `protags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `protags`
+-- 資料表的匯出資料 `protags`
 --
 
 INSERT INTO `protags` (`no`, `name`, `pic`, `color`, `sort`, `lang`, `addtime`, `updatetime`) VALUES
@@ -3294,10 +3386,9 @@ INSERT INTO `protags` (`no`, `name`, `pic`, `color`, `sort`, `lang`, `addtime`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rules`
+-- 資料表結構 `rules`
 --
 
-DROP TABLE IF EXISTS `rules`;
 CREATE TABLE `rules` (
   `r_id` int(11) NOT NULL COMMENT '流水號(PK)',
   `r_name` varchar(80) NOT NULL COMMENT '角色名稱',
@@ -3310,7 +3401,7 @@ CREATE TABLE `rules` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='權限角色';
 
 --
--- Dumping data for table `rules`
+-- 資料表的匯出資料 `rules`
 --
 
 INSERT INTO `rules` (`r_id`, `r_name`, `r_depiction`, `r_superadmin`, `r_system`, `r_admin`, `r_updatetime`, `r_createtime`) VALUES
@@ -3322,10 +3413,9 @@ INSERT INTO `rules` (`r_id`, `r_name`, `r_depiction`, `r_superadmin`, `r_system`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rules_auth`
+-- 資料表結構 `rules_auth`
 --
 
-DROP TABLE IF EXISTS `rules_auth`;
 CREATE TABLE `rules_auth` (
   `r_id` int(11) NOT NULL COMMENT '角色表ID',
   `ra_main_key` int(11) NOT NULL COMMENT '主功能key',
@@ -3337,7 +3427,7 @@ CREATE TABLE `rules_auth` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='權限記錄表';
 
 --
--- Dumping data for table `rules_auth`
+-- 資料表的匯出資料 `rules_auth`
 --
 
 INSERT INTO `rules_auth` (`r_id`, `ra_main_key`, `ra_fun_key`, `ra_auth`, `ra_admin`, `ra_updatetime`, `ra_createtime`) VALUES
@@ -3392,10 +3482,9 @@ INSERT INTO `rules_auth` (`r_id`, `ra_main_key`, `ra_fun_key`, `ra_auth`, `ra_ad
 -- --------------------------------------------------------
 
 --
--- Table structure for table `settings`
+-- 資料表結構 `settings`
 --
 
-DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `key` varchar(10) NOT NULL COMMENT '設定鍵值',
@@ -3406,7 +3495,7 @@ CREATE TABLE `settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='網站資料設定';
 
 --
--- Dumping data for table `settings`
+-- 資料表的匯出資料 `settings`
 --
 
 INSERT INTO `settings` (`no`, `key`, `name`, `value`, `lang`, `updatetime`) VALUES
@@ -3425,10 +3514,9 @@ INSERT INTO `settings` (`no`, `key`, `name`, `value`, `lang`, `updatetime`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shippings`
+-- 資料表結構 `shippings`
 --
 
-DROP TABLE IF EXISTS `shippings`;
 CREATE TABLE `shippings` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `logno` int(11) NOT NULL COMMENT '物流業者編號',
@@ -3444,7 +3532,7 @@ CREATE TABLE `shippings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='配送方式';
 
 --
--- Dumping data for table `shippings`
+-- 資料表的匯出資料 `shippings`
 --
 
 INSERT INTO `shippings` (`no`, `logno`, `shiptype`, `size`, `platform`, `supplier`, `nocharge`, `forSupplier`, `status`, `addtime`, `updatetime`) VALUES
@@ -3453,10 +3541,9 @@ INSERT INTO `shippings` (`no`, `logno`, `shiptype`, `size`, `platform`, `supplie
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shiptypes`
+-- 資料表結構 `shiptypes`
 --
 
-DROP TABLE IF EXISTS `shiptypes`;
 CREATE TABLE `shiptypes` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `name` varchar(20) NOT NULL COMMENT '配送名稱',
@@ -3466,7 +3553,7 @@ CREATE TABLE `shiptypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `shiptypes`
+-- 資料表的匯出資料 `shiptypes`
 --
 
 INSERT INTO `shiptypes` (`no`, `name`, `type`, `addtime`, `updatetime`) VALUES
@@ -3476,10 +3563,9 @@ INSERT INTO `shiptypes` (`no`, `name`, `type`, `addtime`, `updatetime`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `smslogs`
+-- 資料表結構 `smslogs`
 --
 
-DROP TABLE IF EXISTS `smslogs`;
 CREATE TABLE `smslogs` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `phone` varchar(20) NOT NULL COMMENT '發送電話號碼',
@@ -3490,35 +3576,9 @@ CREATE TABLE `smslogs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `suppconstores`
+-- 資料表結構 `supplierPC`
 --
 
-DROP TABLE IF EXISTS `suppconstores`;
-CREATE TABLE `suppconstores` (
-  `no` int(11) NOT NULL COMMENT '流水號(PK)',
-  `suppid` varchar(20) NOT NULL COMMENT '供應商ID',
-  `store_name` varchar(50) NOT NULL COMMENT '門市名稱',
-  `store_addr` varchar(250) NOT NULL COMMENT '門市地址',
-  `store_tel` varchar(50) NOT NULL COMMENT '門市電話',
-  `store_bustime` varchar(50) NOT NULL COMMENT '營業時間',
-  `addtime` datetime NOT NULL COMMENT '建立時間',
-  `updatetime` datetime NOT NULL COMMENT '修改時間'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `suppconstores`
---
-
-INSERT INTO `suppconstores` (`no`, `suppid`, `store_name`, `store_addr`, `store_tel`, `store_bustime`, `addtime`, `updatetime`) VALUES
-(1, 'TEST001', '萊爾富台中忠孝店', '台中市南區忠孝路100號', '0988888888', '全年無休', '2017-11-27 10:40:52', '2017-11-27 10:40:52');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `supplierPC`
---
-
-DROP TABLE IF EXISTS `supplierPC`;
 CREATE TABLE `supplierPC` (
   `suppid` varchar(20) NOT NULL COMMENT '供應商ID(PK)',
   `pc_no` int(11) NOT NULL COMMENT '商品類別編號(第一層類別) (PK)',
@@ -3530,7 +3590,7 @@ CREATE TABLE `supplierPC` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `supplierPC`
+-- 資料表的匯出資料 `supplierPC`
 --
 
 INSERT INTO `supplierPC` (`suppid`, `pc_no`, `serviceP`, `PVP`, `bonuceP`, `addtime`, `updatetime`) VALUES
@@ -3542,10 +3602,9 @@ INSERT INTO `supplierPC` (`suppid`, `pc_no`, `serviceP`, `PVP`, `bonuceP`, `addt
 -- --------------------------------------------------------
 
 --
--- Table structure for table `suppliers`
+-- 資料表結構 `suppliers`
 --
 
-DROP TABLE IF EXISTS `suppliers`;
 CREATE TABLE `suppliers` (
   `suppid` varchar(20) NOT NULL COMMENT '供應商ID(PK)',
   `account` varchar(20) NOT NULL COMMENT '主帳號',
@@ -3576,22 +3635,21 @@ CREATE TABLE `suppliers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='供應商資料';
 
 --
--- Dumping data for table `suppliers`
+-- 資料表的匯出資料 `suppliers`
 --
 
 INSERT INTO `suppliers` (`suppid`, `account`, `password`, `rights`, `deputy_administrator_suppid`, `name`, `platform`, `name_en`, `company_no`, `principal`, `tel`, `fax`, `reg_address`, `con_address`, `contact`, `contact_phone`, `bank`, `bank_branch`, `bank_code`, `bank_account`, `management_ip`, `mid`, `status`, `addtime`, `updatetime`, `logintime`) VALUES
 ('1111', 'testtest', '05a671c66aefea124cc08b76ea6d30bb', 2, 'TEST001', 'test', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'bc8770c9e6d7b90fdf0836a5777321b7151053960121679jm48k40c7blol6e2sshkq7nk34', 1, '2017-11-13 10:20:01', '2017-11-13 10:20:01', '0000-00-00 00:00:00'),
 ('111111', 'guest1234', 'fac38cbc2e0af6719ea5c399e832739e', 3, 'TEST001', 'guest', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'cfc58de03004c72d83b8615cbccafc81151140745049509n4b0abu9datcnphf3ek72n0aj6', 1, '2017-11-23 11:24:10', '2017-11-23 11:24:10', '0000-00-00 00:00:00'),
-('TEST001', 'test', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, NULL, 'TEST', 'TEST', 'TEST', '1234567890', 'TEST USER', '0922666555', '0422228888', 'TEST ADDRESS', 'TEST ADDRESS', 'TEST USER', '0933222333', '', '', '', '', '122.116.150.119', 'e05c57b8a84c0395614f92ea2185d630151254201635186g60nbddccb10a38e12rktc1vn4', 1, '2017-11-06 15:12:22', '2017-11-06 15:19:51', '2017-12-06 14:33:36'),
+('TEST001', 'test', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, NULL, 'TEST', 'TEST', 'TEST', '1234567890', 'TEST USER', '0922666555', '0422228888', 'TEST ADDRESS', 'TEST ADDRESS', 'TEST USER', '0933222333', '', '', '', '', '211.21.65.1', '5075ee05f783cff74c81a8cf3daadc11151263022827202p5beda5jq7abgqc5v2fp2led04', 1, '2017-11-06 15:12:22', '2017-11-06 15:19:51', '2017-12-07 15:03:48'),
 ('test02', 'testtest02', '8878517d3fe47557af068e82a3411835', 1, NULL, 'test02', 'test02', 'tes', '11111', '', '', '', '', '', '', '', '', '', '', '', '211.21.65.1', '1ff1abfbc20e853f4ccbd6ff8dbaefd31512028306797251vem7bbud0vubguncj3fr4smg5', 1, '2017-11-30 14:58:18', '2017-11-30 14:59:29', '2017-11-30 15:51:46');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supplierslogs`
+-- 資料表結構 `supplierslogs`
 --
 
-DROP TABLE IF EXISTS `supplierslogs`;
 CREATE TABLE `supplierslogs` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `account` varchar(20) NOT NULL COMMENT '管理者帳號',
@@ -3607,7 +3665,7 @@ CREATE TABLE `supplierslogs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='供應商後台管理者操作紀錄';
 
 --
--- Dumping data for table `supplierslogs`
+-- 資料表的匯出資料 `supplierslogs`
 --
 
 INSERT INTO `supplierslogs` (`no`, `account`, `main_key`, `fun_key`, `action`, `descript`, `table`, `data`, `suppid`, `ip`, `addtime`) VALUES
@@ -3978,15 +4036,18 @@ INSERT INTO `supplierslogs` (`no`, `account`, `main_key`, `fun_key`, `action`, `
 (365, 'test', 3, 1, 2, '列表', '', '', 'TEST001', '122.116.150.119', '2017-12-06 15:18:40'),
 (366, 'test', 2, 1, 2, '列表', '', '', 'TEST001', '122.116.150.119', '2017-12-06 17:55:46'),
 (367, 'test', 3, 1, 2, '列表', '', '', 'TEST001', '122.116.150.119', '2017-12-06 17:55:52'),
-(368, 'test', 3, 1, 8, 'TEEEEEES id:TEEEEEEST', '', '', 'TEST001', '122.116.150.119', '2017-12-06 17:56:12');
+(368, 'test', 3, 1, 8, 'TEEEEEES id:TEEEEEEST', '', '', 'TEST001', '122.116.150.119', '2017-12-06 17:56:12'),
+(369, 'test', 3, 1, 2, '列表', '', '', 'TEST001', '122.116.150.119', '2017-12-07 10:36:10'),
+(370, 'admin', 0, 0, 1, 'admin登入失敗-帳密不正確', '', '', '', '120.108.127.29', '2017-12-07 14:36:52'),
+(371, 'admin', 0, 0, 1, 'admin登入失敗-帳密不正確', '', '', '', '120.108.127.29', '2017-12-07 14:36:57'),
+(372, 'test', 0, 0, 1, 'suppliers登入成功', '', '', 'TEST001', '211.21.65.1', '2017-12-07 15:03:48');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `suppliers_rules`
+-- 資料表結構 `suppliers_rules`
 --
 
-DROP TABLE IF EXISTS `suppliers_rules`;
 CREATE TABLE `suppliers_rules` (
   `sr_id` int(11) NOT NULL COMMENT '流水號(PK)',
   `sr_name` varchar(80) NOT NULL COMMENT '角色名稱',
@@ -4000,7 +4061,7 @@ CREATE TABLE `suppliers_rules` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='權限角色';
 
 --
--- Dumping data for table `suppliers_rules`
+-- 資料表的匯出資料 `suppliers_rules`
 --
 
 INSERT INTO `suppliers_rules` (`sr_id`, `sr_name`, `sr_depiction`, `sr_superadmin`, `sr_system`, `sr_suppid`, `sr_admin`, `sr_updatetime`, `sr_createtime`) VALUES
@@ -4011,10 +4072,9 @@ INSERT INTO `suppliers_rules` (`sr_id`, `sr_name`, `sr_depiction`, `sr_superadmi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `suppliers_rules_auth`
+-- 資料表結構 `suppliers_rules_auth`
 --
 
-DROP TABLE IF EXISTS `suppliers_rules_auth`;
 CREATE TABLE `suppliers_rules_auth` (
   `sr_id` int(11) NOT NULL COMMENT '角色表ID',
   `sra_main_key` int(11) NOT NULL COMMENT '主功能key',
@@ -4026,7 +4086,7 @@ CREATE TABLE `suppliers_rules_auth` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='權限記錄表';
 
 --
--- Dumping data for table `suppliers_rules_auth`
+-- 資料表的匯出資料 `suppliers_rules_auth`
 --
 
 INSERT INTO `suppliers_rules_auth` (`sr_id`, `sra_main_key`, `sra_fun_key`, `sra_auth`, `sra_admin`, `sra_updatetime`, `sra_createtime`) VALUES
@@ -4050,10 +4110,9 @@ INSERT INTO `suppliers_rules_auth` (`sr_id`, `sra_main_key`, `sra_fun_key`, `sra
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supporderdetail`
+-- 資料表結構 `supporderdetail`
 --
 
-DROP TABLE IF EXISTS `supporderdetail`;
 CREATE TABLE `supporderdetail` (
   `ordid` varchar(20) NOT NULL COMMENT '訂單編號(PK)',
   `odno` int(11) NOT NULL COMMENT '項目流水號(PK)',
@@ -4069,10 +4128,9 @@ CREATE TABLE `supporderdetail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supporders`
+-- 資料表結構 `supporders`
 --
 
-DROP TABLE IF EXISTS `supporders`;
 CREATE TABLE `supporders` (
   `ordid` varchar(20) NOT NULL COMMENT '訂單編號(PK)',
   `orddate` date NOT NULL COMMENT '訂單日期',
@@ -4091,7 +4149,7 @@ CREATE TABLE `supporders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='經銷商訂單';
 
 --
--- Dumping data for table `supporders`
+-- 資料表的匯出資料 `supporders`
 --
 
 INSERT INTO `supporders` (`ordid`, `orddate`, `suppid`, `discount`, `discount_price`, `pay_no`, `pay_price`, `ispay`, `installment`, `total_price`, `freight`, `PV`, `bonuce`, `profit`) VALUES
@@ -4100,10 +4158,9 @@ INSERT INTO `supporders` (`ordid`, `orddate`, `suppid`, `discount`, `discount_pr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supppayments`
+-- 資料表結構 `supppayments`
 --
 
-DROP TABLE IF EXISTS `supppayments`;
 CREATE TABLE `supppayments` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `suppid` varchar(20) NOT NULL COMMENT '供應商ID',
@@ -4115,7 +4172,7 @@ CREATE TABLE `supppayments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='經銷商付款方式';
 
 --
--- Dumping data for table `supppayments`
+-- 資料表的匯出資料 `supppayments`
 --
 
 INSERT INTO `supppayments` (`no`, `suppid`, `mfno`, `payno`, `status`, `addtime`, `updatetime`) VALUES
@@ -4130,10 +4187,9 @@ INSERT INTO `supppayments` (`no`, `suppid`, `mfno`, `payno`, `status`, `addtime`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `suppshippings`
+-- 資料表結構 `suppshippings`
 --
 
-DROP TABLE IF EXISTS `suppshippings`;
 CREATE TABLE `suppshippings` (
   `no` int(11) NOT NULL COMMENT '流水號(PK)',
   `suppid` varchar(20) NOT NULL COMMENT '供應商ID',
@@ -4145,375 +4201,399 @@ CREATE TABLE `suppshippings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='經銷商配送方式';
 
 --
--- Dumping data for table `suppshippings`
+-- 資料表的匯出資料 `suppshippings`
 --
 
 INSERT INTO `suppshippings` (`no`, `suppid`, `logno`, `shipno`, `status`, `addtime`, `updatetime`) VALUES
 (1, 'TEST001', 1, 1, '1', '2017-11-27 10:40:52', '2017-11-27 10:40:52');
 
+-- --------------------------------------------------------
+
 --
--- Indexes for dumped tables
+-- 資料表結構 `suppstores`
+--
+
+CREATE TABLE `suppstores` (
+  `no` int(11) NOT NULL COMMENT '流水號(PK)',
+  `suppid` varchar(20) NOT NULL COMMENT '供應商ID',
+  `store_name` varchar(50) NOT NULL COMMENT '門市名稱',
+  `store_addr` varchar(250) NOT NULL COMMENT '門市地址',
+  `store_tel` varchar(50) NOT NULL COMMENT '門市電話',
+  `store_bustime` varchar(50) NOT NULL COMMENT '營業時間',
+  `addtime` datetime NOT NULL COMMENT '建立時間',
+  `updatetime` datetime NOT NULL COMMENT '修改時間'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 資料表的匯出資料 `suppstores`
+--
+
+INSERT INTO `suppstores` (`no`, `suppid`, `store_name`, `store_addr`, `store_tel`, `store_bustime`, `addtime`, `updatetime`) VALUES
+(1, 'TEST001', '萊爾富台中忠孝店', '台中市南區忠孝路100號', '0988888888', '全年無休', '2017-11-27 10:40:52', '2017-11-27 10:40:52');
+
+--
+-- 已匯出資料表的索引
 --
 
 --
--- Indexes for table `banners`
+-- 資料表索引 `banners`
 --
 ALTER TABLE `banners`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `checkout`
+-- 資料表索引 `checkout`
 --
 ALTER TABLE `checkout`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cstypes`
+-- 資料表索引 `cstypes`
 --
 ALTER TABLE `cstypes`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `customerservices`
+-- 資料表索引 `customerservices`
 --
 ALTER TABLE `customerservices`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `floginlogs`
+-- 資料表索引 `floginlogs`
 --
 ALTER TABLE `floginlogs`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `languages`
+-- 資料表索引 `languages`
 --
 ALTER TABLE `languages`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `logistics`
+-- 資料表索引 `logistics`
 --
 ALTER TABLE `logistics`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `managerlogs`
+-- 資料表索引 `managerlogs`
 --
 ALTER TABLE `managerlogs`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `managers`
+-- 資料表索引 `managers`
 --
 ALTER TABLE `managers`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `members`
+-- 資料表索引 `members`
 --
 ALTER TABLE `members`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `moneyflows`
+-- 資料表索引 `moneyflows`
 --
 ALTER TABLE `moneyflows`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `orderdetail`
+-- 資料表索引 `orderdetail`
 --
 ALTER TABLE `orderdetail`
   ADD PRIMARY KEY (`ordid`,`odno`);
 
 --
--- Indexes for table `orders`
+-- 資料表索引 `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`ordid`);
 
 --
--- Indexes for table `pages`
+-- 資料表索引 `pages`
 --
 ALTER TABLE `pages`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `payments`
+-- 資料表索引 `payments`
 --
 ALTER TABLE `payments`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `proclass`
+-- 資料表索引 `proclass`
 --
 ALTER TABLE `proclass`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `productclass`
+-- 資料表索引 `productclass`
 --
 ALTER TABLE `productclass`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `productpics`
+-- 資料表索引 `productpics`
 --
 ALTER TABLE `productpics`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `products`
+-- 資料表索引 `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`proid`);
 
 --
--- Indexes for table `protags`
+-- 資料表索引 `protags`
 --
 ALTER TABLE `protags`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `rules`
+-- 資料表索引 `rules`
 --
 ALTER TABLE `rules`
   ADD UNIQUE KEY `a_id` (`r_id`);
 
 --
--- Indexes for table `rules_auth`
+-- 資料表索引 `rules_auth`
 --
 ALTER TABLE `rules_auth`
   ADD PRIMARY KEY (`r_id`,`ra_main_key`,`ra_fun_key`),
   ADD KEY `r_id` (`r_id`);
 
 --
--- Indexes for table `settings`
+-- 資料表索引 `settings`
 --
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `shippings`
+-- 資料表索引 `shippings`
 --
 ALTER TABLE `shippings`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `shiptypes`
+-- 資料表索引 `shiptypes`
 --
 ALTER TABLE `shiptypes`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `smslogs`
+-- 資料表索引 `smslogs`
 --
 ALTER TABLE `smslogs`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `suppconstores`
---
-ALTER TABLE `suppconstores`
-  ADD PRIMARY KEY (`no`);
-
---
--- Indexes for table `supplierPC`
+-- 資料表索引 `supplierPC`
 --
 ALTER TABLE `supplierPC`
   ADD PRIMARY KEY (`suppid`,`pc_no`);
 
 --
--- Indexes for table `suppliers`
+-- 資料表索引 `suppliers`
 --
 ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`suppid`),
   ADD UNIQUE KEY `account` (`account`);
 
 --
--- Indexes for table `supplierslogs`
+-- 資料表索引 `supplierslogs`
 --
 ALTER TABLE `supplierslogs`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `suppliers_rules`
+-- 資料表索引 `suppliers_rules`
 --
 ALTER TABLE `suppliers_rules`
   ADD UNIQUE KEY `sr_id` (`sr_id`);
 
 --
--- Indexes for table `suppliers_rules_auth`
+-- 資料表索引 `suppliers_rules_auth`
 --
 ALTER TABLE `suppliers_rules_auth`
   ADD PRIMARY KEY (`sr_id`,`sra_main_key`,`sra_fun_key`),
   ADD KEY `sr_id` (`sr_id`);
 
 --
--- Indexes for table `supporderdetail`
+-- 資料表索引 `supporderdetail`
 --
 ALTER TABLE `supporderdetail`
   ADD PRIMARY KEY (`ordid`,`odno`);
 
 --
--- Indexes for table `supppayments`
+-- 資料表索引 `supppayments`
 --
 ALTER TABLE `supppayments`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `suppshippings`
+-- 資料表索引 `suppshippings`
 --
 ALTER TABLE `suppshippings`
   ADD PRIMARY KEY (`no`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 資料表索引 `suppstores`
+--
+ALTER TABLE `suppstores`
+  ADD PRIMARY KEY (`no`);
+
+--
+-- 在匯出的資料表使用 AUTO_INCREMENT
 --
 
 --
--- AUTO_INCREMENT for table `banners`
+-- 使用資料表 AUTO_INCREMENT `banners`
 --
 ALTER TABLE `banners`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=7;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT for table `checkout`
+-- 使用資料表 AUTO_INCREMENT `checkout`
 --
 ALTER TABLE `checkout`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '結帳ID (PK)';
 --
--- AUTO_INCREMENT for table `cstypes`
+-- 使用資料表 AUTO_INCREMENT `cstypes`
 --
 ALTER TABLE `cstypes`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `customerservices`
+-- 使用資料表 AUTO_INCREMENT `customerservices`
 --
 ALTER TABLE `customerservices`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `floginlogs`
+-- 使用資料表 AUTO_INCREMENT `floginlogs`
 --
 ALTER TABLE `floginlogs`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)';
 --
--- AUTO_INCREMENT for table `languages`
+-- 使用資料表 AUTO_INCREMENT `languages`
 --
 ALTER TABLE `languages`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `logistics`
+-- 使用資料表 AUTO_INCREMENT `logistics`
 --
 ALTER TABLE `logistics`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `managerlogs`
+-- 使用資料表 AUTO_INCREMENT `managerlogs`
 --
 ALTER TABLE `managerlogs`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=2577;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=2694;
 --
--- AUTO_INCREMENT for table `managers`
+-- 使用資料表 AUTO_INCREMENT `managers`
 --
 ALTER TABLE `managers`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `moneyflows`
+-- 使用資料表 AUTO_INCREMENT `moneyflows`
 --
 ALTER TABLE `moneyflows`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `pages`
+-- 使用資料表 AUTO_INCREMENT `pages`
 --
 ALTER TABLE `pages`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT for table `payments`
+-- 使用資料表 AUTO_INCREMENT `payments`
 --
 ALTER TABLE `payments`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT for table `proclass`
+-- 使用資料表 AUTO_INCREMENT `proclass`
 --
 ALTER TABLE `proclass`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '類別編號 (PK)', AUTO_INCREMENT=26;
 --
--- AUTO_INCREMENT for table `productclass`
+-- 使用資料表 AUTO_INCREMENT `productclass`
 --
 ALTER TABLE `productclass`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '圖片流水號(PK)', AUTO_INCREMENT=21;
 --
--- AUTO_INCREMENT for table `productpics`
+-- 使用資料表 AUTO_INCREMENT `productpics`
 --
 ALTER TABLE `productpics`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '圖片流水號(PK)', AUTO_INCREMENT=27;
 --
--- AUTO_INCREMENT for table `protags`
+-- 使用資料表 AUTO_INCREMENT `protags`
 --
 ALTER TABLE `protags`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '標籤編號(流水號) ', AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `rules`
+-- 使用資料表 AUTO_INCREMENT `rules`
 --
 ALTER TABLE `rules`
   MODIFY `r_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `settings`
+-- 使用資料表 AUTO_INCREMENT `settings`
 --
 ALTER TABLE `settings`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT for table `shippings`
+-- 使用資料表 AUTO_INCREMENT `shippings`
 --
 ALTER TABLE `shippings`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `shiptypes`
+-- 使用資料表 AUTO_INCREMENT `shiptypes`
 --
 ALTER TABLE `shiptypes`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `smslogs`
+-- 使用資料表 AUTO_INCREMENT `smslogs`
 --
 ALTER TABLE `smslogs`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)';
 --
--- AUTO_INCREMENT for table `suppconstores`
---
-ALTER TABLE `suppconstores`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `supplierslogs`
+-- 使用資料表 AUTO_INCREMENT `supplierslogs`
 --
 ALTER TABLE `supplierslogs`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=369;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=373;
 --
--- AUTO_INCREMENT for table `suppliers_rules`
+-- 使用資料表 AUTO_INCREMENT `suppliers_rules`
 --
 ALTER TABLE `suppliers_rules`
   MODIFY `sr_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `supppayments`
+-- 使用資料表 AUTO_INCREMENT `supppayments`
 --
 ALTER TABLE `supppayments`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT for table `suppshippings`
+-- 使用資料表 AUTO_INCREMENT `suppshippings`
 --
 ALTER TABLE `suppshippings`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=2;
 --
--- Constraints for dumped tables
+-- 使用資料表 AUTO_INCREMENT `suppstores`
+--
+ALTER TABLE `suppstores`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號(PK)', AUTO_INCREMENT=2;
+--
+-- 已匯出資料表的限制(Constraint)
 --
 
 --
--- Constraints for table `rules_auth`
+-- 資料表的 Constraints `rules_auth`
 --
 ALTER TABLE `rules_auth`
   ADD CONSTRAINT `rules_auth_ibfk_1` FOREIGN KEY (`r_id`) REFERENCES `rules` (`r_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `suppliers_rules_auth`
+-- 資料表的 Constraints `suppliers_rules_auth`
 --
 ALTER TABLE `suppliers_rules_auth`
   ADD CONSTRAINT `suppliers_rules_auth_ibfk_1` FOREIGN KEY (`sr_id`) REFERENCES `suppliers_rules` (`sr_id`) ON DELETE CASCADE ON UPDATE CASCADE;
