@@ -1,8 +1,6 @@
 <?php
 include 'db.php';
 session_start();
-?>
-<?php
 
 $errorMessage = "";
 foreach ($_POST as $k => $v) {
@@ -21,13 +19,18 @@ if (empty($errorMessage)) {
 
     $insertData = encodeRegisterData($_POST);
 
+    // 珍菌堂會員/直銷會員 串接 API
+    if ($_POST['type'] == 2) {
+
+    }
+
     $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] .
         ' AND type=' . $insertData['type'];
 
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
 
-    $rs2 = mysqli_query($conn,$sql);
+    $rs2 = mysqli_query($conn, $sql);
     $row2 = mysqli_fetch_assoc($rs2);
 
     if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
