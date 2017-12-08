@@ -2,8 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
 // 輪播資料
 $sql = "select * from banners where status=1 order by sort";
 $banners = array();
@@ -83,11 +82,11 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
 
     <?php include 'http_head.php'; ?>
 
-<!--    <style>-->
-<!--        .product-area .pd-pic img {-->
-<!--            height: 250px;-->
-<!--        }-->
-<!--    </style>-->
+    <!--    <style>-->
+    <!--        .product-area .pd-pic img {-->
+    <!--            height: 250px;-->
+    <!--        }-->
+    <!--    </style>-->
 
 </head>
 
@@ -229,6 +228,8 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
             }
         }
     });
+
+    $(".pd-pic").height(($(".pd-pic").width() * 6) / 5);
 </script>
 
 </body>
