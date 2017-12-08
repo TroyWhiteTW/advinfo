@@ -51,7 +51,7 @@ if ($isLogin) {
 
                             <div class="login-tittle">會員登入</div>
 
-                            <form id="login_form" action="memberLogin.php" method="post">
+                            <form id="login_form" method="post">
 
                                 <table width="100%" border="0">
 
@@ -59,21 +59,31 @@ if ($isLogin) {
 
                                     <tr>
                                         <td class="td-04">會員帳號</td>
-                                        <td><input type="text" name="email" class="input-4"><a
-                                                    href="login_forget1.php"><span> 忘記帳號</span></a></td>
+                                        <td>
+                                            <input id="email" type="text" name="email" class="input-4">
+                                            <a href="login_forget1.php">
+                                                <div style="display: inline-block;"> 忘記帳號</div>
+                                            </a>
+                                        </td>
                                     </tr>
 
                                     <tr>
                                         <td class="td-04">會員密碼</td>
-                                        <td><input type="password" name="password" class="input-4"><a
-                                                    href="login_forget2.php"><span> 忘記密碼</span></a></td>
+                                        <td>
+                                            <input id="password" type="password" name="password" class="input-4">
+                                            <a href="login_forget2.php">
+                                                <div style="display: inline-block;"> 忘記密碼</div>
+                                            </a>
+                                        </td>
                                     </tr>
 
                                     <tr>
                                         <td class="td-04">驗證碼</td>
-                                        <td><input onkeyup="ajaxForCheckCaptcha();" id="validate_code" type="text"
+                                        <td>
+                                            <input onkeyup="ajaxForCheckCaptcha();" id="validate_code" type="text"
                                                    name="validate_code" class="input-5">
                                             <span id="captcha"><img src="captcha.php" width="100" height="25"/></span>
+                                            <br/>
                                             <span id="captchaIcon" class="glyphicon glyphicon-remove"></span>
                                             <a style="cursor: pointer" id="change_captcha">換一張</a>
                                             <script>
@@ -89,14 +99,51 @@ if ($isLogin) {
                                         <td colspan="2" style="text-align:center;">
                                             <input id="typeData" name="type" value="0" hidden="hidden">
                                             <input id="type1login" type="submit" class="btn btn-default" value="商城會員登入">
-                                            <input id="type2login" type="submit" class="btn btn-default" value="珍菌堂會員登入">
+                                            <input id="type2login" type="submit" class="btn btn-default"
+                                                   value="珍菌堂會員登入">
                                             <script>
+
+                                                function ajaxLogin() {
+                                                    $.ajax({
+                                                        url: "./memberLogin.php",
+                                                        type: 'POST',
+                                                        data: {
+                                                            email: document.getElementById('email').value,
+                                                            password: document.getElementById('password').value,
+                                                            validate_code: document.getElementById('validate_code').value,
+                                                            type: document.getElementById('typeData').value
+                                                        },
+                                                        error: function () {
+                                                            alert('發生錯誤');
+                                                        },
+                                                        success: function (response) {
+                                                            switch (response) {
+                                                                case '0':
+                                                                    alert('帳號或密碼錯誤');
+                                                                    break;
+                                                                case '1':
+                                                                    // alert('登入成功');
+                                                                    window.location = './index.php';
+                                                                    break;
+                                                                case '2':
+                                                                    alert('驗證碼錯誤');
+                                                                    break;
+                                                                default:
+                                                                    alert(response);
+                                                                    break;
+                                                            }
+                                                        }
+                                                    });
+                                                }
+
                                                 document.getElementById('type1login').addEventListener('click', function () {
                                                     document.getElementById('typeData').value = "1";
                                                 });
+
                                                 document.getElementById('type2login').addEventListener('click', function () {
                                                     document.getElementById('typeData').value = "2";
                                                 });
+
                                             </script>
                                         </td>
                                     </tr>
@@ -247,8 +294,10 @@ if ($isLogin) {
         //
         if (isDataCorrect === false) {
             alert(errorMessage);
-            e.preventDefault();
+        } else {
+            ajaxLogin();
         }
+        e.preventDefault();
     });
     //
 

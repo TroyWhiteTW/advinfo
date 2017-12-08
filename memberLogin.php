@@ -2,7 +2,7 @@
 include 'db.php';
 session_start();
 
-$errorMessage = "";
+$errorMessage = '';
 foreach ($_POST as $k => $v) {
     $_POST[$k] = trim($_POST[$k]);
 }
@@ -12,8 +12,9 @@ if (empty($errorMessage)) {
 
     //檢查驗證碼
     if ($_POST['validate_code'] !== $_SESSION['check_word']) {
-        echo "驗證碼錯誤，3秒後跳轉回登入頁...";
-        header("Refresh:3;url=login.php");
+        echo 2;
+//        echo "驗證碼錯誤，3秒後跳轉回登入頁...";
+//        header("Refresh:3;url=login.php");
         exit;
     }
 
@@ -21,11 +22,29 @@ if (empty($errorMessage)) {
 
     // 珍菌堂會員/直銷會員 串接 API
     if ($_POST['type'] == 2) {
-
+//        $url = "./API/MemberLogin";
+//
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $url);
+//        curl_setopt($ch, CURLOPT_POST, true);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
+//                array(
+//                    'MemberNo' => '123',
+//                    'MbPassword1' => '456',
+//                    'Ip' => '',
+//                    'LoginTime' => '',
+//                    'Token' => ''
+//                ))
+//        );
+//        $output = curl_exec($ch);
+//        curl_close($ch);
+//
+//        var_dump($output);
+//        return;
     }
 
-    $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] .
-        ' AND type=' . $insertData['type'];
+    $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
 
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
@@ -39,19 +58,22 @@ if (empty($errorMessage)) {
         $_SESSION['user'] = $row;
         $_SESSION['user2'] = $row2;
 
+        echo 1;
 //        echo "登入成功，3秒後跳轉回首頁...";
 //        header("Refresh:3;url=index.php");
-        header('Location:index.php');
+//        header('Location:index.php');
     } else {
-        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
-        header("Refresh:3;url=login.php");
+        echo 0;
+//        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
+//        header("Refresh:3;url=login.php");
     }
     $rs->close();
     $rs2->close();
+    exit;
 } else {
     echo "登入資料有誤:\n" . $errorMessage;
+    exit;
 }
-
 
 function checkData($post, &$msg)
 {
@@ -203,5 +225,3 @@ function encodeRegisterData($rawDataArray)
     }
     return $dataArray;
 }
-
-exit;
