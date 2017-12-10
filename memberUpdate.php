@@ -14,13 +14,7 @@ if (empty($errorMessage)) {
     //檢查通過 寫入資料庫
     $insertData = encodeRegisterData($_POST);
     $keys = array_keys($insertData);
-    $sqlStr = (function ($ks, $vs) {
-        $str = "";
-        foreach ($ks as $v) {
-            $str .= $v . "=" . $vs[$v] . ",";
-        }
-        return substr($str, 0, -1);
-    })($keys, $insertData);
+    $sqlStr = f3($keys, $insertData);
 
     $sql = 'UPDATE members SET ' . $sqlStr . ' WHERE id=' . "\"" . $_SESSION['user2']['id'] . "\"";
 
@@ -64,6 +58,14 @@ function f2($ks, $vs)
         $str .= $vs[$v] . ",";
     }
     return substr($str, 0, -1) . ")";
+}
+
+function f3($ks, $vs){
+    $str = "";
+    foreach ($ks as $v) {
+        $str .= $v . "=" . $vs[$v] . ",";
+    }
+    return substr($str, 0, -1);
 }
 
 function checkData($post, &$msg)
