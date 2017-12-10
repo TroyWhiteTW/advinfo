@@ -22,12 +22,12 @@ if (empty($errorMessage)) {
         return substr($str, 0, -1);
     })($keys, $insertData);
 
-    $sql = 'UPDATE members SET ' . $sqlStr . ' WHERE id=' . "\"" . $_SESSION['user'][0] . "\"";
+    $sql = 'UPDATE members SET ' . $sqlStr . ' WHERE id=' . "\"" . $_SESSION['user2']['id'] . "\"";
 
     $result = mysqli_query($conn, $sql);
     if ($result === true) {
 
-        $newSql = 'SELECT * FROM members WHERE email=' . "\"" . $_SESSION['user'][7] . "\"";
+        $newSql = 'SELECT * FROM members WHERE email=' . "\"" . $_SESSION['user2']['email'] . "\"";
         $rs = mysqli_query($conn, $newSql);
         $newRow = mysqli_fetch_array($rs, MYSQLI_NUM);;
         unset($_SESSION['user']);
