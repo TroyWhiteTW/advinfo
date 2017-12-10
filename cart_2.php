@@ -6,7 +6,9 @@ if (!$isLogin) {
     header('Location:index.php');
     exit;
 }
-if (!preg_match("/cart_1\.php$/", $_SERVER['HTTP_REFERER']) && !preg_match("/cart_3\.php$/", $_SERVER['HTTP_REFERER'])) {
+if (!preg_match("/cart_1\.php$/", $_SERVER['HTTP_REFERER']) &&
+    !preg_match("/cart_3\.php$/", $_SERVER['HTTP_REFERER']) &&
+    !preg_match("/showstore.asp/", $_SERVER['HTTP_REFERER'])) {
     header('Location:index.php');
     exit;
 }
@@ -263,37 +265,43 @@ $orders = unserialize($orders);
                                 <div class="function-area">
 
                                     <ul>
-
                                         <li>
-                                            <a href="">
-                                                <input type="button" id="" name="" class="" value="全家取貨門市">
+                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&csvid=0&cvstemp=cart">
+                                                <input type="button" id="" name="" class="" value="選擇門市">
                                             </a>
                                         </li>
-
-                                        <li>
-                                            <a href="">
-                                                <input type="button" id="" name="" class="" value="OK取貨門市">
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="">
-                                                <input type="button" id="" name="" class="" value="萊爾富取貨門市">
-                                            </a>
-                                        </li>
-
                                     </ul>
 
                                 </div>
 
                                 <div class="form-tittle">
                                     門市名稱：
-                                    <input name="store_name" id="" type="text" class="input-2">
+                                    <div class="form-input-2">
+                                        <?php
+                                        $a = explode(' ', $_SESSION['user2']['constore']);
+                                        foreach ($a as $k => $v) {
+                                            $b = explode('=', $v);
+                                            if ($b[0] == 'name') {
+                                                echo $b[1];
+                                            }
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
 
                                 <div class="form-tittle">
                                     門市地址：
-                                    <input name="store_addr" id="" type="text" class="input-2">
+                                    <div class="form-input-2">
+                                        <?php
+                                        $a = explode(' ', $_SESSION['user2']['constore']);
+                                        foreach ($a as $k => $v) {
+                                            $b = explode('=', $v);
+                                            if ($b[0] == 'addr') {
+                                                echo $b[1];
+                                            }
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
 
                             </div>

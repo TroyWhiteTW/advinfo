@@ -205,11 +205,11 @@ $isLogin = !empty($_SESSION['user']);
                                 </div>
 
                                 <div class="form-tittle">
-                                    統一編號：<input name="company_no" id="" type="text" class="input-2">
+                                    統一編號：<input name="company_no" id="company_no" type="text" class="input-2">
                                 </div>
 
                                 <div class="form-tittle">
-                                    公司抬頭：<input name="" id="invoice_title" type="text" class="input-2">
+                                    公司抬頭：<input name="invoice_title" id="invoice_title" type="text" class="input-2">
                                 </div>
 
                             </div>
@@ -218,16 +218,39 @@ $isLogin = !empty($_SESSION['user']);
                                 <div class="function-area">
                                     <ul>
                                         <li>
-                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com"><input
-                                                        type="button" id="" name="" class="" value="選擇常用門市"></a>
+                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&csvid=0&cvstemp=member">
+                                                <input type="button" id="" name="" class="" value="選擇常用門市">
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="form-tittle">門市名稱：
-                                    <div class="form-input-2"></div>
+                                <div class="form-tittle">
+                                    門市名稱：
+                                    <div class="form-input-2">
+                                        <?php
+                                        $a = explode(' ', $_SESSION['user2']['constore']);
+                                        foreach ($a as $k => $v) {
+                                            $b = explode('=', $v);
+                                            if ($b[0] == 'name') {
+                                                echo $b[1];
+                                            }
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
-                                <div class="form-tittle">門市地址：
-                                    <div class="form-input-2"></div>
+                                <div class="form-tittle">
+                                    門市地址：
+                                    <div class="form-input-2">
+                                        <?php
+                                        $a = explode(' ', $_SESSION['user2']['constore']);
+                                        foreach ($a as $k => $v) {
+                                            $b = explode('=', $v);
+                                            if ($b[0] == 'addr') {
+                                                echo $b[1];
+                                            }
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
 
