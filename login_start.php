@@ -2,8 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
 // 產品分類
 $sql = "select * from proclass where parent = 0 order by no";
 $result = mysqli_query($conn, $sql);
@@ -95,7 +94,7 @@ $result = mysqli_query($conn, $sql);
                             </table>
 
                             <div class="login-info">
-                                <input type="submit" value="確認" class="login-btn">
+                                <input id="submitBtn" type="submit" value="確認" class="login-btn">
                             </div>
                             </form>
                         </div>
@@ -156,33 +155,87 @@ $result = mysqli_query($conn, $sql);
     });
 
     $('#sms').click(function () {
-        $.ajax({
-            url: "./smstest.php",
-            type: 'POST',
-            data: {
-                mobile: $('#mobile')[0].value
-            },
-            error: function () {
-                alert('發生錯誤');
-            },
-            success: function (response) {
-                var pos = response.indexOf("statuscode=");
-                var s = response.slice(pos + 11, pos + 12);
-                switch (s) {
-                    case "0":
-                    case "1":
-                    case "2":
-                    case "3":
-                    case "4":
-                        alert("驗證碼已寄出，請自手機查看。");
-                        break;
-                    default:
-                        alert('簡訊發送失敗請稍後再試。');
-                        break;
+        var isDataCorrect = true;
+        var errorMessage = "";
+
+        var mobile = $('#mobile').val().trim();
+
+        //檢查手機
+        if (mobile.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '手機格式錯誤，請勿包含空白鍵。\n';
+        }
+        if (mobile.match(/[^\d]/)) {
+            isDataCorrect = false;
+            errorMessage += '手機格式錯誤，請輸入數字。\n';
+        }
+        if (mobile.length !== 10) {
+            isDataCorrect = false;
+            errorMessage += '請輸入正確手機號碼。\n';
+        }
+
+        if (isDataCorrect === false) {
+            alert(errorMessage);
+            e.preventDefault();
+        }else {
+
+            $.ajax({
+                url: "./smstest.php",
+                type: 'POST',
+                data: {
+                    mobile: $('#mobile')[0].value
+                },
+                error: function () {
+                    alert('發生錯誤');
+                },
+                success: function (response) {
+                    var pos = response.indexOf("statuscode=");
+                    var s = response.slice(pos + 11, pos + 12);
+                    switch (s) {
+                        case "0":
+                        case "1":
+                        case "2":
+                        case "3":
+                        case "4":
+                            alert("驗證碼已寄出，請自手機查看。");
+                            break;
+                        default:
+                            alert('簡訊發送失敗請稍後再試。');
+                            break;
+                    }
                 }
-            }
-        });
+            });
+
+        }
+
     });
+
+    $('#submitBtn').click(function (e) {
+        var isDataCorrect = true;
+        var errorMessage = "";
+
+        var verifycode = $('#verifycode').val().trim();
+
+        if (verifycode.match(/\s/)) {
+            isDataCorrect = false;
+            errorMessage += '驗證碼格式錯誤，請勿包含空白鍵。\n';
+        }
+        if (verifycode.match(/[^\d]/)) {
+            isDataCorrect = false;
+            errorMessage += '驗證碼格式錯誤，請輸入數字。\n';
+        }
+        if (verifycode.length !== 10) {
+            isDataCorrect = false;
+            errorMessage += '請輸入正確長度的驗證碼。\n';
+        }
+
+        if (isDataCorrect === false) {
+            alert(errorMessage);
+            e.preventDefault();
+        }
+
+    });
+
 </script>
 
 </body>
