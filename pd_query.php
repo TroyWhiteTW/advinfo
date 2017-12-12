@@ -319,7 +319,7 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                                         }
 
                                         echo '<div class="pd-name">' . $product['proname'] . '</div>';
-                                        echo '<div class="pd-type">' . $product['name'] . '</div>';
+                                        //echo '<div class="pd-type">' . $product['name'] . '</div>';
 
                                         if ($isLogin) {
                                             switch ($_SESSION['user2']['type']) {
@@ -336,7 +336,7 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
 
                                         // 促銷商品
                                         if ($product['protags'] == 2) {
-                                            echo '<div class="d-price">促銷價$ ' . $product['promo_price'] . ' 元</div>';
+                                            echo '<div class="pd-price">促銷價$ ' . $product['promo_price'] . ' 元</div>';
                                         } else {
                                             echo '<div class="pd-price">價格$ ' . $product['price'] . ' 元</div>';
                                         }

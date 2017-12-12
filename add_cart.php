@@ -2,6 +2,15 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
+
+//更新購物車數量
+if ($_POST["act"] == "getCount") {
+    if (isset($_SESSION['shop_cart'])) {
+        exit('$("#cartNum").html("' . count($_SESSION['shop_cart']) . '");');
+    } else {
+        exit('$("#cartNum").html("0");');
+    }
+}
 ?>
 <?php
 if ($isLogin) {

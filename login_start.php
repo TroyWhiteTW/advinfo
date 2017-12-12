@@ -3,9 +3,6 @@ include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
 
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
-$result = mysqli_query($conn, $sql);
 ?>
 <!doctype html>
 <html>

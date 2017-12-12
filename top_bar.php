@@ -60,7 +60,7 @@
 
                 <?php
                 if ($isLogin) {
-                    echo '<li><a href="logout.php">登出</a></li>';
+                    echo '<li><a href="#" onclick="logout(); return false;">登出</a></li>';
                 }
                 ?>
 
@@ -104,15 +104,14 @@
 
             <li>
                 <a href="cart_1.php">
-                    購物車
-                    <div class="cart-icon">
-                    </div>
+										購物車(<span id="cartNum"><?=count($_SESSION['shop_cart'])?></span>)
+                    <div class="cart-icon"></div>
                 </a>
             </li>
 
             <?php
             if ($isLogin) {
-                echo '<li><a href="logout.php">登出</a></li>';
+                echo '<li><a href="#" onclick="logout(); return false;">登出</a></li>';
             }
             ?>
 
@@ -153,12 +152,16 @@
     </div>
 </div>
 <script>
-    document.getElementById('search_form').addEventListener('submit', function (e) {
-        var searchWord = e.target.getElementsByClassName('input-1')[0].value;
-        if (searchWord.trim() === "") {
-            alert('請輸入欲搜索的商品名稱');
-            e.preventDefault();
-        }
-    });
+	document.getElementById('search_form').addEventListener('submit', function (e) {
+			var searchWord = e.target.getElementsByClassName('input-1')[0].value;
+			if (searchWord.trim() === "") {
+					alert('請輸入欲搜索的商品名稱');
+					e.preventDefault();
+			}
+	});
+	
+	function logout(){
+			if(confirm("確定登出嗎?")){location.href="logout.php";}
+	}
 </script>
 <!-- mobile footer search bar -->

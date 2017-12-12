@@ -77,12 +77,16 @@ $isLogin = !empty($_SESSION['user']);
                                     <a class="btn btn-default btn-xs" href="password_modify.php">修改密碼</a>
                                 </div>
 
-                                <div class="form-tittle">
-                                    聘級：
-                                    <div class="form-input-2"><?php echo $_SESSION['user2']['level']; ?></div>
-                                </div>
+                                <?php if ($_SESSION['user2']['type'] == 2):    //直銷會員?>
 
-                                <?php if ($_SESSION['user2']['type'] == 2): ?>
+                                    <div class="form-tittle">
+                                        聘級：
+                                        <div class="form-input-2"><?php echo $_SESSION['user2']['level']; ?></div>
+                                    </div>
+
+                                <?php endif; ?>
+
+                                <?php if ($_SESSION['user2']['type'] == 1):    //一般會員?>
 
                                     <div class="form-tittle">
                                         推薦ID：
@@ -205,11 +209,13 @@ $isLogin = !empty($_SESSION['user']);
                                 </div>
 
                                 <div class="form-tittle">
-                                    統一編號：<input name="company_no" id="company_no" type="text" class="input-2">
+                                    統一編號：<input name="company_no" id="company_no" type="text" class="input-2"
+                                                value="<?= $_SESSION['user2']['company_no'] ?>">
                                 </div>
 
                                 <div class="form-tittle">
-                                    公司抬頭：<input name="invoice_title" id="invoice_title" type="text" class="input-2">
+                                    公司抬頭：<input name="invoice_title" id="invoice_title" type="text" class="input-2"
+                                                value="<?= $_SESSION['user2']['invoice_title'] ?>">
                                 </div>
 
                             </div>
@@ -218,7 +224,7 @@ $isLogin = !empty($_SESSION['user']);
                                 <div class="function-area">
                                     <ul>
                                         <li>
-                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&csvid=0&cvstemp=member">
+                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&cvstemp=member">
                                                 <input type="button" id="" name="" class="" value="選擇常用門市">
                                             </a>
                                         </li>
@@ -228,13 +234,14 @@ $isLogin = !empty($_SESSION['user']);
                                     門市名稱：
                                     <div class="form-input-2">
                                         <?php
-                                        $a = explode(' ', $_SESSION['user2']['constore']);
+                                        /*$a = explode(' ', $_SESSION['user2']['constore']);
                                         foreach ($a as $k => $v) {
                                             $b = explode('=', $v);
                                             if ($b[0] == 'name') {
                                                 echo $b[1];
                                             }
-                                        }
+                                        }*/
+                                        echo $_SESSION['user2']['constore']['name'];
                                         ?>
                                     </div>
                                 </div>
@@ -242,13 +249,14 @@ $isLogin = !empty($_SESSION['user']);
                                     門市地址：
                                     <div class="form-input-2">
                                         <?php
-                                        $a = explode(' ', $_SESSION['user2']['constore']);
+                                        /*$a = explode(' ', $_SESSION['user2']['constore']);
                                         foreach ($a as $k => $v) {
                                             $b = explode('=', $v);
                                             if ($b[0] == 'addr') {
                                                 echo $b[1];
                                             }
-                                        }
+                                        }*/
+                                        echo $_SESSION['user2']['constore']['addr'];
                                         ?>
                                     </div>
                                 </div>

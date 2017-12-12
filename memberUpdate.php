@@ -27,7 +27,7 @@ if (empty($errorMessage)) {
         unset($_SESSION['user']);
         $_SESSION['user'] = $newRow;
 
-        $rs2 = mysqli_query($conn,$newSql);
+        $rs2 = mysqli_query($conn, $newSql);
         $row2 = mysqli_fetch_assoc($rs2);
         unset($_SESSION['user2']);
         $_SESSION['user2'] = $row2;
@@ -37,7 +37,8 @@ if (empty($errorMessage)) {
     } else {
         echo "發生未預期錯誤...";
     }
-    $result->close();
+    //$result->close();
+    mysqli_close($conn);
 } else {
     echo "資料有誤:\n" . $errorMessage;
 }
@@ -60,7 +61,8 @@ function f2($ks, $vs)
     return substr($str, 0, -1) . ")";
 }
 
-function f3($ks, $vs){
+function f3($ks, $vs)
+{
     $str = "";
     foreach ($ks as $v) {
         $str .= $v . "=" . $vs[$v] . ",";

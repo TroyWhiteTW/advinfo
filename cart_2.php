@@ -6,11 +6,11 @@ if (!$isLogin) {
     header('Location:index.php');
     exit;
 }
-if (!preg_match("/cart_1\.php$/", $_SERVER['HTTP_REFERER']) &&
-    !preg_match("/cart_3\.php$/", $_SERVER['HTTP_REFERER']) &&
-    !preg_match("/showstore.asp/", $_SERVER['HTTP_REFERER'])) {
-    header('Location:index.php');
-    exit;
+if (!preg_match("/cart_1\.php$/", $_SERVER['HTTP_REFERER']) 
+		&& !preg_match("/cart_3\.php$/", $_SERVER['HTTP_REFERER'])
+		&& !preg_match("/CVSReceive\.php$/", $_SERVER['HTTP_REFERER'])) {
+    //header('Location:index.php');
+    //exit;
 }
 ?>
 <?php
@@ -77,19 +77,19 @@ $orders = unserialize($orders);
 
                             <ul>
 
-                                <li class="btn btn-default btn-xs disabled" style="margin-top: 10px">1.確認商品</li>
+                                <li class="btn btn-default disabled">1.確認商品</li>
 
-                                <li><img src="img/process_icon.png" alt="" style="margin-top: 10px"></li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                                <li class="btn btn-danger btn-xs disabled" style="margin-top: 10px">2.收件人資訊</li>
+                                <li class="btn btn-danger disabled">2.收件人資訊</li>
 
-                                <li><img src="img/process_icon.png" alt="" style="margin-top: 10px"></li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                                <li class="btn btn-default btn-xs disabled" style="margin-top: 10px">3.確認訂單資料</li>
+                                <li class="btn btn-default disabled">3.確認訂單資料</li>
 
-                                <li><img src="img/process_icon.png" alt="" style="margin-top: 10px"></li>
+                                <li><img src="img/process_icon.png" alt=""></li>
 
-                                <li class="btn btn-default btn-xs disabled" style="margin-top: 10px">4.完成確認</li>
+                                <li class="btn btn-default disabled">4.完成確認</li>
 
                             </ul>
 
@@ -105,26 +105,26 @@ $orders = unserialize($orders);
                                 <div class="form-tittle">
                                     姓名：
                                     <input name="sub_name" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][2] ?>">
+                                           value="<?= $_SESSION['user2']['name'] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     電子信箱：
-                                    <input name="sub_email" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][7] ?>">
+                                    <input name="sub_email" id="" type="text" class="input-3" size="40"
+                                           value="<?= $_SESSION['user2']['email'] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     聯繫電話：
                                     <input name="sub_phone" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][8] ?>">
+                                           value="<?= $_SESSION['user2']['phone'] ?>">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
                                     <input name="sub_mobile" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][9] ?>">
+                                           value="<?= $_SESSION['user2']['mobile'] ?>">
                                 </div>
 
                                 <div class="form-tittle">
@@ -150,7 +150,7 @@ $orders = unserialize($orders);
 
                                         <div class="form-tittle">
                                             <input size="40" name="sub_address" id="" type="text" class="input-3"
-                                                   value="<?= $_SESSION['user'][12] . $_SESSION['user'][13] . $_SESSION['user'][14] ?>">
+                                                   value="<?= $_SESSION['user2']['city'] . $_SESSION['user2']['area'] . $_SESSION['user2']['address'] ?>">
                                         </div>
 
                                     </div>
@@ -174,31 +174,31 @@ $orders = unserialize($orders);
                                 <div class="form-tittle">
                                     姓名：
                                     <input name="rec_name" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][2] ?>" disabled="disabled">
+                                           value="<?= $_SESSION['user2']['name'] ?>" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     電子信箱：
-                                    <input name="rec_email" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][7] ?>" disabled="disabled">
+                                    <input name="rec_email" id="" type="text" class="input-3" size="40"
+                                           value="<?= $_SESSION['user2']['email'] ?>" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     聯繫電話：
                                     <input name="rec_phone" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][8] ?>" disabled="disabled">
+                                           value="<?= $_SESSION['user2']['phone'] ?>" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
                                     <input name="rec_mobile" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user'][9] ?>" disabled="disabled">
+                                           value="<?= $_SESSION['user2']['mobile'] ?>" disabled="disabled">
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
-                                    聯繫地址：
+                                    配送地址：
                                     <!--                                    <input type="checkbox" checked="checked">-->
                                     <!--                                    台澎金馬-->
                                     <!--                                    <span style="color:red; font-size:12px;">(預設勾選)</span>-->
@@ -220,7 +220,7 @@ $orders = unserialize($orders);
                                         <div class="form-tittle">
                                             <input size="40" disabled="disabled" name="rec_address" id="" type="text"
                                                    class="input-3"
-                                                   value="<?= $_SESSION['user'][12] . $_SESSION['user'][13] . $_SESSION['user'][14] ?>">
+                                                   value="<?= $_SESSION['user2']['city'] . $_SESSION['user2']['area'] . $_SESSION['user2']['address'] ?>">
                                         </div>
 
                                     </div>
@@ -258,6 +258,13 @@ $orders = unserialize($orders);
                             </script>
 
                             <!-- 取貨門市 -->
+                            <?php
+															$sql = "select shippings.*,logistics.name as logname from shippings 
+																			LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.no='".$orders->ship_no."'";
+															$rs = mysqli_query($conn, $sql);
+															$rst = mysqli_fetch_assoc($rs);
+															if($rst["logname"] == "便利達康"){
+														?>
                             <div class="content-article">
 
                                 <div class="form-name">取貨門市</div>
@@ -265,11 +272,13 @@ $orders = unserialize($orders);
                                 <div class="function-area">
 
                                     <ul>
+
                                         <li>
-                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&csvid=0&cvstemp=cart">
-                                                <input type="button" id="" name="" class="" value="選擇門市">
+                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&cvstemp=cart">
+                                                <input type="button" id="" name="" class="" value="選擇取貨門市">
                                             </a>
                                         </li>
+
                                     </ul>
 
                                 </div>
@@ -278,13 +287,19 @@ $orders = unserialize($orders);
                                     門市名稱：
                                     <div class="form-input-2">
                                         <?php
-                                        $a = explode(' ', $_SESSION['user2']['constore']);
+                                        /*$a = explode(' ', $_SESSION['user2']['constore']);
                                         foreach ($a as $k => $v) {
                                             $b = explode('=', $v);
                                             if ($b[0] == 'name') {
                                                 echo $b[1];
                                             }
-                                        }
+                                        }*/
+																				if($_SESSION['constore']['name']!=""){
+																					echo $_SESSION['constore']['name'];;
+																				}
+																				else{
+																					echo $_SESSION['user2']['constore']['name'];
+																				}
                                         ?>
                                     </div>
                                 </div>
@@ -293,18 +308,25 @@ $orders = unserialize($orders);
                                     門市地址：
                                     <div class="form-input-2">
                                         <?php
-                                        $a = explode(' ', $_SESSION['user2']['constore']);
+                                        /*$a = explode(' ', $_SESSION['user2']['constore']);
                                         foreach ($a as $k => $v) {
                                             $b = explode('=', $v);
                                             if ($b[0] == 'addr') {
                                                 echo $b[1];
                                             }
-                                        }
+                                        }*/
+																				if($_SESSION['constore']['addr']!=""){
+																					echo $_SESSION['constore']['addr'];;
+																				}
+																				else{
+																					echo $_SESSION['user2']['constore']['addr'];
+																				}
                                         ?>
                                     </div>
                                 </div>
 
                             </div>
+                            <?php }?>
 
                             <div class="btn-area">
 

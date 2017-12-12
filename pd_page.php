@@ -221,69 +221,75 @@ if ($hasProid) {
                                             }
                                             echo '</select >';
                                         } else {
-                                            echo '<span style="color: red">商品缺貨</span>';
+                                            echo '<span style="color: red">商品暫時缺貨</span>';
                                         }
                                         ?>
                                     </div>
 
-                                    <div class="buy-btn-area">
+                                    <?php if ($product['stock'] > 0) { ?>
+                                        <div class="buy-btn-area">
 
-                                        <div id="addCart" class="buy-btn">加入購物車</div>
+                                            <div id="addCart" class="buy-btn">加入購物車</div>
 
-                                        <script>
-                                            $('#addCart').click(function () {
-                                                $.ajax({
-                                                    url: "./add_cart.php",
-                                                    type: 'POST',
-                                                    data: {
-                                                        proid:<?= '\'' . $proid . '\''?>,
-                                                        count: $('#sc').val()
-                                                    },
-                                                    error: function () {
-                                                        alert('發生錯誤');
-                                                    },
-                                                    success: function (response) {
-                                                        alert(response);
-                                                    }
+                                            <script>
+                                                $('#addCart').click(function () {
+                                                    $.ajax({
+                                                        url: "./add_cart.php",
+                                                        type: 'POST',
+                                                        data: {
+                                                            proid:<?= '\'' . $proid . '\''?>,
+                                                            count: $('#sc').val()
+                                                        },
+                                                        error: function () {
+                                                            alert('發生錯誤');
+                                                        },
+                                                        success: function (response) {
+                                                            alert(response);
+                                                            //更新top_bar購物車數量
+                                                            $.post('./add_cart.php', {act: 'getCount'}, function (response) {
+                                                                eval(response);
+                                                            });
+                                                        }
+                                                    });
                                                 });
-                                            });
-                                        </script>
+                                            </script>
 
-                                        <?php if ($isLogin): ?>
+                                            <?php if ($isLogin): ?>
 
-                                            <form id="directPurchase" method="post" action="purchase.php">
-                                                <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
-                                                <input id="purchaseCount" name="count" value="1" hidden="hidden">
+                                                <form id="directPurchase" method="post" action="purchase.php">
+                                                    <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
+                                                    <input id="purchaseCount" name="count" value="1" hidden="hidden">
+                                                    <div id="directPurchaseDiv" class="buy-btn" value="直接購買">直接購買</div>
+                                                </form>
+
+                                                <script>
+                                                    $('#sc').change(function () {
+                                                        $('#purchaseCount').val($('#sc').val());
+                                                    });
+                                                    $('#directPurchaseDiv').click(function () {
+                                                        document.getElementById("directPurchase").submit()
+                                                    });
+                                                </script>
+
+                                            <?php else: ?>
+
+                                            <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
+                                            <input id="purchaseCount" name="count" value="1" hidden="hidden">
                                                 <div id="directPurchaseDiv" class="buy-btn" value="直接購買">直接購買</div>
-                                            </form>
 
-                                            <script>
-                                                $('#sc').change(function () {
-                                                    $('#purchaseCount').val($('#sc').val());
-                                                });
-                                                $('#directPurchaseDiv').click(function () {
-                                                    document.getElementById("directPurchase").submit()
-                                                });
-                                            </script>
+                                                <script>
+                                                    $('#sc').change(function () {
+                                                        $('#purchaseCount').val($('#sc').val());
+                                                    });
+                                                    $('#directPurchaseDiv').click(function () {
+                                                        alert('請先登入');
+                                                    });
+                                                </script>
 
-                                        <?php else: ?>
+                                            <?php endif; ?>
 
-                                        <input id="" name="proid" value="<?= $proid ?>" hidden="hidden">
-                                        <input id="purchaseCount" name="count" value="1" hidden="hidden">
-                                            <div id="directPurchaseDiv" class="buy-btn" value="直接購買">直接購買</div>
-
-                                            <script>
-                                                $('#sc').change(function () {
-                                                    $('#purchaseCount').val($('#sc').val());
-                                                });
-                                                $('#directPurchaseDiv').click(function () {
-                                                    alert('請先登入');
-                                                });
-                                            </script>
-
-                                        <?php endif; ?>
-
-                                    </div>
+                                        </div>
+                                    <?php } ?>
 
                                     <div class="pay-way">可付款方式：</div>
 

@@ -58,6 +58,9 @@ if (empty($errorMessage)) {
         $_SESSION['user'] = $row;
         $_SESSION['user2'] = $row2;
 
+        //常用取貨便利商店資料(要unerialize)
+        $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
+
         echo 1;
 //        echo "登入成功，3秒後跳轉回首頁...";
 //        header("Refresh:3;url=index.php");
