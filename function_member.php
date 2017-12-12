@@ -234,13 +234,6 @@ $isLogin = !empty($_SESSION['user']);
                                     門市名稱：
                                     <div class="form-input-2">
                                         <?php
-                                        /*$a = explode(' ', $_SESSION['user2']['constore']);
-                                        foreach ($a as $k => $v) {
-                                            $b = explode('=', $v);
-                                            if ($b[0] == 'name') {
-                                                echo $b[1];
-                                            }
-                                        }*/
                                         echo $_SESSION['user2']['constore']['name'];
                                         ?>
                                     </div>
@@ -249,13 +242,6 @@ $isLogin = !empty($_SESSION['user']);
                                     門市地址：
                                     <div class="form-input-2">
                                         <?php
-                                        /*$a = explode(' ', $_SESSION['user2']['constore']);
-                                        foreach ($a as $k => $v) {
-                                            $b = explode('=', $v);
-                                            if ($b[0] == 'addr') {
-                                                echo $b[1];
-                                            }
-                                        }*/
                                         echo $_SESSION['user2']['constore']['addr'];
                                         ?>
                                     </div>

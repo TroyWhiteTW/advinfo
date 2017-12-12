@@ -6,11 +6,11 @@ if (!$isLogin) {
     header('Location:index.php');
     exit;
 }
-if (!preg_match("/cart_1\.php$/", $_SERVER['HTTP_REFERER']) 
-		&& !preg_match("/cart_3\.php$/", $_SERVER['HTTP_REFERER'])
-		&& !preg_match("/CVSReceive\.php$/", $_SERVER['HTTP_REFERER'])) {
-    //header('Location:index.php');
-    //exit;
+if (!preg_match("/cart_1\.php$/", $_SERVER['HTTP_REFERER']) &&
+    !preg_match("/cart_3\.php$/", $_SERVER['HTTP_REFERER']) &&
+    !preg_match("/showstore\.asp/", $_SERVER['HTTP_REFERER'])) {
+    header('Location:index.php');
+    exit;
 }
 ?>
 <?php
@@ -259,74 +259,58 @@ $orders = unserialize($orders);
 
                             <!-- 取貨門市 -->
                             <?php
-															$sql = "select shippings.*,logistics.name as logname from shippings 
-																			LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.no='".$orders->ship_no."'";
-															$rs = mysqli_query($conn, $sql);
-															$rst = mysqli_fetch_assoc($rs);
-															if($rst["logname"] == "便利達康"){
-														?>
-                            <div class="content-article">
+                            $sql = "select shippings.*,logistics.name as logname from shippings 
+                                    LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.no='" . $orders->ship_no . "'";
+                            $rs = mysqli_query($conn, $sql);
+                            $rst = mysqli_fetch_assoc($rs);
+                            if ($rst["logname"] == "便利達康") {
+                                ?>
+                                <div class="content-article">
 
-                                <div class="form-name">取貨門市</div>
+                                    <div class="form-name">取貨門市</div>
 
-                                <div class="function-area">
+                                    <div class="function-area">
 
-                                    <ul>
+                                        <ul>
 
-                                        <li>
-                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&cvstemp=cart">
-                                                <input type="button" id="" name="" class="" value="選擇取貨門市">
-                                            </a>
-                                        </li>
+                                            <li>
+                                                <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&cvstemp=cart">
+                                                    <input type="button" id="" name="" class="" value="選擇取貨門市">
+                                                </a>
+                                            </li>
 
-                                    </ul>
+                                        </ul>
 
-                                </div>
-
-                                <div class="form-tittle">
-                                    門市名稱：
-                                    <div class="form-input-2">
-                                        <?php
-                                        /*$a = explode(' ', $_SESSION['user2']['constore']);
-                                        foreach ($a as $k => $v) {
-                                            $b = explode('=', $v);
-                                            if ($b[0] == 'name') {
-                                                echo $b[1];
-                                            }
-                                        }*/
-																				if($_SESSION['constore']['name']!=""){
-																					echo $_SESSION['constore']['name'];;
-																				}
-																				else{
-																					echo $_SESSION['user2']['constore']['name'];
-																				}
-                                        ?>
                                     </div>
-                                </div>
 
-                                <div class="form-tittle">
-                                    門市地址：
-                                    <div class="form-input-2">
-                                        <?php
-                                        /*$a = explode(' ', $_SESSION['user2']['constore']);
-                                        foreach ($a as $k => $v) {
-                                            $b = explode('=', $v);
-                                            if ($b[0] == 'addr') {
-                                                echo $b[1];
+                                    <div class="form-tittle">
+                                        門市名稱：
+                                        <div class="form-input-2">
+                                            <?php
+                                            if ($_SESSION['user2']['constore']['name'] != "") {
+                                                echo $_SESSION['user2']['constore']['name'];;
+                                            } else {
+                                                echo $_SESSION['user2']['constore']['name'];
                                             }
-                                        }*/
-																				if($_SESSION['constore']['addr']!=""){
-																					echo $_SESSION['constore']['addr'];;
-																				}
-																				else{
-																					echo $_SESSION['user2']['constore']['addr'];
-																				}
-                                        ?>
+                                            ?>
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div>
-                            <?php }?>
+                                    <div class="form-tittle">
+                                        門市地址：
+                                        <div class="form-input-2">
+                                            <?php
+                                            if ($_SESSION['user2']['constore']['addr'] != "") {
+                                                echo $_SESSION['user2']['constore']['addr'];;
+                                            } else {
+                                                echo $_SESSION['user2']['constore']['addr'];
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            <?php } ?>
 
                             <div class="btn-area">
 
