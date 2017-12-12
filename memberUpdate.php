@@ -31,6 +31,7 @@ if (empty($errorMessage)) {
         $row2 = mysqli_fetch_assoc($rs2);
         unset($_SESSION['user2']);
         $_SESSION['user2'] = $row2;
+        $_SESSION['user2']['constore'] = unserialize($row2['constore']);
 
         echo "會員資料修改成功，3秒後跳轉回...";
         header("Refresh:3;url=function_member.php");
