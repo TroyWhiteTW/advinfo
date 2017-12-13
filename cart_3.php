@@ -149,7 +149,16 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                             <td>商品名稱</td>
                                             <td>數量</td>
                                             <td>單位價格</td>
-                                            <td>單位PV</td>
+                                            <?php
+                                            switch ($_SESSION['user2']['type']) {
+                                                case 1:
+                                                    echo '<td>單位紅利</td>';
+                                                    break;
+                                                case 2:
+                                                    echo '<td>單位PV</td>';
+                                                    break;
+                                            }
+                                            ?>
                                         </tr>
 
                                         <?php
@@ -178,13 +187,27 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                             $html[] = '</td>';
                                             // PV
                                             $html[] = '<td class="pvValue">';
-                                            $html[] = $recordArray[$i]['PV'];
+                                            switch ($_SESSION['user2']['type']) {
+                                                case 1:
+                                                    $html[] = $recordArray[$i]['bonuce'];
+                                                    break;
+                                                case 2:
+                                                    $html[] = $recordArray[$i]['PV'];
+                                                    break;
+                                            }
                                             $html[] = '</td>';
 
                                             $html[] = '</tr>';
 
                                             $total += $_SESSION['shop_cart'][$recordArray[$i]['proid']] * $recordArray[$i]['price'];
-                                            $tPV += $_SESSION['shop_cart'][$recordArray[$i]['proid']] * $recordArray[$i]['PV'];
+                                            switch ($_SESSION['user2']['type']) {
+                                                case 1:
+                                                    $tPV += $_SESSION['shop_cart'][$recordArray[$i]['proid']] * $recordArray[$i]['bonuce'];
+                                                    break;
+                                                case 2:
+                                                    $tPV += $_SESSION['shop_cart'][$recordArray[$i]['proid']] * $recordArray[$i]['PV'];
+                                                    break;
+                                            }
                                         }
 
                                         echo implode("\n", $html);
@@ -196,9 +219,27 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     </table>
 
                                     <div class="pv-area">
-                                        <div class="pv-textarea">商品總PV</div>
+                                        <?php
+                                        switch ($_SESSION['user2']['type']) {
+                                            case 1:
+                                                echo '<div class="pv-textarea">商品總紅利</div>';
+                                                break;
+                                            case 2:
+                                                echo '<div class="pv-textarea">商品總PV</div>';
+                                                break;
+                                        }
+                                        ?>
                                         <div class="pv-textarea"><?= $tPV ?></div>
-                                        <div class="pv-textarea">PV</div>
+                                        <?php
+                                        switch ($_SESSION['user2']['type']) {
+                                            case 1:
+                                                echo '<div class="pv-textarea">紅利</div>';
+                                                break;
+                                            case 2:
+                                                echo '<div class="pv-textarea">PV</div>';
+                                                break;
+                                        }
+                                        ?>
                                     </div>
 
                                     <div class="price-area">

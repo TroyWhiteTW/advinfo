@@ -10,8 +10,7 @@ if (!preg_match("/cart_1.php$/", $_SERVER['HTTP_REFERER'])) {
     header('Location:index.php');
     exit;
 }
-?>
-<?php
+
 require __DIR__ . '/OrdersDAO.php';
 
 $errorMessage = "";
@@ -20,17 +19,12 @@ foreach ($_POST as $k => $v) {
 }
 //checkData($_POST, $errorMessage);
 
-//var_dump($_POST);
-//return;
-
 /** @var OrdersDAO $orders */
 $orders = unserialize($_SESSION['orders']);
 
-//var_dump($_SESSION['shop_cart']);return;
 foreach ($_SESSION['shop_cart'] as $k => $v) {
     $_SESSION['shop_cart'][$k] = $_POST[$k];
 }
-//var_dump($_SESSION['shop_cart']);return;
 
 //設定訂單 orders id date
 $orders->ordid = time();
@@ -51,9 +45,6 @@ $orders->company_no = $_POST['company_no'];
 $orders->invoice_title = $_POST['invoice_title'];
 
 $_SESSION['orders'] = serialize($orders);
-
-//echo $orders->ordid;
-//echo '<hr/>';
 
 // 跳轉到 cart_2.php
 header('Location:cart_2.php');

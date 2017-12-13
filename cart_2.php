@@ -12,8 +12,7 @@ if (!preg_match("/cart_1\.php$/", $_SERVER['HTTP_REFERER']) &&
     header('Location:index.php');
     exit;
 }
-?>
-<?php
+
 // 引入訂單的 DAO class
 require __DIR__ . '/OrdersDAO.php';
 

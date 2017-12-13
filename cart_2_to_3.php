@@ -10,8 +10,7 @@ if(!preg_match("/cart_2.php$/",$_SERVER['HTTP_REFERER'])){
     header('Location:index.php');
     exit;
 }
-?>
-<?php
+
 require __DIR__ . '/OrdersDAO.php';
 
 $errorMessage = "";
