@@ -148,8 +148,8 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                         <tr class="tb-tittle">
                                             <td>商品名稱</td>
                                             <td>數量</td>
-                                            <td>價格</td>
-                                            <td>PV</td>
+                                            <td>單位價格</td>
+                                            <td>單位PV</td>
                                         </tr>
 
                                         <?php
