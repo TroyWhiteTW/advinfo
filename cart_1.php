@@ -455,24 +455,18 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                         <input type="radio" name="discount" value="0" checked="checked">
                                         不使用折抵
                                     </label>
-
                                 </div>
 
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="discount" value="1">
-                                        使用電子錢包折抵
-                                    </label>
-
-                                </div>
-
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="discount" value="2">
-                                        使用紅利折抵
-                                    </label>
-
-                                </div>
+                                <?php
+                                switch ($_SESSION['user2']['type']) {
+                                    case 1:
+                                        echo '<div class="form-tittle"><label><input type="radio" name="discount" value="2">使用紅利折抵</label></div>';
+                                        break;
+                                    case 2:
+                                        echo '<div class="form-tittle"><label><input type="radio" name="discount" value="1">使用電子錢包折抵</label></div>';
+                                        break;
+                                }
+                                ?>
 
                                 <!--                                <div class="form-tittle">-->
                                 <!---->
