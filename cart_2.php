@@ -77,19 +77,19 @@ $orders = unserialize($orders);
 
                             <ul>
 
-                                <li class="btn btn-default disabled">1.確認商品</li>
+                                <li class="btn btn-default btn-sm disabled" style="margin-top: 10px">1.確認商品</li>
 
-                                <li><img src="img/process_icon.png" alt=""></li>
+                                <li><img src="img/process_icon.png" alt="" style="margin-top: 10px"></li>
 
-                                <li class="btn btn-danger disabled">2.收件人資訊</li>
+                                <li class="btn btn-danger btn-sm disabled" style="margin-top: 10px">2.收件人資訊</li>
 
-                                <li><img src="img/process_icon.png" alt=""></li>
+                                <li><img src="img/process_icon.png" alt="" style="margin-top: 10px"></li>
 
-                                <li class="btn btn-default disabled">3.確認訂單資料</li>
+                                <li class="btn btn-default btn-sm disabled" style="margin-top: 10px">3.確認訂單資料</li>
 
-                                <li><img src="img/process_icon.png" alt=""></li>
+                                <li><img src="img/process_icon.png" alt="" style="margin-top: 10px"></li>
 
-                                <li class="btn btn-default disabled">4.完成確認</li>
+                                <li class="btn btn-default btn-sm disabled" style="margin-top: 10px">4.完成確認</li>
 
                             </ul>
 
