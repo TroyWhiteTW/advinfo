@@ -415,7 +415,8 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
         }
     });
 
-    $(".pd-pic").height(($(".pd-pic").width() * 6) / 5);
+    var w = ($(".pd-pic").width() * 6) / 5;
+    $(".pd-pic").height(w);
 </script>
 
 </body>

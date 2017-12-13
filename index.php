@@ -229,7 +229,8 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
         }
     });
 
-    $(".pd-pic").height(($(".pd-pic").width() * 6) / 5);
+    var w = ($(".pd-pic").width() * 6) / 5;
+    $(".pd-pic").height(w);
 </script>
 
 </body>
