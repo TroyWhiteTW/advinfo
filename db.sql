@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: localhost:3306
--- 產生時間： 2017 年 12 月 13 日 21:34
+-- 產生時間： 2017 年 12 月 13 日 21:37
 -- 伺服器版本: 5.6.36-cll-lve
 -- PHP 版本： 5.6.30
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- 資料庫： `bradchao_ bradchao`
 --
-CREATE DATABASE IF NOT EXISTS `bradchao_ bradchao` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `bradchao_ bradchao`;
 
 -- --------------------------------------------------------
 
