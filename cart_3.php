@@ -354,21 +354,25 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                 </div>
 
                                 <!-- 取貨門市 -->
-                                <div class="content-article">
+                                <?php
+                                if ($orders->store_name != null && $orders->ship_no != null) {
+                                    echo '<div class="content-article">';
 
-                                    <div class="form-name">取貨門市</div>
+                                    echo '<div class="form-name">取貨門市</div>';
 
-                                    <!--<div class="form-input">便利商店名稱(資料填入)</div>-->
+                                    echo '<!--<div class="form-input">便利商店名稱(資料填入)</div>-->';
 
-                                    <div class="form-tittle">門市名稱：
-                                        <div class="form-input-2"><?= $orders->store_name ?></div>
-                                    </div>
+                                    echo '<div class="form-tittle">門市名稱：';
+                                    echo '<div class="form-input-2">' . $orders->store_name . '</div>';
+                                    echo '</div>';
 
-                                    <div class="form-tittle">門市地址：
-                                        <div class="form-input-2"><?= $orders->store_addr ?></div>
-                                    </div>
+                                    echo '<div class="form-tittle">門市地址：';
+                                    echo '<div class="form-input-2">' . $orders->store_addr . '</div>';
+                                    echo '</div>';
 
-                                </div>
+                                    echo '</div>';
+                                }
+                                ?>
 
                                 <!-- 訂購人資料 -->
                                 <div class="content-article">
@@ -436,19 +440,20 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                             break;
                                         case 2:
                                             echo '<div class="form-tittle">公司戶頭票</div>';
+
+                                            echo '<hr/>';
+
+                                            echo '<div class="form-tittle">統一編號：';
+                                            echo '<div class="form-input-2">' . $orders->company_no . '</div>';
+                                            echo '</div>';
+
+                                            echo '<div class="form-tittle">公司抬頭：';
+                                            echo '<div class="form-input-2">' . $orders->invoice_title . '</div>';
+                                            echo '</div>';
+
                                             break;
                                     }
                                     ?>
-
-                                    <hr/>
-
-                                    <div class="form-tittle">統一編號：
-                                        <div class="form-input-2"><?= $orders->company_no ?></div>
-                                    </div>
-
-                                    <div class="form-tittle">公司抬頭：
-                                        <div class="form-input-2"><?= $orders->invoice_title ?></div>
-                                    </div>
 
                                 </div>
 

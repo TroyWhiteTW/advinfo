@@ -42,7 +42,7 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
 
 // 配送方式
 $shiptypes = [];
-$shiptypesSql = 'SELECT shiptypes.no, shiptypes.name, shiptypes.type, logistics.name as logname, shippings.* FROM shiptypes 
+$shiptypesSql = 'SELECT shiptypes.no AS pno, shiptypes.name, shiptypes.type, logistics.name as logname, shippings.* FROM shiptypes 
 										LEFT JOIN shippings ON shiptypes.no=shippings.shiptype 
 										LEFT JOIN logistics ON logistics.no=shippings.logno
 										WHERE shippings.status=1 and shippings.forSupplier=1';
@@ -382,9 +382,9 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     echo '<label>';
                                     //if ( $shiptype[ 'no' ] == 1 ) {
                                     if ($k == 0) {
-                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['no'] . '" checked="checked">';
+                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['pno'] . '" checked="checked">';
                                     } else {
-                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['no'] . '">';
+                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['pno'] . '">';
                                     }
                                     echo $shiptype['name'];
                                     switch ($shiptype['type']) {
