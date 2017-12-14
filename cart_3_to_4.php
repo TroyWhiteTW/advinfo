@@ -38,7 +38,14 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     $orders->returntime = '0000-00-00 00:00:00';
     $orders->refundtime = '0000-00-00 00:00:00';
 
-    $orders->constore = serialize($_SESSION['user2']['constore']);
+    $sql = "select shippings.*,logistics.name as logname from shippings 
+                                    LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.no='" . $orders->ship_no . "'";
+    $rs = mysqli_query($conn, $sql);
+    $rst = mysqli_fetch_assoc($rs);
+
+    if ($rst["logname"] == "便利達康" && $orders->ship_no == "2") {
+        $orders->constore = serialize($_SESSION['user2']['constore']);
+    }
 
     //金流回來的資訊
     $orders->cardno = $_POST["Card_NO"];
@@ -130,7 +137,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
 		<script>
 			document.form1.submit();
 		</script>';
-    
+
 }
 
 function getMaxOdno($conn)

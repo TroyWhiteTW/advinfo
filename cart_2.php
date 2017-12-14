@@ -262,7 +262,8 @@ $orders = unserialize($orders);
                                     LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.no='" . $orders->ship_no . "'";
                             $rs = mysqli_query($conn, $sql);
                             $rst = mysqli_fetch_assoc($rs);
-                            if ($rst["logname"] == "便利達康") {
+
+                            if ($rst["logname"] == "便利達康" && $orders->ship_no == "2") {
                                 ?>
                                 <div class="content-article">
 

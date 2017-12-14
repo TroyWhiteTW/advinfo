@@ -86,6 +86,15 @@ class OrderDetailDAO
 //            $rs2->free();
             $rs2->close();
 //            header("Refresh:3;url=index.php");
+
+            $sql5566 = 'INSERT INTO supporderdetail ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
+            $result5566 = $mysqli->query($sql5566);
+            if ($result5566 === true) {
+                echo '5566得第一';
+            } else {
+                echo '5566不能亡';
+            }
+
         } else {
             array_push($errors, 'OrderDetailDAO save error.');
             echo "發生未預期錯誤...";

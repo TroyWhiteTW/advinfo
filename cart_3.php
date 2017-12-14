@@ -355,7 +355,12 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                 <!-- 取貨門市 -->
                                 <?php
-                                if ($_SESSION['user2']['constore']['name'] != "" && $orders->ship_no != null) {
+                                $sql = "select shippings.*,logistics.name as logname from shippings 
+                                    LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.no='" . $orders->ship_no . "'";
+                                $rs = mysqli_query($conn, $sql);
+                                $rst = mysqli_fetch_assoc($rs);
+
+                                if ($rst["logname"] == "便利達康" && $orders->ship_no == "2") {
                                     echo '<div class="content-article">';
 
                                     echo '<div class="form-name">取貨門市</div>';
