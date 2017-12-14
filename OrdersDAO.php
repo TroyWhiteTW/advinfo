@@ -40,8 +40,7 @@ class OrdersDAO
 
     public $ship_no = null;//配送方式(編號)1
 
-    public $store_name = null;//便利商店取貨門市名稱2
-    public $store_addr = null;//便利商店取貨門市地址2
+    public $constore = null;//便利商店取貨門市
 
     public $appredate = null;//鑑賞期日期
 
@@ -66,7 +65,7 @@ class OrdersDAO
     public $returntime = null;//實際退貨時間
     public $refundtime = null;//退款時間
 
-    public function save($mysqli, $errors)
+    public function save(mysqli $mysqli, $errors)
     {
 
         //check all data is null or not
@@ -86,7 +85,7 @@ class OrdersDAO
 
             $sqlSetStr .= $k . ',';
 
-            $sqlValueStr .= '"' . $v . '",';
+            $sqlValueStr .= "'" . $v . "',";
 
         }
 
@@ -95,7 +94,7 @@ class OrdersDAO
 
         $sql = 'INSERT INTO orders ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
 
-//        var_dump($sql);
+        var_dump($sql);
 //        return;
 
 //        $conn = @mysqli_connect('localhost', 'root', 'root', 'bradchao') or die("Server Busy");

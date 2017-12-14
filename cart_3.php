@@ -355,7 +355,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                 <!-- 取貨門市 -->
                                 <?php
-                                if ($orders->store_name != null && $orders->ship_no != null) {
+                                if ($_SESSION['user2']['constore']['name'] != "" && $orders->ship_no != null) {
                                     echo '<div class="content-article">';
 
                                     echo '<div class="form-name">取貨門市</div>';
@@ -363,11 +363,11 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     echo '<!--<div class="form-input">便利商店名稱(資料填入)</div>-->';
 
                                     echo '<div class="form-tittle">門市名稱：';
-                                    echo '<div class="form-input-2">' . $orders->store_name . '</div>';
+                                    echo '<div class="form-input-2">' . $_SESSION['user2']['constore']['name'] . '</div>';
                                     echo '</div>';
 
                                     echo '<div class="form-tittle">門市地址：';
-                                    echo '<div class="form-input-2">' . $orders->store_addr . '</div>';
+                                    echo '<div class="form-input-2">' . $_SESSION['user2']['constore']['name'] . '</div>';
                                     echo '</div>';
 
                                     echo '</div>';

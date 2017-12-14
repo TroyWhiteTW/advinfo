@@ -38,6 +38,8 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     $orders->returntime = '0000-00-00 00:00:00';
     $orders->refundtime = '0000-00-00 00:00:00';
 
+    $orders->constore = serialize($_SESSION['user2']['constore']);
+
     //金流回來的資訊
     $orders->cardno = $_POST["Card_NO"];
     $orders->approvecode = $_POST["ApproveCode"];
@@ -128,7 +130,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
 		<script>
 			document.form1.submit();
 		</script>';
-    exit;
+    
 }
 
 function getMaxOdno($conn)

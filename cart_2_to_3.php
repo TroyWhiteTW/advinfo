@@ -56,8 +56,8 @@ if ($_POST['rec_check']=='on'){
 }
 
 //(POST) 取貨門市
-$orders->store_name = $_POST['store_name'];
-$orders->store_addr = $_POST['store_addr'];
+//$orders->store_name = $_POST['store_name'];
+//$orders->store_addr = $_POST['store_addr'];
 
 $_SESSION['orders'] = serialize($orders);
 

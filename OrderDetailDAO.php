@@ -52,7 +52,7 @@ class OrderDetailDAO
 
             $sqlSetStr .= $k . ',';
 
-            $sqlValueStr .= '"' . $v . '",';
+            $sqlValueStr .= "'" . $v . "',";
 
         }
 

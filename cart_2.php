@@ -287,7 +287,7 @@ $orders = unserialize($orders);
                                         <div class="form-input-2">
                                             <?php
                                             if ($_SESSION['user2']['constore']['name'] != "") {
-                                                echo $_SESSION['user2']['constore']['name'];;
+                                                echo $_SESSION['user2']['constore']['name'];
                                             } else {
                                                 echo $_SESSION['user2']['constore']['name'];
                                             }
