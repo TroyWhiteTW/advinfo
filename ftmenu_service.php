@@ -58,7 +58,7 @@ while ($cstypesRow = mysqli_fetch_assoc($cstypesRes)) {
 
                             <div class="form-tittle">
                                 請選擇問題類型：
-                                <select name="cstype" id="cstype">
+                                <select name="cstype_no" id="cstype">
                                     <?php
                                     foreach ($cstypes as $cstype) {
                                         if ($cstype['no'] == 0) {
