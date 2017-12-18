@@ -58,7 +58,7 @@ while ($cstypesRow = mysqli_fetch_assoc($cstypesRes)) {
 
                             <div class="form-tittle">
                                 請選擇問題類型：
-                                <select name="cstype_no" id="cstype">
+                                <select name="cstype_no" id="cstype_no">
                                     <?php
                                     foreach ($cstypes as $cstype) {
                                         if ($cstype['no'] == 0) {
@@ -149,6 +149,41 @@ while ($cstypesRow = mysqli_fetch_assoc($cstypesRes)) {
         }
     });
 
+    function ajaxService() {
+        $.ajax({
+            url: "./service.php",
+            type: 'POST',
+            data: {
+                cstype_no: document.getElementById('cstype_no').value,
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                content: document.getElementById('content').value
+            },
+            error: function () {
+                alert('發生錯誤');
+            },
+            success: function (response) {
+                // alert(response);
+                switch (response) {
+                    case '0':
+                        alert('發生未預期錯誤...');
+                        break;
+                    case '1':
+                        alert('感謝您的意見，我們將盡快與您聯繫答覆');
+                        document.getElementById('name').value = '';
+                        document.getElementById('phone').value = '';
+                        document.getElementById('email').value = '';
+                        document.getElementById('content').value = '';
+                        break;
+                    default:
+                        alert(response);
+                        break;
+                }
+            }
+        });
+    }
+
     //表單提交檢查
     var form = document.getElementById('service_form');
 
@@ -192,8 +227,10 @@ while ($cstypesRow = mysqli_fetch_assoc($cstypesRes)) {
 
         if (isDataCorrect === false) {
             alert(errorMessage);
-            e.preventDefault();
+        } else {
+            ajaxService();
         }
+        e.preventDefault();
     });
     //表單提交檢查
 </script>

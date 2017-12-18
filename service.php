@@ -1,8 +1,6 @@
 <?php
 include 'db.php';
 session_start();
-?>
-<?php
 
 $errorMessage = "";
 foreach ($_POST as $k => $v) {
@@ -23,16 +21,21 @@ if (empty($errorMessage)) {
     $sql = 'INSERT INTO customerservices ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
 
     $result = mysqli_query($conn, $sql);
-    if ($result === true) {
+//var_dump($result);return;
+    if ($result == true) {
         send2Mail($_POST['email'], 'service mail', $_POST['content']);
-        echo "感謝您的意見，我們將盡快與您聯繫答覆；3秒後跳轉回首頁...";
-        header("Refresh:3;url=index.php");
+        echo 1;
+//        echo "感謝您的意見，我們將盡快與您聯繫答覆；3秒後跳轉回首頁...";
+//        header("Refresh:3;url=index.php");
     } else {
-        echo "發生未預期錯誤...";
+        echo 0;
+//        echo "發生未預期錯誤...";
     }
-    $result->close();
+//    $result->close();
+    exit;
 } else {
     echo "資料有誤:\n" . $errorMessage;
+    exit;
 }
 
 function f1($ks)
@@ -239,6 +242,8 @@ function encodeRegisterData($rawDataArray)
         "phone" => "\"\"",
         "email" => "\"\"",
         "content" => "\"\"",
+        "addtime" => '"' . date('Y-m-d H:i:s', time()) . '"',
+        "updatetime" => '"' . date('Y-m-d H:i:s', time()) . '"',
     ];
 
     foreach ($dataArray as $k => $v) {
