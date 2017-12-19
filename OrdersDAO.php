@@ -94,7 +94,7 @@ class OrdersDAO
 
         $sql = 'INSERT INTO orders ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
 
-        var_dump($sql);
+//        var_dump($sql);
 //        return;
 
 //        $conn = @mysqli_connect('localhost', 'root', 'root', 'bradchao') or die("Server Busy");
@@ -105,28 +105,28 @@ class OrdersDAO
             echo "訂單OK";
 //            header("Refresh:3;url=index.php");
 
-            $sqlSetStr = '(';
-            $sqlValueStr = '(';
-
-            foreach ($this as $k => $v) {
-                if ($k == 'ordid' || $k == 'orddate' || $k == 'suppid' || $k == 'discount' || $k == 'discount_price' ||
-                    $k == 'pay_no' || $k == 'pay_price' || $k == 'ispay' || $k == 'installment' || $k == 'total_price' ||
-                    $k == 'freight' || $k == 'PV' || $k == 'bonuce' || $k == 'profit') {
-                    $sqlSetStr .= $k . ',';
-                    $sqlValueStr .= "'" . $v . "',";
-                }
-            }
-
-            $sqlSetStr = substr($sqlSetStr, 0, -1) . ")";
-            $sqlValueStr = substr($sqlValueStr, 0, -1) . ")";
-
-            $sql5566 = 'INSERT INTO supporders ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
-            $result5566 = $mysqli->query($sql5566);
-            if ($result5566 === true) {
-                echo '5566得第一';
-            } else {
-                echo '5566不能亡';
-            }
+//            $sqlSetStr = '(';
+//            $sqlValueStr = '(';
+//
+//            foreach ($this as $k => $v) {
+//                if ($k == 'ordid' || $k == 'orddate' || $k == 'suppid' || $k == 'discount' || $k == 'discount_price' ||
+//                    $k == 'pay_no' || $k == 'pay_price' || $k == 'ispay' || $k == 'installment' || $k == 'total_price' ||
+//                    $k == 'freight' || $k == 'PV' || $k == 'bonuce' || $k == 'profit') {
+//                    $sqlSetStr .= $k . ',';
+//                    $sqlValueStr .= "'" . $v . "',";
+//                }
+//            }
+//
+//            $sqlSetStr = substr($sqlSetStr, 0, -1) . ")";
+//            $sqlValueStr = substr($sqlValueStr, 0, -1) . ")";
+//
+//            $sql5566 = 'INSERT INTO supporders ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
+//            $result5566 = $mysqli->query($sql5566);
+//            if ($result5566 === true) {
+//                echo '5566得第一';
+//            } else {
+//                echo '5566不能亡';
+//            }
 
         } else {
             array_push($errors, 'OrdersDAO save error.');
