@@ -103,7 +103,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     }
 
     $mergeSupp = $tempArray;
-
+//var_dump($mergeSupp);return;
     $c = count($mergeSupp);
 
     $suppid = 0;
@@ -116,7 +116,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
         $k = array_keys($mergeSupp[$i])[0];
         $v = array_values($mergeSupp[$i])[0];
 
-        if ($suppid == 0) {
+        if ($suppid === 0) {
 
             $suppid = $k;
 //            $pay_price=0;
@@ -134,7 +134,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
             $PV += ($row78['PV'] * $item2);
             $bonuce += ($row78['bonuce'] * $item2);
 
-        } else if ($k == $suppid) {
+        } else if ($k === $suppid) {
 
             $item1 = array_keys($v)[0];
             $item2 = array_values($v)[0];
@@ -146,12 +146,12 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
             $PV += ($row78['PV'] * $item2);
             $bonuce += ($row78['bonuce'] * $item2);
 
-        } else if ($k != $suppid) {
+        } else if ($k !== $suppid) {
 
             $sql5566 = "INSERT INTO supporders (ordid,orddate,suppid,discount,discount_price,pay_no,pay_price,ispay,installment,total_price,freight,PV,bonuce,profit)
  VALUES ('$orders->ordid','$orders->orddate','$suppid','$orders->discount','$orders->discount_price','$orders->pay_no','$orders->pay_price','$orders->ispay','$orders->installment','$total_price','$orders->freight','$PV','$bonuce','0');";
 
-            $result5566 = mysqli_query($conn, $sql5566);
+            $result5566 = $mysqli->query($sql5566);
             if ($result5566 === true) {
                 echo '5566得第一';
 
@@ -181,7 +181,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
             $sql5566 = "INSERT INTO supporders (ordid,orddate,suppid,discount,discount_price,pay_no,pay_price,ispay,installment,total_price,freight,PV,bonuce,profit)
  VALUES ('$orders->ordid','$orders->orddate','$suppid','$orders->discount','$orders->discount_price','$orders->pay_no','$orders->pay_price','$orders->ispay','$orders->installment','$total_price','$orders->freight','$PV','$bonuce','0');";
 
-            $result5566 = mysqli_query($conn, $sql5566);
+            $result5566 = $mysqli->query($sql5566);
             if ($result5566 === true) {
                 echo '5566得第一';
 
