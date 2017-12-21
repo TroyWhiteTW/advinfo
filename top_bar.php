@@ -1,20 +1,7 @@
 <!-- mobile side bar -->
 <div class="sidebar visible-sm visible-xs ">
     <ul class="fullheight" style="overflow:auto;">
-        <?php
-        // 左側分類
-        foreach ($proclass as $class) {
-            echo '<li>';
-            echo '<a class="sidebar-menu">';
-
-            echo $class['pcname'];
-            echo '<i class="fa fa-angle-right angle-right" aria-hidden="true"></i>';
-
-            echo '</a>';
-            echo '<li>';
-        }
-        ?>
-
+        <?php include 'side_bar2.php'; ?>
     </ul>
 </div>
 <!-- mobile side bar -->

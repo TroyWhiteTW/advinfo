@@ -229,6 +229,30 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
         }
     });
 
+    //新增側邊欄
+
+    //側邊欄滑動
+    $('#left-open').click(function() {
+        // 顯示隱藏側邊欄
+        $('.sidebar').toggleClass('sidebar-view');
+        // body畫面變暗+鎖住網頁滾輪
+        $('body').toggleClass('body-back');
+    });
+
+    $(window).resize(function() {
+        //減去tobar 高度
+        var bh = $(window).height() - 51;
+        $('.fullheight').height(bh);
+
+        var bw = $(window).width();
+        if (bw >= 768) {
+            $('.sidebar').removeClass('sidebar-view');
+            $('body').removeClass('body-back');
+        }
+    }).resize();
+
+    //新增側邊欄
+
     var w = ($(".pd-pic").width() * 6) / 5;
     $(".pd-pic").height(w);
 </script>
