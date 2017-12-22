@@ -13,26 +13,26 @@
 
         <?php
 
-        $classOne = [];
-        $classOneSql = 'SELECT A.no AS first_no, A.pcname AS first_name FROM proclass A WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC';
-        $classOneRes = mysqli_query($conn, $classOneSql);
-        while ($classOneRow = mysqli_fetch_assoc($classOneRes)) {
-            $classOne[] = $classOneRow;
-        }
-
-        $classTwo = [];
-        $classTwoSql = 'SELECT A.no AS first_no, A.pcname AS first_name, B.no AS second_no, B.pcname AS second_name FROM proclass A LEFT JOIN proclass B ON A.no=B.parent WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC, B.sort ASC';
-        $classTwoRes = mysqli_query($conn, $classTwoSql);
-        while ($classTwoRow = mysqli_fetch_assoc($classTwoRes)) {
-            $classTwo[] = $classTwoRow;
-        }
-
-        $classThree = [];
-        $classThreeSql = 'SELECT A.no AS first_no, A.pcname AS first_name, B.no AS second_no, B.pcname AS second_name, C.no AS third_no, C.pcname AS third_name FROM proclass A LEFT JOIN proclass B ON A.no=B.parent LEFT JOIN proclass C ON B.no=C.parent WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC, B.sort ASC, C.sort ASC';
-        $classThreeRes = mysqli_query($conn, $classThreeSql);
-        while ($classThreeRow = mysqli_fetch_assoc($classThreeRes)) {
-            $classThree[] = $classThreeRow;
-        }
+//        $classOne = [];
+//        $classOneSql = 'SELECT A.no AS first_no, A.pcname AS first_name FROM proclass A WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC';
+//        $classOneRes = mysqli_query($conn, $classOneSql);
+//        while ($classOneRow = mysqli_fetch_assoc($classOneRes)) {
+//            $classOne[] = $classOneRow;
+//        }
+//
+//        $classTwo = [];
+//        $classTwoSql = 'SELECT A.no AS first_no, A.pcname AS first_name, B.no AS second_no, B.pcname AS second_name FROM proclass A LEFT JOIN proclass B ON A.no=B.parent WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC, B.sort ASC';
+//        $classTwoRes = mysqli_query($conn, $classTwoSql);
+//        while ($classTwoRow = mysqli_fetch_assoc($classTwoRes)) {
+//            $classTwo[] = $classTwoRow;
+//        }
+//
+//        $classThree = [];
+//        $classThreeSql = 'SELECT A.no AS first_no, A.pcname AS first_name, B.no AS second_no, B.pcname AS second_name, C.no AS third_no, C.pcname AS third_name FROM proclass A LEFT JOIN proclass B ON A.no=B.parent LEFT JOIN proclass C ON B.no=C.parent WHERE A.parent=0 AND A.status=1 ORDER BY A.sort ASC, B.sort ASC, C.sort ASC';
+//        $classThreeRes = mysqli_query($conn, $classThreeSql);
+//        while ($classThreeRow = mysqli_fetch_assoc($classThreeRes)) {
+//            $classThree[] = $classThreeRow;
+//        }
 
         foreach ($classOne as $item1) {
             echo '<ul class="list-group sbar">';

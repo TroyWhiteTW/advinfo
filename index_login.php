@@ -2,24 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
-// 產品分類
-$sql = "select * from proclass where parent = 0 order by no";
-$result = mysqli_query($conn, $sql);
-//if (mysqli_num_rows($result) > 0) {
-//    while ($row = mysqli_fetch_assoc($result)) {
-//        $proclass[] = array(
-//            'no' => "{$row['no']}",
-//            'pcname' => "{$row['pcname']}"
-//        );
-//    }
-//} else {
-//    // 錯誤 查詢結果
-//    echo 'E1';
-//    return;
-//}
-// TODO: 待補側邊攔，目前是 hard code
+
 ?>
 <!doctype html>
 <html>
@@ -367,6 +350,30 @@ $result = mysqli_query($conn, $sql);
             }
         }
     });
+
+    //新增側邊欄
+
+    //側邊欄滑動
+    $('#left-open').click(function() {
+        // 顯示隱藏側邊欄
+        $('.sidebar').toggleClass('sidebar-view');
+        // body畫面變暗+鎖住網頁滾輪
+        $('body').toggleClass('body-back');
+    });
+
+    $(window).resize(function() {
+        //減去tobar 高度
+        var bh = $(window).height() - 51;
+        $('.fullheight').height(bh);
+
+        var bw = $(window).width();
+        if (bw >= 768) {
+            $('.sidebar').removeClass('sidebar-view');
+            $('body').removeClass('body-back');
+        }
+    }).resize();
+
+    //新增側邊欄
 </script>
 
 </body>

@@ -2,8 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
 if ($isLogin) {
 
     if (!empty($_POST['proid']) && !empty($_POST['count'])) {

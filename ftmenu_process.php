@@ -2,8 +2,7 @@
 include 'db.php';
 session_start();
 $isLogin = !empty($_SESSION['user']);
-?>
-<?php
+
 // Page資料
 $sql = "select * from pages where `name` = '購物流程說明'";
 $pages = array();
@@ -110,6 +109,30 @@ if (mysqli_num_rows($result) > 0) {
             }
         }
     });
+
+    //新增側邊欄
+
+    //側邊欄滑動
+    $('#left-open').click(function() {
+        // 顯示隱藏側邊欄
+        $('.sidebar').toggleClass('sidebar-view');
+        // body畫面變暗+鎖住網頁滾輪
+        $('body').toggleClass('body-back');
+    });
+
+    $(window).resize(function() {
+        //減去tobar 高度
+        var bh = $(window).height() - 51;
+        $('.fullheight').height(bh);
+
+        var bw = $(window).width();
+        if (bw >= 768) {
+            $('.sidebar').removeClass('sidebar-view');
+            $('body').removeClass('body-back');
+        }
+    }).resize();
+
+    //新增側邊欄
 </script>
 
 </body>

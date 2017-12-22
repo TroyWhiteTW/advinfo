@@ -1,8 +1,6 @@
 <?php
 include 'db.php';
 session_start();
-?>
-<?php
 
 $errorMessage = "";
 foreach ($_POST as $k => $v) {
