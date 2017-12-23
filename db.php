@@ -29,4 +29,8 @@ mysqli_set_charset($conn, "UTF8");
 // 	// 錯誤 查詢結果
 // 	return;
 // }
+
+//API串接用
+$secString1 = 've6t5io371tqda8';
+$secString2 = '49dqf1gyuk1y2jr';
 ?>

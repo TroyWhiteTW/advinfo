@@ -117,6 +117,7 @@ if ($isLogin) {
                                                             alert('發生錯誤');
                                                         },
                                                         success: function (response) {
+                                                            console.log(response);
                                                             switch (response) {
                                                                 case '0':
                                                                     alert('帳號或密碼錯誤');
@@ -213,6 +214,30 @@ if ($isLogin) {
         }
     });
 
+    //新增側邊欄
+
+    //側邊欄滑動
+    $('#left-open').click(function() {
+        // 顯示隱藏側邊欄
+        $('.sidebar').toggleClass('sidebar-view');
+        // body畫面變暗+鎖住網頁滾輪
+        $('body').toggleClass('body-back');
+    });
+
+    $(window).resize(function() {
+        //減去tobar 高度
+        var bh = $(window).height() - 51;
+        $('.fullheight').height(bh);
+
+        var bw = $(window).width();
+        if (bw >= 768) {
+            $('.sidebar').removeClass('sidebar-view');
+            $('body').removeClass('body-back');
+        }
+    }).resize();
+
+    //新增側邊欄
+
     //ajax檢查驗證碼
     function ajaxForCheckCaptcha() {
         $.ajax({
@@ -250,13 +275,9 @@ if ($isLogin) {
         var account = $('input[name="email"]').val().trim();
         var password = $('input[name="password"]').val().trim();
         var validate_code = $('input[name="validate_code"]').val().trim();
+        var type = $('input[name="type"]').val().trim();
 
         //檢查帳號格式
-        var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
-        if (!account.match(email_regex)) {
-            isDataCorrect = false;
-            errorMessage += '帳號格式錯誤，請輸入電子信箱。\n';
-        }
         if (account.match(/\s/)) {
             isDataCorrect = false;
             errorMessage += '帳號格式錯誤，請勿包含空白鍵。\n';
@@ -265,22 +286,30 @@ if ($isLogin) {
             isDataCorrect = false;
             errorMessage += '請輸入帳號。\n';
         }
-        //檢查密碼格式
-        if (password.length < 8 || password.length > 20) {
-            isDataCorrect = false;
-            errorMessage += '密碼格式錯誤，字數必須在8-20之間。\n';
-        }
-        if (!password.match(/[0-9]/) || !password.match(/[a-zA-Z]/)) {
-            isDataCorrect = false;
-            errorMessage += '密碼格式錯誤，必須至少擁有一個數字及英文。\n';
-        }
-        if (password.match(/\s/)) {
-            isDataCorrect = false;
-            errorMessage += '密碼格式錯誤，請勿包含空白鍵。\n';
-        }
-        if (password.length === 0) {
-            isDataCorrect = false;
-            errorMessage += '請輸入密碼。\n';
+
+        if (type == "1") {
+            var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
+            if (!account.match(email_regex)) {
+                isDataCorrect = false;
+                errorMessage += '帳號格式錯誤，請輸入電子信箱。\n';
+            }
+            //檢查密碼格式
+            if (password.length < 8 || password.length > 20) {
+                isDataCorrect = false;
+                errorMessage += '密碼格式錯誤，字數必須在8-20之間。\n';
+            }
+            if (!password.match(/[0-9]/) || !password.match(/[a-zA-Z]/)) {
+                isDataCorrect = false;
+                errorMessage += '密碼格式錯誤，必須至少擁有一個數字及英文。\n';
+            }
+            if (password.match(/\s/)) {
+                isDataCorrect = false;
+                errorMessage += '密碼格式錯誤，請勿包含空白鍵。\n';
+            }
+            if (password.length === 0) {
+                isDataCorrect = false;
+                errorMessage += '請輸入密碼。\n';
+            }
         }
         //檢查驗證碼格式
         if (validate_code.length === 0) {

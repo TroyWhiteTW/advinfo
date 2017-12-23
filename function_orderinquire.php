@@ -4,7 +4,7 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 
 //先取得該用戶持有的所有訂單id
-$sql = "SELECT ordid FROM orders WHERE sub_account='" . $_SESSION['user'][7] . "'";
+$sql = "SELECT ordid FROM orders WHERE sub_account='" . $_SESSION['user2']['email'] . "'";
 $rs = mysqli_query($conn, $sql);
 $ordidArray = [];
 while ($row = mysqli_fetch_assoc($rs)) {
@@ -265,14 +265,14 @@ $orderData = mysqli_fetch_assoc($rs3);
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);

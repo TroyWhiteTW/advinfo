@@ -6,7 +6,7 @@ if (!$isLogin) {
     header('Location:index.php');
     exit;
 }
-if(!preg_match("/cart_2.php$/",$_SERVER['HTTP_REFERER'])){
+if (!preg_match("/cart_2.php$/", $_SERVER['HTTP_REFERER'])) {
     header('Location:index.php');
     exit;
 }
@@ -26,16 +26,16 @@ foreach ($_POST as $k => $v) {
 $orders = unserialize($_SESSION['orders']);
 
 //(POST) 訂購人資料
-$orders->sub_account = $_SESSION['user'][7];
+$orders->sub_account = $_SESSION['user2']["id"];
 $orders->sub_name = $_POST['sub_name'];
-$orders->sub_level = $_SESSION['user'][4];
+$orders->sub_level = $_SESSION['user2']["level"];
 $orders->sub_phone = $_POST['sub_phone'];
 $orders->sub_mobile = $_POST['sub_mobile'];
 $orders->sub_email = $_POST['sub_email'];
 $orders->sub_address = $_POST['sub_address'];
 
 //(POST) 收件人資料
-if ($_POST['rec_check']=='on'){
+if ($_POST['rec_check'] == 'on') {
     $orders->rec_name = $_POST['sub_name'];
     $orders->rec_phone = $_POST['sub_phone'];
     $orders->rec_mobile = $_POST['sub_mobile'];
@@ -44,7 +44,7 @@ if ($_POST['rec_check']=='on'){
     $orders->rec_city = '';
     $orders->rec_area = '';
     $orders->rec_address = $_POST['sub_address'];
-}else{
+} else {
     $orders->rec_name = $_POST['rec_name'];
     $orders->rec_phone = $_POST['rec_phone'];
     $orders->rec_mobile = $_POST['rec_mobile'];

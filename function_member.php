@@ -90,17 +90,23 @@ $isLogin = !empty($_SESSION['user']);
 
                                     <div class="form-tittle">
                                         推薦ID：
-                                        <div class="form-input-2"><?php echo $_SESSION['user'][5]; ?></div>
+                                        <div class="form-input-2"><?php echo $_SESSION['user2']['myreferral']; ?></div>
                                         <a class="btn btn-default btn-xs" href="">推薦表</a>
                                     </div>
 
                                     <div class="form-tittle">
                                         推薦連結：
-                                        <div class="form-input-2"><span id="copyNode">資料填入</span></div>
-                                        <div id="copyBtn" class="btn btn-default btn-xs copy"
-                                             data-clipboard-text="資料填入">
-                                            複製
-                                        </div>
+                                        <?php if ($_SESSION['user2']['myreferral'] != "") { ?>
+                                            <div class="form-input-2">
+                                                <span id="copyNode">
+                                                    <?= "http://" . $_SERVER['HTTP_HOST'] . "/login_register.php?rf=" . $_SESSION['user2']['myreferral'] ?>
+                                                </span>
+                                            </div>
+                                            <div id="copyBtn" class="btn btn-default btn-xs copy"
+                                                 data-clipboard-text="資料填入">
+                                                複製
+                                            </div>
+                                        <?php } ?>
                                     </div>
 
                                     <script>
@@ -312,14 +318,14 @@ $isLogin = !empty($_SESSION['user']);
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);

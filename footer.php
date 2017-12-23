@@ -25,5 +25,19 @@
             </div>
         </div>
     </div>
-    <div class="copyright"><br><br>客服時間：AM 10:00 - PM 18:00(網路部門星期六、日公休)快速客服專線：02-22XX-XXXX轉XX<br><br><br><br><br><br></div>
+    <?php
+			$setting = array();
+			$sql = "select * from settings order by no";
+			$rs = mysqli_query($conn, $sql);
+			while($rst = mysqli_fetch_assoc($rs)){
+				$setting[$rst["key"]] = $rst["value"];
+			}
+		?>
+    <div class="copyright"><br><br>
+    <?php
+			echo '客服時間：' . $setting["serv_time"];
+			echo '&nbsp;快速客服專線：' . $setting["cs_phone"];
+		?>
+    	<br><br><br><br><br><br>
+    </div>
 </footer>

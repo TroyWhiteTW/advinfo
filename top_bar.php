@@ -19,7 +19,7 @@
 
                 <?php
                 if ($isLogin) {
-                    echo '<li>-- Hi! ' . $_SESSION['user'][2] . '-- </li>';
+                    echo '<li>-- Hi! ' . $_SESSION['user2']['name'] . '-- </li>';
                 }
                 ?>
 
@@ -67,7 +67,7 @@
 
         <?php
         if ($isLogin) {
-            echo '<ul>-- Hi! ' . $_SESSION['user'][2] . '-- </ul>';
+            echo '<ul>-- Hi! ' . $_SESSION['user2']['name'] . '-- </ul>';
         }
         ?>
 
@@ -107,7 +107,7 @@
         <div class="search show_border">
             <form id="search_form1" method="get" action="pd_search.php">
                 <div class="search-input">
-                    <input type="text" name="search" id="" class="input-1" placeholder="搜尋商品">
+                    <input type="text" name="search" class="input-1" placeholder="搜尋商品">
                 </div>
                 <input type="submit" class="search-btn" value="">
             </form>
@@ -133,7 +133,8 @@
     <div class="search">
         <form id="search_form" method="get" action="pd_search.php">
             <div class="search-input">
-                <input type="text" name="search" id="" class="input-1" placeholder="搜尋商品"></div>
+                <input type="text" name="search" class="input-1" placeholder="搜尋商品">
+            </div>
             <input type="submit" class="search-btn" value="">
         </form>
     </div>

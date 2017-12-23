@@ -22,56 +22,66 @@ if (empty($errorMessage)) {
 
     // 珍菌堂會員/直銷會員 串接 API
     if ($_POST['type'] == 2) {
-//        $url = "./API/MemberLogin";
-//
-//        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL, $url);
-//        curl_setopt($ch, CURLOPT_POST, true);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
-//                array(
-//                    'MemberNo' => '123',
-//                    'MbPassword1' => '456',
-//                    'Ip' => '',
-//                    'LoginTime' => '',
-//                    'Token' => ''
-//                ))
-//        );
-//        $output = curl_exec($ch);
-//        curl_close($ch);
-//
-//        var_dump($output);
-//        return;
+				$ClienIP = $_SERVER['REMOTE_ADDR'];
+				$MemberNo = $_POST['email'];
+				$MbPassword = $_POST['password'];
+				$Timestemp = time();
+				$Token = MD5($ClienIP.$MemberNo.$Timestemp.$MbPassword.$secString1).
+									substr(MD5($ClienIP.$MemberNo.$Timestemp.$MbPassword.$secString2),0,8);
+			
+        $url = "https://api-101.zjt-taiwan.com/API/MemberLogin";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
+                array(
+                    'MemberNo' => $MemberNo,
+                    'MbPassword1' => $MbPassword,
+                    'Ip' => $ClienIP,
+                    'LoginTime' => $Timestemp,
+                    'Token' => $Token
+                ))
+        );
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        var_dump($output);
+				//多埋一個password2放登入密碼，串API會用到
+        exit;
     }
+		
+		if ($_POST['type'] == 1) {
+			$sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
 
-    $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+			$rs = mysqli_query($conn, $sql);
+			$row = mysqli_fetch_array($rs, MYSQLI_NUM);
 
-    $rs = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_array($rs, MYSQLI_NUM);
+			$rs2 = mysqli_query($conn, $sql);
+			$row2 = mysqli_fetch_assoc($rs2);
 
-    $rs2 = mysqli_query($conn, $sql);
-    $row2 = mysqli_fetch_assoc($rs2);
+			if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
 
-    if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
+					//SESSION 設定
+					$_SESSION['user'] = $row;
+					$_SESSION['user2'] = $row2;
 
-        //SESSION 設定
-        $_SESSION['user'] = $row;
-        $_SESSION['user2'] = $row2;
+					//常用取貨便利商店資料(要unerialize)
+					$_SESSION['user2']['constore'] = unserialize($row2["constore"]);
 
-        //常用取貨便利商店資料(要unerialize)
-        $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
-
-        echo 1;
-//        echo "登入成功，3秒後跳轉回首頁...";
-//        header("Refresh:3;url=index.php");
-//        header('Location:index.php');
-    } else {
-        echo 0;
-//        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
-//        header("Refresh:3;url=login.php");
-    }
-    $rs->close();
-    $rs2->close();
+					echo 1;
+	//        echo "登入成功，3秒後跳轉回首頁...";
+	//        header("Refresh:3;url=index.php");
+	//        header('Location:index.php');
+			} else {
+					echo 0;
+	//        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
+	//        header("Refresh:3;url=login.php");
+			}
+			$rs->close();
+			$rs2->close();
+		}
     exit;
 } else {
     echo "登入資料有誤:\n" . $errorMessage;
@@ -85,14 +95,18 @@ function checkData($post, &$msg)
             case 'email':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
-                chechEmail($k, $msg);
+								if($post["type"]=="1"){
+                	chechEmail($k, $msg);
+								}
                 break;
             case 'password':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
-                chechLengthBetweenTwoValue($k, $msg, 20, 8);
-                checkOneEngAndOneNum($k, $msg);
-                break;
+								if($post["type"]=="1"){
+									chechLengthBetweenTwoValue($k, $msg, 20, 8);
+									checkOneEngAndOneNum($k, $msg);
+								}
+								break;
             case 'type':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);

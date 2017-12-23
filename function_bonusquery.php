@@ -48,174 +48,211 @@ $isLogin = !empty($_SESSION['user']);
                     <div class="content-area">
                         <div class="function-area">
                             <ul>
-                                <li><a href="function_member.php"><input type="button" id="" name="" class=""
-                                                                         value="個人資料"></a></li>
-                                <li><a href="function_orderquery.php"><input type="button" id="" name="" class=""
-                                                                             value="訂單查詢"></a></li>
-                                <li><a href="function_bonusquery.php"><input type="button" id="" name=""
-                                                                             class="tag-value-select" value="重銷獎金查詢/規則"></a>
+                                <li>
+                                    <a href="function_member.php">
+                                        <input type="button" id="" name="" class="" value="個人資料">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="function_orderquery.php">
+                                        <input type="button" id="" name="" class="" value="訂單查詢">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="function_bonusquery.php">
+                                        <input type="button" id="" name="" class="tag-value-select" value="重銷獎金查詢/規則">
+                                    </a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="content-article">
-                            <div class="text-1" style="display:inline-block;">本期重銷累積獎金資料(預估資料)
-                                <div style="display:inline-block;"><a href="#rule"><span style="color:blue;">重銷規則</span></a>
+                        <?php
+                        //商城會員獎金自己顯示
+                        if ($_SESSION['user2']["type"] == "1") {
+                            ?>
+                            <div class="content-article">
+                                <div class="text-1" style="display:inline-block;">本期重銷累積獎金資料(預估資料)
+                                    <div style="display:inline-block;"><a href="#rule"><span
+                                                    style="color:blue;">重銷規則</span></a>
+                                    </div>
                                 </div>
+                                <table width="100%" border="1" style="margin-top:10px;">
+                                    <tbody>
+                                    <tr class="tb-tittle">
+                                        <td>週期</td>
+                                        <td>目前責任額</td>
+                                        <td>實際消費</td>
+                                        <td>達成與否</td>
+                                        <td>累積獎金</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>2017/7/20-2017/8/20</td>
+                                        <td>1000PV</td>
+                                        <td>1000PV</td>
+                                        <td>是</td>
+                                        <td>$14,443</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table width="100%" border="1" style="margin-top:10px;">
+                                    <tbody>
+                                    <tr class="tb-tittle">
+                                        <td>代數</td>
+                                        <td>金額</td>
+                                        <td>代數</td>
+                                        <td>金額</td>
+                                        <td>代數</td>
+                                        <td>金額</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>1</td>
+                                        <td>$1,111</td>
+                                        <td>6</td>
+                                        <td>$1,111</td>
+                                        <td>11</td>
+                                        <td>$1,111</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>2</td>
+                                        <td>$1,111</td>
+                                        <td>7</td>
+                                        <td>$1,111</td>
+                                        <td>12</td>
+                                        <td>$1,111</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>3</td>
+                                        <td>$1,111</td>
+                                        <td>8</td>
+                                        <td>$1,111</td>
+                                        <td>13</td>
+                                        <td>$1,111</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>4</td>
+                                        <td>$1,111</td>
+                                        <td>9</td>
+                                        <td>$1,111</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>5</td>
+                                        <td>$1,111</td>
+                                        <td>10</td>
+                                        <td>$1,111</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <table width="100%" border="1" style="margin-top:10px;">
-                                <tbody>
-                                <tr class="tb-tittle">
-                                    <td>週期</td>
-                                    <td>目前責任額</td>
-                                    <td>實際消費</td>
-                                    <td>達成與否</td>
-                                    <td>累積獎金</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>2017/7/20-2017/8/20</td>
-                                    <td>1000PV</td>
-                                    <td>1000PV</td>
-                                    <td>是</td>
-                                    <td>$14,443</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table width="100%" border="1" style="margin-top:10px;">
-                                <tbody>
-                                <tr class="tb-tittle">
-                                    <td>代數</td>
-                                    <td>金額</td>
-                                    <td>代數</td>
-                                    <td>金額</td>
-                                    <td>代數</td>
-                                    <td>金額</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>1</td>
-                                    <td>$1,111</td>
-                                    <td>6</td>
-                                    <td>$1,111</td>
-                                    <td>11</td>
-                                    <td>$1,111</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>2</td>
-                                    <td>$1,111</td>
-                                    <td>7</td>
-                                    <td>$1,111</td>
-                                    <td>12</td>
-                                    <td>$1,111</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>3</td>
-                                    <td>$1,111</td>
-                                    <td>8</td>
-                                    <td>$1,111</td>
-                                    <td>13</td>
-                                    <td>$1,111</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>4</td>
-                                    <td>$1,111</td>
-                                    <td>9</td>
-                                    <td>$1,111</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>5</td>
-                                    <td>$1,111</td>
-                                    <td>10</td>
-                                    <td>$1,111</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="content-article">
-                            <div class="text-1" style="display:inline-block;">歷史重銷累積獎金
-                                <select name="" id="">
-                                    <option selected="selected" value="0">週期選擇</option>
-                                    <option value="1">20170620-20170720</option>
-                                    <option value="2">20170520-20170620</option>
-                                </select>
+                            <div class="content-article">
+                                <div class="text-1" style="display:inline-block;">歷史重銷累積獎金
+                                    <select name="" id="">
+                                        <option selected="selected" value="0">週期選擇</option>
+                                        <option value="1">20170620-20170720</option>
+                                        <option value="2">20170520-20170620</option>
+                                    </select>
+                                </div>
+                                <table width="100%" border="1" style="margin-top:10px;">
+                                    <tbody>
+                                    <tr class="tb-tittle">
+                                        <td>週期</td>
+                                        <td>目前責任額</td>
+                                        <td>實際消費</td>
+                                        <td>達成與否</td>
+                                        <td>累積獎金</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>2017/7/20-2017/8/20</td>
+                                        <td>1000PV</td>
+                                        <td>1000PV</td>
+                                        <td>是</td>
+                                        <td>$14,443</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table width="100%" border="1" style="margin-top:10px;">
+                                    <tbody>
+                                    <tr class="tb-tittle">
+                                        <td>代數</td>
+                                        <td>金額</td>
+                                        <td>代數</td>
+                                        <td>金額</td>
+                                        <td>代數</td>
+                                        <td>金額</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>1</td>
+                                        <td>$1,111</td>
+                                        <td>6</td>
+                                        <td>$1,111</td>
+                                        <td>11</td>
+                                        <td>$1,111</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>2</td>
+                                        <td>$1,111</td>
+                                        <td>7</td>
+                                        <td>$1,111</td>
+                                        <td>12</td>
+                                        <td>$1,111</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>3</td>
+                                        <td>$1,111</td>
+                                        <td>8</td>
+                                        <td>$1,111</td>
+                                        <td>13</td>
+                                        <td>$1,111</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>4</td>
+                                        <td>$1,111</td>
+                                        <td>9</td>
+                                        <td>$1,111</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr class="td-02">
+                                        <td>5</td>
+                                        <td>$1,111</td>
+                                        <td>10</td>
+                                        <td>$1,111</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <table width="100%" border="1" style="margin-top:10px;">
-                                <tbody>
-                                <tr class="tb-tittle">
-                                    <td>週期</td>
-                                    <td>目前責任額</td>
-                                    <td>實際消費</td>
-                                    <td>達成與否</td>
-                                    <td>累積獎金</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>2017/7/20-2017/8/20</td>
-                                    <td>1000PV</td>
-                                    <td>1000PV</td>
-                                    <td>是</td>
-                                    <td>$14,443</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table width="100%" border="1" style="margin-top:10px;">
-                                <tbody>
-                                <tr class="tb-tittle">
-                                    <td>代數</td>
-                                    <td>金額</td>
-                                    <td>代數</td>
-                                    <td>金額</td>
-                                    <td>代數</td>
-                                    <td>金額</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>1</td>
-                                    <td>$1,111</td>
-                                    <td>6</td>
-                                    <td>$1,111</td>
-                                    <td>11</td>
-                                    <td>$1,111</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>2</td>
-                                    <td>$1,111</td>
-                                    <td>7</td>
-                                    <td>$1,111</td>
-                                    <td>12</td>
-                                    <td>$1,111</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>3</td>
-                                    <td>$1,111</td>
-                                    <td>8</td>
-                                    <td>$1,111</td>
-                                    <td>13</td>
-                                    <td>$1,111</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>4</td>
-                                    <td>$1,111</td>
-                                    <td>9</td>
-                                    <td>$1,111</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr class="td-02">
-                                    <td>5</td>
-                                    <td>$1,111</td>
-                                    <td>10</td>
-                                    <td>$1,111</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="content-article"><a name="rule"></a>
-                            <div class="text-1" style="display:inline-block;">重銷規則說明</div>
-                            <div class="text-2">重銷規則說明區</div>
-                        </div>
+                            <div class="content-article"><a name="rule"></a>
+                                <div class="text-1" style="display:inline-block;">重銷規則說明</div>
+                                <div class="text-2">重銷規則說明區</div>
+                            </div>
+                        <?php } ?>
+                        <?php
+                        //直銷會員獎金iframe顯示
+                        if ($_SESSION['user2']["type"] == "2") {
+                            $ClienIP = $_SERVER['REMOTE_ADDR'];
+                            $MemberNo = $_SESSION['user2']['id'];
+                            $MbPassword = $_SESSION['user2']['password2'];
+                            $Timestemp = time();
+                            $Token = MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString1) .
+                                substr(MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString2), 0, 8);
+
+                            $param = array(
+                                'MemberNo' => $MemberNo,
+                                'Timestemp' => $Timestemp,
+                                'Token' => $Token
+                            );
+
+                            $Url = 'https://vip-101.zjt-taiwan.com/Mall/MemberBonus?' . http_build_query($param);
+                            ?>
+                            <div class="content-article">
+                                <iframe src="<?= $Url ?>" width="100%" height="1000" frameborder="0"
+                                        scrolling="auto"></iframe>
+                            </div>
+                        <?php } ?>
                     </div>
 
                 <?php else: ?>
@@ -274,14 +311,14 @@ $isLogin = !empty($_SESSION['user']);
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);

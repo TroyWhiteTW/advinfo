@@ -4,7 +4,7 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 
 //拿到所有訂單
-$userEmail = $_SESSION['user'][7];
+$userEmail = $_SESSION['user2']['email'];
 $sql = "SELECT * FROM orders WHERE sub_account = '" . $userEmail . "' ORDER BY ordid DESC";
 $rs = mysqli_query($conn, $sql);
 $orderDataArray = [];
@@ -112,7 +112,7 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
 
                             $a = statusTranslate(1);
                             echo '<div class="content-article"><table width="100%" border="1"><tbody><tr class="tb-tittle"><td colspan="2">訂單編號</td></tr>';
-                            echo '<tr class="td-02"><td colspan="2"><a href="function_orderinquire.php?ordid='.$orderDataArray[$i]['ordid'].'">' . $orderDataArray[$i]['ordid'] . '</a></td></tr>';
+                            echo '<tr class="td-02"><td colspan="2"><a href="function_orderinquire.php?ordid=' . $orderDataArray[$i]['ordid'] . '">' . $orderDataArray[$i]['ordid'] . '</a></td></tr>';
                             echo '<tr class="tb-tittle"><td>日期</td><td>狀態</td></tr>';
                             echo '<tr class="td-02"><td>' . $orderDataArray[$i]['orddate'] . '</td><td>' . statusTranslate($orderDataArray[$i]['ordstatus']) . '</td></tr></tbody></table>';
                             echo '<table width="100%" border="1"><tbody><tr class="tb-tittle"><td>總金額</td><td>折抵</td><td>應付金額</td></tr>';
@@ -122,10 +122,9 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
                             echo '<table width="100%" border="1"><tbody><tr class="tb-tittle"><td>退貨</td><td>明細</td></tr>';
                             echo '<tr class="td-02">';
                             echo '<td> -- </td>';
-                            echo '<td><a href="function_orderinquire.php?ordid='.$orderDataArray[$i]['ordid'].'">明細</a></td>';
+                            echo '<td><a href="function_orderinquire.php?ordid=' . $orderDataArray[$i]['ordid'] . '">明細</a></td>';
                             echo '</tr></tbody></table></div><br/>';
                         }
-
 
 
                         ?>
@@ -243,14 +242,14 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);
