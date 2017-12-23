@@ -64,6 +64,12 @@ if (empty($errorMessage)) {
             mysqli_query($conn, "UPDATE members SET myreferral='" . $MyReferral . "' WHERE id='" . $rst["id"] . "'");
         }
 
+        if ($_POST['referral'] != "") {
+            foreach (explode(";", findReferral("zjttw_" . substr($insertData['id'], 1, -1), $_POST['referral'], 1)) as $recommendmapSql) {
+                $recommendmapRes = mysqli_query($conn, $recommendmapSql);
+            }
+        }
+
         send2Mail($_POST['email'], 'service mail', '');
         echo "註冊成功，請至您的電子信箱點擊驗證連結，以使用更多會員功能！\n3秒後跳轉回首頁...";
         header("Refresh:3;url=index.php");
@@ -321,6 +327,22 @@ function send2Mail($towhom, $title, $mesg)
         'Content-type:text/html;charset=UTF-8' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
     mail($towhom, $subject, $message, $headers);
+}
+
+function findReferral($memid, $referral, $level)
+{
+    global $conn;
+
+    $sql = "SELECT * FROM members WHERE myreferral='" . $referral . "'";
+    $rs = mysqli_query($conn, $sql);
+    while ($rst = mysqli_fetch_assoc($rs)) {
+        if ($rst["referral"] != "" && $level < 13) {
+            $referral_sql = findReferral($memid, $rst["referral"], $level + 1);
+        }
+    }
+
+    return $referral_sql .
+        "INSERT INTO recommendmap(memid, referral, leveldiff, addtime, updatetime) VALUES('" . $memid . "','" . $referral . "','" . ($level) . "',NOW(),NOW());";
 }
 
 exit;
