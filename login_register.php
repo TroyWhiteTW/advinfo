@@ -104,7 +104,7 @@ if ($isLogin) {
                                     <!--                                    </tr>-->
 
                                     <tr>
-                                        <td class="td-04">推薦者帳號</td>
+                                        <td class="td-04">推薦碼</td>
                                         <td>
                                             <input type="text" name="referral" class="input-4"
                                                    value="<?= $_GET['rf'] ?>">
@@ -538,10 +538,10 @@ if ($isLogin) {
 //        }
         //檢查推薦者帳號 referral
         if (referral !== "") {
-            if (!referral.match(email_regex)) {
-                isDataCorrect = false;
-                errorMessage += '推薦者帳號格式錯誤，請輸入電子信箱。\n';
-            }
+            // if (!referral.match(email_regex)) {
+            //     isDataCorrect = false;
+            //     errorMessage += '推薦者帳號格式錯誤，請輸入電子信箱。\n';
+            // }
             if (referral.match(/\s/)) {
                 isDataCorrect = false;
                 errorMessage += '推薦者帳號格式錯誤，請勿包含空白鍵。\n';

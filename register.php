@@ -148,7 +148,7 @@ function checkData($post, &$msg)
                 break;
             case 'referral':
                 checkSpace($k, $msg);
-                chechEmail($k, $msg);
+//                chechEmail($k, $msg);
                 break;
             case 'validate_code':
                 checkEmpty($k, $msg);
