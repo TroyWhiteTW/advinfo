@@ -32,6 +32,14 @@ if (empty($errorMessage)) {
     }
     $rs->close();
 
+    //判斷推薦碼是否正確(存在此推薦碼)，若有，則將此推薦碼 寫在 註冊會員資料的 referral 欄位
+    $checkReferralExistSql = 'SELECT * FROM members WHERE myreferral=' . "\"" . $_POST['referral'] . "\"";
+    $checkReferralExistRes = mysqli_query($conn, $checkReferralExistSql);
+    $checkReferralExistRow = mysqli_fetch_assoc($checkReferralExistRes);
+    if ($checkReferralExistRow == null) {
+        $_POST['referral'] = '';
+    }
+    $checkReferralExistRes->close();
 
     //檢查通過 寫入資料庫
     $insertData = encodeRegisterData($_POST);
@@ -47,7 +55,7 @@ if (empty($errorMessage)) {
     if ($result === true) {
 
         $Directory = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
-        $rs2 = mysqli_query($conn, "SELECT * FROM members WHERE myreferral='' or myreferral IS NULL");
+        $rs2 = mysqli_query($conn, "SELECT * FROM members WHERE myreferral='' OR myreferral IS NULL");
         while ($rst = mysqli_fetch_assoc($rs2)) {
             $MyReferral = "";
             for ($i = 1; $i <= 8; $i++) {
