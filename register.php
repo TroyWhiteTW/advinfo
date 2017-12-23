@@ -45,6 +45,17 @@ if (empty($errorMessage)) {
 
     $result = mysqli_query($conn, $sql);
     if ($result === true) {
+
+        $Directory = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
+        $rs2 = mysqli_query($conn, "SELECT * FROM members WHERE myreferral='' or myreferral IS NULL");
+        while ($rst = mysqli_fetch_assoc($rs2)) {
+            $MyReferral = "";
+            for ($i = 1; $i <= 8; $i++) {
+                $MyReferral .= substr($Directory, rand(0, strlen($Directory)), 1);
+            }
+            mysqli_query($conn, "UPDATE members SET myreferral='" . $MyReferral . "' WHERE id='" . $rst["id"] . "'");
+        }
+
         send2Mail($_POST['email'], 'service mail', '');
         echo "註冊成功，請至您的電子信箱點擊驗證連結，以使用更多會員功能！\n3秒後跳轉回首頁...";
         header("Refresh:3;url=index.php");
