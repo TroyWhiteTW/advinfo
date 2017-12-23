@@ -54,6 +54,7 @@ if (empty($errorMessage)) {
     $result = mysqli_query($conn, $sql);
     if ($result === true) {
 
+        //當商城會員註冊時要一併產生寫入資料表 myreferral 欄位
         $Directory = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
         $rs2 = mysqli_query($conn, "SELECT * FROM members WHERE myreferral='' OR myreferral IS NULL");
         while ($rst = mysqli_fetch_assoc($rs2)) {
@@ -64,6 +65,7 @@ if (empty($errorMessage)) {
             mysqli_query($conn, "UPDATE members SET myreferral='" . $MyReferral . "' WHERE id='" . $rst["id"] . "'");
         }
 
+        //參考test.php 裡的 findReferral function，主要是遞迴往上找出推薦者的推薦者，會產生insert資料到推薦表(recommendmap)的sql語法
         if ($_POST['referral'] != "") {
             foreach (explode(";", findReferral("zjttw_" . substr($insertData['id'], 1, -1), $_POST['referral'], 1)) as $recommendmapSql) {
                 $recommendmapRes = mysqli_query($conn, $recommendmapSql);
