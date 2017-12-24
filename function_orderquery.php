@@ -5,7 +5,7 @@ $isLogin = !empty($_SESSION['user']);
 
 //拿到所有訂單
 $userEmail = $_SESSION['user2']['email'];
-$sql = "SELECT * FROM orders WHERE sub_account = '" . $userEmail . "' ORDER BY ordid DESC";
+$sql = "SELECT * FROM orders WHERE sub_email = '" . $userEmail . "' ORDER BY ordid DESC";
 $rs = mysqli_query($conn, $sql);
 $orderDataArray = [];
 while ($rowData = mysqli_fetch_assoc($rs)) {
