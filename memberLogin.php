@@ -29,7 +29,7 @@ if (empty($errorMessage)) {
 				$Token = MD5($ClienIP.$MemberNo.$Timestemp.$MbPassword.$secString1).
 									substr(MD5($ClienIP.$MemberNo.$Timestemp.$MbPassword.$secString2),0,8);
 			
-        $url = "https://api-101.zjt-taiwan.com/API/MemberLogin";
+        $url = "https://api.zjt-taiwan.com/API/MemberLogin";
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

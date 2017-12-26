@@ -246,7 +246,7 @@ $isLogin = !empty($_SESSION['user']);
                                 'Token' => $Token
                             );
 
-                            $Url = 'https://vip-101.zjt-taiwan.com/Mall/MemberBonus?' . http_build_query($param);
+                            $Url = 'https://vip.zjt-taiwan.com/Mall/MemberBonus?' . http_build_query($param);
                             ?>
                             <div class="content-article">
                                 <iframe src="<?= $Url ?>" width="100%" height="1000" frameborder="0"
