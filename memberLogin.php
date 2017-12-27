@@ -18,7 +18,7 @@ if (empty($errorMessage)) {
         exit;
     }
 
-    $insertData = encodeRegisterData($_POST);
+    $insertData = encodeLoginData($_POST);
 
     switch ($_POST['type']) {
         case 1:
@@ -83,18 +83,80 @@ if (empty($errorMessage)) {
                 )
             ));
             if ($output = curl_exec($ch)) {
-                echo $output;
-                $obj = json_decode($output);
-                $obj->RetVal;
-                $obj->MemberName;
-                $obj->MemberClass;
-                $obj->ClassName;
-                $obj->MbCellTel;
-                $obj->RecAddress;
-                $obj->BonusCoin;
-                $obj->LastLogin;
+//                echo $output;
+                $apiRes = json_decode($output);
+                if ($apiRes === null) {
+                    echo 'decode fail';
+                } else {
+                    switch ($apiRes->RetVal) {
+                        case 0://執行成功
+                            $checkSql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+
+                            $checkRes = mysqli_query($conn, $checkSql);
+                            $checkRow = mysqli_fetch_assoc($checkRes);
+
+                            if ($checkRow === null) {
+                                //insert
+                                $data = encodeRegisterData($_POST, $apiRes);
+                                $keys = array_keys($data);
+                                $sqlSetStr = f1($keys);
+                                $sqlValueStr = f2($keys, $data);
+                                $insertSql = 'INSERT INTO members ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
+                                $result = mysqli_query($conn, $insertSql);
+                                if ($result === true) {
+
+                                } else {
+                                    echo "發生未預期錯誤...";
+                                }
+                            } else if ($checkRow['email'] === $_POST['email'] && password_verify($_POST['password'], $checkRow['password'])) {
+                                //update
+                                $data = encodeUpdateData($_POST);
+                                $keys = array_keys($data);
+                                $sqlStr = f3($keys, $data);
+                                $updateSql = 'UPDATE members SET ' . $sqlStr . ' WHERE email=' . $insertData['email'];
+                                $result = mysqli_query($conn, $updateSql);
+                                if ($result === true) {
+
+                                } else {
+                                    echo "發生未預期錯誤...";
+                                }
+                            } else {
+                                echo 0;
+                                //        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
+                                //        header("Refresh:3;url=login.php");
+                                exit;
+                            }
+
+                            $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+
+                            $rs = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_array($rs, MYSQLI_NUM);
+
+                            $rs2 = mysqli_query($conn, $sql);
+                            $row2 = mysqli_fetch_assoc($rs2);
+
+                            //SESSION 設定
+                            $_SESSION['user'] = $row;
+                            $_SESSION['user2'] = $row2;
+
+                            //常用取貨便利商店資料(要unerialize)
+                            $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
+
+                            echo 1;
+                            break;
+                        case 1://帳號或密碼不正確
+                            break;
+                        case 2://帳號未激活
+                            break;
+                        case 3://帳號已凍結
+                            break;
+                        case 99://Token錯誤
+                            break;
+                    }
+                }
+
             } else {
-                echo 'XX';
+                echo 'curl fail';
             }
 
             curl_close($ch);
@@ -106,6 +168,33 @@ if (empty($errorMessage)) {
 } else {
     echo "登入資料有誤:\n" . $errorMessage;
     exit;
+}
+
+function f1($ks)
+{
+    $str = "(";
+    foreach ($ks as $v) {
+        $str .= $v . ",";
+    }
+    return substr($str, 0, -1) . ")";
+}
+
+function f2($ks, $vs)
+{
+    $str = "(";
+    foreach ($ks as $v) {
+        $str .= $vs[$v] . ",";
+    }
+    return substr($str, 0, -1) . ")";
+}
+
+function f3($ks, $vs)
+{
+    $str = "";
+    foreach ($ks as $v) {
+        $str .= $v . "=" . $vs[$v] . ",";
+    }
+    return substr($str, 0, -1);
 }
 
 function checkData($post, &$msg)
@@ -247,7 +336,7 @@ function checkType($k, &$msg)
     }
 }
 
-function encodeRegisterData($rawDataArray)
+function encodeLoginData($rawDataArray)
 {
     $dataArray = [
         "email" => "\"\"",
@@ -258,6 +347,74 @@ function encodeRegisterData($rawDataArray)
     foreach ($dataArray as $k => $v) {
         if (!empty($rawDataArray[$k])) {
             $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
+        }
+    }
+    return $dataArray;
+}
+
+function encodeRegisterData($rawDataArray, $apiData)
+{
+    $dataArray = [
+        'id' => "\"zjttw_" . date("YmdHis", time()) . "\"",
+        "password" => "\"\"",
+        "name" => "\"$apiData->MemberName\"",
+        "gender" => "\"\"",
+        "level" => "\"$apiData->MemberClass\"",
+        "levelname" => "\"$apiData->ClassName\"",
+        "referral" => "\"\"",
+        "birthday" => "\"\"",
+        "email" => "\"\"",
+        "phone" => "\"$apiData->MbCellTel\"",
+        "mobile" => "\"\"",
+        "company_no" => "\"\"",
+        "invoice_title" => "\"\"",
+        "city" => "\"\"",
+        "area" => "\"\"",
+        "address" => "\"$apiData->RecAddress\"",
+        "constore" => "\"$apiData->BonusCoin\"",
+        "bonuscoin" => "\"\"",
+        "regtime" => "\"" . date("Y-m-d H:i:s", time()) . "\"",
+        "verifycode" => "\"\"",
+        "verifytime" => "\"0\"",
+        "type" => "\"1\"",
+        "status" => "\"9\""
+    ];
+
+    foreach ($dataArray as $k => $v) {
+        if (!empty($rawDataArray[$k])) {
+            if ($k === "password") {
+                $dataArray[$k] = "\"" . password_hash($rawDataArray[$k], PASSWORD_DEFAULT) . "\"";
+            } else {
+                $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
+            }
+        }
+    }
+    return $dataArray;
+}
+
+function encodeUpdateData($rawDataArray)
+{
+    $dataArray = [
+        "name" => "\"\"",
+        "birthday" => "\"\"",
+        "gender" => "\"\"",
+        "email" => "\"\"",
+        "phone" => "\"\"",
+        "mobile" => "\"\"",
+        "company_no" => "\"\"",
+        "invoice_title" => "\"\"",
+//        "city" => "\"\"",
+//        "area" => "\"\"",
+        "address" => "\"\"",
+    ];
+
+    foreach ($dataArray as $k => $v) {
+        if (!empty($rawDataArray[$k])) {
+            if ($k === "password") {
+                $dataArray[$k] = "\"" . password_hash($rawDataArray[$k], PASSWORD_DEFAULT) . "\"";
+            } else {
+                $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
+            }
         }
     }
     return $dataArray;
