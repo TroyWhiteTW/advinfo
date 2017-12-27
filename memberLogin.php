@@ -20,68 +20,88 @@ if (empty($errorMessage)) {
 
     $insertData = encodeRegisterData($_POST);
 
-    // 珍菌堂會員/直銷會員 串接 API
-    if ($_POST['type'] == 2) {
-				$ClienIP = $_SERVER['REMOTE_ADDR'];
-				$MemberNo = $_POST['email'];
-				$MbPassword = $_POST['password'];
-				$Timestemp = time();
-				$Token = MD5($ClienIP.$MemberNo.$Timestemp.$MbPassword.$secString1).
-									substr(MD5($ClienIP.$MemberNo.$Timestemp.$MbPassword.$secString2),0,8);
-			
-        $url = "https://api.zjt-taiwan.com/API/MemberLogin";
+    switch ($_POST['type']) {
+        case 1:
+            $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
+            $rs = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_array($rs, MYSQLI_NUM);
+
+            $rs2 = mysqli_query($conn, $sql);
+            $row2 = mysqli_fetch_assoc($rs2);
+
+            if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
+
+                //SESSION 設定
+                $_SESSION['user'] = $row;
+                $_SESSION['user2'] = $row2;
+
+                //常用取貨便利商店資料(要unerialize)
+                $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
+
+                echo 1;
+                //        echo "登入成功，3秒後跳轉回首頁...";
+                //        header("Refresh:3;url=index.php");
+                //        header('Location:index.php');
+            } else {
+                echo 0;
+                //        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
+                //        header("Refresh:3;url=login.php");
+            }
+            $rs->close();
+            $rs2->close();
+            break;
+        case 2:
+            // 珍菌堂會員/直銷會員 串接 API
+            $ClienIP = $_SERVER['REMOTE_ADDR'];
+            $MemberNo = $_POST['email'];
+            $MbPassword = $_POST['password'];
+            $Timestemp = time();
+            $secString1 = 've6t5io371tqda8';
+            $secString2 = '49dqf1gyuk1y2jr';
+            $Token = MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString1) .
+                substr(MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString2), 0, 8);
+
+            $url = "https://api.zjt-taiwan.com/API/MemberLogin";
+//            $url = "https://www.google.com";
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
                 array(
                     'MemberNo' => $MemberNo,
                     'MbPassword1' => $MbPassword,
                     'Ip' => $ClienIP,
                     'LoginTime' => $Timestemp,
-                    'Token' => $Token
-                ))
-        );
-        $output = curl_exec($ch);
-        curl_close($ch);
+                    'Token' => $Token,
+                )
+            ));
+            if ($output = curl_exec($ch)) {
+                echo $output;
+                $obj = json_decode($output);
+                $obj->RetVal;
+                $obj->MemberName;
+                $obj->MemberClass;
+                $obj->ClassName;
+                $obj->MbCellTel;
+                $obj->RecAddress;
+                $obj->BonusCoin;
+                $obj->LastLogin;
+            } else {
+                echo 'XX';
+            }
 
-        var_dump($output);
-				//多埋一個password2放登入密碼，串API會用到
-        exit;
+            curl_close($ch);
+            //多埋一個password2放登入密碼，串API會用到
+            break;
     }
-		
-		if ($_POST['type'] == 1) {
-			$sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
 
-			$rs = mysqli_query($conn, $sql);
-			$row = mysqli_fetch_array($rs, MYSQLI_NUM);
-
-			$rs2 = mysqli_query($conn, $sql);
-			$row2 = mysqli_fetch_assoc($rs2);
-
-			if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
-
-					//SESSION 設定
-					$_SESSION['user'] = $row;
-					$_SESSION['user2'] = $row2;
-
-					//常用取貨便利商店資料(要unerialize)
-					$_SESSION['user2']['constore'] = unserialize($row2["constore"]);
-
-					echo 1;
-	//        echo "登入成功，3秒後跳轉回首頁...";
-	//        header("Refresh:3;url=index.php");
-	//        header('Location:index.php');
-			} else {
-					echo 0;
-	//        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
-	//        header("Refresh:3;url=login.php");
-			}
-			$rs->close();
-			$rs2->close();
-		}
     exit;
 } else {
     echo "登入資料有誤:\n" . $errorMessage;
@@ -95,18 +115,18 @@ function checkData($post, &$msg)
             case 'email':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
-								if($post["type"]=="1"){
-                	chechEmail($k, $msg);
-								}
+                if ($post["type"] == "1") {
+                    chechEmail($k, $msg);
+                }
                 break;
             case 'password':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);
-								if($post["type"]=="1"){
-									chechLengthBetweenTwoValue($k, $msg, 20, 8);
-									checkOneEngAndOneNum($k, $msg);
-								}
-								break;
+                if ($post["type"] == "1") {
+                    chechLengthBetweenTwoValue($k, $msg, 20, 8);
+                    checkOneEngAndOneNum($k, $msg);
+                }
+                break;
             case 'type':
                 checkEmpty($k, $msg);
                 checkSpace($k, $msg);

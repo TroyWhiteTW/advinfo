@@ -287,7 +287,7 @@ if ($isLogin) {
             errorMessage += '請輸入帳號。\n';
         }
 
-        if (type == "1") {
+        if (type === "1") {
             var email_regex = /[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,4}/;
             if (!account.match(email_regex)) {
                 isDataCorrect = false;
