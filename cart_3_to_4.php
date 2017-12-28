@@ -1,14 +1,16 @@
 <?php
 include 'db.php';
 session_start();
-$isLogin = !empty($_SESSION['user']);
-if (!$isLogin) {
+//$isLogin = !empty($_SESSION['user']);
+if (empty($_SESSION['user']) || empty($_SESSION['orders'])) {
     header('Location:index.php');
     exit;
 }
+
+//可能從金流轉回來，所以這邊判斷先註解了
 if (!preg_match("/cart_3.php$/", $_SERVER['HTTP_REFERER'])) {
-    header('Location:index.php');
-    exit;
+    //header('Location:index.php');
+    //exit;
 }
 
 require __DIR__ . '/OrdersDAO.php';
@@ -17,20 +19,48 @@ require __DIR__ . '/OrderDetailDAO.php';
 /** @var OrdersDAO $orders */
 $orders = unserialize($_SESSION['orders']);
 
+// 配送方式
+$shiptype = [];
+$shiptypesSql = 'SELECT shiptypes.no, shiptypes.name, shiptypes.type, logistics.name as logname, shippings.* FROM shiptypes 
+										LEFT JOIN shippings ON shiptypes.no=shippings.shiptype 
+										LEFT JOIN logistics ON logistics.no=shippings.logno
+										WHERE shippings.status=1 and shippings.forSupplier=1';
+$shiptypesRes = mysqli_query($conn, $shiptypesSql);
+while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
+    //$shiptypes[] = $shiptypesRow;
+    if ($shiptypesRow["no"] == $orders->ship_no) {
+        $shiptype = $shiptypesRow;
+    }
+}
+
+// 付款方式
+$payment = [];
+$paymentsSql = 'SELECT * FROM payments WHERE status=1 and forSupplier=1 order by type desc,installment';
+$paymentsRes = mysqli_query($conn, $paymentsSql);
+while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
+    //$payments[] = $paymentsRow;
+    if ($paymentsRow["no"] == $orders->pay_no) {
+        $payment = $paymentsRow;
+    }
+}
+
 //完成付款
 if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders->ordid) {
     if ($_POST["errcode"] != "00") {        //00 (數字 )表交易成功。其餘失敗！
         exit('<script>alert("交易失敗: ' . $_POST["errmsg"] . '"); location.href="cart3.php";</script>');
     }
 
+    //$orders->sub_account = $_SESSION["user2"]["id"];
+    //$orders->sub_level = $_SESSION["user2"]["level"];
     $orders->pay_time = date('Y-m-d H:i:s', time());
-    $orders->appredate = '0000-00-00 00:00:00';
-//$orders->total_price = 0;
-//$orders->freight = 0;
-//$orders->PV = 0;
-//$orders->bonuce = 0;
+    $orders->pay_price = $orders->total_price + $order->freight - $orders->discount_price;
+    //$orders->total_price = 0;
+    //$orders->freight = 0;
+    //$orders->PV = 0;
+    //$orders->bonuce = 0;
     $orders->ordstatus = 0;
     $orders->shipstatus = 0;
+    $orders->appredate = '0000-00-00 00:00:00';
     $orders->shiptime = '0000-00-00 00:00:00';
     $orders->addtime = date('Y-m-d H:i:s', time());
     $orders->updatetime = date('Y-m-d H:i:s', time());
@@ -47,13 +77,13 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
         $orders->constore = serialize($_SESSION['user2']['constore']);
     }
 
-//金流回來的資訊
+    //金流回來的資訊
     $orders->cardno = $_POST["Card_NO"];
     $orders->approvecode = $_POST["ApproveCode"];
     $orders->moneyflow_no = $_POST["buysafeno"];
+    $orders->ispay = 1;   //已付款
 
-//for transition
-
+    //for transition
     $odno = getMaxOdno($conn);
 
     $mysqli = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
@@ -70,6 +100,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     $mysqli->autocommit(false);
     $orders->save(@$mysqli, @$errors);
 
+    //訂單子表
     foreach ($_SESSION['shop_cart'] as $k => $v) {
         $orderDetail = new OrderDetailDAO();
 
@@ -208,11 +239,11 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
         //    header('Location:cart_4.php');
     }
 
-//
-// 跳轉到 cart_4.php
+    // 跳轉到 cart_4.php
     $mysqli->close();
-//header('Location:cart_4.php');
+    //header('Location:cart_4.php');
 } else {
+    //先產生金流表單
     $item = array();
     foreach ($_SESSION['shop_cart'] as $proid => $qty) {
         $sql = 'SELECT proname,price,PV,bonuce FROM products WHERE proid=\'' . $proid . '\'';
@@ -221,29 +252,51 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
         $item[] = $row['proname'];
     }
 
-    //分期
-    $Term = "";
-
     //訂單金額與檢查碼
     $total = $orders->total_price + $orders->freight;
-    $ChkValue = strtoupper(sha1('S1708259161' . '1qazxsw2' . (int)$total));   //檢查碼
-    echo '
-		<form name="form1" method="post" action="https://test.esafe.com.tw/Service/Etopm.aspx">
-		<input type="hidden" name="web" value="S1708259161">
-		<input type="hidden" name="MN" value="' . $total . '">
-		<input type="hidden" name="OrderInfo" value="' . implode(",", $item) . '">
-		<input type="hidden" name="Td" value="' . $orders->ordid . '">
-		<input type="hidden" name="sna" value="' . $orders->sub_name . '">
-		<input type="hidden" name="sdt" value="' . $orders->sub_mobile . '">
-		<input type="hidden" name="email" value="' . $orders->sub_email . '">
-		<input type="hidden" name="Card_Type" value="0">
-		<input type="hidden" name="Term" value="' . $Term . '">
-		<input type="hidden" name="ChkValue" value="' . $ChkValue . '">
-		</form>
-		<script>
+
+    if ($payment["type"] == "C") {        //刷卡
+        //分期
+        $Term = "";
+        if ($payment["installment"] > 0) {
+            $Term = $payment["installment"];
+        }
+
+        //檢查碼
+        $ChkValue = strtoupper(sha1('S1708259161' . '1qazxsw2' . (int)$total . $Term));
+
+        echo '
+			<form name="form1" method="post" action="https://test.esafe.com.tw/Service/Etopm.aspx">
+			<input type="hidden" name="web" value="S1708259161">
+			<input type="hidden" name="MN" value="' . $total . '">
+			<input type="hidden" name="OrderInfo" value="' . implode(",", $item) . '">
+			<input type="hidden" name="Td" value="' . $orders->ordid . '">
+			<input type="hidden" name="sna" value="' . $orders->sub_name . '">
+			<input type="hidden" name="sdt" value="' . $orders->sub_mobile . '">
+			<input type="hidden" name="email" value="' . $orders->sub_email . '">
+			<input type="hidden" name="Card_Type" value="0">
+			<input type="hidden" name="Term" value="' . $Term . '">
+			<input type="hidden" name="ChkValue" value="' . $ChkValue . '">
+			</form>';
+    } elseif ($payment["type"] == "A") {        //WebATM
+        $ChkValue = strtoupper(sha1('S1708259187' . '1qazxsw2' . (int)$total));   //檢查碼
+        echo '
+			<form name="form1" method="post" action="https://test.esafe.com.tw/Service/Etopm.aspx">
+			<input type="hidden" name="web" value="S1708259187">
+			<input type="hidden" name="MN" value="' . $total . '">
+			<input type="hidden" name="OrderInfo" value="' . implode(",", $item) . '">
+			<input type="hidden" name="Td" value="' . $orders->ordid . '">
+			<input type="hidden" name="sna" value="' . $orders->sub_name . '">
+			<input type="hidden" name="sdt" value="' . $orders->sub_mobile . '">
+			<input type="hidden" name="email" value="' . $orders->sub_email . '">
+			<input type="hidden" name="ChkValue" value="' . $ChkValue . '">
+			</form>';
+    }
+
+    echo '<script>
 			document.form1.submit();
 		</script>';
-
+    exit;
 }
 
 function getMaxOdno($conn)
