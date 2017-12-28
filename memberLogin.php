@@ -542,6 +542,9 @@ function loginType2($conn, $insertData)
                     //常用取貨便利商店資料(要unerialize)
                     $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
 
+                    //多埋一個password2放登入密碼，串API會用到
+                    $_SESSION['user2']['password2'] = $_POST['password'];
+
                     echo 1;
                     break;
                 case 1://帳號或密碼不正確

@@ -234,9 +234,11 @@ $isLogin = !empty($_SESSION['user']);
                         //直銷會員獎金iframe顯示
                         if ($_SESSION['user2']["type"] == "2") {
                             $ClienIP = $_SERVER['REMOTE_ADDR'];
-                            $MemberNo = $_SESSION['user2']['id'];
+                            $MemberNo = $_SESSION['user2']['email'];
                             $MbPassword = $_SESSION['user2']['password2'];
                             $Timestemp = time();
+                            $secString1 = 've6t5io371tqda8';
+                            $secString2 = '49dqf1gyuk1y2jr';
                             $Token = MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString1) .
                                 substr(MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString2), 0, 8);
 
