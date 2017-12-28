@@ -22,144 +22,146 @@ if (empty($errorMessage)) {
 
     switch ($_POST['type']) {
         case 1:
-            $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
-
-            $rs = mysqli_query($conn, $sql);
-            $row = mysqli_fetch_array($rs, MYSQLI_NUM);
-
-            $rs2 = mysqli_query($conn, $sql);
-            $row2 = mysqli_fetch_assoc($rs2);
-
-            if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
-
-                //SESSION 設定
-                $_SESSION['user'] = $row;
-                $_SESSION['user2'] = $row2;
-
-                //常用取貨便利商店資料(要unerialize)
-                $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
-
-                echo 1;
-                //        echo "登入成功，3秒後跳轉回首頁...";
-                //        header("Refresh:3;url=index.php");
-                //        header('Location:index.php');
-            } else {
-                echo 0;
-                //        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
-                //        header("Refresh:3;url=login.php");
-            }
-            $rs->close();
-            $rs2->close();
+            loginType1($conn, $insertData);
+//            $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+//
+//            $rs = mysqli_query($conn, $sql);
+//            $row = mysqli_fetch_array($rs, MYSQLI_NUM);
+//
+//            $rs2 = mysqli_query($conn, $sql);
+//            $row2 = mysqli_fetch_assoc($rs2);
+//
+//            if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
+//
+//                //SESSION 設定
+//                $_SESSION['user'] = $row;
+//                $_SESSION['user2'] = $row2;
+//
+//                //常用取貨便利商店資料(要unerialize)
+//                $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
+//
+//                echo 1;
+//                //        echo "登入成功，3秒後跳轉回首頁...";
+//                //        header("Refresh:3;url=index.php");
+//                //        header('Location:index.php');
+//            } else {
+//                echo 0;
+//                //        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
+//                //        header("Refresh:3;url=login.php");
+//            }
+//            $rs->close();
+//            $rs2->close();
             break;
         case 2:
             // 珍菌堂會員/直銷會員 串接 API
-            $ClienIP = $_SERVER['REMOTE_ADDR'];
-            $MemberNo = $_POST['email'];
-            $MbPassword = $_POST['password'];
-            $Timestemp = time();
-            $secString1 = 've6t5io371tqda8';
-            $secString2 = '49dqf1gyuk1y2jr';
-            $Token = MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString1) .
-                substr(MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString2), 0, 8);
-
-            $url = "https://api.zjt-taiwan.com/API/MemberLogin";
-//            $url = "https://www.google.com";
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-//            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
-                array(
-                    'MemberNo' => $MemberNo,
-                    'MbPassword1' => $MbPassword,
-                    'Ip' => $ClienIP,
-                    'LoginTime' => $Timestemp,
-                    'Token' => $Token,
-                )
-            ));
-            if ($output = curl_exec($ch)) {
-//                echo $output;
-                $apiRes = json_decode($output);
-                if ($apiRes === null) {
-                    echo 'decode fail';
-                } else {
-                    switch ($apiRes->RetVal) {
-                        case 0://執行成功
-                            $checkSql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
-
-                            $checkRes = mysqli_query($conn, $checkSql);
-                            $checkRow = mysqli_fetch_assoc($checkRes);
-
-                            if ($checkRow === null) {
-                                //insert
-                                $data = encodeRegisterData($_POST, $apiRes);
-                                $keys = array_keys($data);
-                                $sqlSetStr = f1($keys);
-                                $sqlValueStr = f2($keys, $data);
-                                $insertSql = 'INSERT INTO members ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
-                                $result = mysqli_query($conn, $insertSql);
-                                if ($result === true) {
-
-                                } else {
-                                    echo "發生未預期錯誤...";
-                                }
-                            } else if ($checkRow['email'] === $_POST['email'] && password_verify($_POST['password'], $checkRow['password'])) {
-                                //update
-                                $data = encodeUpdateData($_POST);
-                                $keys = array_keys($data);
-                                $sqlStr = f3($keys, $data);
-                                $updateSql = 'UPDATE members SET ' . $sqlStr . ' WHERE email=' . $insertData['email'];
-                                $result = mysqli_query($conn, $updateSql);
-                                if ($result === true) {
-
-                                } else {
-                                    echo "發生未預期錯誤...";
-                                }
-                            } else {
-                                echo 0;
-                                //        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
-                                //        header("Refresh:3;url=login.php");
-                                exit;
-                            }
-
-                            $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
-
-                            $rs = mysqli_query($conn, $sql);
-                            $row = mysqli_fetch_array($rs, MYSQLI_NUM);
-
-                            $rs2 = mysqli_query($conn, $sql);
-                            $row2 = mysqli_fetch_assoc($rs2);
-
-                            //SESSION 設定
-                            $_SESSION['user'] = $row;
-                            $_SESSION['user2'] = $row2;
-
-                            //常用取貨便利商店資料(要unerialize)
-                            $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
-
-                            echo 1;
-                            break;
-                        case 1://帳號或密碼不正確
-                            break;
-                        case 2://帳號未激活
-                            break;
-                        case 3://帳號已凍結
-                            break;
-                        case 99://Token錯誤
-                            break;
-                    }
-                }
-
-            } else {
-                echo 'curl fail';
-            }
-
-            curl_close($ch);
+            loginType2($conn, $insertData);
+//            $ClienIP = $_SERVER['REMOTE_ADDR'];
+//            $MemberNo = $_POST['email'];
+//            $MbPassword = $_POST['password'];
+//            $Timestemp = time();
+//            $secString1 = 've6t5io371tqda8';
+//            $secString2 = '49dqf1gyuk1y2jr';
+//            $Token = MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString1) .
+//                substr(MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString2), 0, 8);
+//
+//            $url = "https://api.zjt-taiwan.com/API/MemberLogin";
+////            $url = "https://www.google.com";
+//
+//            $ch = curl_init();
+//            curl_setopt($ch, CURLOPT_URL, $url);
+//            curl_setopt($ch, CURLOPT_HEADER, false);
+//            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+//            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+////            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+//            curl_setopt($ch, CURLOPT_POST, true);
+//            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
+//                array(
+//                    'MemberNo' => $MemberNo,
+//                    'MbPassword1' => $MbPassword,
+//                    'Ip' => $ClienIP,
+//                    'LoginTime' => $Timestemp,
+//                    'Token' => $Token,
+//                )
+//            ));
+//            if ($output = curl_exec($ch)) {
+////                echo $output;
+//                $apiRes = json_decode($output);
+//                if ($apiRes === null) {
+//                    echo 'decode fail';
+//                } else {
+//                    switch ($apiRes->RetVal) {
+//                        case 0://執行成功
+//                            $checkSql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+//
+//                            $checkRes = mysqli_query($conn, $checkSql);
+//                            $checkRow = mysqli_fetch_assoc($checkRes);
+//
+//                            if ($checkRow === null) {
+//                                //insert
+//                                $data = encodeRegisterData($_POST, $apiRes);
+//                                $keys = array_keys($data);
+//                                $sqlSetStr = f1($keys);
+//                                $sqlValueStr = f2($keys, $data);
+//                                $insertSql = 'INSERT INTO members ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
+//                                $result = mysqli_query($conn, $insertSql);
+//                                if ($result === true) {
+//
+//                                } else {
+//                                    echo "發生未預期錯誤...";
+//                                }
+//                            } else if ($checkRow['email'] === $_POST['email'] && password_verify($_POST['password'], $checkRow['password'])) {
+//                                //update
+//                                $data = encodeUpdateData($_POST, $apiRes);
+//                                $keys = array_keys($data);
+//                                $sqlStr = f3($keys, $data);
+//                                $updateSql = 'UPDATE members SET ' . $sqlStr . ' WHERE email=' . $insertData['email'];
+//                                $result = mysqli_query($conn, $updateSql);
+//                                if ($result === true) {
+//
+//                                } else {
+//                                    echo "發生未預期錯誤...";
+//                                }
+//                            } else {
+//                                echo 0;
+//                                //        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
+//                                //        header("Refresh:3;url=login.php");
+//                                exit;
+//                            }
+//
+//                            $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+//
+//                            $rs = mysqli_query($conn, $sql);
+//                            $row = mysqli_fetch_array($rs, MYSQLI_NUM);
+//
+//                            $rs2 = mysqli_query($conn, $sql);
+//                            $row2 = mysqli_fetch_assoc($rs2);
+//
+//                            //SESSION 設定
+//                            $_SESSION['user'] = $row;
+//                            $_SESSION['user2'] = $row2;
+//
+//                            //常用取貨便利商店資料(要unerialize)
+//                            $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
+//
+//                            echo 1;
+//                            break;
+//                        case 1://帳號或密碼不正確
+//                            break;
+//                        case 2://帳號未激活
+//                            break;
+//                        case 3://帳號已凍結
+//                            break;
+//                        case 99://Token錯誤
+//                            break;
+//                    }
+//                }
+//
+//            } else {
+//                echo 'curl fail';
+//            }
+//
+//            curl_close($ch);
             //多埋一個password2放登入密碼，串API會用到
             break;
     }
@@ -371,8 +373,8 @@ function encodeRegisterData($rawDataArray, $apiData)
         "city" => "\"\"",
         "area" => "\"\"",
         "address" => "\"$apiData->RecAddress\"",
-        "constore" => "\"$apiData->BonusCoin\"",
-        "bonuscoin" => "\"\"",
+        "constore" => "\"\"",
+        "bonuscoin" => "\"$apiData->BonusCoin\"",
         "regtime" => "\"" . date("Y-m-d H:i:s", time()) . "\"",
         "verifycode" => "\"\"",
         "verifytime" => "\"0\"",
@@ -392,20 +394,17 @@ function encodeRegisterData($rawDataArray, $apiData)
     return $dataArray;
 }
 
-function encodeUpdateData($rawDataArray)
+function encodeUpdateData($rawDataArray, $apiData)
 {
     $dataArray = [
-        "name" => "\"\"",
-        "birthday" => "\"\"",
-        "gender" => "\"\"",
-        "email" => "\"\"",
-        "phone" => "\"\"",
-        "mobile" => "\"\"",
-        "company_no" => "\"\"",
-        "invoice_title" => "\"\"",
+        "name" => "\"$apiData->MemberName\"",
+        "level" => "\"$apiData->MemberClass\"",
+        "levelname" => "\"$apiData->ClassName\"",
+        "phone" => "\"$apiData->MbCellTel\"",
 //        "city" => "\"\"",
 //        "area" => "\"\"",
-        "address" => "\"\"",
+        "address" => "\"$apiData->RecAddress\"",
+        "bonuscoin" => "\"$apiData->BonusCoin\"",
     ];
 
     foreach ($dataArray as $k => $v) {
@@ -418,4 +417,147 @@ function encodeUpdateData($rawDataArray)
         }
     }
     return $dataArray;
+}
+
+function loginType1($conn, $insertData)
+{
+    $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+
+    $rs = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($rs, MYSQLI_NUM);
+
+    $rs2 = mysqli_query($conn, $sql);
+    $row2 = mysqli_fetch_assoc($rs2);
+
+    if ($row2['email'] === $_POST['email'] && password_verify($_POST['password'], $row2['password'])) {
+
+        //SESSION 設定
+        $_SESSION['user'] = $row;
+        $_SESSION['user2'] = $row2;
+
+        //常用取貨便利商店資料(要unerialize)
+        $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
+
+        echo 1;
+        //        echo "登入成功，3秒後跳轉回首頁...";
+        //        header("Refresh:3;url=index.php");
+        //        header('Location:index.php');
+    } else {
+        echo 0;
+        //        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
+        //        header("Refresh:3;url=login.php");
+    }
+    $rs->close();
+    $rs2->close();
+}
+
+function loginType2($conn, $insertData)
+{
+    $ClienIP = $_SERVER['REMOTE_ADDR'];
+    $MemberNo = $_POST['email'];
+    $MbPassword = $_POST['password'];
+    $Timestemp = time();
+    $secString1 = 've6t5io371tqda8';
+    $secString2 = '49dqf1gyuk1y2jr';
+    $Token = MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString1) .
+        substr(MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString2), 0, 8);
+
+    $url = "https://api.zjt-taiwan.com/API/MemberLogin";
+//            $url = "https://www.google.com";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
+        array(
+            'MemberNo' => $MemberNo,
+            'MbPassword1' => $MbPassword,
+            'Ip' => $ClienIP,
+            'LoginTime' => $Timestemp,
+            'Token' => $Token,
+        )
+    ));
+    if ($output = curl_exec($ch)) {
+//                echo $output;
+        $apiRes = json_decode($output);
+        if ($apiRes === null) {
+            echo 'decode fail';
+        } else {
+            switch ($apiRes->RetVal) {
+                case 0://執行成功
+                    $checkSql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+
+                    $checkRes = mysqli_query($conn, $checkSql);
+                    $checkRow = mysqli_fetch_assoc($checkRes);
+
+                    if ($checkRow === null) {
+                        //insert
+                        $data = encodeRegisterData($_POST, $apiRes);
+                        $keys = array_keys($data);
+                        $sqlSetStr = f1($keys);
+                        $sqlValueStr = f2($keys, $data);
+                        $insertSql = 'INSERT INTO members ' . $sqlSetStr . ' VALUES ' . $sqlValueStr . ';';
+                        $result = mysqli_query($conn, $insertSql);
+                        if ($result === true) {
+
+                        } else {
+                            echo "發生未預期錯誤...";
+                        }
+                    } else if ($checkRow['email'] === $_POST['email'] && password_verify($_POST['password'], $checkRow['password'])) {
+                        //update
+                        $data = encodeUpdateData($_POST, $apiRes);
+                        $keys = array_keys($data);
+                        $sqlStr = f3($keys, $data);
+                        $updateSql = 'UPDATE members SET ' . $sqlStr . ' WHERE email=' . $insertData['email'];
+                        $result = mysqli_query($conn, $updateSql);
+                        if ($result === true) {
+
+                        } else {
+                            echo "發生未預期錯誤...";
+                        }
+                    } else {
+                        echo 0;
+                        //        echo "帳號或密碼錯誤，3秒後跳轉回登入頁...";
+                        //        header("Refresh:3;url=login.php");
+                        exit;
+                    }
+
+                    $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+
+                    $rs = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_array($rs, MYSQLI_NUM);
+
+                    $rs2 = mysqli_query($conn, $sql);
+                    $row2 = mysqli_fetch_assoc($rs2);
+
+                    //SESSION 設定
+                    $_SESSION['user'] = $row;
+                    $_SESSION['user2'] = $row2;
+
+                    //常用取貨便利商店資料(要unerialize)
+                    $_SESSION['user2']['constore'] = unserialize($row2["constore"]);
+
+                    echo 1;
+                    break;
+                case 1://帳號或密碼不正確
+                    break;
+                case 2://帳號未激活
+                    break;
+                case 3://帳號已凍結
+                    break;
+                case 99://Token錯誤
+                    break;
+            }
+        }
+
+    } else {
+        echo 'curl fail';
+    }
+
+    curl_close($ch);
 }
