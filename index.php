@@ -82,12 +82,6 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
 
     <?php include 'http_head.php'; ?>
 
-    <!--    <style>-->
-    <!--        .product-area .pd-pic img {-->
-    <!--            height: 250px;-->
-    <!--        }-->
-    <!--    </style>-->
-
 </head>
 
 <body>
@@ -183,6 +177,59 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
                 }
                 ?>
 
+                <div class="product-area">
+                    <div class="tag normal-pd">
+                        <div class="tag-name">普通商品</div>
+                        <div class="more"><a href="pd_query.php?protags=0">more</a></div>
+                    </div>
+                    <div class="product-list">
+                        <?php
+                        $products = [];
+                        $productsSql = 'SELECT * FROM products WHERE protags=0 AND status=3 OR status=8 ORDER BY uptime DESC LIMIT 8';
+                        $productsRes = mysqli_query($conn, $productsSql);
+                        while ($productsRow = mysqli_fetch_assoc($productsRes)) {
+                            $products[] = $productsRow;
+                        }
+                        foreach ($products as $product) {
+                            echo '<div class="pd">';
+                            echo '<a href="pd_page.php?proid=' . $product['proid'] . '">';
+                            // 搜尋該商品的主圖
+                            $sql = "select * from productpics where proid='" . $product['proid'] . "' and sort=1";
+                            $result = mysqli_query($conn, $sql);
+                            if (mysqli_num_rows($result) > 0) {
+                                // 撈出主圖
+                                $row = mysqli_fetch_assoc($result);
+                                echo '<div class="pd-pic"><img src="upload/product/' . $row['picfile'] . '" alt=""/></div>';
+                            } else {
+                                echo '<div class="pd-pic"></div>';
+                            }
+                            echo '<div class="pd-name">' . $product['proname'] . '</div>';
+                            foreach ($proclass as $item) {
+                                if ($item['no'] == $product['pcno']) {
+                                    echo '<div class="pd-type">' . $item['pcname'] . '</div>';
+                                }
+                            }
+                            echo '</a>';
+                            if ($isLogin) {
+                                switch ($_SESSION['user2']['type']) {
+                                    case 1:
+                                        echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                        break;
+                                    case 2:
+                                        echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                        break;
+                                }
+                            } else {
+                                echo '<div class="pd-pv">請登入後查看</div>';
+                            }
+                            echo '<div class="pd-price">價格$' . $product['price'] . '元</div>';
+                            echo '</div>';
+                        }
+                        ?>
+
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -232,14 +279,14 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);
