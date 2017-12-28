@@ -185,7 +185,7 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
                     <div class="product-list">
                         <?php
                         $products = [];
-                        $productsSql = 'SELECT * FROM products WHERE protags=0 AND status=3 OR status=8 ORDER BY uptime DESC LIMIT 8';
+                        $productsSql = 'SELECT * FROM products WHERE protags=0 AND status IN(3,8) ORDER BY uptime DESC LIMIT 8';
                         $productsRes = mysqli_query($conn, $productsSql);
                         while ($productsRow = mysqli_fetch_assoc($productsRes)) {
                             $products[] = $productsRow;

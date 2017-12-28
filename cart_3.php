@@ -10,8 +10,7 @@ if (!preg_match("/cart_2.php$/", $_SERVER['HTTP_REFERER'])) {
     header('Location:index.php');
     exit;
 }
-?>
-<?php
+
 // 引入訂單的 DAO class
 require __DIR__ . '/OrdersDAO.php';
 
@@ -530,14 +529,14 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
         //新增側邊欄
 
         //側邊欄滑動
-        $('#left-open').click(function() {
+        $('#left-open').click(function () {
             // 顯示隱藏側邊欄
             $('.sidebar').toggleClass('sidebar-view');
             // body畫面變暗+鎖住網頁滾輪
             $('body').toggleClass('body-back');
         });
 
-        $(window).resize(function() {
+        $(window).resize(function () {
             //減去tobar 高度
             var bh = $(window).height() - 51;
             $('.fullheight').height(bh);
@@ -556,7 +555,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
     </html>
 <?php
-$orders->total_price = $total + $fare - $discount;
+$orders->total_price = $total - $discount;
 $orders->freight = $fare;
 $orders->PV = $tPV;
 $orders->bonuce = 0;
