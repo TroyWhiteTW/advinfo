@@ -468,32 +468,77 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                 }
                                 ?>
 
-                                <!--                                <div class="form-tittle">-->
-                                <!---->
-                                <!--                                    <div class="price-textarea">-->
-                                <!--                                        餘額-->
-                                <!--                                    </div>-->
-                                <!---->
-                                <!--                                    <div class="price-textarea" style="color:blue;">-->
-                                <!--                                        xxxx-->
-                                <!--                                    </div>-->
-                                <!---->
-                                <!--                                    <div class="price-textarea unit">-->
-                                <!--                                        元-->
-                                <!--                                    </div>-->
-                                <!---->
-                                <!--                                </div>-->
+                                <div class="form-tittle">
+
+                                    <div class="price-textarea">
+                                        餘額
+                                    </div>
+
+                                    <div id="accountBalance" class="price-textarea" style="color:blue;">
+                                        <?php
+                                        switch ($_SESSION['user2']['type']) {
+                                            case 1:
+                                                echo $_SESSION['user2']['bonus'];
+                                                break;
+                                            case 2:
+                                                echo $_SESSION['user2']['bonuscoin'];;
+                                                break;
+                                        }
+                                        ?>
+                                    </div>
+
+                                    <div class="price-textarea unit">
+                                        元
+                                    </div>
+
+                                </div>
 
                                 <div class="form-tittle">
                                     折抵金額：
-                                    <input type="text" name="discount_price" id="" class="input-6"> 元
+                                    <input type="number" name="discount_price" id="discountPrice" class="input-6"> 元
                                 </div>
 
                                 <div class="price-area">
                                     <div class="price-textarea">應付總金額：</div>
-                                    <div class="price-textarea">--</div>
+                                    <div class="price-textarea" id="shouldPay">--</div>
                                     <div class="price-textarea">元</div>
                                 </div>
+
+                                <script>
+                                    var accountBalenceValue = parseInt(document.getElementById('accountBalance').innerText);
+                                    var accountBalenceValue2 = parseInt(totalPriceNode2.innerHTML);
+                                    var discountPrice = document.getElementById('discountPrice');
+                                    var shouldPay = document.getElementById('shouldPay');
+                                    shouldPay.innerText = accountBalenceValue2;
+                                    if (accountBalenceValue > accountBalenceValue2) {
+                                        discountPrice.addEventListener('change', function (e) {
+                                            if (this.value > accountBalenceValue2) {
+                                                this.value = accountBalenceValue2;
+                                            }
+                                            shouldPay.innerText = accountBalenceValue2 - this.value;
+                                        });
+                                        discountPrice.addEventListener('keyup', function (e) {
+                                            if (this.value > accountBalenceValue2) {
+                                                this.value = accountBalenceValue2;
+                                            }
+                                            shouldPay.innerText = accountBalenceValue2 - this.value;
+                                        });
+                                    } else if (accountBalenceValue <= accountBalenceValue2) {
+                                        discountPrice.addEventListener('change', function (e) {
+                                            if (this.value > accountBalenceValue) {
+                                                this.value = accountBalenceValue;
+                                            }
+                                            shouldPay.innerText = accountBalenceValue2 - this.value;
+                                        });
+                                        discountPrice.addEventListener('keyup', function (e) {
+                                            if (this.value > accountBalenceValue) {
+                                                this.value = accountBalenceValue;
+                                            }
+                                            shouldPay.innerText = accountBalenceValue2 - this.value;
+                                        });
+                                    }
+
+                                </script>
 
                             </div>
 
@@ -658,14 +703,14 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);

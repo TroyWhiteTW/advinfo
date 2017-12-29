@@ -311,12 +311,12 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                             echo '<div class="form-input">不使用折抵</div>';
                                             break;
                                         case 1:
-                                            $discount = 0;
+                                            $discount = $orders->discount_price;
                                             echo '<div class="form-input">使用電子錢包折抵</div>';
                                             echo '<div class="form-tittle">折抵金額：<div class="form-input-2">' . $orders->discount_price . '</div></div>';
                                             break;
                                         case 2:
-                                            $discount = 0;
+                                            $discount = $orders->discount_price;
                                             echo '<div class="form-input">使用紅利折抵</div>';
                                             echo '<div class="form-tittle">折抵金額：<div class="form-input-2">' . $orders->discount_price . '</div></div>';
                                             break;
@@ -555,7 +555,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
     </html>
 <?php
-$orders->total_price = $total - $discount;
+$orders->total_price = $total;
 $orders->freight = $fare;
 $orders->PV = $tPV;
 $orders->bonuce = 0;
