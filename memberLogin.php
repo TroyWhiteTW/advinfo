@@ -548,12 +548,18 @@ function loginType2($conn, $insertData)
                     echo 1;
                     break;
                 case 1://帳號或密碼不正確
+//                    var_dump($apiRes);
+                    echo 0;
                     break;
                 case 2://帳號未激活
+//                    var_dump($apiRes);
                     break;
                 case 3://帳號已凍結
+//                    var_dump($apiRes);
+                    echo '帳號已凍結或停用';
                     break;
                 case 99://Token錯誤
+//                    var_dump($apiRes);
                     break;
             }
         }

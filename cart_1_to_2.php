@@ -26,6 +26,10 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
     $_SESSION['shop_cart'][$k] = $_POST[$k];
 }
 
+//if ($_POST['password2'] != null && $_POST['password2'] != $_SESSION['user2']['password2']) {
+//    echo '登入密碼驗證錯誤';
+//}
+
 //設定訂單 orders id date
 $orders->ordid = time();
 $orders->orddate = date('Y-m-d', time());

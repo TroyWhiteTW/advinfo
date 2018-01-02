@@ -498,6 +498,11 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     <input type="number" name="discount_price" id="discountPrice" class="input-6"> 元
                                 </div>
 
+                                <div class="form-tittle">
+                                    登入密碼：
+                                    <input type="password" name="password2" id="password2" class="input-6"> (請輸入登入密碼作為驗證身分用)
+                                </div>
+
                                 <div class="price-area">
                                     <div class="price-textarea">應付總金額：</div>
                                     <div class="price-textarea" id="shouldPay">--</div>

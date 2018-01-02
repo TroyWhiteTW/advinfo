@@ -21,10 +21,10 @@ $orders = unserialize($_SESSION['orders']);
 
 // 配送方式
 $shiptype = [];
-$shiptypesSql = 'SELECT shiptypes.no, shiptypes.name, shiptypes.type, logistics.name as logname, shippings.* FROM shiptypes 
+$shiptypesSql = 'SELECT shiptypes.no, shiptypes.name, shiptypes.type, logistics.name AS logname, shippings.* FROM shiptypes 
 										LEFT JOIN shippings ON shiptypes.no=shippings.shiptype 
 										LEFT JOIN logistics ON logistics.no=shippings.logno
-										WHERE shippings.status=1 and shippings.forSupplier=1';
+										WHERE shippings.status=1 AND shippings.forSupplier=1';
 $shiptypesRes = mysqli_query($conn, $shiptypesSql);
 while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
     //$shiptypes[] = $shiptypesRow;
@@ -35,7 +35,7 @@ while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
 
 // 付款方式
 $payment = [];
-$paymentsSql = 'SELECT * FROM payments WHERE status=1 and forSupplier=1 order by type desc,installment';
+$paymentsSql = 'SELECT * FROM payments WHERE status=1 AND forSupplier=1 ORDER BY type DESC,installment';
 $paymentsRes = mysqli_query($conn, $paymentsSql);
 while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
     //$payments[] = $paymentsRow;
@@ -53,7 +53,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     //$orders->sub_account = $_SESSION["user2"]["id"];
     //$orders->sub_level = $_SESSION["user2"]["level"];
     $orders->pay_time = date('Y-m-d H:i:s', time());
-    $orders->pay_price = $orders->total_price + $order->freight - $orders->discount_price;
+    $orders->pay_price = $orders->total_price + $orders->freight - $orders->discount_price;
     //$orders->total_price = 0;
     //$orders->freight = 0;
     //$orders->PV = 0;
@@ -68,8 +68,8 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     $orders->returntime = '0000-00-00 00:00:00';
     $orders->refundtime = '0000-00-00 00:00:00';
 
-    $sql = "select shippings.*,logistics.name as logname from shippings 
-                                    LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.no='" . $orders->ship_no . "'";
+    $sql = "SELECT shippings.*,logistics.name AS logname FROM shippings 
+            LEFT JOIN logistics ON logistics.no=shippings.logno WHERE shippings.no='$orders->ship_no'";
     $rs = mysqli_query($conn, $sql);
     $rst = mysqli_fetch_assoc($rs);
 
@@ -82,6 +82,13 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     $orders->approvecode = $_POST["ApproveCode"];
     $orders->moneyflow_no = $_POST["buysafeno"];
     $orders->ispay = 1;   //已付款
+
+    //訂單請求API
+    if (orderApply($orders->ordid, $orders->total_price, $orders->total_price + $orders->freight, $orders->PV, $orders->discount_price, $orders->orddate) == 0) {
+
+    } else {
+        exit('<script>alert("電子錢包折抵失敗"); location.href="cart3.php";</script>');
+    }
 
     //for transition
     $odno = getMaxOdno($conn);
@@ -228,6 +235,13 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
         //無錯誤 所有資料寫入成功
         $mysqli->commit();
 
+        //訂單確認API
+        if (orderConfirm($orders->ordid, $orders->total_price, $orders->pay_no, $orders->pay_price, $orders->ispay == 1 ? 'Y' : 'N', $orders->pay_time) == 0) {
+
+        } else {
+            //error
+        }
+
         unset($_SESSION['orders']);
         unset($_SESSION['shop_cart']);
         header('Location:cart_4.php');
@@ -246,14 +260,14 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     //先產生金流表單
     $item = array();
     foreach ($_SESSION['shop_cart'] as $proid => $qty) {
-        $sql = 'SELECT proname,price,PV,bonuce FROM products WHERE proid=\'' . $proid . '\'';
+        $sql = "SELECT proname,price,PV,bonuce FROM products WHERE proid='$proid'";
         $rs = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($rs);
         $item[] = $row['proname'];
     }
 
     //訂單金額與檢查碼
-    $total = $orders->total_price + $orders->freight;
+    $total = $orders->total_price + $orders->freight - $orders->discount_price;
 
     if ($payment["type"] == "C") {        //刷卡
         //分期
@@ -305,6 +319,208 @@ function getMaxOdno($conn)
     $r = mysqli_fetch_assoc($rData);
     $rData->close();
     return intval($r['maxOdno']);
+}
+
+function orderApply($OrderNo, $OrderAmount, $TotalAmount, $PvValue, $DiscountCoin, $OrderTime)
+{
+    $ClienIP = $_SERVER['REMOTE_ADDR'];
+    $MemberNo = $_SESSION['user2']['email'];
+    $MbPassword = $_SESSION['user2']['password2'];
+    $Timestemp = time();
+    $secString1 = 've6t5io371tqda8';
+    $secString2 = '49dqf1gyuk1y2jr';
+    $Token = MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString1) .
+        substr(MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString2), 0, 8);
+
+    $url = "https://api.zjt-taiwan.com/API/OrderApply";
+//            $url = "https://www.google.com";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        'MemberNo' => $MemberNo,
+        'MbPassword2' => $MbPassword,
+        'OrderNo' => $OrderNo,
+        'OrderAmount' => $OrderAmount,
+        'TotalAmount' => $TotalAmount,
+        'PvValue' => $PvValue,
+        'DiscountCoin' => $DiscountCoin,
+        'OrderTime' => $OrderTime,
+        'Ip' => $ClienIP,
+        'Token' => $Token,
+    ]));
+    if ($output = curl_exec($ch)) {
+//                echo $output;
+        $apiRes = json_decode($output);
+        if ($apiRes === null) {
+            return 'decode fail';
+        } else {
+            switch ($apiRes->RetVal) {
+                case 0://執行成功
+                    $sql = "UPDATE members SET bonuscoin=$apiRes->BonusCoin WHERE id='{$_SESSION['user2']['id']}'";
+                    global $conn;
+                    $result = mysqli_query($conn, $sql);
+                    if ($result === true) {
+
+                        $newSql = "SELECT * FROM members WHERE email='{$_SESSION['user2']['email']}'";
+                        $rs = mysqli_query($conn, $newSql);
+                        $newRow = mysqli_fetch_array($rs, MYSQLI_NUM);;
+                        unset($_SESSION['user']);
+                        $_SESSION['user'] = $newRow;
+
+                        $rs2 = mysqli_query($conn, $newSql);
+                        $row2 = mysqli_fetch_assoc($rs2);
+                        unset($_SESSION['user2']);
+                        $_SESSION['user2'] = $row2;
+                        $_SESSION['user2']['constore'] = unserialize($row2['constore']);
+
+                    } else {
+                        echo "發生未預期錯誤...";
+                    }
+                    return 0;
+                    break;
+                case 1://帳號或密碼不正確
+//                    var_dump($apiRes);
+                    return 1;
+                    break;
+                case 2://帳號未激活
+//                    var_dump($apiRes);
+                    return 2;
+                    break;
+                case 3://帳號已凍結
+//                    var_dump($apiRes);
+                    return 3;
+                    break;
+                case 4://付款方式錯誤
+//                    var_dump($apiRes);
+                    return 4;
+                    break;
+                case 5://訂單編號重複
+//                    var_dump($apiRes);
+                    return 5;
+                    break;
+                case 6://變更會員帳戶時發生錯誤
+//                    var_dump($apiRes);
+                    return 6;
+                    break;
+                case 7://新增訂單鍵值重複
+//                    var_dump($apiRes);
+                    return 7;
+                    break;
+                case 8://新增訂單鍵值未對應正確
+//                    var_dump($apiRes);
+                    return 8;
+                    break;
+                case 99://Token錯誤
+//                    var_dump($apiRes);
+                    return 99;
+                    break;
+                default:
+                    return '';
+                    break;
+            }
+        }
+
+    } else {
+        return 'curl fail';
+    }
+}
+
+function orderConfirm($OrderNo, $OrderAmount, $PaymentType, $PaymentAmount, $PaymentStatus, $PaymentTime)
+{
+    $ClienIP = $_SERVER['REMOTE_ADDR'];
+    $MemberNo = $_SESSION['user2']['email'];
+    $MbPassword = $_SESSION['user2']['password2'];
+    $Timestemp = time();
+    $secString1 = 've6t5io371tqda8';
+    $secString2 = '49dqf1gyuk1y2jr';
+    $Token = MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString1) .
+        substr(MD5($ClienIP . $MemberNo . $Timestemp . $MbPassword . $secString2), 0, 8);
+
+    $url = "https://api.zjt-taiwan.com/API/OrderConfirm";
+//            $url = "https://www.google.com";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        'MemberNo' => $MemberNo,
+        'OrderNo' => $OrderNo,
+        'OrderAmount' => $OrderAmount,
+        'PaymentType' => $PaymentType,
+        'PaymentAmount' => $PaymentAmount,
+        'PaymentStatus' => $PaymentStatus,
+        'PaymentTime' => $PaymentTime,
+        'MbPassword2' => $MbPassword,
+        'Ip' => $ClienIP,
+        'Token' => $Token,
+    ]));
+    if ($output = curl_exec($ch)) {
+//                echo $output;
+        $apiRes = json_decode($output);
+        if ($apiRes === null) {
+            return 'decode fail';
+        } else {
+            switch ($apiRes->RetVal) {
+                case 0://執行成功
+                    return 0;
+                    break;
+                case 1://帳號或密碼不正確
+//                    var_dump($apiRes);
+                    return 1;
+                    break;
+                case 2://帳號未激活
+//                    var_dump($apiRes);
+                    return 2;
+                    break;
+                case 3://帳號已凍結
+//                    var_dump($apiRes);
+                    return 3;
+                    break;
+                case 4://付款方式錯誤
+//                    var_dump($apiRes);
+                    return 4;
+                    break;
+                case 5://訂單編號重複
+//                    var_dump($apiRes);
+                    return 5;
+                    break;
+                case 6://變更會員帳戶時發生錯誤
+//                    var_dump($apiRes);
+                    return 6;
+                    break;
+                case 7://新增訂單鍵值重複
+//                    var_dump($apiRes);
+                    return 7;
+                    break;
+                case 8://新增訂單鍵值未對應正確
+//                    var_dump($apiRes);
+                    return 8;
+                    break;
+                case 99://Token錯誤
+//                    var_dump($apiRes);
+                    return 99;
+                    break;
+                default:
+                    return '';
+                    break;
+            }
+        }
+
+    } else {
+        return 'curl fail';
+    }
 }
 
 exit;
