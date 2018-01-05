@@ -382,9 +382,9 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     echo '<label>';
                                     //if ( $shiptype[ 'no' ] == 1 ) {
                                     if ($k == 0) {
-                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['pno'] . '" checked="checked">';
+                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['no'] . '" checked="checked">';
                                     } else {
-                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['pno'] . '">';
+                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['no'] . '">';
                                     }
                                     echo $shiptype['name'];
                                     switch ($shiptype['type']) {

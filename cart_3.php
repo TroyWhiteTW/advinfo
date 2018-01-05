@@ -51,7 +51,7 @@ $discount = 0;
 
 // 配送方式
 $shiptypes = [];
-$shiptypesSql = 'SELECT shiptypes.no, shiptypes.name, shiptypes.type, shippings.platform, shippings.nocharge FROM shiptypes LEFT JOIN shippings ON shiptypes.no=shippings.shiptype WHERE shippings.status=1';
+$shiptypesSql = 'SELECT shiptypes.no AS pno, shiptypes.name, shiptypes.type, shippings.no, shippings.platform, shippings.nocharge FROM shiptypes LEFT JOIN shippings ON shiptypes.no=shippings.shiptype WHERE shippings.status=1';
 $shiptypesRes = mysqli_query($conn, $shiptypesSql);
 while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
     $shiptypes[] = $shiptypesRow;
