@@ -42,6 +42,8 @@ class OrdersDAO
 
     public $constore = null;//便利商店取貨門市
 
+    public $suppstore_no = null;//供應商取貨門市(編號)
+
     public $appredate = null;//鑑賞期日期
 
     public $total_price = null;//訂單總金額

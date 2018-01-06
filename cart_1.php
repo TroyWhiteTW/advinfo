@@ -17,12 +17,10 @@ if (empty($_SESSION['orders'])) {
 $orders = $_SESSION['orders'];
 /** @var OrdersDAO $orders */
 $orders = unserialize($orders);
-//echo serialize($orders);
-//return;
 
 //從購物車取得商品資訊
 $recordArray = [];
-
+$suppidArray = [];
 if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
     $keys = array_keys($_SESSION['shop_cart']);
     $sql_pk = "(";
@@ -31,12 +29,11 @@ if (isset($_SESSION['shop_cart']) && count($_SESSION['shop_cart']) > 0) {
     }
     $sql_pk = substr($sql_pk, 0, -1);
     $sql_pk .= ")";
-    $sql_pro_cart = "SELECT * FROM products WHERE proid IN " . $sql_pk;
+    $sql_pro_cart = "SELECT * FROM products WHERE proid IN $sql_pk";
     $rs_cart = mysqli_query($conn, $sql_pro_cart);
-    //    var_dump($sql_pro_cart);
-    //    var_dump(mysqli_num_rows($rs_cart));
     while ($record = mysqli_fetch_assoc($rs_cart)) {
         $recordArray[] = $record;
+        $suppidArray[] = $record['suppid'];
     }
 }
 
@@ -356,7 +353,6 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                 </div>
 
                                 <?php
-                                //print_r($shiptypes);
                                 $_shiptypes = [];
                                 //過濾不可用配送方式
                                 foreach ($shiptypes as $k => $shiptype) {
@@ -402,6 +398,47 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     echo '</label>';
                                     echo '</div>';
                                 }
+
+                                if (in_array('', $suppidArray) === true) {
+                                    //所選商品中存在無供應傷id的品項
+                                } else {
+                                    $stores = [];
+                                    foreach ($suppidArray as $k => $v) {
+                                        $storesSql = "SELECT * FROM suppstores WHERE suppid='$v'";
+                                        $storesRes = mysqli_query($conn, $storesSql);
+                                        while ($storesRow = mysqli_fetch_assoc($storesRes)) {
+                                            $stores[$k][] = $storesRow;
+                                        }
+                                    }
+//                                    var_dump($stores);
+                                    $c = count($stores);
+                                    if ($c >= 2) {
+//                                        $tempArray = $stores[0];
+//                                        for ($i = 1; $i < $c; $i++) {
+//                                            $tempArray = array_intersect($stores[$i], $tempArray);
+//                                        }
+                                    } elseif ($c = 1) {
+                                        echo '<div class="form-tittle">';
+                                        echo '<label>';
+                                        echo '<input type="radio" name="ship_no" value="0">';
+                                        echo '營業據點取貨(須先付款)';
+                                        echo ' <span>0</span>元';
+                                        echo '</label>';
+                                        echo '<div class="form-tittle" style="margin-left:20px;">';
+                                        echo '<select name="suppstore_no">';
+                                        echo '<option selected="selected" value="0">請選擇營業據點</option>';
+                                        foreach ($stores[0] as $k => $v) {
+                                            echo '<option value="' . $v['no'] . '">' . $v['store_name'] . '</option>';
+                                        }
+                                        echo '</select>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                    } else {
+
+                                    }
+
+                                }
+
                                 ?>
 
                                 <div class="info-area">
@@ -500,7 +537,8 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                 <div class="form-tittle">
                                     登入密碼：
-                                    <input type="password" name="password2" id="password2" class="input-6"> (請輸入登入密碼作為驗證身分用)
+                                    <input type="password" name="password2" id="password2" class="input-6">
+                                    (請輸入登入密碼作為驗證身分用)
                                 </div>
 
                                 <div class="price-area">
