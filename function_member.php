@@ -10,6 +10,7 @@ $isLogin = !empty($_SESSION['user']);
 <head>
 
     <?php include 'http_head.php'; ?>
+    <link rel="stylesheet" href="dist/themes/default/style.min.css"/>
 
 </head>
 
@@ -91,8 +92,60 @@ $isLogin = !empty($_SESSION['user']);
                                     <div class="form-tittle">
                                         推薦ID：
                                         <div class="form-input-2"><?php echo $_SESSION['user2']['myreferral']; ?></div>
-                                        <a class="btn btn-default btn-xs" href="">推薦表</a>
+                                        <a id="testBtn" class="btn btn-default btn-xs" href="">推薦表</a>
                                     </div>
+
+                                    <script src="./dist/jstree.min.js"></script>
+                                    <script>
+                                        var testBtn = document.getElementById('testBtn');
+                                        testBtn.addEventListener('click', function () {
+                                            $.ajax({
+                                                url: "./Web_Manage/members/service.php",
+                                                cache: false,
+                                                type: "GET",
+                                                data: {
+                                                    'id': '<?=$_SESSION['user2']['id']?>',
+                                                    'level': '<?=$_SESSION['user2']['level']?>',
+                                                    'referral': '<?=$_SESSION['user2']['referral']?>',
+                                                    'name': '<?=$_SESSION['user2']['name']?>',
+                                                    'birthday': '<?=$_SESSION['user2']['birthday']?>',
+                                                    'email': '<?=$_SESSION['user2']['email']?>',
+                                                    'phone': '<?=$_SESSION['user2']['phone']?>',
+                                                    'mobile': '<?=$_SESSION['user2']['mobile']?>',
+                                                    'city': '<?=$_SESSION['user2']['city']?>',
+                                                    'area': '<?=$_SESSION['user2']['area']?>',
+                                                    'address': '<?=$_SESSION['user2']['address']?>',
+                                                    'company_no': '<?=$_SESSION['user2']['company_no']?>',
+                                                    'invoice_title': '<?=$_SESSION['user2']['invoice_title']?>',
+                                                    'constore': '<?=$_SESSION['user2']['constore']['name']?>',
+                                                },
+                                                // data: {
+                                                //     'keywordtype': '1',
+                                                //     'keyword': 'zjttw_20171107205310',
+                                                //     '_': '1515400556743'
+                                                // },
+                                                dataType: "json",
+                                                success: function (data) {
+                                                    // if (data) {
+                                                    //     if (data['result'] == true) {
+                                                    //         $('#jstree').jstree(true).settings.core.data = data.data;
+                                                    //         $('#jstree').jstree(true).refresh();
+                                                    //     }
+                                                    //     else {
+                                                    //         console.log(data['data']);
+                                                    //     }
+                                                    // }
+                                                    // else {
+                                                    //     alert("回傳資料錯誤");
+                                                    // }
+                                                    console.log(data);
+                                                },
+                                                error: function (xhr, ajaxOptions, thrownError) {
+                                                    console.log("讀取資料時發生錯誤,請梢候再試" + thrownError, xhr);
+                                                }
+                                            });
+                                        });
+                                    </script>
 
                                     <div class="form-tittle">
                                         推薦連結：
@@ -259,6 +312,11 @@ $isLogin = !empty($_SESSION['user']);
                             </div>
 
                         </form>
+
+                    </div>
+
+                    <div id="ajaxContent" style="position: fixed;top: 25%;left: 25%;right: 25%;width: 50%;height: 50%;"
+                         hidden="hidden">
 
                     </div>
 
