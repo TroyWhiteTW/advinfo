@@ -10,7 +10,9 @@ $isLogin = !empty($_SESSION['user']);
 <head>
 
     <?php include 'http_head.php'; ?>
-    <link rel="stylesheet" href="dist/themes/default/style.min.css"/>
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
 
 </head>
 
@@ -92,60 +94,8 @@ $isLogin = !empty($_SESSION['user']);
                                     <div class="form-tittle">
                                         推薦ID：
                                         <div class="form-input-2"><?php echo $_SESSION['user2']['myreferral']; ?></div>
-                                        <a id="testBtn" class="btn btn-default btn-xs" href="">推薦表</a>
+                                        <div id="recommendBtn" class="btn btn-default btn-xs" href="">推薦表</div>
                                     </div>
-
-                                    <script src="./dist/jstree.min.js"></script>
-                                    <script>
-                                        var testBtn = document.getElementById('testBtn');
-                                        testBtn.addEventListener('click', function () {
-                                            $.ajax({
-                                                url: "./Web_Manage/members/service.php",
-                                                cache: false,
-                                                type: "GET",
-                                                data: {
-                                                    'id': '<?=$_SESSION['user2']['id']?>',
-                                                    'level': '<?=$_SESSION['user2']['level']?>',
-                                                    'referral': '<?=$_SESSION['user2']['referral']?>',
-                                                    'name': '<?=$_SESSION['user2']['name']?>',
-                                                    'birthday': '<?=$_SESSION['user2']['birthday']?>',
-                                                    'email': '<?=$_SESSION['user2']['email']?>',
-                                                    'phone': '<?=$_SESSION['user2']['phone']?>',
-                                                    'mobile': '<?=$_SESSION['user2']['mobile']?>',
-                                                    'city': '<?=$_SESSION['user2']['city']?>',
-                                                    'area': '<?=$_SESSION['user2']['area']?>',
-                                                    'address': '<?=$_SESSION['user2']['address']?>',
-                                                    'company_no': '<?=$_SESSION['user2']['company_no']?>',
-                                                    'invoice_title': '<?=$_SESSION['user2']['invoice_title']?>',
-                                                    'constore': '<?=$_SESSION['user2']['constore']['name']?>',
-                                                },
-                                                // data: {
-                                                //     'keywordtype': '1',
-                                                //     'keyword': 'zjttw_20171107205310',
-                                                //     '_': '1515400556743'
-                                                // },
-                                                dataType: "json",
-                                                success: function (data) {
-                                                    // if (data) {
-                                                    //     if (data['result'] == true) {
-                                                    //         $('#jstree').jstree(true).settings.core.data = data.data;
-                                                    //         $('#jstree').jstree(true).refresh();
-                                                    //     }
-                                                    //     else {
-                                                    //         console.log(data['data']);
-                                                    //     }
-                                                    // }
-                                                    // else {
-                                                    //     alert("回傳資料錯誤");
-                                                    // }
-                                                    console.log(data);
-                                                },
-                                                error: function (xhr, ajaxOptions, thrownError) {
-                                                    console.log("讀取資料時發生錯誤,請梢候再試" + thrownError, xhr);
-                                                }
-                                            });
-                                        });
-                                    </script>
 
                                     <div class="form-tittle">
                                         推薦連結：
@@ -335,6 +285,66 @@ $isLogin = !empty($_SESSION['user']);
     </div>
 
 </div>
+
+<div id="recommendDiv"
+     style="display: none;position: absolute;left: 25vw;top: 25vh;width: 50vw;height: 50vh;background: lightgrey;">
+    <div id="recommendDivClose"
+         style="position:absolute;right: 0;top: 0;" class="btn btn-default glyphicon glyphicon-remove"
+         aria-hidden="true"></div>
+
+    <?php
+    $recommendSql = "CALL SP_RecomnendList('{$_SESSION['user2']['id']}','13')";
+    $recommendRes = mysqli_query($conn, $recommendSql);
+    $recommendRows = [];
+    while ($row = mysqli_fetch_assoc($recommendRes)) {
+        $recommendRows[] = $row;
+    }
+    //    print_r($recommendRows);
+    $data = [];
+    foreach ($recommendRows as $k => $v) {
+        $text = "[" . $v['referral'] == '' ? '無' : $v['referral'] . "],[{$v['email']}],[{$v['levelname']}].{$v['regtime']}";
+        $sdata = [];
+        $sdata['id'] = $v['id'];
+        $sdata['parent'] = $v['leveldiff'] == 0 ? '#' : $v['referral'];
+        $sdata['text'] = $text;
+        $sdata['state'] = ['opened' => true];
+        $data[] = $sdata;
+    }
+    //        var_dump(json_encode($data));
+    $data = json_encode($data);
+
+    ?>
+    <h4>推薦表</h4>
+    <hr/>
+    <div id="jstree_demo_div"></div>
+    <script>
+
+        $(function () {
+            $('#jstree_demo_div').jstree();
+            $('#jstree_demo_div').on("changed.jstree", function (e, data) {
+                console.log(data.selected);
+            });
+
+            var data = <?=$data?>;
+            $('#jstree_demo_div').jstree(true).settings.core.data = data;
+            $('#jstree_demo_div').jstree(true).refresh();
+        });
+
+    </script>
+</div>
+
+<script>
+    var recommendBtn = document.getElementById('recommendBtn');
+    var recommendDiv = document.getElementById('recommendDiv');
+    var recommendDivClose = document.getElementById('recommendDivClose');
+    recommendBtn.addEventListener('click', function () {
+        // recommendDiv.style.display = "inline-block";
+        window.open('./recommend.php');
+    });
+    recommendDivClose.addEventListener('click', function () {
+        recommendDiv.style.display = "none";
+    });
+</script>
 
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
