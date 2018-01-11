@@ -36,7 +36,7 @@ $orders->orddate = date('Y-m-d', time());
 //(POST) 配送方式
 $orders->ship_no = $_POST['ship_no'];
 $orders->suppstore_no = $_POST['suppstore_no'];
-var_dump($orders->suppstore_no);return;
+//var_dump($orders->suppstore_no);return;
 //(POST) 折扣方式
 $orders->discount = $_POST['discount'];
 $orders->discount_price = $_POST['discount_price'];
