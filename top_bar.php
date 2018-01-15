@@ -90,8 +90,8 @@
             ?>
 
             <li>
-                <a href="cart_1.php">
-										購物車(<span id="cartNum"><?=count($_SESSION['shop_cart'])?></span>)
+                <a href="cart_1.php">購物車(<span
+                            id="cartNum"><?= isset($_SESSION['shop_cart']) === false ? 0 : count($_SESSION['shop_cart']) ?></span>)
                     <div class="cart-icon"></div>
                 </a>
             </li>
@@ -140,16 +140,18 @@
     </div>
 </div>
 <script>
-	document.getElementById('search_form').addEventListener('submit', function (e) {
-			var searchWord = e.target.getElementsByClassName('input-1')[0].value;
-			if (searchWord.trim() === "") {
-					alert('請輸入欲搜索的商品名稱');
-					e.preventDefault();
-			}
-	});
-	
-	function logout(){
-			if(confirm("確定登出嗎?")){location.href="logout.php";}
-	}
+    document.getElementById('search_form').addEventListener('submit', function (e) {
+        var searchWord = e.target.getElementsByClassName('input-1')[0].value;
+        if (searchWord.trim() === "") {
+            alert('請輸入欲搜索的商品名稱');
+            e.preventDefault();
+        }
+    });
+
+    function logout() {
+        if (confirm("確定登出嗎?")) {
+            location.href = "logout.php";
+        }
+    }
 </script>
 <!-- mobile footer search bar -->
