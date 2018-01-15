@@ -26,9 +26,9 @@ foreach ($_POST as $k => $v) {
 $orders = unserialize($_SESSION['orders']);
 
 //(POST) 訂購人資料
-$orders->sub_account = $_SESSION['user2']["id"];
+$orders->sub_account = $_SESSION['user2']['email'];
 $orders->sub_name = $_POST['sub_name'];
-$orders->sub_level = $_SESSION['user2']["level"];
+$orders->sub_level = $_SESSION['user2']['level'];
 $orders->sub_phone = $_POST['sub_phone'];
 $orders->sub_mobile = $_POST['sub_mobile'];
 $orders->sub_email = $_POST['sub_email'];
