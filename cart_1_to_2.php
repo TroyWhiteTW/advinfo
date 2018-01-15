@@ -51,6 +51,7 @@ $orders->company_no = $_POST['company_no'];
 $orders->invoice_title = $_POST['invoice_title'];
 
 $_SESSION['orders'] = serialize($orders);
+//$_SESSION['user2']['password2'] = $_POST['password2'];
 
 // 跳轉到 cart_2.php
 header('Location:cart_2.php');

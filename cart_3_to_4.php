@@ -84,10 +84,12 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     $orders->ispay = 1;   //已付款
 
     //訂單請求API
-    if (orderApply($orders->ordid, $orders->total_price, $orders->total_price + $orders->freight, $orders->PV, $orders->discount_price, $orders->orddate) == 0) {
+    if ($_SESSION['user2']['type'] == 2) {
+        if (orderApply($orders->ordid, $orders->total_price, $orders->total_price + $orders->freight, $orders->PV, $orders->discount_price, $orders->orddate) == 0) {
 
-    } else {
-        exit('<script>alert("電子錢包折抵失敗"); location.href="cart3.php";</script>');
+        } else {
+            exit('<script>alert("電子錢包折抵失敗"); location.href="cart3.php";</script>');
+        }
     }
 
     //for transition
@@ -236,10 +238,12 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
         $mysqli->commit();
 
         //訂單確認API
-        if (orderConfirm($orders->ordid, $orders->total_price, $orders->pay_no, $orders->pay_price, $orders->ispay == 1 ? 'Y' : 'N', $orders->pay_time) == 0) {
+        if ($_SESSION['user2']['type'] == 2) {
+            if (orderConfirm($orders->ordid, $orders->total_price, $orders->pay_no, $orders->pay_price, $orders->ispay == 1 ? 'Y' : 'N', $orders->pay_time) == 0) {
 
-        } else {
-            //error
+            } else {
+                //error
+            }
         }
 
         unset($_SESSION['orders']);
