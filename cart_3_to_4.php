@@ -44,6 +44,15 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
     }
 }
 
+//訂單請求API
+if ($_SESSION['user2']['type'] == 2) {
+    if (orderApply($orders->ordid, $orders->total_price, $orders->total_price + $orders->freight, $orders->PV, $orders->discount_price, $orders->orddate) == 0) {
+
+    } else {
+        exit('<script>alert("電子錢包折抵失敗"); location.href="cart3.php";</script>');
+    }
+}
+
 //完成付款
 if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders->ordid) {
     if ($_POST["errcode"] != "00") {        //00 (數字 )表交易成功。其餘失敗！
@@ -82,15 +91,6 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     $orders->approvecode = $_POST["ApproveCode"];
     $orders->moneyflow_no = $_POST["buysafeno"];
     $orders->ispay = 1;   //已付款
-
-    //訂單請求API
-    if ($_SESSION['user2']['type'] == 2) {
-        if (orderApply($orders->ordid, $orders->total_price, $orders->total_price + $orders->freight, $orders->PV, $orders->discount_price, $orders->orddate) == 0) {
-
-        } else {
-            exit('<script>alert("電子錢包折抵失敗"); location.href="cart3.php";</script>');
-        }
-    }
 
     //for transition
     $odno = getMaxOdno($conn);
