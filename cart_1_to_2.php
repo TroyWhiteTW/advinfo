@@ -26,10 +26,6 @@ foreach ($_SESSION['shop_cart'] as $k => $v) {
     $_SESSION['shop_cart'][$k] = $_POST[$k];
 }
 
-//if ($_POST['password2'] != null && $_POST['password2'] != $_SESSION['user2']['password2']) {
-//    echo '登入密碼驗證錯誤';
-//}
-
 //設定訂單 orders id date
 $orders->ordid = time();
 $orders->orddate = date('Y-m-d', time());
@@ -51,7 +47,7 @@ $orders->company_no = $_POST['company_no'];
 $orders->invoice_title = $_POST['invoice_title'];
 
 $_SESSION['orders'] = serialize($orders);
-//$_SESSION['user2']['password2'] = $_POST['password2'];
+$_SESSION['user2']['password2'] = $_POST['password2'];
 
 // 跳轉到 cart_2.php
 header('Location:cart_2.php');

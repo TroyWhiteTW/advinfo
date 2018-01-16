@@ -235,7 +235,7 @@ $isLogin = !empty($_SESSION['user']);
                         if ($_SESSION['user2']["type"] == "2") {
                             $ClienIP = $_SERVER['REMOTE_ADDR'];
                             $MemberNo = $_SESSION['user2']['email'];
-                            $MbPassword = $_SESSION['user2']['password2'];
+                            $MbPassword = $_SESSION['user2']['password1'];
                             $Timestemp = time();
                             $secString1 = 've6t5io371tqda8';
                             $secString2 = '49dqf1gyuk1y2jr';

@@ -49,7 +49,7 @@ if ($_SESSION['user2']['type'] == 2) {
     if (orderApply($orders->ordid, $orders->total_price, $orders->total_price + $orders->freight, $orders->PV, $orders->discount_price, $orders->orddate) == 0) {
 
     } else {
-        exit('<script>alert("電子錢包折抵失敗"); location.href="cart3.php";</script>');
+        exit('<script>alert("電子錢包折抵失敗"); location.href="cart_3.php";</script>');
     }
 }
 
@@ -362,6 +362,7 @@ function orderApply($OrderNo, $OrderAmount, $TotalAmount, $PvValue, $DiscountCoi
     if ($output = curl_exec($ch)) {
 //                echo $output;
         $apiRes = json_decode($output);
+//        var_dump($apiRes);return;
         if ($apiRes === null) {
             return 'decode fail';
         } else {

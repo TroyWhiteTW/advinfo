@@ -539,7 +539,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     <div class="form-tittle">
                                         登入密碼：
                                         <input type="password" name="password2" id="password2" class="input-6">
-                                        (請輸入登入密碼作為驗證身分用)
+                                        (請輸入驗證密碼)
                                     </div>
                                 <?php endif; ?>
 
