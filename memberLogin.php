@@ -221,7 +221,7 @@ function encodeLoginData($rawDataArray)
 function encodeRegisterData($rawDataArray, $apiData)
 {
     $dataArray = [
-        'id' => "\"zjttw_" . date("YmdHis", time()) . "\"",
+        'id' => "\"zjttw_{$_POST['email']}\"",
         "password" => "\"\"",
         "name" => "\"$apiData->MemberName\"",
         "gender" => "\"\"",
@@ -229,7 +229,7 @@ function encodeRegisterData($rawDataArray, $apiData)
         "levelname" => "\"$apiData->ClassName\"",
         "referral" => "\"\"",
         "birthday" => "\"\"",
-        "email" => "\"\"",
+        "email" => "\"{$_POST['email']}@fjzjt.com\"",
         "phone" => "\"$apiData->MbCellTel\"",
         "mobile" => "\"\"",
         "company_no" => "\"\"",
@@ -261,9 +261,11 @@ function encodeRegisterData($rawDataArray, $apiData)
 function encodeUpdateData($rawDataArray, $apiData)
 {
     $dataArray = [
+        'id' => "\"zjttw_{$_POST['email']}\"",
         "name" => "\"$apiData->MemberName\"",
         "level" => "\"$apiData->MemberClass\"",
         "levelname" => "\"$apiData->ClassName\"",
+        "email" => "\"{$_POST['email']}@fjzjt.com\"",
         "phone" => "\"$apiData->MbCellTel\"",
 //        "city" => "\"\"",
 //        "area" => "\"\"",
@@ -354,7 +356,7 @@ function loginType2($conn, $insertData)
         } else {
             switch ($apiRes->RetVal) {
                 case 0://執行成功
-                    $checkSql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+                    $checkSql = 'SELECT * FROM members WHERE email="' . $_POST['email'] . '@fjzjt.com"' . ' AND type=' . $insertData['type'];
 
                     $checkRes = mysqli_query($conn, $checkSql);
                     $checkRow = mysqli_fetch_assoc($checkRes);
@@ -377,7 +379,7 @@ function loginType2($conn, $insertData)
                         $data = encodeUpdateData($_POST, $apiRes);
                         $keys = array_keys($data);
                         $sqlStr = f3($keys, $data);
-                        $updateSql = 'UPDATE members SET ' . $sqlStr . ' WHERE email=' . $insertData['email'];
+                        $updateSql = 'UPDATE members SET ' . $sqlStr . ' WHERE email="' . $_POST['email'] . '@fjzjt.com"';
                         $result = mysqli_query($conn, $updateSql);
                         if ($result === true) {
 
@@ -391,7 +393,7 @@ function loginType2($conn, $insertData)
                         exit;
                     }
 
-                    $sql = 'SELECT * FROM members WHERE email=' . $insertData['email'] . ' AND type=' . $insertData['type'];
+                    $sql = 'SELECT * FROM members WHERE email="' . $_POST['email'] . '@fjzjt.com"' . ' AND type=' . $insertData['type'];
 
                     $rs = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_array($rs, MYSQLI_NUM);
