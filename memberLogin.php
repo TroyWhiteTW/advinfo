@@ -229,7 +229,7 @@ function encodeRegisterData($rawDataArray, $apiData)
         "levelname" => "\"$apiData->ClassName\"",
         "referral" => "\"\"",
         "birthday" => "\"\"",
-        "email" => "\"{$_POST['email']}@fjzjt.com\"",
+        "email" => "\"\"",
         "phone" => "\"$apiData->MbCellTel\"",
         "mobile" => "\"\"",
         "company_no" => "\"\"",
@@ -250,6 +250,8 @@ function encodeRegisterData($rawDataArray, $apiData)
         if (!empty($rawDataArray[$k])) {
             if ($k === "password") {
                 $dataArray[$k] = "\"" . password_hash($rawDataArray[$k], PASSWORD_DEFAULT) . "\"";
+            } elseif ($k === "email") {
+                $dataArray[$k] = "\"{$_POST['email']}@fjzjt.com\"";
             } else {
                 $dataArray[$k] = "\"" . $rawDataArray[$k] . "\"";
             }
@@ -261,11 +263,9 @@ function encodeRegisterData($rawDataArray, $apiData)
 function encodeUpdateData($rawDataArray, $apiData)
 {
     $dataArray = [
-        'id' => "\"zjttw_{$_POST['email']}\"",
         "name" => "\"$apiData->MemberName\"",
         "level" => "\"$apiData->MemberClass\"",
         "levelname" => "\"$apiData->ClassName\"",
-        "email" => "\"{$_POST['email']}@fjzjt.com\"",
         "phone" => "\"$apiData->MbCellTel\"",
 //        "city" => "\"\"",
 //        "area" => "\"\"",

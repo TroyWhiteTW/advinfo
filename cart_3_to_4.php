@@ -56,7 +56,7 @@ if ($_SESSION['user2']['type'] == 2) {
 //完成付款
 if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders->ordid) {
     if ($_POST["errcode"] != "00") {        //00 (數字 )表交易成功。其餘失敗！
-        exit('<script>alert("交易失敗: ' . $_POST["errmsg"] . '"); location.href="cart3.php";</script>');
+        exit('<script>alert("交易失敗: ' . $_POST["errmsg"] . '"); location.href="cart_3.php";</script>');
     }
 
     //$orders->sub_account = $_SESSION["user2"]["id"];
@@ -328,8 +328,9 @@ function getMaxOdno($conn)
 function orderApply($OrderNo, $OrderAmount, $TotalAmount, $PvValue, $DiscountCoin, $OrderTime)
 {
     $ClienIP = $_SERVER['REMOTE_ADDR'];
-    $MemberNo = $_SESSION['user2']['email'];
+    $MemberNo = explode('@', $_SESSION['user2']['email'])[0];
     $MbPassword = $_SESSION['user2']['password2'];
+//    var_dump($MbPassword);
     $Timestemp = time();
     $secString1 = 've6t5io371tqda8';
     $secString2 = '49dqf1gyuk1y2jr';
@@ -362,7 +363,7 @@ function orderApply($OrderNo, $OrderAmount, $TotalAmount, $PvValue, $DiscountCoi
     if ($output = curl_exec($ch)) {
 //                echo $output;
         $apiRes = json_decode($output);
-//        var_dump($apiRes);return;
+//        var_dump($apiRes);exit;
         if ($apiRes === null) {
             return 'decode fail';
         } else {
