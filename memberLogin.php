@@ -374,7 +374,7 @@ function loginType2($conn, $insertData)
                         } else {
                             echo "發生未預期錯誤...";
                         }
-                    } else if ($checkRow['email'] === $_POST['email'] && password_verify($_POST['password'], $checkRow['password'])) {
+                    } else if ($checkRow['email'] === $_POST['email'] . '@fjzjt.com' && password_verify($_POST['password'], $checkRow['password'])) {
                         //update
                         $data = encodeUpdateData($_POST, $apiRes);
                         $keys = array_keys($data);
