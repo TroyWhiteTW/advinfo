@@ -77,7 +77,8 @@ $isLogin = !empty($_SESSION['user']);
                                 <div class="form-tittle">
                                     帳號：
                                     <div class="form-input-2"><?php echo $_SESSION['user2']['email']; ?></div>
-                                    <a class="btn btn-default btn-xs" href="password_modify.php">修改密碼</a>
+                                    <a class="btn btn-default btn-xs"
+                                       href="<?= $_SESSION['user2']['type'] == 1 ? 'password_modify.php' : '#' ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>修改密碼</a>
                                 </div>
 
                                 <?php if ($_SESSION['user2']['type'] == 2):    //直銷會員?>
@@ -138,20 +139,22 @@ $isLogin = !empty($_SESSION['user']);
 
                                 <div class="form-tittle">
                                     姓名：
-                                    <input name="name" type="text" value="<?php echo $_SESSION['user2']['name']; ?>">
+                                    <input name="name" type="text"
+                                           value="<?php echo $_SESSION['user2']['name']; ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                 </div>
 
                                 <div class="form-tittle">
                                     生日：
                                     <div class="form-input-2">
-                                        <input name="birthday" value="<?= $_SESSION['user2']['birthday'] ?>" type="date"
-                                               title="生日"/>
+                                        <input name="birthday" value="<?= $_SESSION['user2']['birthday'] ?>"
+                                               type="date"
+                                               title="生日"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>/>
                                     </div>
                                 </div>
 
                                 <div class="form-tittle">
                                     性別：
-                                    <select name="gender">
+                                    <select name="gender"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                         <?php
                                         switch ($_SESSION['user2']['gender']) {
                                             case 'M':
@@ -176,21 +179,22 @@ $isLogin = !empty($_SESSION['user']);
                                     電子信箱：
                                     <br/>
                                     <input name="email" id="" type="text" style="width: 50%;min-width: 200px;"
-                                           value="<?= $_SESSION['user2']['email'] ?>">
+                                           value="<?= $_SESSION['user2']['email'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                 </div>
 
                                 <div class="form-tittle">
                                     聯繫電話：
                                     <input name="phone" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user2']['phone'] ?>">
+                                           value="<?= $_SESSION['user2']['phone'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
                                     <input name="mobile" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user2']['mobile'] ?>">
-                                    <a class="btn btn-default btn-xs" href="login_start.php">驗證手機</a>
+                                           value="<?= $_SESSION['user2']['mobile'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
+                                    <a class="btn btn-default btn-xs"
+                                       href="<?= $_SESSION['user2']['type'] == 1 ? 'login_start.php' : '#' ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>驗證手機</a>
                                 </div>
 
                                 <div class="form-tittle">
@@ -213,18 +217,18 @@ $isLogin = !empty($_SESSION['user']);
                                     <!--                                    </div>-->
                                     <br/>
                                     <input name="address" id="" type="text" style="width: 50%;min-width: 200px;"
-                                           value="<?= $_SESSION['user2']['address'] ?>">
+                                           value="<?= $_SESSION['user2']['address'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
 
                                 </div>
 
                                 <div class="form-tittle">
                                     統一編號：<input name="company_no" id="company_no" type="text" class="input-2"
-                                                value="<?= $_SESSION['user2']['company_no'] ?>">
+                                                value="<?= $_SESSION['user2']['company_no'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                 </div>
 
                                 <div class="form-tittle">
                                     公司抬頭：<input name="invoice_title" id="invoice_title" type="text" class="input-2"
-                                                value="<?= $_SESSION['user2']['invoice_title'] ?>">
+                                                value="<?= $_SESSION['user2']['invoice_title'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                 </div>
 
                             </div>
@@ -233,8 +237,9 @@ $isLogin = !empty($_SESSION['user']);
                                 <div class="function-area">
                                     <ul>
                                         <li>
-                                            <a href="http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&cvstemp=member">
-                                                <input type="button" id="" name="" class="" value="選擇常用門市">
+                                            <a href="<?= $_SESSION['user2']['type'] == 1 ? 'http://cvs.map.com.tw/default.asp?cvsname=advinfo.taironlife.com&cvstemp=member' : '#' ?>">
+                                                <input type="button" id="" name="" class=""
+                                                       value="選擇常用門市"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                             </a>
                                         </li>
                                     </ul>
