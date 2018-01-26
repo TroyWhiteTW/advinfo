@@ -67,12 +67,11 @@ $isLogin = !empty($_SESSION['user']);
                         </div>
                         <?php
                         //商城會員獎金自己顯示
-                        if ($_SESSION['user2']["type"] == "1") {
-                            ?>
+                        if ($_SESSION['user2']["type"] == "1") { ?>
                             <div class="content-article">
                                 <div class="text-1" style="display:inline-block;">本期重銷累積獎金資料(預估資料)
-                                    <div style="display:inline-block;"><a href="#rule"><span
-                                                    style="color:blue;">重銷規則</span></a>
+                                    <div style="display:inline-block;">
+                                        <a href="#rule"><span style="color:blue;">重銷規則</span></a>
                                     </div>
                                 </div>
                                 <table width="100%" border="1" style="margin-top:10px;">
@@ -82,10 +81,32 @@ $isLogin = !empty($_SESSION['user']);
                                         <td>目前責任額</td>
                                         <td>實際消費</td>
                                         <td>達成與否</td>
-                                        <td>累積獎金</td>
+                                        <td>累積紅利</td>
                                     </tr>
                                     <tr class="td-02">
-                                        <td>2017/7/20-2017/8/20</td>
+                                        <td>
+                                            <?php
+                                            $year = date('Y', time());
+                                            $month = date('m', time());
+                                            $date = date('d', time());
+                                            if ($date >= 21) {
+                                                echo $year . '/' . $month . '/21-' . $year . '/' . $month . '/' . $date;
+                                            } else {
+                                                if ($month == '01') {
+                                                    $preMonth = '12';
+                                                    $preYear = ($year - 1) . '';
+                                                } else if ($month == '11' || $month == '12') {
+                                                    $preMonth = ($month - 1) . '';
+                                                    $preYear = $year;
+                                                } else {
+                                                    $preMonth = '0' . $month - 1;
+                                                    $preYear = $year;
+                                                }
+                                                echo $preYear . '/' . $preMonth . '/21-' . $year . '/' . $month . '/' . $date;
+                                            }
+                                            // echo '2017/7/20-2017/8/20';
+                                            ?>
+                                        </td>
                                         <td>1000PV</td>
                                         <td>1000PV</td>
                                         <td>是</td>
