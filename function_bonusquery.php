@@ -67,7 +67,39 @@ $isLogin = !empty($_SESSION['user']);
                         </div>
                         <?php
                         //商城會員獎金自己顯示
-                        if ($_SESSION['user2']["type"] == "1") { ?>
+                        if ($_SESSION['user2']["type"] == "1") {
+
+                            $year = date('Y', time());
+                            $month = date('m', time());
+                            $date = date('d', time());
+                            if ($date >= 21) {
+                                $cycle1 = $year . '/' . $month . '/21-' . $year . '/' . $month . '/' . $date;
+                                $startTime = $year . '-' . $month . '-21';
+                                $endTime = $year . '-' . $month . '-' . $date;
+                            } else {
+                                if ($month == '01') {
+                                    $preMonth = '12';
+                                    $preYear = ($year - 1) . '';
+                                } else if ($month == '11' || $month == '12') {
+                                    $preMonth = ($month - 1) . '';
+                                    $preYear = $year;
+                                } else {
+                                    $preMonth = '0' . $month - 1;
+                                    $preYear = $year;
+                                }
+                                $cycle1 = $preYear . '/' . $preMonth . '/21-' . $year . '/' . $month . '/' . $date;
+                                $startTime = $preYear . '-' . $preMonth . '-21';
+                                $endTime = $year . '-' . $month . '-' . $date;
+                            }
+                            // echo '2017/7/20-2017/8/20';
+                            $bonusData = [];
+                            $bonusSql = "SELECT * FROM checkout WHERE referral='{$_SESSION['user2']['id']}' AND checkout_date>'$startTime' AND checkout_date<'$endTime'";
+                            $bonusRes = mysqli_query($conn, $bonusSql);
+                            while ($bonusRow = mysqli_fetch_assoc($bonusRes)) {
+                                $bonusData[] = $bonusRow;
+                            }
+
+                            ?>
                             <div class="content-article">
                                 <div class="text-1" style="display:inline-block;">本期重銷累積獎金資料(預估資料)
                                     <div style="display:inline-block;">
@@ -84,33 +116,37 @@ $isLogin = !empty($_SESSION['user']);
                                         <td>累積紅利</td>
                                     </tr>
                                     <tr class="td-02">
+                                        <td><?= $cycle1 ?></td>
                                         <td>
                                             <?php
-                                            $year = date('Y', time());
-                                            $month = date('m', time());
-                                            $date = date('d', time());
-                                            if ($date >= 21) {
-                                                echo $year . '/' . $month . '/21-' . $year . '/' . $month . '/' . $date;
-                                            } else {
-                                                if ($month == '01') {
-                                                    $preMonth = '12';
-                                                    $preYear = ($year - 1) . '';
-                                                } else if ($month == '11' || $month == '12') {
-                                                    $preMonth = ($month - 1) . '';
-                                                    $preYear = $year;
-                                                } else {
-                                                    $preMonth = '0' . $month - 1;
-                                                    $preYear = $year;
-                                                }
-                                                echo $preYear . '/' . $preMonth . '/21-' . $year . '/' . $month . '/' . $date;
+                                            $bonuce = 0;
+                                            foreach ($bonusData as $k => $v) {
+                                                $bonuce += $v['bonuce'];
                                             }
-                                            // echo '2017/7/20-2017/8/20';
+                                            echo $bonuce;
                                             ?>
                                         </td>
-                                        <td>1000PV</td>
-                                        <td>1000PV</td>
-                                        <td>是</td>
-                                        <td>$14,443</td>
+                                        <td>
+                                            <?php
+                                            $check_money = 0;
+                                            foreach ($bonusData as $k => $v) {
+                                                $check_money += $v['check_money'];
+                                            }
+                                            echo $check_money;
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?= $bonuce >= 500 ? '是' : '否' ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $checkout_bonuce = 0;
+                                            foreach ($bonusData as $k => $v) {
+                                                $checkout_bonuce += $v['checkout_bonuce'];
+                                            }
+                                            echo $checkout_bonuce;
+                                            ?>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -124,46 +160,25 @@ $isLogin = !empty($_SESSION['user']);
                                         <td>代數</td>
                                         <td>金額</td>
                                     </tr>
-                                    <tr class="td-02">
-                                        <td>1</td>
-                                        <td>$1,111</td>
-                                        <td>6</td>
-                                        <td>$1,111</td>
-                                        <td>11</td>
-                                        <td>$1,111</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>2</td>
-                                        <td>$1,111</td>
-                                        <td>7</td>
-                                        <td>$1,111</td>
-                                        <td>12</td>
-                                        <td>$1,111</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>3</td>
-                                        <td>$1,111</td>
-                                        <td>8</td>
-                                        <td>$1,111</td>
-                                        <td>13</td>
-                                        <td>$1,111</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>4</td>
-                                        <td>$1,111</td>
-                                        <td>9</td>
-                                        <td>$1,111</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>5</td>
-                                        <td>$1,111</td>
-                                        <td>10</td>
-                                        <td>$1,111</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
+                                    <?php
+                                    for ($i = 0; $i < 5; $i++) {
+                                        echo '<tr class="td-02">';
+                                        for ($j = 0; $j < 3; $j++) {
+                                            echo '<td>';
+                                            $generation = $i + 1 + $j * 5;
+                                            echo $generation;
+                                            echo '</td>';
+                                            echo '<td>';
+                                            foreach ($bonusData as $k => $v) {
+                                                if ($v['generation'] == $generation - 1) {
+                                                    echo $v['bonuce'];
+                                                }
+                                            }
+                                            echo '</td>';
+                                        }
+                                        echo '</tr>';
+                                    }
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>
