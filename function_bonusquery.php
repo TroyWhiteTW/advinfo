@@ -99,6 +99,69 @@ $isLogin = !empty($_SESSION['user']);
                                 $bonusData[] = $bonusRow;
                             }
 
+                            function bonusTable($cycle1, $bonusData)
+                            {
+                                echo '<table width="100%" border="1" style="margin-top:10px;">';
+                                echo '<tbody>';
+                                echo '<tr class="tb-tittle">';
+                                echo '<td>週期</td>';
+                                echo '<td>目前責任額</td>';
+                                echo '<td>實際消費</td>';
+                                echo '<td>達成與否</td>';
+                                echo '<td>累積紅利</td>';
+                                echo '</tr>';
+                                echo '<tr class="td-02">';
+                                echo "<td>$cycle1</td>";
+                                $bonuce = 0;
+                                foreach ($bonusData as $k => $v) {
+                                    $bonuce += $v['bonuce'];
+                                }
+                                echo "<td>$bonuce</td>";
+                                $check_money = 0;
+                                foreach ($bonusData as $k => $v) {
+                                    $check_money += $v['check_money'];
+                                }
+                                echo "<td>$check_money</td>";
+                                echo $bonuce >= 500 ? '<td>是</td>' : '<td>否</td>';
+                                $checkout_bonuce = 0;
+                                foreach ($bonusData as $k => $v) {
+                                    $checkout_bonuce += $v['checkout_bonuce'];
+                                }
+                                echo "<td>$checkout_bonuce</td>";
+                                echo '</tr>';
+                                echo '</tbody>';
+                                echo '</table>';
+                                echo '<table width="100%" border="1" style="margin-top:10px;">';
+                                echo '<tbody>';
+                                echo '<tr class="tb-tittle">';
+                                echo '<td>代數</td>';
+                                echo '<td>金額</td>';
+                                echo '<td>代數</td>';
+                                echo '<td>金額</td>';
+                                echo '<td>代數</td>';
+                                echo '<td>金額</td>';
+                                for ($i = 0; $i < 5; $i++) {
+                                    echo '<tr class="td-02">';
+                                    for ($j = 0; $j < 3; $j++) {
+                                        $generation = $i + 1 + $j * 5;
+//                                        if ($generation > 13) continue;
+                                        echo '<td>';
+                                        echo $generation;
+                                        echo '</td>';
+                                        echo '<td>';
+                                        foreach ($bonusData as $k => $v) {
+                                            if ($v['generation'] == $generation - 1) {
+                                                echo $v['bonuce'];
+                                            }
+                                        }
+                                        echo '</td>';
+                                    }
+                                    echo '</tr>';
+                                }
+                                echo '</tbody>';
+                                echo '</table>';
+                            }
+
                             ?>
                             <div class="content-article">
                                 <div class="text-1" style="display:inline-block;">本期重銷累積獎金資料(預估資料)
@@ -106,81 +169,82 @@ $isLogin = !empty($_SESSION['user']);
                                         <a href="#rule"><span style="color:blue;">重銷規則</span></a>
                                     </div>
                                 </div>
-                                <table width="100%" border="1" style="margin-top:10px;">
-                                    <tbody>
-                                    <tr class="tb-tittle">
-                                        <td>週期</td>
-                                        <td>目前責任額</td>
-                                        <td>實際消費</td>
-                                        <td>達成與否</td>
-                                        <td>累積紅利</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td><?= $cycle1 ?></td>
-                                        <td>
-                                            <?php
-                                            $bonuce = 0;
-                                            foreach ($bonusData as $k => $v) {
-                                                $bonuce += $v['bonuce'];
-                                            }
-                                            echo $bonuce;
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            $check_money = 0;
-                                            foreach ($bonusData as $k => $v) {
-                                                $check_money += $v['check_money'];
-                                            }
-                                            echo $check_money;
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?= $bonuce >= 500 ? '是' : '否' ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            $checkout_bonuce = 0;
-                                            foreach ($bonusData as $k => $v) {
-                                                $checkout_bonuce += $v['checkout_bonuce'];
-                                            }
-                                            echo $checkout_bonuce;
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table width="100%" border="1" style="margin-top:10px;">
-                                    <tbody>
-                                    <tr class="tb-tittle">
-                                        <td>代數</td>
-                                        <td>金額</td>
-                                        <td>代數</td>
-                                        <td>金額</td>
-                                        <td>代數</td>
-                                        <td>金額</td>
-                                    </tr>
-                                    <?php
-                                    for ($i = 0; $i < 5; $i++) {
-                                        echo '<tr class="td-02">';
-                                        for ($j = 0; $j < 3; $j++) {
-                                            echo '<td>';
-                                            $generation = $i + 1 + $j * 5;
-                                            echo $generation;
-                                            echo '</td>';
-                                            echo '<td>';
-                                            foreach ($bonusData as $k => $v) {
-                                                if ($v['generation'] == $generation - 1) {
-                                                    echo $v['bonuce'];
-                                                }
-                                            }
-                                            echo '</td>';
-                                        }
-                                        echo '</tr>';
-                                    }
-                                    ?>
-                                    </tbody>
-                                </table>
+                                <?= bonusTable($cycle1, $bonusData) ?>
+                                <!--                                <table width="100%" border="1" style="margin-top:10px;">-->
+                                <!--                                    <tbody>-->
+                                <!--                                    <tr class="tb-tittle">-->
+                                <!--                                        <td>週期</td>-->
+                                <!--                                        <td>目前責任額</td>-->
+                                <!--                                        <td>實際消費</td>-->
+                                <!--                                        <td>達成與否</td>-->
+                                <!--                                        <td>累積紅利</td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    <tr class="td-02">-->
+                                <!--                                        <td>--><? //= $cycle1 ?><!--</td>-->
+                                <!--                                        <td>-->
+                                <!--                                            --><?php
+                                //                                            $bonuce = 0;
+                                //                                            foreach ($bonusData as $k => $v) {
+                                //                                                $bonuce += $v['bonuce'];
+                                //                                            }
+                                //                                            echo $bonuce;
+                                //                                            ?>
+                                <!--                                        </td>-->
+                                <!--                                        <td>-->
+                                <!--                                            --><?php
+                                //                                            $check_money = 0;
+                                //                                            foreach ($bonusData as $k => $v) {
+                                //                                                $check_money += $v['check_money'];
+                                //                                            }
+                                //                                            echo $check_money;
+                                //                                            ?>
+                                <!--                                        </td>-->
+                                <!--                                        <td>-->
+                                <!--                                            --><? //= $bonuce >= 500 ? '是' : '否' ?>
+                                <!--                                        </td>-->
+                                <!--                                        <td>-->
+                                <!--                                            --><?php
+                                //                                            $checkout_bonuce = 0;
+                                //                                            foreach ($bonusData as $k => $v) {
+                                //                                                $checkout_bonuce += $v['checkout_bonuce'];
+                                //                                            }
+                                //                                            echo $checkout_bonuce;
+                                //                                            ?>
+                                <!--                                        </td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    </tbody>-->
+                                <!--                                </table>-->
+                                <!--                                <table width="100%" border="1" style="margin-top:10px;">-->
+                                <!--                                    <tbody>-->
+                                <!--                                    <tr class="tb-tittle">-->
+                                <!--                                        <td>代數</td>-->
+                                <!--                                        <td>金額</td>-->
+                                <!--                                        <td>代數</td>-->
+                                <!--                                        <td>金額</td>-->
+                                <!--                                        <td>代數</td>-->
+                                <!--                                        <td>金額</td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    --><?php
+                                //                                    for ($i = 0; $i < 5; $i++) {
+                                //                                        echo '<tr class="td-02">';
+                                //                                        for ($j = 0; $j < 3; $j++) {
+                                //                                            echo '<td>';
+                                //                                            $generation = $i + 1 + $j * 5;
+                                //                                            echo $generation;
+                                //                                            echo '</td>';
+                                //                                            echo '<td>';
+                                //                                            foreach ($bonusData as $k => $v) {
+                                //                                                if ($v['generation'] == $generation - 1) {
+                                //                                                    echo $v['bonuce'];
+                                //                                                }
+                                //                                            }
+                                //                                            echo '</td>';
+                                //                                        }
+                                //                                        echo '</tr>';
+                                //                                    }
+                                //                                    ?>
+                                <!--                                    </tbody>-->
+                                <!--                                </table>-->
                             </div>
                             <div class="content-article">
                                 <div class="text-1" style="display:inline-block;">歷史重銷累積獎金
