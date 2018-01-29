@@ -72,36 +72,75 @@ $isLogin = !empty($_SESSION['user']);
                             $year = date('Y', time());
                             $month = date('m', time());
                             $date = date('d', time());
-                            if ($date >= 21) {
-                                $cycle1 = $year . '/' . $month . '/21-' . $year . '/' . $month . '/' . $date;
-                                $startTime = $year . '-' . $month . '-21';
-                                $endTime = $year . '-' . $month . '-' . $date;
-                            } else {
-                                if ($month == '01') {
-                                    $preMonth = '12';
-                                    $preYear = ($year - 1) . '';
-                                } else if ($month == '11' || $month == '12') {
-                                    $preMonth = ($month - 1) . '';
-                                    $preYear = $year;
+                            function getCBData($year, $month, $date, $isNow)
+                            {
+                                global $conn;
+                                $returnData = [];
+                                if ($date >= 21) {
+                                    $cycle1 = $year . '/' . $month . '/21-' . $year . '/' . $month . '/' . $date;
+                                    $startTime = $year . '-' . $month . '-21';
+                                    $endTime = $year . '-' . $month . '-' . $date;
                                 } else {
-                                    $preMonth = '0' . $month - 1;
-                                    $preYear = $year;
+                                    if ($month == '01') {
+                                        $preMonth = '12';
+                                        $preYear = ($year - 1) . '';
+                                    } else if ($month == '11' || $month == '12') {
+                                        $preMonth = ($month - 1) . '';
+                                        $preYear = $year;
+                                    } else {
+                                        $preMonth = '0' . $month - 1;
+                                        $preYear = $year;
+                                    }
+                                    $cycle1 = $preYear . '/' . $preMonth . '/21-' . $year . '/' . $month . '/' . $date;
+                                    $startTime = $preYear . '-' . $preMonth . '-21';
+                                    $endTime = $year . '-' . $month . '-' . $date;
                                 }
-                                $cycle1 = $preYear . '/' . $preMonth . '/21-' . $year . '/' . $month . '/' . $date;
-                                $startTime = $preYear . '-' . $preMonth . '-21';
-                                $endTime = $year . '-' . $month . '-' . $date;
-                            }
-                            // echo '2017/7/20-2017/8/20';
-                            $bonusData = [];
-                            $bonusSql = "SELECT * FROM checkout WHERE referral='{$_SESSION['user2']['id']}' AND checkout_date>'$startTime' AND checkout_date<'$endTime'";
-                            $bonusRes = mysqli_query($conn, $bonusSql);
-                            while ($bonusRow = mysqli_fetch_assoc($bonusRes)) {
-                                $bonusData[] = $bonusRow;
+                                if (!$isNow) {
+                                    if ($date >= 21) {
+                                        if ($month == '12') {
+                                            $cycle1 = $year . '/' . $month . '/21-' . ($year + 1) . '/' . '01' . '/' . '20';
+                                            $startTime = $year . '-' . $month . '-21';
+                                            $endTime = ($year + 1) . '-' . '01' . '-' . '20';
+                                        } else {
+                                            $cycle1 = $year . '/' . $month . '/21-' . $year . '/' . ($month + 1) . '/' . '20';
+                                            $startTime = $year . '-' . $month . '-21';
+                                            $endTime = $year . '-' . ($month + 1) . '-' . '20';
+                                        }
+                                    } else {
+                                        if ($month == '01') {
+                                            $cycle1 = ($year - 1) . '/' . '12' . '/21-' . $year . '/' . $month . '/' . '20';
+                                            $startTime = ($year - 1) . '-' . '12' . '-21';
+                                            $endTime = $year . '-' . $month . '-' . '20';
+                                        } else {
+                                            $cycle1 = $year . '/' . ($month - 1) . '/21-' . $year . '/' . $month . '/' . '20';
+                                            $startTime = $year . '-' . ($month - 1) . '-21';
+                                            $endTime = $year . '-' . $month . '-' . '20';
+                                        }
+                                    }
+                                }
+                                $bonusData = [];
+                                $bonusSql = "SELECT * FROM checkout WHERE referral='{$_SESSION['user2']['id']}' AND checkout_date>'$startTime' AND checkout_date<'$endTime'";
+                                $bonusRes = mysqli_query($conn, $bonusSql);
+                                while ($bonusRow = mysqli_fetch_assoc($bonusRes)) {
+                                    $bonusData[] = $bonusRow;
+                                }
+                                $returnData['cycle1'] = $cycle1;
+                                $returnData['bonusData'] = $bonusData;
+                                $bonusRes->close();
+                                return $returnData;
                             }
 
-                            function bonusTable($cycle1, $bonusData)
+                            $cbData = getCBData($year, $month, $date, true);
+
+
+                            function bonusTable($cycle1, $bonusData, $isHidden)
                             {
-                                echo '<table width="100%" border="1" style="margin-top:10px;">';
+//                                $id = preg_filter("/-|\//", "", $cycle1, -1);
+                                if ($isHidden) {
+                                    echo '<table width="100%" border="1" style="display:none;margin-top:10px;">';
+                                } else {
+                                    echo '<table width="100%" border="1" style="display:;margin-top:10px;">';
+                                }
                                 echo '<tbody>';
                                 echo '<tr class="tb-tittle">';
                                 echo '<td>週期</td>';
@@ -131,7 +170,11 @@ $isLogin = !empty($_SESSION['user']);
                                 echo '</tr>';
                                 echo '</tbody>';
                                 echo '</table>';
-                                echo '<table width="100%" border="1" style="margin-top:10px;">';
+                                if ($isHidden) {
+                                    echo '<table width="100%" border="1" style="display:none;margin-top:10px;">';
+                                } else {
+                                    echo '<table width="100%" border="1" style="display:;margin-top:10px;">';
+                                }
                                 echo '<tbody>';
                                 echo '<tr class="tb-tittle">';
                                 echo '<td>代數</td>';
@@ -144,15 +187,20 @@ $isLogin = !empty($_SESSION['user']);
                                     echo '<tr class="td-02">';
                                     for ($j = 0; $j < 3; $j++) {
                                         $generation = $i + 1 + $j * 5;
-//                                        if ($generation > 13) continue;
                                         echo '<td>';
-                                        echo $generation;
+                                        if ($generation <= 13) {
+                                            echo $generation;
+                                        }
                                         echo '</td>';
                                         echo '<td>';
-                                        foreach ($bonusData as $k => $v) {
-                                            if ($v['generation'] == $generation - 1) {
-                                                echo $v['bonuce'];
+                                        if ($generation <= 13) {
+                                            $totalBonus = 0;
+                                            foreach ($bonusData as $k => $v) {
+                                                if ($v['generation'] == $generation - 1) {
+                                                    $totalBonus += floatval($v['bonuce']);
+                                                }
                                             }
+                                            echo $totalBonus . '';
                                         }
                                         echo '</td>';
                                     }
@@ -163,13 +211,72 @@ $isLogin = !empty($_SESSION['user']);
                             }
 
                             ?>
+                            <?php
+
+                            function getPreYearDateData($y, $m, $d) //int
+                            {
+                                function formatMandD($int)
+                                {
+                                    if ($int < 10) {
+                                        return '0' . $int;
+                                    }
+                                    return '' . $int;
+                                }
+
+                                $dateData = [];
+                                $ny = $y - 1;
+                                $nm = $m;
+                                $nd = $d;
+
+                                $dateData[] = ['y' => '' . $ny, 'm' => formatMandD($nm), 'd' => formatMandD($nd)];
+
+                                for ($i = 0; $i < 11; $i++) {
+                                    $nm += 1;
+                                    if ($nm == 13) {
+                                        $ny += 1;
+                                        $nm = 1;
+                                    }
+                                    $dateData[] = ['y' => '' . $ny, 'm' => formatMandD($nm), 'd' => formatMandD($nd)];
+                                }
+                                return $dateData;
+                            }
+
+                            ?>
                             <div class="content-article">
                                 <div class="text-1" style="display:inline-block;">本期重銷累積獎金資料(預估資料)
                                     <div style="display:inline-block;">
                                         <a href="#rule"><span style="color:blue;">重銷規則</span></a>
                                     </div>
                                 </div>
-                                <?= bonusTable($cycle1, $bonusData) ?>
+                                <?= bonusTable($cbData['cycle1'], $cbData['bonusData'], false) ?>
+                            </div>
+                            <div class="content-article" id="tables">
+                                <div class="text-1" style="display:inline-block;">歷史重銷累積獎金
+                                    <select name="" id="choseCycle">
+                                        <option selected="selected" value="0">週期選擇</option>
+                                        <?php
+                                        $yearDateData = getPreYearDateData(intval($year), intval($month), intval($date));
+                                        $index = 0;
+                                        foreach ($yearDateData as $k => $v) {
+                                            $index++;
+                                            $tCbData = getCBData($v['y'], $v['m'], $v['d'], false);
+                                            echo '<option value="' . $index . '">' . $tCbData['cycle1'] . '</option>';
+                                        }
+                                        ?>
+                                        <!--                                        <option value="1">20170620-20170720</option>-->
+                                        <!--                                        <option value="2">20170520-20170620</option>-->
+                                    </select>
+                                </div>
+                                <?php
+                                //                                $yearDateData = getPreYearDateData(intval($year), intval($month), intval($date));
+
+                                foreach ($yearDateData as $k => $v) {
+//                                    var_dump($v);
+                                    $tCbData = getCBData($v['y'], $v['m'], $v['d'], false);
+                                    bonusTable($tCbData['cycle1'], $tCbData['bonusData'], true);
+                                }
+
+                                ?>
                                 <!--                                <table width="100%" border="1" style="margin-top:10px;">-->
                                 <!--                                    <tbody>-->
                                 <!--                                    <tr class="tb-tittle">-->
@@ -177,40 +284,14 @@ $isLogin = !empty($_SESSION['user']);
                                 <!--                                        <td>目前責任額</td>-->
                                 <!--                                        <td>實際消費</td>-->
                                 <!--                                        <td>達成與否</td>-->
-                                <!--                                        <td>累積紅利</td>-->
+                                <!--                                        <td>累積獎金</td>-->
                                 <!--                                    </tr>-->
                                 <!--                                    <tr class="td-02">-->
-                                <!--                                        <td>--><? //= $cycle1 ?><!--</td>-->
-                                <!--                                        <td>-->
-                                <!--                                            --><?php
-                                //                                            $bonuce = 0;
-                                //                                            foreach ($bonusData as $k => $v) {
-                                //                                                $bonuce += $v['bonuce'];
-                                //                                            }
-                                //                                            echo $bonuce;
-                                //                                            ?>
-                                <!--                                        </td>-->
-                                <!--                                        <td>-->
-                                <!--                                            --><?php
-                                //                                            $check_money = 0;
-                                //                                            foreach ($bonusData as $k => $v) {
-                                //                                                $check_money += $v['check_money'];
-                                //                                            }
-                                //                                            echo $check_money;
-                                //                                            ?>
-                                <!--                                        </td>-->
-                                <!--                                        <td>-->
-                                <!--                                            --><? //= $bonuce >= 500 ? '是' : '否' ?>
-                                <!--                                        </td>-->
-                                <!--                                        <td>-->
-                                <!--                                            --><?php
-                                //                                            $checkout_bonuce = 0;
-                                //                                            foreach ($bonusData as $k => $v) {
-                                //                                                $checkout_bonuce += $v['checkout_bonuce'];
-                                //                                            }
-                                //                                            echo $checkout_bonuce;
-                                //                                            ?>
-                                <!--                                        </td>-->
+                                <!--                                        <td>2017/7/20-2017/8/20</td>-->
+                                <!--                                        <td>1000PV</td>-->
+                                <!--                                        <td>1000PV</td>-->
+                                <!--                                        <td>是</td>-->
+                                <!--                                        <td>$14,443</td>-->
                                 <!--                                    </tr>-->
                                 <!--                                    </tbody>-->
                                 <!--                                </table>-->
@@ -224,107 +305,66 @@ $isLogin = !empty($_SESSION['user']);
                                 <!--                                        <td>代數</td>-->
                                 <!--                                        <td>金額</td>-->
                                 <!--                                    </tr>-->
-                                <!--                                    --><?php
-                                //                                    for ($i = 0; $i < 5; $i++) {
-                                //                                        echo '<tr class="td-02">';
-                                //                                        for ($j = 0; $j < 3; $j++) {
-                                //                                            echo '<td>';
-                                //                                            $generation = $i + 1 + $j * 5;
-                                //                                            echo $generation;
-                                //                                            echo '</td>';
-                                //                                            echo '<td>';
-                                //                                            foreach ($bonusData as $k => $v) {
-                                //                                                if ($v['generation'] == $generation - 1) {
-                                //                                                    echo $v['bonuce'];
-                                //                                                }
-                                //                                            }
-                                //                                            echo '</td>';
-                                //                                        }
-                                //                                        echo '</tr>';
-                                //                                    }
-                                //                                    ?>
+                                <!--                                    <tr class="td-02">-->
+                                <!--                                        <td>1</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>6</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>11</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    <tr class="td-02">-->
+                                <!--                                        <td>2</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>7</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>12</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    <tr class="td-02">-->
+                                <!--                                        <td>3</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>8</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>13</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    <tr class="td-02">-->
+                                <!--                                        <td>4</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>9</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>&nbsp;</td>-->
+                                <!--                                        <td>&nbsp;</td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    <tr class="td-02">-->
+                                <!--                                        <td>5</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>10</td>-->
+                                <!--                                        <td>$1,111</td>-->
+                                <!--                                        <td>&nbsp;</td>-->
+                                <!--                                        <td>&nbsp;</td>-->
+                                <!--                                    </tr>-->
                                 <!--                                    </tbody>-->
                                 <!--                                </table>-->
                             </div>
-                            <div class="content-article">
-                                <div class="text-1" style="display:inline-block;">歷史重銷累積獎金
-                                    <select name="" id="">
-                                        <option selected="selected" value="0">週期選擇</option>
-                                        <option value="1">20170620-20170720</option>
-                                        <option value="2">20170520-20170620</option>
-                                    </select>
-                                </div>
-                                <table width="100%" border="1" style="margin-top:10px;">
-                                    <tbody>
-                                    <tr class="tb-tittle">
-                                        <td>週期</td>
-                                        <td>目前責任額</td>
-                                        <td>實際消費</td>
-                                        <td>達成與否</td>
-                                        <td>累積獎金</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>2017/7/20-2017/8/20</td>
-                                        <td>1000PV</td>
-                                        <td>1000PV</td>
-                                        <td>是</td>
-                                        <td>$14,443</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table width="100%" border="1" style="margin-top:10px;">
-                                    <tbody>
-                                    <tr class="tb-tittle">
-                                        <td>代數</td>
-                                        <td>金額</td>
-                                        <td>代數</td>
-                                        <td>金額</td>
-                                        <td>代數</td>
-                                        <td>金額</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>1</td>
-                                        <td>$1,111</td>
-                                        <td>6</td>
-                                        <td>$1,111</td>
-                                        <td>11</td>
-                                        <td>$1,111</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>2</td>
-                                        <td>$1,111</td>
-                                        <td>7</td>
-                                        <td>$1,111</td>
-                                        <td>12</td>
-                                        <td>$1,111</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>3</td>
-                                        <td>$1,111</td>
-                                        <td>8</td>
-                                        <td>$1,111</td>
-                                        <td>13</td>
-                                        <td>$1,111</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>4</td>
-                                        <td>$1,111</td>
-                                        <td>9</td>
-                                        <td>$1,111</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr class="td-02">
-                                        <td>5</td>
-                                        <td>$1,111</td>
-                                        <td>10</td>
-                                        <td>$1,111</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <script>
+                                function showHistoryBonusTable($cycle) {
+                                    var tables = (document.getElementById('tables')).getElementsByTagName('table');
+                                    for (var i = 0; i < tables.length; i++) {
+                                        tables[i].style.display = 'none';
+                                    }
+                                    if ($cycle != 0) {
+                                        tables[2 * $cycle - 1].style.display = '';
+                                        tables[2 * $cycle - 2].style.display = '';
+                                    }
+                                }
+
+                                (document.getElementById('choseCycle')).addEventListener('change', function (e) {
+                                    showHistoryBonusTable(parseInt(e.target.value))
+                                })
+
+                            </script>
                             <div class="content-article"><a name="rule"></a>
                                 <div class="text-1" style="display:inline-block;">重銷規則說明</div>
                                 <div class="text-2">重銷規則說明區</div>
