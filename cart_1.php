@@ -420,7 +420,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     } elseif ($c = 1) {
                                         echo '<div class="form-tittle">';
                                         echo '<label>';
-                                        echo '<input type="radio" name="ship_no" value="0">';
+                                        echo '<input type="radio" name="ship_no" value="3">';
                                         echo '營業據點取貨(須先付款)';
                                         echo ' <span>0</span>元';
                                         echo '</label>';
