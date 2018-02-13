@@ -10,7 +10,7 @@ $isLogin = !empty($_SESSION['user']);
 // GET order = 2 => 高到低排序
 // all products
 $products = [];
-$productsSql = 'SELECT products.proid, products.proname, products.price, products.PV, products.bonuce, products.uptime, products.downtime, products.status, products.protags, products.promo_price, products.promo_PV, products.promo_bonuce, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status=3 OR status=8) products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
+$productsSql = 'SELECT products.proid, products.proname, products.price, products.PV, products.bonuce, products.uptime, products.downtime, products.status, products.protags, products.promo_price, products.promo_PV, products.promo_bonuce, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3, products.promo_start, products.promo_end FROM (SELECT * FROM products WHERE status=3 OR status=8) products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
 
 $productsRes = mysqli_query($conn, $productsSql);
 while ($productsRow = mysqli_fetch_assoc($productsRes)) {
@@ -31,6 +31,15 @@ foreach ($products as $product) {
     }
 }
 $products = $tmpArray;
+
+//促銷判斷
+function isPromo($product){
+    if (!(time() > strtotime($product['promo_start']) && time() < strtotime($product['promo_end']))) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 // sort
 $tmpArray = [];
@@ -335,7 +344,7 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                                         }
 
                                         // 促銷商品
-                                        if ($product['protags'] == 2) {
+                                        if (isPromo($product)) {
                                             echo '<div class="pd-price">促銷價$ ' . $product['promo_price'] . ' 元</div>';
                                         } else {
                                             echo '<div class="pd-price">價格$ ' . $product['price'] . ' 元</div>';
@@ -418,14 +427,14 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);
