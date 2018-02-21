@@ -4,9 +4,19 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 
 $hasProid = !empty($_GET['proid']);// 從 GET 取得產品 id
+$hasPreview = !empty($_GET['preview']);
+$showProduct = false;
+if ($hasProid == true && $hasPreview == false) {
+    $showProduct = true;
+} else if ($hasProid == true && $hasPreview == true) {
+    if (md5($_GET['proid']) == $_GET['preview']) {
+        $showProduct = true;
+    }
+}
+
 $proid = 0;
 
-if ($hasProid) {
+if ($showProduct) {
 
     // product
     $proid = trim($_GET['proid']);// 產品 id 處理
@@ -86,7 +96,7 @@ if ($hasProid) {
                         <li><a href="index.php">首頁</a></li>
                         <li><img src="img/process_icon.png" alt=""></li>
 
-                        <?php if ($hasProid): ?>
+                        <?php if ($showProduct): ?>
                             <?php
                             foreach ($proclass as $item) {
                                 if ($item['no'] == $product['pcno1']) {
@@ -119,7 +129,7 @@ if ($hasProid) {
 
                 </div>
 
-                <?php if ($hasProid): ?>
+                <?php if ($showProduct): ?>
 
                     <div class="content-area">
 
@@ -423,14 +433,14 @@ if ($hasProid) {
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);
