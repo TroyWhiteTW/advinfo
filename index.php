@@ -36,26 +36,68 @@ if (mysqli_num_rows($result) > 0) {
         // 以下針對該標籤的商品取出
         $tagno = $row['no'];
         $products[$tagno] = array();
-        $sql2 = "select * from products where protags = $tagno and status = 3";
+        $sql2 = "select * from products where protags = $tagno and status IN (3,8)";
         $result2 = mysqli_query($conn, $sql2);
         if (mysqli_num_rows($result2) > 0) {
             while ($row2 = mysqli_fetch_assoc($result2)) {
-                $products[$tagno][] = array(
-                    'proid' => "{$row2['proid']}",
-                    'proname' => "{$row2['proname']}",
-                    'prointro' => "{$row2['prointro']}",
-                    'pcno' => "{$row2['pcno']}",
-                    'price' => "{$row2['price']}",
-                    'pv' => "{$row2['PV']}",
-                    'bonuce' => "{$row2['bonuce']}",
-                    'stock' => "{$row2['stock']}",
-                    'prodetail' => "{$row2['prodetail']}",
-                    'weight' => "{$row2['weight']}",
-                    'size' => "{$row2['size']}",
-                    'promo_price' => "{$row2['promo_price']}",
-                    'promo_pv' => "{$row2['promo_PV']}",
-                    'promo_bonuce' => "{$row2['promo_bonuce']}"
-                );
+                switch ($row2['status']) {
+                    case 3:
+                        $products[$tagno][] = array(
+                            'proid' => "{$row2['proid']}",
+                            'proname' => "{$row2['proname']}",
+                            'prointro' => "{$row2['prointro']}",
+                            'pcno' => "{$row2['pcno']}",
+                            'price' => "{$row2['price']}",
+                            'pv' => "{$row2['PV']}",
+                            'bonuce' => "{$row2['bonuce']}",
+                            'stock' => "{$row2['stock']}",
+                            'prodetail' => "{$row2['prodetail']}",
+                            'weight' => "{$row2['weight']}",
+                            'size' => "{$row2['size']}",
+                            'promo_price' => "{$row2['promo_price']}",
+                            'promo_pv' => "{$row2['promo_PV']}",
+                            'promo_bonuce' => "{$row2['promo_bonuce']}"
+                        );
+                        break;
+                    case 8:
+                        if (!(time() > strtotime($row2['uptime']) && time() < strtotime($row2['downtime']))) {
+
+                        } else {
+                            $products[$tagno][] = array(
+                                'proid' => "{$row2['proid']}",
+                                'proname' => "{$row2['proname']}",
+                                'prointro' => "{$row2['prointro']}",
+                                'pcno' => "{$row2['pcno']}",
+                                'price' => "{$row2['price']}",
+                                'pv' => "{$row2['PV']}",
+                                'bonuce' => "{$row2['bonuce']}",
+                                'stock' => "{$row2['stock']}",
+                                'prodetail' => "{$row2['prodetail']}",
+                                'weight' => "{$row2['weight']}",
+                                'size' => "{$row2['size']}",
+                                'promo_price' => "{$row2['promo_price']}",
+                                'promo_pv' => "{$row2['promo_PV']}",
+                                'promo_bonuce' => "{$row2['promo_bonuce']}"
+                            );
+                        }
+                        break;
+                }
+//                $products[$tagno][] = array(
+//                    'proid' => "{$row2['proid']}",
+//                    'proname' => "{$row2['proname']}",
+//                    'prointro' => "{$row2['prointro']}",
+//                    'pcno' => "{$row2['pcno']}",
+//                    'price' => "{$row2['price']}",
+//                    'pv' => "{$row2['PV']}",
+//                    'bonuce' => "{$row2['bonuce']}",
+//                    'stock' => "{$row2['stock']}",
+//                    'prodetail' => "{$row2['prodetail']}",
+//                    'weight' => "{$row2['weight']}",
+//                    'size' => "{$row2['size']}",
+//                    'promo_price' => "{$row2['promo_price']}",
+//                    'promo_pv' => "{$row2['promo_PV']}",
+//                    'promo_bonuce' => "{$row2['promo_bonuce']}"
+//                );
             }
         }
 

@@ -21,7 +21,7 @@ if ($showProduct) {
     // product
     $proid = trim($_GET['proid']);// 產品 id 處理
 
-    $productSql = 'SELECT products.proid, products.proname, products.prointro, products.price, products.PV, products.bonuce, products.stock, products.prodetail, products.protags, products.weight, products.size, products.promo_price, products.promo_PV, products.promo_bonuce, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status=3';
+    $productSql = 'SELECT products.*, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status IN (3,8)';
     $productSql .= ' AND proid=\'' . $proid . '\'';
     $productSql .= ') products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
 
