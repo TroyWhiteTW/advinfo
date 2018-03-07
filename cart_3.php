@@ -50,6 +50,21 @@ $fare = 0;
 $discount = 0;
 
 // 配送方式
+// 名稱
+$chooseShipType = $orders->ship_no;
+$chooseShipTypeSql = "SELECT name FROM shiptypes WHERE no = $chooseShipType";
+$chooseShipTypeRs = mysqli_query($conn, $chooseShipTypeSql);
+$chooseShipName = mysqli_fetch_assoc($chooseShipTypeRs)['name'];
+$chooseShipTypeRs->close();
+
+// 價格
+$shipAmount = 0;
+$shipAmountSql = "SELECT * FROM shippings WHERE shiptypes = $chooseShipType";
+$shipAmountRs = mysqli_query($conn, $shipAmountSql);
+while ($shipAmountRow = mysqli_fetch_assoc($shipAmountRs)) {
+    var_dump($shipAmountRow);
+}
+
 $shiptypes = [];
 $shiptypesSql = 'SELECT shiptypes.no AS pno, shiptypes.name, shiptypes.type, shippings.no, shippings.platform, shippings.nocharge FROM shiptypes LEFT JOIN shippings ON shiptypes.no=shippings.shiptype WHERE shippings.status=1';
 $shiptypesRes = mysqli_query($conn, $shiptypesSql);
@@ -255,6 +270,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     <div class="form-name">配送方式</div>
 
                                     <?php
+
                                     foreach ($shiptypes as $shiptype) {
                                         if ($shiptype['no'] == $orders->ship_no) {
                                             $fare = (int)$shiptype['platform'];

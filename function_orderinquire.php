@@ -4,7 +4,7 @@ session_start();
 $isLogin = !empty($_SESSION['user']);
 
 //先取得該用戶持有的所有訂單id
-$sql = "SELECT ordid FROM orders WHERE sub_account='" . $_SESSION['user2']['email'] . "'";
+$sql = "SELECT ordid FROM orders WHERE sub_email='" . $_SESSION['user2']['email'] . "'";
 $rs = mysqli_query($conn, $sql);
 $ordidArray = [];
 while ($row = mysqli_fetch_assoc($rs)) {

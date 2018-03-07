@@ -179,7 +179,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                         $html[] = '</td>';
                                         // 數量
                                         $html[] = '<td>';
-                                        $html[] = '<select name="' . $recordArray[$i]['proid'] . '" class="prodCount" onchange="doTotal();doFedexTotal();" >';
+                                        $html[] = '<select name="' . $recordArray[$i]['proid'] . '" class="prodCount">';
                                         // select -> option
                                         $optionCount = ($recordArray[$i]['stock'] > 10 ? 10 : $recordArray[$i]['stock']);
                                         for ($j = 1; $j <= $optionCount; $j++) {
@@ -240,6 +240,10 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                         //計算才數(長*寬*高/27000)
                                         $units += ceil(($c[1] * $c[2] * $c[3]) / 27000);
+
+                                        $_SESSION['size'] = $size;
+                                        $_SESSION['weight'] = $weight;
+                                        $_SESSION['units'] = $units;
                                     }
 
                                     echo implode("\n", $html);
@@ -264,17 +268,51 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                                 },
                                                 success: function (response) {
                                                     //alert('成功刪除');
-                                                    node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
-                                                    doTotal();
-                                                    doFedexTotal();
-                                                    updateSubmitStatus();
+                                                    // node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
+                                                    // doTotal();
+                                                    // doFedexTotal();
+                                                    // updateSubmitStatus();
                                                     //更新購物車數量
-                                                    $.post('./add_cart.php', {act: 'getCount'}, function (response) {
-                                                        eval(response);
-                                                    });
+                                                    // $.post('./add_cart.php', {act: 'getCount'}, function (response) {
+                                                    //     eval(response);
+                                                    // });
+                                                    window.location = './cart_1.php';
                                                 }
                                             });
                                         }
+                                    }
+
+                                    var selectNodes = document.getElementsByClassName("prodCount");
+                                    for (var i = 0; i < selectNodes.length; i++) {
+                                        selectNodes[i].addEventListener('change',changeProd);
+                                    }
+
+
+                                    function changeProd(e) {
+                                        $.ajax({
+                                            url: "./change_prod.php",
+                                            type: 'POST',
+                                            data: {
+                                                proid: e.target.name,
+                                                count: e.target.value
+                                            },
+                                            error: function () {
+                                                alert('發生錯誤');
+                                            },
+                                            success: function (response) {
+                                                //alert('成功刪除');
+                                                // node.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode);
+                                                // doTotal();
+                                                // doFedexTotal();
+                                                // updateSubmitStatus();
+                                                //更新購物車數量
+                                                // $.post('./add_cart.php', {act: 'getCount'}, function (response) {
+                                                //     eval(response);
+                                                // });
+                                                window.location = './cart_1.php';
+                                            }
+                                        });
+
                                     }
                                 </script>
 
@@ -417,7 +455,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 //                                        for ($i = 1; $i < $c; $i++) {
 //                                            $tempArray = array_intersect($stores[$i], $tempArray);
 //                                        }
-                                    } elseif ($c = 1) {
+                                    } elseif ($c == 1) {
                                         echo '<div class="form-tittle">';
                                         echo '<label>';
                                         echo '<input type="radio" name="ship_no" value="3">';

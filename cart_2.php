@@ -159,102 +159,105 @@ $orders = unserialize($orders);
                             </div>
 
                             <!-- 收件人資料 -->
-                            <div id="rec_set" class="content-article">
+                            <?php if ($orders->ship_no != '3'): ?>
+                                <div id="rec_set" class="content-article">
 
-                                <div class="form-name">收件人資料</div>
-
-                                <div class="form-tittle">
-                                    <div class="check-box">
-                                        <input name="rec_check" id="rec_check" type="checkbox" checked>
-                                    </div>
-                                    同步為訂購人資料
-                                </div>
-
-                                <div class="form-tittle">
-                                    姓名：
-                                    <input name="rec_name" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user2']['name'] ?>" disabled="disabled">
-                                </div>
-
-                                <div class="form-tittle">
-                                    電子信箱：
-                                    <input name="rec_email" id="" type="text" class="input-3" size="40"
-                                           value="<?= $_SESSION['user2']['email'] ?>" disabled="disabled">
-                                </div>
-
-                                <div class="form-tittle">
-                                    聯繫電話：
-                                    <input name="rec_phone" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user2']['phone'] ?>" disabled="disabled">
-                                </div>
-
-                                <div class="form-tittle">
-                                    <span style="color:red;">*</span>
-                                    手機：
-                                    <input name="rec_mobile" id="" type="text" class="input-2"
-                                           value="<?= $_SESSION['user2']['mobile'] ?>" disabled="disabled">
-                                </div>
-
-                                <div class="form-tittle">
-                                    <span style="color:red;">*</span>
-                                    配送地址：
-                                    <!--                                    <input type="checkbox" checked="checked">-->
-                                    <!--                                    台澎金馬-->
-                                    <!--                                    <span style="color:red; font-size:12px;">(預設勾選)</span>-->
+                                    <div class="form-name">收件人資料</div>
 
                                     <div class="form-tittle">
+                                        <div class="check-box">
+                                            <input name="rec_check" id="rec_check" type="checkbox" checked>
+                                        </div>
+                                        同步為訂購人資料
+                                    </div>
 
-                                        <!--                                        <select name="" id="">-->
-                                        <!--                                            <option selected="selected" value="0">請選擇縣市</option>-->
-                                        <!--                                            <option value="1">B</option>-->
-                                        <!--                                            <option value="2">C</option>-->
-                                        <!--                                        </select>-->
-                                        <!---->
-                                        <!--                                        <select name="" id="">-->
-                                        <!--                                            <option selected="selected" value="0">請選擇區別</option>-->
-                                        <!--                                            <option value="1">B</option>-->
-                                        <!--                                            <option value="2">C</option>-->
-                                        <!--                                        </select>-->
+                                    <div class="form-tittle">
+                                        姓名：
+                                        <input name="rec_name" id="" type="text" class="input-2"
+                                               value="<?= $_SESSION['user2']['name'] ?>" disabled="disabled">
+                                    </div>
+
+                                    <div class="form-tittle">
+                                        電子信箱：
+                                        <input name="rec_email" id="" type="text" class="input-3" size="40"
+                                               value="<?= $_SESSION['user2']['email'] ?>" disabled="disabled">
+                                    </div>
+
+                                    <div class="form-tittle">
+                                        聯繫電話：
+                                        <input name="rec_phone" id="" type="text" class="input-2"
+                                               value="<?= $_SESSION['user2']['phone'] ?>" disabled="disabled">
+                                    </div>
+
+                                    <div class="form-tittle">
+                                        <span style="color:red;">*</span>
+                                        手機：
+                                        <input name="rec_mobile" id="" type="text" class="input-2"
+                                               value="<?= $_SESSION['user2']['mobile'] ?>" disabled="disabled">
+                                    </div>
+
+                                    <div class="form-tittle">
+                                        <span style="color:red;">*</span>
+                                        配送地址：
+                                        <!--                                    <input type="checkbox" checked="checked">-->
+                                        <!--                                    台澎金馬-->
+                                        <!--                                    <span style="color:red; font-size:12px;">(預設勾選)</span>-->
 
                                         <div class="form-tittle">
-                                            <input size="40" disabled="disabled" name="rec_address" id="" type="text"
-                                                   class="input-3"
-                                                   value="<?= $_SESSION['user2']['city'] . $_SESSION['user2']['area'] . $_SESSION['user2']['address'] ?>">
+
+                                            <!--                                        <select name="" id="">-->
+                                            <!--                                            <option selected="selected" value="0">請選擇縣市</option>-->
+                                            <!--                                            <option value="1">B</option>-->
+                                            <!--                                            <option value="2">C</option>-->
+                                            <!--                                        </select>-->
+                                            <!---->
+                                            <!--                                        <select name="" id="">-->
+                                            <!--                                            <option selected="selected" value="0">請選擇區別</option>-->
+                                            <!--                                            <option value="1">B</option>-->
+                                            <!--                                            <option value="2">C</option>-->
+                                            <!--                                        </select>-->
+
+                                            <div class="form-tittle">
+                                                <input size="40" disabled="disabled" name="rec_address" id=""
+                                                       type="text"
+                                                       class="input-3"
+                                                       value="<?= $_SESSION['user2']['city'] . $_SESSION['user2']['area'] . $_SESSION['user2']['address'] ?>">
+                                            </div>
+
                                         </div>
 
                                     </div>
 
                                 </div>
 
-                            </div>
+                                <script>
+                                    var recCheck = $('#rec_check')[0];
+                                    recCheck.addEventListener('change', function () {
+                                        enableRecInput(this.checked);
+                                    });
 
-                            <script>
-                                var recCheck = $('#rec_check')[0];
-                                recCheck.addEventListener('change', function () {
-                                    enableRecInput(this.checked);
-                                });
+                                    function enableRecInput(enable) {
+                                        var nodes = document.getElementById('rec_set').getElementsByTagName('input');
+                                        for (var n in nodes) {
+                                            if (nodes[n].type === 'text') {
+                                                nodes[n].disabled = enable;
+                                                if (enable) {
 
-                                function enableRecInput(enable) {
-                                    var nodes = document.getElementById('rec_set').getElementsByTagName('input');
-                                    for (var n in nodes) {
-                                        if (nodes[n].type === 'text') {
-                                            nodes[n].disabled = enable;
-                                            if (enable) {
-
-                                            } else {
-                                                nodes[n].value = '';
+                                                } else {
+                                                    nodes[n].value = '';
+                                                }
                                             }
                                         }
+                                        if (enable) {
+                                            $('input[name="rec_name"]')[0].value = $('input[name="sub_name"]')[0].value;
+                                            $('input[name="rec_email"]')[0].value = $('input[name="sub_email"]')[0].value;
+                                            $('input[name="rec_phone"]')[0].value = $('input[name="sub_phone"]')[0].value;
+                                            $('input[name="rec_mobile"]')[0].value = $('input[name="sub_mobile"]')[0].value;
+                                            $('input[name="rec_address"]')[0].value = $('input[name="sub_address"]')[0].value;
+                                        }
                                     }
-                                    if (enable) {
-                                        $('input[name="rec_name"]')[0].value = $('input[name="sub_name"]')[0].value;
-                                        $('input[name="rec_email"]')[0].value = $('input[name="sub_email"]')[0].value;
-                                        $('input[name="rec_phone"]')[0].value = $('input[name="sub_phone"]')[0].value;
-                                        $('input[name="rec_mobile"]')[0].value = $('input[name="sub_mobile"]')[0].value;
-                                        $('input[name="rec_address"]')[0].value = $('input[name="sub_address"]')[0].value;
-                                    }
-                                }
-                            </script>
+                                </script>
+                            <?php endif; ?>
 
                             <!-- 取貨門市 -->
                             <?php
@@ -380,14 +383,14 @@ $orders = unserialize($orders);
     //新增側邊欄
 
     //側邊欄滑動
-    $('#left-open').click(function() {
+    $('#left-open').click(function () {
         // 顯示隱藏側邊欄
         $('.sidebar').toggleClass('sidebar-view');
         // body畫面變暗+鎖住網頁滾輪
         $('body').toggleClass('body-back');
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         //減去tobar 高度
         var bh = $(window).height() - 51;
         $('.fullheight').height(bh);
