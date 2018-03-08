@@ -275,6 +275,62 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                 </div>
 
+                                <!-- 訂購人資料 -->
+                                <div class="content-article">
+
+                                    <div class="form-name">訂購人資料</div>
+
+                                    <div class="form-tittle">姓名：
+                                        <div class="form-input-2"><?= $orders->sub_name ?></div>
+                                    </div>
+
+                                    <div class="form-tittle">電子信箱：
+                                        <div class="form-input-2"><?= $orders->sub_email ?></div>
+                                    </div>
+
+                                    <div class="form-tittle">聯繫電話：
+                                        <div class="form-input-2"><?= $orders->sub_phone ?></div>
+                                    </div>
+
+                                    <div class="form-tittle">手機：
+                                        <div class="form-input-2"><?= $orders->sub_mobile ?></div>
+                                    </div>
+
+                                    <div class="form-tittle">聯繫地址：
+                                        <div class="form-input-2"><?= $orders->sub_address ?></div>
+                                    </div>
+
+                                </div>
+
+                                <!-- 收件人資料 -->
+                                <?php if ($orders->ship_no == 1): ?>
+                                    <div class="content-article">
+
+                                        <div class="form-name">收件人資料</div>
+
+                                        <div class="form-tittle">姓名：
+                                            <div class="form-input-2"><?= $orders->rec_name ?></div>
+                                        </div>
+
+                                        <div class="form-tittle">電子信箱：
+                                            <div class="form-input-2"><?= $orders->rec_email ?></div>
+                                        </div>
+
+                                        <div class="form-tittle">聯繫電話：
+                                            <div class="form-input-2"><?= $orders->rec_phone ?></div>
+                                        </div>
+
+                                        <div class="form-tittle">手機：
+                                            <div class="form-input-2"><?= $orders->rec_mobile ?></div>
+                                        </div>
+
+                                        <div class="form-tittle">聯繫地址：
+                                            <div class="form-input-2"><?= $orders->rec_address ?></div>
+                                        </div>
+
+                                    </div>
+                                <?php endif; ?>
+
                                 <!-- 配送方式 -->
                                 <div class="content-article">
 
@@ -397,68 +453,12 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     echo '</div>';
 
                                     echo '<div class="form-tittle">門市地址：';
-                                    echo '<div class="form-input-2">' . $_SESSION['user2']['constore']['name'] . '</div>';
+                                    echo '<div class="form-input-2">' . $_SESSION['user2']['constore']['addr'] . '</div>';
                                     echo '</div>';
 
                                     echo '</div>';
                                 }
                                 ?>
-
-                                <!-- 訂購人資料 -->
-                                <div class="content-article">
-
-                                    <div class="form-name">訂購人資料</div>
-
-                                    <div class="form-tittle">姓名：
-                                        <div class="form-input-2"><?= $orders->sub_name ?></div>
-                                    </div>
-
-                                    <div class="form-tittle">電子信箱：
-                                        <div class="form-input-2"><?= $orders->sub_email ?></div>
-                                    </div>
-
-                                    <div class="form-tittle">聯繫電話：
-                                        <div class="form-input-2"><?= $orders->sub_phone ?></div>
-                                    </div>
-
-                                    <div class="form-tittle">手機：
-                                        <div class="form-input-2"><?= $orders->sub_mobile ?></div>
-                                    </div>
-
-                                    <div class="form-tittle">聯繫地址：
-                                        <div class="form-input-2"><?= $orders->sub_address ?></div>
-                                    </div>
-
-                                </div>
-
-                                <!-- 收件人資料 -->
-                                <?php if ($orders->ship_no == 1): ?>
-                                    <div class="content-article">
-
-                                        <div class="form-name">收件人資料</div>
-
-                                        <div class="form-tittle">姓名：
-                                            <div class="form-input-2"><?= $orders->rec_name ?></div>
-                                        </div>
-
-                                        <div class="form-tittle">電子信箱：
-                                            <div class="form-input-2"><?= $orders->rec_email ?></div>
-                                        </div>
-
-                                        <div class="form-tittle">聯繫電話：
-                                            <div class="form-input-2"><?= $orders->rec_phone ?></div>
-                                        </div>
-
-                                        <div class="form-tittle">手機：
-                                            <div class="form-input-2"><?= $orders->rec_mobile ?></div>
-                                        </div>
-
-                                        <div class="form-tittle">聯繫地址：
-                                            <div class="form-input-2"><?= $orders->rec_address ?></div>
-                                        </div>
-
-                                    </div>
-                                <?php endif; ?>
 
                                 <!-- 發票資訊-->
                                 <div class="content-article">
