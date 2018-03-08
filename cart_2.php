@@ -159,7 +159,7 @@ $orders = unserialize($orders);
                             </div>
 
                             <!-- 收件人資料 -->
-                            <?php if ($orders->ship_no != '3'): ?>
+                            <?php if ($orders->ship_no == 1): ?>
                                 <div id="rec_set" class="content-article">
 
                                     <div class="form-name">收件人資料</div>

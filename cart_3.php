@@ -432,7 +432,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                 </div>
 
                                 <!-- 收件人資料 -->
-                                <?php if ($orders->ship_no != '3'): ?>
+                                <?php if ($orders->ship_no == 1): ?>
                                     <div class="content-article">
 
                                         <div class="form-name">收件人資料</div>
