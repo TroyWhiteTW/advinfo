@@ -54,23 +54,42 @@ $discount = 0;
 $chooseShipType = $orders->ship_no;
 $chooseShipTypeSql = "SELECT name FROM shiptypes WHERE no = $chooseShipType";
 $chooseShipTypeRs = mysqli_query($conn, $chooseShipTypeSql);
-$chooseShipName = mysqli_fetch_assoc($chooseShipTypeRs)['name'];
+$chooseShipData = mysqli_fetch_assoc($chooseShipTypeRs);
+$chooseShipName = $chooseShipData['name'];
+$chooseShipWay = $chooseShipData['type'];
+if ($chooseShipName == "" || $chooseShipName == null) { //value 有誤
+    var_dump("配送方式有誤");
+//    header('Location:index.php');
+    exit;
+}
 $chooseShipTypeRs->close();
 
 // 價格
-$shipAmount = 0;
-$shipAmountSql = "SELECT * FROM shippings WHERE shiptypes = $chooseShipType";
+$shipAmount = 0;//營業據點取貨的錢
+$shipAmountSql = "SELECT * FROM shippings WHERE shiptype = $chooseShipType";
+//var_dump($shipAmountSql);
 $shipAmountRs = mysqli_query($conn, $shipAmountSql);
+$shipAmountRows = [];
 while ($shipAmountRow = mysqli_fetch_assoc($shipAmountRs)) {
-    var_dump($shipAmountRow);
+    $shipAmountRows[] = $shipAmountRow;
+}
+if (count($shipAmountRows) >= 2) {
+    foreach ($shipAmountRows as $k => $v) {
+        if ($v["units"] == $_SESSION["units"]) {
+            $shipAmount = $v["freight"];
+        }
+    }
+} else if (count($shipAmountRows) == 1) {
+    $shipAmount = $shipAmountRows[0]["freight"];
 }
 
-$shiptypes = [];
-$shiptypesSql = 'SELECT shiptypes.no AS pno, shiptypes.name, shiptypes.type, shippings.no, shippings.platform, shippings.nocharge FROM shiptypes LEFT JOIN shippings ON shiptypes.no=shippings.shiptype WHERE shippings.status=1';
-$shiptypesRes = mysqli_query($conn, $shiptypesSql);
-while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
-    $shiptypes[] = $shiptypesRow;
-}
+
+//$shiptypes = [];
+//$shiptypesSql = 'SELECT shiptypes.no AS pno, shiptypes.name, shiptypes.type, shippings.no, shippings.platform, shippings.nocharge FROM shiptypes LEFT JOIN shippings ON shiptypes.no=shippings.shiptype WHERE shippings.status=1';
+//$shiptypesRes = mysqli_query($conn, $shiptypesSql);
+//while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
+//    $shiptypes[] = $shiptypesRow;
+//}
 
 // 付款方式
 $payments = [];
@@ -271,12 +290,12 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                     <?php
 
-                                    foreach ($shiptypes as $shiptype) {
-                                        if ($shiptype['no'] == $orders->ship_no) {
-                                            $fare = (int)$shiptype['platform'];
+//                                    foreach ($shiptypes as $shiptype) {
+//                                        if ($shiptype['no'] == $orders->ship_no) {
+                                            $fare = $shipAmount;
                                             echo '<div class="form-input">';
-                                            echo $shiptype['name'];
-                                            switch ($shiptype['type']) {
+                                            echo $chooseShipName;
+                                            switch ($chooseShipWay) {
                                                 case 1:
                                                     echo '(需先付款)';
                                                     break;
@@ -287,10 +306,10 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                                     echo '(貨到付款)';
                                                     break;
                                             }
-                                            echo ' ' . $shiptype['platform'] . '元';
+                                            echo ' ' . $shipAmount . '元';
                                             echo '</div>';
-                                        }
-                                    }
+//                                        }
+//                                    }
                                     ?>
 
                                     <div class="price-area">

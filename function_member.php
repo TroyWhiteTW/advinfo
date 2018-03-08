@@ -75,7 +75,7 @@ $isLogin = !empty($_SESSION['user']);
                             <div class="content-article">
 
                                 <div class="form-tittle">
-                                    帳號：
+                                    帳號(同信箱)：
                                     <div class="form-input-2"><?php echo $_SESSION['user2']['email']; ?></div>
                                     <a class="btn btn-default btn-xs"
                                        href="<?= $_SESSION['user2']['type'] == 1 ? 'password_modify.php' : '#' ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>修改密碼</a>
@@ -139,7 +139,7 @@ $isLogin = !empty($_SESSION['user']);
 
                                 <div class="form-tittle">
                                     姓名：
-                                    <input name="name" type="text"
+                                    <input name="name" type="text" id="name" class="c"
                                            value="<?php echo $_SESSION['user2']['name']; ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                 </div>
 
@@ -147,26 +147,29 @@ $isLogin = !empty($_SESSION['user']);
                                     生日：
                                     <div class="form-input-2">
                                         <input name="birthday" value="<?= $_SESSION['user2']['birthday'] ?>"
-                                               type="date"
+                                               type="date" id="birthday" class="c"
                                                title="生日"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>/>
                                     </div>
                                 </div>
 
                                 <div class="form-tittle">
                                     性別：
-                                    <select name="gender"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
+                                    <select id="gender"
+                                            name="gender"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                         <?php
                                         switch ($_SESSION['user2']['gender']) {
                                             case 'M':
+                                                echo '<option value="0">請選擇</option>';
                                                 echo '<option value="M" selected>男</option>';
                                                 echo '<option value="F">女</option>';
                                                 break;
                                             case 'F':
+                                                echo '<option value="0">請選擇</option>';
                                                 echo '<option value="F" selected>女</option>';
                                                 echo '<option value="M">男</option>';
                                                 break;
                                             default:
-                                                echo '<option>請選擇</option>';
+                                                echo '<option value="0">請選擇</option>';
                                                 echo '<option value="M">男</option>';
                                                 echo '<option value="F">女</option>';
                                                 break;
@@ -174,24 +177,24 @@ $isLogin = !empty($_SESSION['user']);
                                         ?>
                                     </select>
                                 </div>
-
+                                <!--
                                 <div class="form-tittle">
                                     電子信箱：
                                     <br/>
                                     <input name="email" id="" type="text" style="width: 50%;min-width: 200px;"
                                            value="<?= $_SESSION['user2']['email'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                 </div>
-
+                                   -->
                                 <div class="form-tittle">
                                     聯繫電話：
-                                    <input name="phone" id="" type="text" class="input-2"
+                                    <input name="phone" id="phone" type="text" class="input-2 c"
                                            value="<?= $_SESSION['user2']['phone'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                 </div>
 
                                 <div class="form-tittle">
                                     <span style="color:red;">*</span>
                                     手機：
-                                    <input name="mobile" id="" type="text" class="input-2"
+                                    <input name="mobile" id="mobile" type="text" class="input-2 c"
                                            value="<?= $_SESSION['user2']['mobile'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
                                     <a class="btn btn-default btn-xs"
                                        href="<?= $_SESSION['user2']['type'] == 1 ? 'login_start.php' : '#' ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>驗證手機</a>
@@ -216,7 +219,8 @@ $isLogin = !empty($_SESSION['user']);
                                     <!--                                        </select>-->
                                     <!--                                    </div>-->
                                     <br/>
-                                    <input name="address" id="" type="text" style="width: 50%;min-width: 200px;"
+                                    <input name="address" id="address" type="text" style="width: 50%;min-width: 200px;"
+                                           class="c"
                                            value="<?= $_SESSION['user2']['address'] ?>"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>>
 
                                 </div>
@@ -262,11 +266,55 @@ $isLogin = !empty($_SESSION['user']);
                                 </div>
                             </div>
 
+                            <div id="mesg" style="color: red;display:">
+                                資料格式有誤,請確認
+                            </div>
+
                             <div class="btn-area">
-                                <input type="submit" value="確認提交">
+                                <input id="smt" type="submit" value="確認提交" disabled="disabled">
                             </div>
 
                         </form>
+                        <script>
+
+                            function ajaxCheckUpdate() {
+                                $.ajax({
+                                    url: "./checkMemberUpdate.php",
+                                    type: 'POST',
+                                    data: {
+                                        name: document.getElementById("name").value,
+                                        birthday: document.getElementById("birthday").value,
+                                        gender: document.getElementById("gender").value,
+                                        phone: document.getElementById("phone").value,
+                                        mobile: document.getElementById("mobile").value,
+                                        address: document.getElementById("address").value,
+                                        company_no: document.getElementById("company_no").value,
+                                        invoice_title: document.getElementById("invoice_title").value,
+                                    },
+                                    error: function () {
+                                        alert('發生錯誤');
+                                    },
+                                    success: function (response) {
+                                        if (response == '1') {
+                                            document.getElementById("smt").disabled = "";
+                                            document.getElementById("mesg").style.display = "none";
+                                        } else {
+                                            document.getElementById("smt").disabled = "disabled";
+                                            document.getElementById("mesg").style.display = "";
+                                            document.getElementById("mesg").innerHTML = response;
+                                        }
+                                    }
+                                });
+                            }
+
+                            ajaxCheckUpdate();
+
+                            var nodes = document.getElementsByClassName("c");
+                            for (var i = 0; i < nodes.length; i++) {
+                                nodes[i].addEventListener('keyup', ajaxCheckUpdate);
+                            }
+
+                        </script>
 
                     </div>
 

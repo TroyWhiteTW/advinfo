@@ -76,22 +76,22 @@ function checkData($post, &$msg)
     foreach ($post as $k => $v) {
         switch ($k) {
             case 'email':
-                checkEmpty($k, $msg);
+//                checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 chechEmail($k, $msg);
                 break;
             case 'password':
-                checkEmpty($k, $msg);
+//                checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 chechLengthBetweenTwoValue($k, $msg, 20, 8);
                 checkOneEngAndOneNum($k, $msg);
                 break;
             case 'password_c':
-                checkEmpty($k, $msg);
+//                checkEmpty($k, $msg);
                 checkSamePassword($k, $msg);
                 break;
             case 'name':
-                checkEmpty($k, $msg);
+//                checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 checkHasNum($k, $msg);
                 break;
@@ -109,12 +109,12 @@ function checkData($post, &$msg)
                 checkEmpty($k, $msg);
                 break;
             case 'gender':
-                checkEmpty($k, $msg);
+//                checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 checkGender($k, $msg);
                 break;
             case 'type':
-                checkEmpty($k, $msg);
+//                checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 checkType($k, $msg);
                 break;
@@ -123,7 +123,7 @@ function checkData($post, &$msg)
                 chechEmail($k, $msg);
                 break;
             case 'validate_code':
-                checkEmpty($k, $msg);
+//                checkEmpty($k, $msg);
                 checkSpace($k, $msg);
                 break;
             case 'birthday_y':
@@ -234,8 +234,9 @@ function checkGender($k, &$msg)
     if (empty($_POST[$k])) {
         return;
     }
-    if ($_POST[$k] !== "M" && $_POST[$k] !== "F") {
-        $msg .= "$k 錯誤";
+
+    if ($_POST[$k] !== "M" && $_POST[$k] !== "F" && $_POST[$k] != "0") {
+        $msg .= "$k 錯誤...";
     }
 }
 
@@ -255,7 +256,7 @@ function encodeRegisterData($rawDataArray)
         "name" => "\"\"",
         "birthday" => "\"\"",
         "gender" => "\"\"",
-        "email" => "\"\"",
+//        "email" => "\"\"",
         "phone" => "\"\"",
         "mobile" => "\"\"",
         "company_no" => "\"\"",

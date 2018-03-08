@@ -284,7 +284,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                     var selectNodes = document.getElementsByClassName("prodCount");
                                     for (var i = 0; i < selectNodes.length; i++) {
-                                        selectNodes[i].addEventListener('change',changeProd);
+                                        selectNodes[i].addEventListener('change', changeProd);
                                     }
 
 
@@ -416,9 +416,9 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     echo '<label>';
                                     //if ( $shiptype[ 'no' ] == 1 ) {
                                     if ($k == 0) {
-                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['no'] . '" checked="checked">';
+                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['pno'] . '" checked="checked">';
                                     } else {
-                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['no'] . '">';
+                                        echo '<input type="radio" name="ship_no" value="' . $shiptype['pno'] . '">';
                                     }
                                     echo $shiptype['name'];
                                     switch ($shiptype['type']) {
@@ -432,7 +432,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                             echo '(貨到付款)';
                                             break;
                                     }
-                                    echo ' <span>' . $shiptype['platform'] . '</span>元';
+                                    echo ' <span>' . $shiptype['freight'] . '</span>元';
                                     echo '</label>';
                                     echo '</div>';
                                 }
@@ -456,21 +456,23 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 //                                            $tempArray = array_intersect($stores[$i], $tempArray);
 //                                        }
                                     } elseif ($c == 1) {
-                                        echo '<div class="form-tittle">';
-                                        echo '<label>';
-                                        echo '<input type="radio" name="ship_no" value="3">';
-                                        echo '營業據點取貨(須先付款)';
-                                        echo ' <span>0</span>元';
-                                        echo '</label>';
-                                        echo '<div class="form-tittle" style="margin-left:20px;">';
-                                        echo '<select name="suppstore_no">';
-                                        echo '<option selected="selected" value="0">請選擇營業據點</option>';
-                                        foreach ($stores[0] as $k => $v) {
-                                            echo '<option value="' . $v['no'] . '">' . $v['store_name'] . '</option>';
+                                        if (count($stores[0]) != 0) {
+                                            echo '<div class="form-tittle">';
+                                            echo '<label>';
+                                            echo '<input type="radio" name="ship_no" value="3">';
+                                            echo '營業據點取貨(須先付款)';
+                                            echo ' <span>0</span>元';
+                                            echo '</label>';
+                                            echo '<div class="form-tittle" style="margin-left:20px;">';
+                                            echo '<select name="suppstore_no">';
+//                                            echo '<option selected="selected" value="0">請選擇營業據點</option>';
+                                            foreach ($stores[0] as $k => $v) {
+                                                echo '<option value="' . $v['no'] . '">' . $v['store_name'] . '</option>';
+                                            }
+                                            echo '</select>';
+                                            echo '</div>';
+                                            echo '</div>';
                                         }
-                                        echo '</select>';
-                                        echo '</div>';
-                                        echo '</div>';
                                     } else {
 
                                     }
