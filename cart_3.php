@@ -83,14 +83,6 @@ if (count($shipAmountRows) >= 2) {
     $shipAmount = $shipAmountRows[0]["freight"];
 }
 
-
-//$shiptypes = [];
-//$shiptypesSql = 'SELECT shiptypes.no AS pno, shiptypes.name, shiptypes.type, shippings.no, shippings.platform, shippings.nocharge FROM shiptypes LEFT JOIN shippings ON shiptypes.no=shippings.shiptype WHERE shippings.status=1';
-//$shiptypesRes = mysqli_query($conn, $shiptypesSql);
-//while ($shiptypesRow = mysqli_fetch_assoc($shiptypesRes)) {
-//    $shiptypes[] = $shiptypesRow;
-//}
-
 // 付款方式
 $payments = [];
 $paymentsSql = 'SELECT no, name, platform, type FROM payments WHERE status=1';
@@ -290,26 +282,26 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
 
                                     <?php
 
-//                                    foreach ($shiptypes as $shiptype) {
-//                                        if ($shiptype['no'] == $orders->ship_no) {
-                                            $fare = $shipAmount;
-                                            echo '<div class="form-input">';
-                                            echo $chooseShipName;
-                                            switch ($chooseShipWay) {
-                                                case 1:
-                                                    echo '(需先付款)';
-                                                    break;
-                                                case 2:
-                                                    echo '(已付款)';
-                                                    break;
-                                                case 3:
-                                                    echo '(貨到付款)';
-                                                    break;
-                                            }
-                                            echo ' ' . $shipAmount . '元';
-                                            echo '</div>';
-//                                        }
-//                                    }
+                                    //                                    foreach ($shiptypes as $shiptype) {
+                                    //                                        if ($shiptype['no'] == $orders->ship_no) {
+                                    $fare = $shipAmount;
+                                    echo '<div class="form-input">';
+                                    echo $chooseShipName;
+                                    switch ($chooseShipWay) {
+                                        case 1:
+                                            echo '(需先付款)';
+                                            break;
+                                        case 2:
+                                            echo '(已付款)';
+                                            break;
+                                        case 3:
+                                            echo '(貨到付款)';
+                                            break;
+                                    }
+                                    echo ' ' . $shipAmount . '元';
+                                    echo '</div>';
+                                    //                                        }
+                                    //                                    }
                                     ?>
 
                                     <div class="price-area">
@@ -390,10 +382,9 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                 <!-- 取貨門市 -->
                                 <?php
                                 $sql = "select shippings.*,logistics.name as logname from shippings 
-                                    LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.no='" . $orders->ship_no . "'";
+                                    LEFT JOIN logistics ON logistics.no=shippings.logno where shippings.shiptype='" . $orders->ship_no . "'";
                                 $rs = mysqli_query($conn, $sql);
                                 $rst = mysqli_fetch_assoc($rs);
-
                                 if ($rst["logname"] == "便利達康" && $orders->ship_no == "2") {
                                     echo '<div class="content-article">';
 
@@ -441,31 +432,33 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                 </div>
 
                                 <!-- 收件人資料 -->
-                                <div class="content-article">
+                                <?php if ($orders->ship_no != '3'): ?>
+                                    <div class="content-article">
 
-                                    <div class="form-name">收件人資料</div>
+                                        <div class="form-name">收件人資料</div>
 
-                                    <div class="form-tittle">姓名：
-                                        <div class="form-input-2"><?= $orders->rec_name ?></div>
+                                        <div class="form-tittle">姓名：
+                                            <div class="form-input-2"><?= $orders->rec_name ?></div>
+                                        </div>
+
+                                        <div class="form-tittle">電子信箱：
+                                            <div class="form-input-2"><?= $orders->rec_email ?></div>
+                                        </div>
+
+                                        <div class="form-tittle">聯繫電話：
+                                            <div class="form-input-2"><?= $orders->rec_phone ?></div>
+                                        </div>
+
+                                        <div class="form-tittle">手機：
+                                            <div class="form-input-2"><?= $orders->rec_mobile ?></div>
+                                        </div>
+
+                                        <div class="form-tittle">聯繫地址：
+                                            <div class="form-input-2"><?= $orders->rec_address ?></div>
+                                        </div>
+
                                     </div>
-
-                                    <div class="form-tittle">電子信箱：
-                                        <div class="form-input-2"><?= $orders->rec_email ?></div>
-                                    </div>
-
-                                    <div class="form-tittle">聯繫電話：
-                                        <div class="form-input-2"><?= $orders->rec_phone ?></div>
-                                    </div>
-
-                                    <div class="form-tittle">手機：
-                                        <div class="form-input-2"><?= $orders->rec_mobile ?></div>
-                                    </div>
-
-                                    <div class="form-tittle">聯繫地址：
-                                        <div class="form-input-2"><?= $orders->rec_address ?></div>
-                                    </div>
-
-                                </div>
+                                <?php endif; ?>
 
                                 <!-- 發票資訊-->
                                 <div class="content-article">
