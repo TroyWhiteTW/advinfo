@@ -118,7 +118,18 @@ while ($rowData = mysqli_fetch_assoc($rs)) {
                             echo '<table width="100%" border="1"><tbody><tr class="tb-tittle"><td>總金額</td><td>折抵</td><td>應付金額</td></tr>';
                             echo '<tr class="td-02"><td>$' . $orderDataArray[$i]['total_price'] . '</td><td>$' . $orderDataArray[$i]['discount_price'] . '</td><td>$' . $orderDataArray[$i]['pay_price'] . '</td></tr>';
                             echo '<tr class="tb-tittle"><td>PV值</td><td>折抵方式</td><td>付款方式</td></tr>';
-                            echo '<tr class="td-02"><td>' . $orderDataArray[$i]['PV'] . '</td><td>' . discountTranslate($orderDataArray[$i]['discount']) . '</td><td>' . $orderDataArray[$i]['pay_no'] . '</td></tr></tbody></table>';
+                            // 配送方式
+                            // 名稱
+                            $chooseShipType = $orderDataArray[$i]['pay_no'];
+                            $chooseShipTypeSql = "SELECT name FROM shiptypes WHERE no = $chooseShipType";
+                            $chooseShipTypeRs = mysqli_query($conn, $chooseShipTypeSql);
+                            $chooseShipData = mysqli_fetch_assoc($chooseShipTypeRs);
+                            $chooseShipName = $chooseShipData['name'];
+                            if ($chooseShipName == "" || $chooseShipName == null) { //value 有誤
+                                $chooseShipName = "配送方式有誤";
+                            }
+                            $chooseShipTypeRs->close();
+                            echo '<tr class="td-02"><td>' . $orderDataArray[$i]['PV'] . '</td><td>' . discountTranslate($orderDataArray[$i]['discount']) . '</td><td>' . $chooseShipName . '</td></tr></tbody></table>';
                             echo '<table width="100%" border="1"><tbody><tr class="tb-tittle"><td>退貨</td><td>明細</td></tr>';
                             echo '<tr class="td-02">';
                             echo '<td> -- </td>';
