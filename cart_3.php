@@ -52,35 +52,44 @@ $discount = 0;
 // 配送方式
 // 名稱
 $chooseShipType = $orders->ship_no;
-$chooseShipTypeSql = "SELECT name FROM shiptypes WHERE no = $chooseShipType";
-$chooseShipTypeRs = mysqli_query($conn, $chooseShipTypeSql);
-$chooseShipData = mysqli_fetch_assoc($chooseShipTypeRs);
-$chooseShipName = $chooseShipData['name'];
-$chooseShipWay = $chooseShipData['type'];
-if ($chooseShipName == "" || $chooseShipName == null) { //value 有誤
-    var_dump("配送方式有誤");
+if ($chooseShipType == 0) {
+    $chooseShipName = '營業據點取貨';
+    $chooseShipWay = 1;
+} else {
+    $chooseShipTypeSql = "SELECT name FROM shiptypes WHERE no = $chooseShipType";
+    $chooseShipTypeRs = mysqli_query($conn, $chooseShipTypeSql);
+    $chooseShipData = mysqli_fetch_assoc($chooseShipTypeRs);
+    $chooseShipName = $chooseShipData['name'];
+    $chooseShipWay = $chooseShipData['type'];
+    if ($chooseShipName == "" || $chooseShipName == null) { //value 有誤
+        var_dump("配送方式有誤");
 //    header('Location:index.php');
-    exit;
+        exit;
+    }
+    $chooseShipTypeRs->close();
 }
-$chooseShipTypeRs->close();
 
 // 價格
 $shipAmount = 0;//營業據點取貨的錢
-$shipAmountSql = "SELECT * FROM shippings WHERE shiptype = $chooseShipType";
+if ($chooseShipType == 0) {
+
+} else {
+    $shipAmountSql = "SELECT * FROM shippings WHERE shiptype = $chooseShipType";
 //var_dump($shipAmountSql);
-$shipAmountRs = mysqli_query($conn, $shipAmountSql);
-$shipAmountRows = [];
-while ($shipAmountRow = mysqli_fetch_assoc($shipAmountRs)) {
-    $shipAmountRows[] = $shipAmountRow;
-}
-if (count($shipAmountRows) >= 2) {
-    foreach ($shipAmountRows as $k => $v) {
-        if ($v["units"] == $_SESSION["units"]) {
-            $shipAmount = $v["freight"];
-        }
+    $shipAmountRs = mysqli_query($conn, $shipAmountSql);
+    $shipAmountRows = [];
+    while ($shipAmountRow = mysqli_fetch_assoc($shipAmountRs)) {
+        $shipAmountRows[] = $shipAmountRow;
     }
-} else if (count($shipAmountRows) == 1) {
-    $shipAmount = $shipAmountRows[0]["freight"];
+    if (count($shipAmountRows) >= 2) {
+        foreach ($shipAmountRows as $k => $v) {
+            if ($v["units"] == $_SESSION["units"]) {
+                $shipAmount = $v["freight"];
+            }
+        }
+    } else if (count($shipAmountRows) == 1) {
+        $shipAmount = $shipAmountRows[0]["freight"];
+    }
 }
 
 // 付款方式
@@ -337,9 +346,6 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                     <div class="form-name">配送方式</div>
 
                                     <?php
-
-                                    //                                    foreach ($shiptypes as $shiptype) {
-                                    //                                        if ($shiptype['no'] == $orders->ship_no) {
                                     $fare = $shipAmount;
                                     echo '<div class="form-input">';
                                     echo $chooseShipName;
@@ -353,11 +359,11 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                         case 3:
                                             echo '(貨到付款)';
                                             break;
+                                        default:
+                                            break;
                                     }
-                                    echo ' ' . $shipAmount . '元';
+                                    echo " {$shipAmount}元";
                                     echo '</div>';
-                                    //                                        }
-                                    //                                    }
                                     ?>
 
                                     <div class="price-area">

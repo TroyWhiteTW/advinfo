@@ -438,7 +438,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                 }
 
                                 if (in_array('', $suppidArray) === true) {
-                                    //所選商品中存在無供應傷id的品項
+                                    //所選商品中存在無供應商 id 的品項
                                 } else {
                                     $stores = [];
                                     foreach ($suppidArray as $k => $v) {
@@ -459,7 +459,7 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                         if (count($stores[0]) != 0) {
                                             echo '<div class="form-tittle">';
                                             echo '<label>';
-                                            echo '<input type="radio" name="ship_no" value="3">';
+                                            echo '<input type="radio" name="ship_no" value="0">';
                                             echo '營業據點取貨(須先付款)';
                                             echo ' <span>0</span>元';
                                             echo '</label>';
