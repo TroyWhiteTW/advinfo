@@ -77,6 +77,16 @@ if ($isSearch) {
     while ($picsRow = mysqli_fetch_assoc($picRes)) {
         $pics[] = $picsRow;
     }
+
+    //促銷判斷
+    function isPromo($product)
+    {
+        if (!(time() > strtotime($product['promo_start']) && time() < strtotime($product['promo_end']))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
 ?>
@@ -165,10 +175,22 @@ if ($isSearch) {
                                     if ($isLogin) {
                                         switch ($_SESSION['user2']['type']) {
                                             case 1:
-                                                echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+//                                    echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                                // 促銷商品
+                                                if (isPromo($product)) {
+                                                    echo '<div class="pd-pv">紅利：' . $product['promo_bonuce'] . '</div>';
+                                                } else {
+                                                    echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                                }
                                                 break;
                                             case 2:
-                                                echo '<div class="pd-pv">PV：' . $product['PV'] . '</div>';
+//                                    echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                                // 促銷商品
+                                                if (isPromo($product)) {
+                                                    echo '<div class="pd-pv">PV：' . $product['promo_PV'] . '</div>';
+                                                } else {
+                                                    echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                                }
                                                 break;
                                         }
                                     } else {
@@ -176,8 +198,8 @@ if ($isSearch) {
                                     }
 
                                     // 促銷商品
-                                    if ($product['protags'] == 2) {
-                                        echo '<div class="d-price">促銷價$ ' . $product['promo_price'] . ' 元</div>';
+                                    if (isPromo($product)) {
+                                        echo '<div class="pd-price">促銷價$ ' . $product['promo_price'] . ' 元</div>';
                                     } else {
                                         echo '<div class="pd-price">價格$ ' . $product['price'] . ' 元</div>';
                                     }

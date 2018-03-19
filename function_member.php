@@ -85,7 +85,7 @@ $isLogin = !empty($_SESSION['user']);
 
                                     <div class="form-tittle">
                                         聘級：
-                                        <div class="form-input-2"><?php echo $_SESSION['user2']['level']; ?></div>
+                                        <div class="form-input-2"><?php echo $_SESSION['user2']['levelname']; ?></div>
                                     </div>
 
                                 <?php endif; ?>

@@ -334,10 +334,22 @@ while ($picsRow = mysqli_fetch_assoc($picRes)) {
                                         if ($isLogin) {
                                             switch ($_SESSION['user2']['type']) {
                                                 case 1:
-                                                    echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+//                                    echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                                    // 促銷商品
+                                                    if (isPromo($product)) {
+                                                        echo '<div class="pd-pv">紅利：' . $product['promo_bonuce'] . '</div>';
+                                                    } else {
+                                                        echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                                    }
                                                     break;
                                                 case 2:
-                                                    echo '<div class="pd-pv">PV：' . $product['PV'] . '</div>';
+//                                    echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                                    // 促銷商品
+                                                    if (isPromo($product)) {
+                                                        echo '<div class="pd-pv">PV：' . $product['promo_PV'] . '</div>';
+                                                    } else {
+                                                        echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                                    }
                                                     break;
                                             }
                                         } else {

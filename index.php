@@ -56,7 +56,9 @@ if (mysqli_num_rows($result) > 0) {
                             'size' => "{$row2['size']}",
                             'promo_price' => "{$row2['promo_price']}",
                             'promo_pv' => "{$row2['promo_PV']}",
-                            'promo_bonuce' => "{$row2['promo_bonuce']}"
+                            'promo_bonuce' => "{$row2['promo_bonuce']}",
+                            'promo_start' => "{$row2['promo_start']}",
+                            'promo_end' => "{$row2['promo_end']}",
                         );
                         break;
                     case 8:
@@ -77,27 +79,13 @@ if (mysqli_num_rows($result) > 0) {
                                 'size' => "{$row2['size']}",
                                 'promo_price' => "{$row2['promo_price']}",
                                 'promo_pv' => "{$row2['promo_PV']}",
-                                'promo_bonuce' => "{$row2['promo_bonuce']}"
+                                'promo_bonuce' => "{$row2['promo_bonuce']}",
+                                'promo_start' => "{$row2['promo_start']}",
+                                'promo_end' => "{$row2['promo_end']}",
                             );
                         }
                         break;
                 }
-//                $products[$tagno][] = array(
-//                    'proid' => "{$row2['proid']}",
-//                    'proname' => "{$row2['proname']}",
-//                    'prointro' => "{$row2['prointro']}",
-//                    'pcno' => "{$row2['pcno']}",
-//                    'price' => "{$row2['price']}",
-//                    'pv' => "{$row2['PV']}",
-//                    'bonuce' => "{$row2['bonuce']}",
-//                    'stock' => "{$row2['stock']}",
-//                    'prodetail' => "{$row2['prodetail']}",
-//                    'weight' => "{$row2['weight']}",
-//                    'size' => "{$row2['size']}",
-//                    'promo_price' => "{$row2['promo_price']}",
-//                    'promo_pv' => "{$row2['promo_PV']}",
-//                    'promo_bonuce' => "{$row2['promo_bonuce']}"
-//                );
             }
         }
 
@@ -114,6 +102,16 @@ $proclassSql = 'SELECT no, pcname FROM proclass';
 $proclassRes = mysqli_query($conn, $proclassSql);
 while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
     $proclass[] = $proclassRow;
+}
+
+//促銷判斷
+function isPromo($product)
+{
+    if (!(time() > strtotime($product['promo_start']) && time() < strtotime($product['promo_end']))) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 ?>
@@ -196,17 +194,35 @@ while ($proclassRow = mysqli_fetch_assoc($proclassRes)) {
                         if ($isLogin) {
                             switch ($_SESSION['user2']['type']) {
                                 case 1:
-                                    echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+//                                    echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                    // 促銷商品
+                                    if (isPromo($product)) {
+                                        echo '<div class="pd-pv">紅利：' . $product['promo_bonuce'] . '</div>';
+                                    } else {
+                                        echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
+                                    }
                                     break;
                                 case 2:
-                                    echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+//                                    echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                    // 促銷商品
+                                    if (isPromo($product)) {
+                                        echo '<div class="pd-pv">PV：' . $product['promo_PV'] . '</div>';
+                                    } else {
+                                        echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
+                                    }
                                     break;
                             }
                         } else {
                             echo '<div class="pd-pv">請登入後查看</div>';
                         }
 
-                        echo '<div class="pd-price">價格$' . $product['price'] . '元</div>';
+//                        echo '<div class="pd-price">價格$' . $product['price'] . '元</div>';
+                        // 促銷商品
+                        if (isPromo($product)) {
+                            echo '<div class="pd-price">促銷價$ ' . $product['promo_price'] . ' 元</div>';
+                        } else {
+                            echo '<div class="pd-price">價格$ ' . $product['price'] . ' 元</div>';
+                        }
 
                         if ($protag['pic'] != '0') {
                             echo '<div class="tag-type"><img src="upload/product/' . $protag['pic'] . '" alt=""></div>';

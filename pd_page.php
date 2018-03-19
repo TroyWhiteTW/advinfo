@@ -59,6 +59,15 @@ if ($showProduct) {
         $pics[] = $picsRow;
     }
 
+    //促銷判斷
+    function isPromo($product)
+    {
+        if (!(time() > strtotime($product['promo_start']) && time() < strtotime($product['promo_end']))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
 ?>
@@ -196,7 +205,15 @@ if ($showProduct) {
 
                                 <div style="margin-top:10px;">
                                     <div class="price-unit">NT$</div>
-                                    <div class="price-big"><?php echo $product['price']; ?></div>
+                                    <div class="price-big"><?php
+                                        //                                        echo $product['price'];
+                                        // 促銷商品
+                                        if (isPromo($product)) {
+                                            echo $product['promo_price'];
+                                        } else {
+                                            echo $product['price'];
+                                        }
+                                        ?></div>
                                     <div class="goods">庫存數量：<?php echo $product['stock']; ?></div>
                                 </div>
 
@@ -204,10 +221,20 @@ if ($showProduct) {
                                 if ($isLogin) {
                                     switch ($_SESSION['user2']['type']) {
                                         case 1:
-                                            echo '<div class="pv-number">紅利：' . $product['bonuce'] . '</div>';
+//                                            echo '<div class="pv-number">紅利：' . $product['bonuce'] . '</div>';
+                                            if (isPromo($product)) {
+                                                echo '<div class="pd-number">紅利：' . $product['promo_bonuce'] . '</div>';
+                                            } else {
+                                                echo '<div class="pd-number">紅利：' . $product['bonuce'] . '</div>';
+                                            }
                                             break;
                                         case 2:
-                                            echo '<div class="pv-number">PV：' . $product['PV'] . '</div>';
+//                                            echo '<div class="pv-number">PV：' . $product['PV'] . '</div>';
+                                            if (isPromo($product)) {
+                                                echo '<div class="pd-number">PV：' . $product['promo_PV'] . '</div>';
+                                            } else {
+                                                echo '<div class="pd-number">PV：' . $product['pv'] . '</div>';
+                                            }
                                             break;
                                     }
                                 } else {
