@@ -95,6 +95,11 @@ $isLogin = !empty($_SESSION['user']);
                                 <?php if ($_SESSION['user2']['type'] == 1):    //一般會員?>
 
                                     <div class="form-tittle">
+                                        聘級：
+                                        <div class="form-input-2">一般會員</div>
+                                    </div>
+
+                                    <div class="form-tittle">
                                         推薦ID：
                                         <div class="form-input-2"><?php echo $_SESSION['user2']['myreferral']; ?></div>
                                         <div id="recommendBtn" class="btn btn-default btn-xs" href="">推薦表</div>
