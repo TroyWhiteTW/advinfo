@@ -13,6 +13,8 @@ $isLogin = !empty($_SESSION['user']);
     <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </head>
 
@@ -147,10 +149,18 @@ $isLogin = !empty($_SESSION['user']);
                                     生日：
                                     <div class="form-input-2">
                                         <input name="birthday" value="<?= $_SESSION['user2']['birthday'] ?>"
-                                               type="date" id="birthday" class="c"
+                                               type="text" id="birthday" class="c"
                                                title="生日"<?php if ($_SESSION['user2']['type'] == 2) echo ' disabled="disabled"'; ?>/>
                                     </div>
                                 </div>
+                                <script>
+                                    $("#birthday").datepicker({
+                                        dateFormat: "yy-mm-dd",
+                                        changeMonth: true,
+                                        changeYear: true,
+                                        showButtonPanel: true
+                                    });
+                                </script>
 
                                 <div class="form-tittle">
                                     性別：
