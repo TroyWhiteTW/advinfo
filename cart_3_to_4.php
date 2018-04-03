@@ -170,9 +170,15 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
             $sql78 = "SELECT * FROM products WHERE proid='$item1'";
             $result78 = mysqli_query($conn, $sql78);
             $row78 = mysqli_fetch_assoc($result78);
-            $total_price += ($row78['price'] * $item2);
-            $PV += ($row78['PV'] * $item2);
-            $bonuce += ($row78['bonuce'] * $item2);
+            if (isPromo($row78)) {
+                $total_price += ($row78['promo_price'] * $item2);
+                $PV += ($row78['promo_PV'] * $item2);
+                $bonuce += ($row78['promo_bonuce'] * $item2);
+            } else {
+                $total_price += ($row78['price'] * $item2);
+                $PV += ($row78['PV'] * $item2);
+                $bonuce += ($row78['bonuce'] * $item2);
+            }
 
         } else if ($k === $suppid) {
 
@@ -182,9 +188,15 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
             $sql78 = "SELECT * FROM products WHERE proid='$item1'";
             $result78 = mysqli_query($conn, $sql78);
             $row78 = mysqli_fetch_assoc($result78);
-            $total_price += ($row78['price'] * $item2);
-            $PV += ($row78['PV'] * $item2);
-            $bonuce += ($row78['bonuce'] * $item2);
+            if (isPromo($row78)) {
+                $total_price += ($row78['promo_price'] * $item2);
+                $PV += ($row78['promo_PV'] * $item2);
+                $bonuce += ($row78['promo_bonuce'] * $item2);
+            } else {
+                $total_price += ($row78['price'] * $item2);
+                $PV += ($row78['PV'] * $item2);
+                $bonuce += ($row78['bonuce'] * $item2);
+            }
 
         } else if ($k !== $suppid) {
 
@@ -207,9 +219,15 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
                 $sql78 = "SELECT * FROM products WHERE proid='$item1'";
                 $result78 = mysqli_query($conn, $sql78);
                 $row78 = mysqli_fetch_assoc($result78);
-                $total_price += ($row78['price'] * $item2);
-                $PV += ($row78['PV'] * $item2);
-                $bonuce += ($row78['bonuce'] * $item2);
+                if (isPromo($row78)) {
+                    $total_price += ($row78['promo_price'] * $item2);
+                    $PV += ($row78['promo_PV'] * $item2);
+                    $bonuce += ($row78['promo_bonuce'] * $item2);
+                } else {
+                    $total_price += ($row78['price'] * $item2);
+                    $PV += ($row78['PV'] * $item2);
+                    $bonuce += ($row78['bonuce'] * $item2);
+                }
 
             } else {
                 echo '5566不能亡';
@@ -526,6 +544,16 @@ function orderConfirm($OrderNo, $OrderAmount, $PaymentType, $PaymentAmount, $Pay
 
     } else {
         return 'curl fail';
+    }
+}
+
+//促銷判斷
+function isPromo($product)
+{
+    if (!(time() > strtotime($product['promo_start']) && time() < strtotime($product['promo_end']))) {
+        return false;
+    } else {
+        return true;
     }
 }
 

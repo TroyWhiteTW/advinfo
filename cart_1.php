@@ -56,6 +56,16 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
     $payments[] = $paymentsRow;
 }
 
+//促銷判斷
+function isPromo($product)
+{
+    if (!(time() > strtotime($product['promo_start']) && time() < strtotime($product['promo_end']))) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 ?>
 <!doctype html>
 <html>
@@ -194,16 +204,28 @@ while ($paymentsRow = mysqli_fetch_assoc($paymentsRes)) {
                                         $html[] = '</td>';
                                         // 價格
                                         $html[] = '<td class="priceValue">';
-                                        $html[] = $recordArray[$i]['price'];
+                                        if (isPromo($recordArray[$i])) {
+                                            $html[] = $recordArray[$i]['promo_price'];
+                                        } else {
+                                            $html[] = $recordArray[$i]['price'];
+                                        }
                                         $html[] = '</td>';
                                         // PV
                                         $html[] = '<td class="pvValue">';
                                         switch ($_SESSION['user2']['type']) {
                                             case 1:
-                                                $html[] = $recordArray[$i]['bonuce'];
+                                                if (isPromo($recordArray[$i])) {
+                                                    $html[] = $recordArray[$i]['promo_bonuce'];
+                                                } else {
+                                                    $html[] = $recordArray[$i]['bonuce'];
+                                                }
                                                 break;
                                             case 2:
-                                                $html[] = $recordArray[$i]['PV'];
+                                                if (isPromo($recordArray[$i])) {
+                                                    $html[] = $recordArray[$i]['promo_PV'];
+                                                } else {
+                                                    $html[] = $recordArray[$i]['PV'];
+                                                }
                                                 break;
                                         }
                                         $html[] = '</td>';

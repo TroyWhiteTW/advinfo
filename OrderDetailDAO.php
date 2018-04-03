@@ -20,10 +20,16 @@ class OrderDetailDAO
         $rs = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($rs);
         $this->proname = $row['proname'];
-        $this->price = $row['price'];
+        if (isPromo($row)) {
+            $this->price = $row['promo_price'];
+            $this->PV = $row['promo_PV'];
+            $this->bonuce = $row['promo_bonuce'];
+        } else {
+            $this->price = $row['price'];
+            $this->PV = $row['PV'];
+            $this->bonuce = $row['bonuce'];
+        }
         $this->subtotal = (int)$this->qty * (int)$this->price;
-        $this->PV = $row['PV'];
-        $this->bonuce = $row['bonuce'];
         $rs->close();
 
     }
@@ -101,5 +107,15 @@ class OrderDetailDAO
         }
 //        $result->close();
 
+    }
+
+    //促銷判斷
+    function isPromo($product)
+    {
+        if (!(time() > strtotime($product['promo_start']) && time() < strtotime($product['promo_end']))) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
