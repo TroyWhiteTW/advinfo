@@ -287,7 +287,7 @@ function encodeRegisterData($rawDataArray)
         "name" => "\"\"",
         "gender" => "\"\"",
         "level" => "\"\"",
-        "referral" => "\"\"",
+        "referral" => "\"admin\"",
         "birthday" => "\"\"",
         "email" => "\"\"",
         "phone" => "\"\"",
