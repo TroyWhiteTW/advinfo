@@ -114,6 +114,20 @@ function isPromo($product)
     }
 }
 
+//特別處理
+$specialProducts = [];
+$specialProductsSql = 'SELECT * FROM products WHERE protags !=1 and status IN (3,8)';
+$specialProductsRes = mysqli_query($conn, $specialProductsSql);
+while ($specialProductsRow = mysqli_fetch_assoc($specialProductsRes)) {
+    $specialProducts[] = $specialProductsRow;
+}
+
+foreach ($specialProducts as $k => $v) {
+    if ((strtotime($v['uptime']) + (86400 * 30)) > time()) {
+        $products[1][] = $v;
+    }
+}
+
 ?>
 <!doctype html>
 <html>
@@ -194,7 +208,6 @@ function isPromo($product)
                         if ($isLogin) {
                             switch ($_SESSION['user2']['type']) {
                                 case 1:
-//                                    echo '<div class="pd-pv">紅利：' . $product['bonuce'] . '</div>';
                                     // 促銷商品
                                     if (isPromo($product)) {
                                         echo '<div class="pd-pv">紅利：' . $product['promo_bonuce'] . '</div>';
@@ -203,7 +216,6 @@ function isPromo($product)
                                     }
                                     break;
                                 case 2:
-//                                    echo '<div class="pd-pv">PV：' . $product['pv'] . '</div>';
                                     // 促銷商品
                                     if (isPromo($product)) {
                                         echo '<div class="pd-pv">PV：' . $product['promo_PV'] . '</div>';
@@ -216,7 +228,6 @@ function isPromo($product)
                             echo '<div class="pd-pv">請登入後查看</div>';
                         }
 
-//                        echo '<div class="pd-price">價格$' . $product['price'] . '元</div>';
                         // 促銷商品
                         if (isPromo($product)) {
                             echo '<div class="pd-price">促銷價$ ' . $product['promo_price'] . ' 元</div>';
