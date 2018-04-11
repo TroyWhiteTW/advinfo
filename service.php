@@ -23,10 +23,11 @@ if (empty($errorMessage)) {
     $result = mysqli_query($conn, $sql);
 //var_dump($result);return;
     if ($result == true) {
-        send2Mail($_POST['email'], 'service mail', $_POST['content']);
-        echo 1;
+//        send2Mail($_POST['email'], 'service mail', $_POST['content']);
+//        echo 1;
 //        echo "感謝您的意見，我們將盡快與您聯繫答覆；3秒後跳轉回首頁...";
 //        header("Refresh:3;url=index.php");
+        echo sendEmail('service mail', $_POST['content']);
     } else {
         echo 0;
 //        echo "發生未預期錯誤...";
@@ -259,45 +260,56 @@ function encodeRegisterData($rawDataArray)
     return $dataArray;
 }
 
-function sendEmail()
+function sendEmail($title, $mesg)
 {
     require 'PHPMailer/PHPMailerAutoload.php';
 
     $mail = new PHPMailer;
-
-//$mail->SMTPDebug = 3;                               // Enable verbose debug output
-
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+// Enable verbose debug output
+//    $mail->SMTPDebug = 3;
+    $mail->CharSet = 'utf-8';
+    // Set email format to HTML
+    $mail->isHTML(true);
+    // Set mailer to use SMTP
+    $mail->isSMTP();
+    // Specify main and backup SMTP servers
+    $mail->Host = 'advinfo.taironlife.com';
+    // Enable SMTP authentication
+    $mail->SMTPAuth = true;
     // TODO: 寄件者的 gmail 帳號
-    $mail->Username = 'test@gmail.com';                 // SMTP username
+    // SMTP username
+    $mail->Username = 'service@advinfo.taironlife.com';
     // TODO: 寄件者的 gmail 密碼
-    $mail->Password = 'test';                           // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587;                                    // TCP port to connect to
+    // SMTP password
+    $mail->Password = 'cW(o4GpdG6kh';
+    // Enable TLS encryption, `ssl` also accepted
+//    $mail->SMTPSecure = 'tls';
+    // TCP port to connect to
+    $mail->Port = 587;
 
-    $mail->setFrom('service@taironlife.com', 'Mailer');
+    $mail->setFrom($_POST['email'], 'Mailer');
 //$mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
-    $mail->addAddress($_POST['email']);               // Name is optional
+    // Name is optional
+    $mail->addAddress('service@advinfo.taironlife.com');
 //$mail->addReplyTo('info@example.com', 'Information');
 //$mail->addCC('cc@example.com');
 //$mail->addBCC('bcc@example.com');
 
 //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-    $mail->isHTML(true);                                  // Set email format to HTML
 
-    $mail->Subject = 'Reset Password!';
-    $mail->Body = 'a';
+    $mail->Subject = $title;
+    $mail->Body = $mesg;
 //    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     if (!$mail->send()) {
 //        echo '無法寄送電子信件至您填寫的電子信箱';
 //        echo '<br/>';
 //        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        return 0;
     } else {
-        echo '感謝您的意見，我們將盡快與您聯繫答覆；3秒後跳轉回首頁...';
+//        echo '感謝您的意見，我們將盡快與您聯繫答覆；3秒後跳轉回首頁...';
+        return 1;
     }
 }
 
