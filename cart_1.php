@@ -685,34 +685,64 @@ function isPromo($product)
 
                             <!-- 發票資訊-->
                             <div class="content-article">
-
                                 <div class="form-name">發票資訊</div>
 
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="invoice" value="1" checked="checked">
-                                        個人發票
-                                    </label>
+                                <?php if ($_SESSION['user2']['company_no'] != '' && $_SESSION['user2']['invoice_title'] != ''): ?>
+                                    <div class="form-tittle">
+                                        <label>
+                                            <input type="radio" name="invoice" value="1">
+                                            個人發票
+                                        </label>
 
-                                </div>
+                                    </div>
 
-                                <div class="form-tittle">
-                                    <label>
-                                        <input type="radio" name="invoice" value="2">
-                                        公司戶頭票
-                                    </label>
+                                    <div class="form-tittle">
+                                        <label>
+                                            <input type="radio" name="invoice" value="2" checked="checked">
+                                            公司戶頭票
+                                        </label>
 
-                                </div>
+                                    </div>
 
-                                <div class="form-tittle">
-                                    統一編號：
-                                    <input name="company_no" id="" type="text" class="input-2" disabled="disabled">
-                                </div>
+                                    <div class="form-tittle">
+                                        統一編號：
+                                        <input name="company_no" id="" type="text" class="input-2"
+                                               value="<?= $_SESSION['user2']['company_no'] ?>">
+                                    </div>
 
-                                <div class="form-tittle">
-                                    公司抬頭：
-                                    <input name="invoice_title" id="" type="text" class="input-2" disabled="disabled">
-                                </div>
+                                    <div class="form-tittle">
+                                        公司抬頭：
+                                        <input name="invoice_title" id="" type="text" class="input-2"
+                                               value="<?= $_SESSION['user2']['invoice_title'] ?>">
+                                    </div>
+                                <?php else: ?>
+                                    <div class="form-tittle">
+                                        <label>
+                                            <input type="radio" name="invoice" value="1" checked="checked">
+                                            個人發票
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-tittle">
+                                        <label>
+                                            <input type="radio" name="invoice" value="2">
+                                            公司戶頭票
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-tittle">
+                                        統一編號：
+                                        <input name="company_no" id="" type="text" class="input-2" disabled="disabled">
+                                    </div>
+
+                                    <div class="form-tittle">
+                                        公司抬頭：
+                                        <input name="invoice_title" id="" type="text" class="input-2"
+                                               disabled="disabled">
+                                    </div>
+                                <?php endif; ?>
 
                             </div>
 

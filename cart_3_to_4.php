@@ -68,7 +68,7 @@ if ($_POST["buysafeno"] != "" && $_POST["web"] != "" && $_POST["Td"] == $orders-
     //$orders->PV = 0;
     //$orders->bonuce = 0;
     $orders->ordstatus = 0;
-    $orders->shipstatus = 0;
+    $orders->shipstatus = '';
     $orders->appredate = '0000-00-00 00:00:00';
     $orders->shiptime = '0000-00-00 00:00:00';
     $orders->addtime = date('Y-m-d H:i:s', time());
