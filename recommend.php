@@ -25,7 +25,8 @@ $isLogin = !empty($_SESSION['user']);
     //    print_r($recommendRows);
     $data = [];
     foreach ($recommendRows as $k => $v) {
-        $text = "[" . $v['referral'] == '' ? '無' : $v['referral'] . "],[{$v['email']}],[{$v['levelname']}].{$v['regtime']}";
+        $a = $v['referral'] == '' ? '無' : $v['referral'];
+        $text = "[" . $a . "],[{$v['email']}],[{$v['levelname']}].{$v['regtime']}";
         $sdata = [];
         $sdata['id'] = $v['id'];
         $sdata['parent'] = $v['leveldiff'] == 0 ? '#' : $v['referral'];
