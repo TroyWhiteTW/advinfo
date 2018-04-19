@@ -6,13 +6,13 @@ $isLogin = !empty($_SESSION['user']);
 $hasProid = !empty($_GET['proid']);// 從 GET 取得產品 id
 $hasPreview = !empty($_GET['preview']);
 $showProduct = false;
-$correctPreview = "false";
+$correctPreview = "0";
 if ($hasProid == true && $hasPreview == false) {
     $showProduct = true;
 } else if ($hasProid == true && $hasPreview == true) {
     if (md5($_GET['proid']) == $_GET['preview']) {
         $showProduct = true;
-        $correctPreview = "true";
+        $correctPreview = "1";
     }
 }
 
@@ -23,7 +23,7 @@ if ($showProduct) {
     // product
     $proid = trim($_GET['proid']);// 產品 id 處理
 
-    $productSql = 'SELECT products.*, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE status IN (3,8) OR '.$correctPreview;
+    $productSql = 'SELECT products.*, protags.name, protags.pic, protags.color, productclass.pcno1, productclass.pcno2, productclass.pcno3 FROM (SELECT * FROM products WHERE (status = 3 OR status = 8 OR '.$correctPreview.')';
     $productSql .= ' AND proid=\'' . $proid . '\'';
     $productSql .= ') products LEFT JOIN protags ON products.protags=protags.no LEFT JOIN productclass ON products.proid=productclass.proid';
 
