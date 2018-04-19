@@ -133,7 +133,7 @@ if ($showProduct) {
                             echo '<li><a>' . $product['proname'] . '</a></li>';
                             ?>
                         <?php else: ?>
-                            <li class="active">商品資訊錯誤</li>
+                            <li><a>商品資訊錯誤</a></li>
                         <?php endif; ?>
 
                     </ul>
