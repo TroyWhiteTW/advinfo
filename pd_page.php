@@ -107,7 +107,7 @@ if ($showProduct) {
                         <li><a href="index.php">首頁</a></li>
                         <li><img src="img/process_icon.png" alt=""></li>
 
-                        <?php if ($showProduct): ?>
+                        <?php if ($showProduct && $hasProid): ?>
                             <?php
                             foreach ($proclass as $item) {
                                 if ($item['no'] == $product['pcno1']) {
@@ -140,7 +140,7 @@ if ($showProduct) {
 
                 </div>
 
-                <?php if ($showProduct): ?>
+                <?php if ($showProduct && $hasProid): ?>
 
                     <div class="content-area">
 
